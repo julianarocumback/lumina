@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { supabase } from "../../supabaseClient"
 
 import Header from "../../components/header/Header"
+import Footer from "../../components/footer/Footer"
 import ProductHero from "./productHero/ProductHero"
 import ProductDetails from "./productDetails/ProductDetails"
 import Comments from "./Comments/Comments"
@@ -46,6 +47,7 @@ export default function Product(){
         <ProductHero foto={foto} gallery={gallery} setIdFoto={setIdFoto} produto={produto}/>
         <ProductDetails produto={produto}/>
         <Comments/>
+        <Footer/>
     </div>
 )
 }

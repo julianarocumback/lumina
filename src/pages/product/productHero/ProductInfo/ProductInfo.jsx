@@ -20,7 +20,7 @@ export default function ProductInfo({produto}){
             <Divisor/>
             <Info/>
             <div className="flex flex-col py-10 gap-4">
-                <Cart/>
+                <Cart produto={produto}/>
                 <Favorite/>
             </div>
             <div className="lg:flex lg:gap-8 hidden">
