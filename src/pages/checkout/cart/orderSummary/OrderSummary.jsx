@@ -1,6 +1,6 @@
 export default function OrderSummary(){
     return(
-        <div className="w-140 p-8 gap-8 flex flex-col rounded-2xl bg-white shadow-xs">
+        <div className="w-140 max-h-fit p-8 gap-8 flex flex-col rounded-2xl bg-white shadow-xs">
 
             <h3 className="text-2xl ">Resumo do Pedido</h3>
             <div className="flex gap-2 flex-col text-gray-400">

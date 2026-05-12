@@ -10,7 +10,7 @@ import Catalogo from "./components/catalogo/Catalogo";
 
 import Produto from './pages/product/Product'
 import Checkout from './pages/checkout/Checkout'
-import Delivery from './pages/checkout/delivery/Delivery'
+import Delivery from './pages/checkout/cart/delivery/Delivery'
 
 export default function MainRoutes(){
     return (

@@ -11,6 +11,8 @@ export default function Catalogo(){
 
     const [categoria, setCategoria] = useState('Todos')
     const [ordem, setOrdem] = useState('padrao')
+    const [quantidade, setQuantidade] = useState(2)
+
 
     useEffect(()=> {
         async function getProdutos() {
@@ -35,6 +37,7 @@ export default function Catalogo(){
 
 
     const lista = produtos
+    .filter((_,index) => index < quantidade)
     .filter(item => categoria === 'Todos' || item.categoria === categoria)
     .toSorted((a,b) => {
         const valorA = Number(a.valor)
@@ -54,7 +57,7 @@ export default function Catalogo(){
                 <div className="flex flex-col gap-6 p-6 w-full">
                     <Order setOrdem={setOrdem} ordemAtiva={ordem} quantidade={lista.length}/>
                     <div className="h-[0.1px] w-full bg-gray-200"></div>
-                    <Products produtos={lista} carregar={carregando}/>
+                    <Products produtos={lista} carregar={carregando} setQuantidade={setQuantidade} tamanho={produtos.length}/>
                 </div>
             </div>
         </section>
