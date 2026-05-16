@@ -4,43 +4,55 @@ const CartContext = createContext()
 
 export function CartProvider({ children }) {
     const [items, setItems] = useState([])
-    const [quantidade, setQuantidade] = useState(1)
 
     if(!items){
         return
     }
 
+    // Adicionar o produto ao carrinho
     function addToCart(produto) {
         // verificar se o produto já está no carrinho
         if(items.find(item => item.id === produto.id)){
             return
         }
-        const p = {...produto, quantidade : quantidade}
-        setItems(prev => [...prev, p])
-        
+        const p = ({...produto, quantidade : 1})
+        setItems(prev => [...prev, p]) 
     }
 
+    // Remover o produto do carrinho
     function removeToCart(produto) {
         const produtos = items.filter(item => item?.id !== produto?.id)
-
         setItems([...produtos])
     }
 
-    function adicionar(produto){
-        setQuantidade(1)
-
-        // setItems(prev => [...prev, ...produto, q])
+    // Aumentar a quantidade de um produto no carrinho
+    function aumentarQuantidade(produto) {
+        setItems(prev => prev.map(item => {
+            if(item.id === produto.id){
+                return {...item, quantidade: item.quantidade + 1}
+            }
+            return item
+        }))
     }
 
-    function remover(produto){
-        if (quantidade === 1){
-        return removeToCart(produto)
+    // Diminuir a quantidade de um produto no carrinho
+    function diminuirQuantidade(produto) {
+        if(produto.quantidade === 1) {
+            removeToCart(produto)
         }
-        setQuantidade(prev => prev - 1)
+
+        setItems(prev => prev.map(item => {
+            if(item.id === produto.id) {
+                return {...item, quantidade: item.quantidade - 1}
+            }
+            return item
+        }))
     }
+
+  
 
     return (
-        <CartContext.Provider value={{items, addToCart, removeToCart, adicionar, remover, quantidade}}>
+        <CartContext.Provider value={{items, addToCart, removeToCart, aumentarQuantidade, diminuirQuantidade}}>
             {children}
         </CartContext.Provider>
     )

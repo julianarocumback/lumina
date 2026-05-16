@@ -10,9 +10,6 @@ export default function Filter({lista, setCategoria}){
                 <div className="flex flex-col" onClick={() => setCategoria('Todos')}>Todos</div>
                 {categorias}
             </div>
-            <div>
-                <Link to='/livro'>teste</Link>
-            </div>
         </div>
     )
 }

@@ -11,6 +11,7 @@ import Catalogo from "./components/catalogo/Catalogo";
 import Produto from './pages/product/Product'
 import Checkout from './pages/checkout/Checkout'
 import Delivery from './pages/checkout/cart/delivery/Delivery'
+import User from './pages/user/User'
 
 export default function MainRoutes(){
     return (
@@ -30,6 +31,7 @@ export default function MainRoutes(){
             <Route path='/livro/:id' element={<Produto/>}/>
             <Route path='/checkout' element={<Checkout/>}/>
             <Route path='/delivery' element={<Delivery/>}/>
+            <Route path='/user' element={<User/>}/>
         </Routes>
     )
 }

@@ -2,40 +2,69 @@ import { useCart } from '../../contexts/CartContext/CartContext'
 import { Link } from "react-router-dom"
 
 export default function ListaCarrinho(){
-    const { items, removeToCart, adicionar, remover, quantidade } = useCart()
+    const {items, aumentarQuantidade, diminuirQuantidade} = useCart()
+
+    const subtotal = items.map(item => item.valor * item.quantidade).reduce((a,b) => a + b, 0).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
 
     return (
-        <div className=" h-[calc(100vh-56px)] w-100 bg-amber-300 absolute right-0 top-14 flex flex-col p-4">
-            <div>Carrinho</div>
-            <div className="flex flex-col border w-full h-full gap-4 overflow-y-auto">
-                {items.map((item, index) => {
-                    return(
-                        <div className="flex h-40 w-full border border-red-500 gap-4 overflow-hidden rounded-2xl shrink-0" key={index} >
-                            {/* onClick={()=> removeToCart(item)} */}
-                            <div className="h-full">
-                                <img className="h-full w-full" src={item.img_url} alt="" />
-                            </div>
-                            <div className="flex flex-col">
-                                <h4 className="text-lg font-semibold">{item.nome}</h4>
-                                {item.valor}
-                                {item.valor*item.quantidade}
-                            <div className="flex border border-amber-400 w-20 items-center justify-around bg-white rounded-3xl px-2">
-                                <div className="" onClick={()=> remover(item)}>-</div>
-                                <div>{quantidade}</div>
-                                <div onClick={()=> adicionar()}>+</div>
-                            </div>
-                            </div>
-                        </div>        
-                    )
-                })}
+        <div className="h-screen w-100 bg-white absolute right-0 top-14 flex flex-col  shadow-sm ">
+            <div className="p-7 gap-7 flex flex-col w-full h-3/4">
+                <div className="text-2xl font-semibold">Carrinho</div>
+
+                {/* Produtos no carrinho */}
+                <div className="flex flex-col w-full h-full gap-4 overflow-y-auto">
+                    {items.map((item, index) => {
+                        return(
+
+                            // Card do produto
+                            <div className="flex h-35 w-full border border-gray-200 gap-4 overflow-hidden rounded-2xl shrink-0 shadow-xs p-4" key={index} >
+                                <div className="h-full w-1/4 ">
+                                    <img className="h-full w-full rounded-2xl shadow-xs border border-gray-100" src={item.img_url} alt="" />
+                                </div>
+                                <div className="flex flex-col gap-4 py-2 justify-between overflow-hidden w-3/4">
+                                    <div>
+                                        <h4 className="text-lg font-semibold text-[#1a1c1d]  truncate ">
+                                            {item.nome}</h4>
+                                        <p>descrição</p>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="font-semibold">
+                                            {item.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}
+
+                                        </span>
+                                        
+                                        <div className="flex border border-gray-300 w-20 items-center justify-around bg-white rounded-3xl px-2 select-none">
+
+                                            {/* Diminuir a quantidade */}
+                                            <div className="text-xs cursor-pointer" onClick={()=> diminuirQuantidade(item)}><i class="fa-solid fa-minus"></i></div>
+
+                                            {/* Quantidade atual */}
+                                            <div>{item.quantidade}</div>
+
+                                            {/* Aumentar a quantidade */}
+                                            <div className="text-xs cursor-pointer" onClick={()=> aumentarQuantidade(item)}><i class="fa-solid fa-plus"></i></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>        
+                        )
+                    })}
+                </div>
+
+
             </div>
+            <div className="bg-gray-50 h-1/4 p-7">
             <div className="flex justify-between py-4">
-                <span>Subtotal</span>
-                <span>R$ 1.000,00</span>
+                <span className="text-lg text-[#474747]">Subtotal</span>
+                <span className="text-xl font-semibold">{subtotal}</span>
             </div>
             <Link to="/checkout">
-                <button className="border rounded-3xl p-2">Pagamento</button>
+                <button className="rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
             </Link>
+
+
+            </div>
         </div>
     )
 }
