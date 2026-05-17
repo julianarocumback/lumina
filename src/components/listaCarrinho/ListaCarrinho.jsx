@@ -1,6 +1,7 @@
 import { useCart } from '../../contexts/CartContext/CartContext'
 import { Link, useNavigate } from "react-router-dom"
 import { useState } from 'react'
+// import { useLocalStorage} from '../../hooks/useLocalStorage'
 
 export default function ListaCarrinho(){
     const {items, aumentarQuantidade, diminuirQuantidade} = useCart()
