@@ -1,8 +1,18 @@
 import { useCart } from '../../contexts/CartContext/CartContext'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from 'react'
 
 export default function ListaCarrinho(){
     const {items, aumentarQuantidade, diminuirQuantidade} = useCart()
+    const navigate = useNavigate()
+    const [logado, setLogado] = useState(false)
+
+    function vericacao(){
+        if (items.length < 1) return
+
+        navigate('/checkout')
+
+    }
 
     const subtotal = items.map(item => item.valor * item.quantidade).reduce((a,b) => a + b, 0).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
 
@@ -43,6 +53,7 @@ export default function ListaCarrinho(){
 
                                             {/* Aumentar a quantidade */}
                                             <div className="text-xs cursor-pointer" onClick={()=> aumentarQuantidade(item)}><i class="fa-solid fa-plus"></i></div>
+                                            
                                         </div>
 
                                     </div>
@@ -59,10 +70,8 @@ export default function ListaCarrinho(){
                 <span className="text-lg text-[#474747]">Subtotal</span>
                 <span className="text-xl font-semibold">{subtotal}</span>
             </div>
-            <Link to="/checkout">
-                <button className="rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
-            </Link>
-
+                <button onClick={vericacao} className="cursor-pointer rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
+                {!logado && <p>teset</p>}
 
             </div>
         </div>

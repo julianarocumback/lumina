@@ -14,11 +14,10 @@ export default function Catalogo(){
     const [quantidade, setQuantidade] = useState(2)
 
 
-    useEffect(()=> {
+    useEffect(() => {
         async function getProdutos() {
             try {
                 setCarregando(true)
-                await new Promise(resolve => setTimeout(resolve, 2000));
                 const {data, error} = await supabase
                 .from('produtos')
                 .select('id,nome,ano,valor,img_url,categoria,livros(autor,tipo_capa,tipo_folha,quantidade_paginas,isbn)')

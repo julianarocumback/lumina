@@ -1,83 +1,50 @@
-import { use, useState } from 'react'
+import { useState, useEffect } from 'react'
+import { supabase } from '../../supabaseClient'
+// --------------------------------------------
+import Header from '../../components/header/Header'
+import Sidebar from './sidebar/Sidebar'
+import Geral from './geral/Geral'
+import Pedidos from './pedidos/Pedidos'
+import Perfil from './perfil/Perfil'
+import Address from './address/Address'
+import Payment from './payment/Payment'
+import Favorites from './favorites/Favorites'
+import HelpCenter from './helpCenter/HelpCenter'
 
-export default function User(){
-    const [senha, setSenha] = useState('')
+// --------------------------------------------
 
-    function validarSenha(valor){    
-        setSenha(valor)
-    
-    }
+export default function User() {
+    const [clientes, setClientes] = useState([])
+    const [aberto, setAberto] = useState(1)
 
-    // -------------------
-    const [pecas, setPecas] = useState([{id: 1, nome: 'Pneu'}, {id: 2, nome: 'Motor'}])
+    useEffect(()=> {
+        async function getClientes() {
+            try {
+                const {data, error} = await supabase
+                .from('clientes')
+                .select('nome')
+                if(error) throw error
+                setClientes(data)
 
-    function apagar(id){
-        const listaNova = pecas.filter(item => item.id !== id )
-        setPecas(listaNova)
-    }
-    // -------------------
-    const [valorTemp, setValorTemp] = useState('')
-    const [totalAcumulado, setTotalAcumulado] = useState(0)
+            }
 
-    function somarFrete(){
-        setTotalAcumulado(prev => prev + Number(valorTemp))
-        setValorTemp('')
-    }
+            catch(error) {
+                console.error('Erro ao buscar informações do usuário', error.message) 
+            }
+        }
 
-    const [ligar, setLigar] = useState(false)
-    function interruptor(){
-        setLigar(prev => !prev)
-    }
-    
+        getClientes()
+    },[])
+
     return (
-        <div>
-            <input className="border" type="text" onChange={(e) => validarSenha(e.target.value)} />
-
-            {senha.length < 8? 'Senha muito curta' : 'Senha Forte'}
-
-        {/*  */}
-
-        {pecas.map(peca => {
-            return(
-                <div className="flex gap-4">
-                    <div>{peca.nome}</div>
-                    <button onClick={()=>apagar(peca.id)}>Remover</button>
+        <div className="h-screen w-screen">
+            <Header/>
+            <div className="flex">
+                <Sidebar setAberto={setAberto}/>
+                <div className="flex w-screen">
+                    {aberto === 1? <Geral clientes={clientes}/> : aberto === 2? <Pedidos/> : aberto === 3? <Perfil/> : aberto === 4? <Address/> : aberto === 5? <Payment/> : aberto === 6? <Favorites/> : <HelpCenter/>} 
                 </div>
-            )
-        })}
-
-        {/*  */}
-
-        <input className='border 'type="text" onChange={(e)=> setValorTemp(e.target.value)}/>
-
-        <button className="border" onClick={somarFrete}>Somar</button>
-        <p>{totalAcumulado}</p>
-        <p>{valorTemp}</p>
-
-        <button onClick={interruptor}>Ligar Farol</button>
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
+            </div>
         </div>
-        
     )
 }
