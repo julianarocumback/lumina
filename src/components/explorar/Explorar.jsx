@@ -15,7 +15,7 @@ export default function Explorar(){
 
     },[])
     return (
-        <section className="w-full py-24 px-86">
+        <section className="w-full border px-8 py-12 lg:py-24 lg:px-86">
             {isMobile? (<Carrossel/>): (<BentoGrid/>)}
         </section>
     )

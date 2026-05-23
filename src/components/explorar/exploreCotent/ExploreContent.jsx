@@ -5,7 +5,7 @@ import greenCollection from './greenCollection.png'
 
 export const Carrossel = () => {
     return(
-        <div>
+        <div className="w-full">
             <p>aaaaaaaaaa</p>
         </div>
     )
