@@ -47,13 +47,13 @@ export default function Catalogo(){
     })
 
     return (
-        <section className="">
+        <section className="px-4">
             <div className="flex lg:px-80 py-30 w-ful">
                 <div className="hidden lg:flex lg:flex-col lg:p-6">
                     <h3 className="text-2xl font-semibold">Catálogo</h3>
                     <Filter lista={produtos} categoria={categoria} setCategoria={setCategoria}/>
                 </div>
-                <div className="flex flex-col gap-6 p-6 w-full">
+                <div className="flex flex-col gap-6 w-full">
                     <Order setOrdem={setOrdem} ordemAtiva={ordem} quantidade={lista.length}/>
                     <div className="h-[0.1px] w-full bg-gray-200"></div>
                     <Products produtos={lista} carregar={carregando} setQuantidade={setQuantidade} tamanho={produtos.length}/>
