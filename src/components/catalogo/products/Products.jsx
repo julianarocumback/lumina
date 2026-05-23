@@ -36,7 +36,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
     const listaNova = produtos.map((produto) => {
             return (
                     <div className="flex flex-col gap-4 cursor-pointer relative select-none" key={produto.id}>
-                                {authenticated && (dadosCliente?.favoritos.some(item => item.id === produto.id)? <div onClick={ () => handreFavoritar(produto)} className="absolute text-red-300 text-2xl right-4 top-3"><i class="fa-solid fa-heart"></i></div>:<div onClick={ () => handreFavoritar(produto)} className="absolute text-gray-300 text-2xl right-4 top-3"><i class="fa-regular fa-heart"></i></div>)}
+                                {authenticated && (dadosCliente?.favoritos.some(item => item.id === produto.id)? <div onClick={ () => handreFavoritar(produto)} className="absolute text-red-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-solid fa-heart"></i></div>:<div onClick={ () => handreFavoritar(produto)} className="absolute text-gray-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-regular fa-heart"></i></div>)}
                                 
                         <Link to={`/livro/${produto.id}`}>
                             <div className="h-75 lg:h-100 rounded-2xl overflow-hidden shadow-xl ">
@@ -47,10 +47,10 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
                         <div className="flex  flex-col">
                             <span className="text-xs uppercase text-gray-400 font-semibold">{produto.livros.autor}</span>
                             <div className="flex flex-col gap-2">
-                                <span className="font-semibold text-lg">{produto.nome}</span>
+                                <span className="font-semibold lg:text-lg">{produto.nome}</span>
                                 <div className="flex justify-between items-center">
-                                    <span className="font-semibold text-lg text-blue-700">{produto.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
-                                    <button className="border px-2 py-1 cursor-pointer rounded-xl bg-black/80 text-white text-sm font-semibold" onClick={() => addToCart(produto)}>Adicionar</button>
+                                    <span className="font-semibold lg:text-lg text-blue-700">{produto.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
+                                    <button className="px-3 lg:px-2 py-0.5 lg:py-1 cursor-pointer rounded-xl bg-black/80 text-white text-sm font-semibold" onClick={() => addToCart(produto)}>+ carrinho</button>
                                 
                             </div>
                             </div>
@@ -64,7 +64,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
     })
     return (
         <div className="flex flex-col justify-center gap-24">
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 lg:gap-8">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-4 gap-y-8 lg:gap-8">
                 {listaNova}
             </div>
             <div className="w-full flex justify-center">
