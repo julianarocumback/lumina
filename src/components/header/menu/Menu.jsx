@@ -13,7 +13,7 @@ export default function Menu(){
                 <i className="fa-solid fa-bars"></i>
             </div>
 
-            {isOpen&& <div className="h-screen w-50 bg-white z-50 absolute top-14 left-0 shadow-lg p-4">
+            {isOpen&& <div className="h-screen w-50 bg-white z-50 fixed top-14 left-0 shadow-lg p-4">
                 a
             </div>}
 
