@@ -48,7 +48,7 @@ export default function Catalogo(){
 
     return (
         <section className="">
-            <div className="flex px-80 py-30 w-ful">
+            <div className="flex lg:px-80 py-30 w-ful">
                 <div className="hidden lg:flex lg:flex-col lg:p-6">
                     <h3 className="text-2xl font-semibold">Catálogo</h3>
                     <Filter lista={produtos} categoria={categoria} setCategoria={setCategoria}/>
