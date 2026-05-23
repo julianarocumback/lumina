@@ -42,12 +42,18 @@ export default function ListaCarrinho(){
                                 <div className="h-full w-20 lg:w-1/4 ">
                                     <img className="h-full w-full rounded-2xl shadow-xs border border-gray-100" src={item.img_url} alt="" />
                                 </div>
-                                <div className="flex flex-col gap-4 py-2 justify-between overflow-hidden w-3/4">
-                                    <div>
-                                        <h4 className="lg:text-lg font-semibold text-[#1a1c1d]  truncate ">
-                                            {item.nome}</h4>
-                                        <p>descrição</p>
+                                <div className="flex flex-col gap-4 py-2 justify-between overflow-hidden w-3/4 relative">
+                                    <div className="flex justify-between">
+                                        <div className="w-[85%]">
+                                            <h4 className="lg:text-lg font-semibold text-[#1a1c1d]  truncate ">
+                                                {item.nome}</h4>
+                                            <p>descrição</p>
+
+                                        </div>
                                     </div>
+                                        <div className="absolute right-0">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </div>
                                     <div className="flex justify-between">
                                         <span className="text- font-semibold">
                                             {item.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}
