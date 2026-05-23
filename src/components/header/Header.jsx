@@ -10,7 +10,7 @@ export default function Header() {
     const [carrinhoIsOpen, setCarrinhoIsOpen] = useState(false)
 
     return (
-        <header className="flex h-14 w-all bg-white/80 justify-between px-5 items-center lg:px-8 fixed z-50 w-full">
+        <header className="flex h-14 w-all bg-white justify-between px-5 items-center lg:px-8 fixed z-50 w-full">
             <Menu/>
             <Logo/>
             <div className="flex gap-4">
