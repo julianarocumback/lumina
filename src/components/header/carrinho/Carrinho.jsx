@@ -15,7 +15,7 @@ export default function Carrinho({carrinhoIsOpen, setCarrinhoIsOpen}) {
             <i className="fa-solid fa-cart-shopping"></i>
             {/* Mostrar quantidade de produtos no carrinho */}
             {items.length > 0 && 
-            <div  className={`bg-white border rounded-full flex justify-center items-center h-3 w-3 lg:h-4 lg:w-4 absolute top-0 -right-1 ${quantidadeProdutos > 9? 'text-[6px] lg:text-[9px] flex justify-center items-center ':'text-[8px] lg:text-[11px] flex justify-center items-center'}`}>
+            <div  className={`bg-white border rounded-full flex justify-center items-center h-3 w-3 lg:h-4 lg:w-4 absolute top-0 -right-1 ${quantidadeProdutos > 9? 'text-[6px] lg:text-[9px]':'text-[8px] lg:text-[11px]'}`}>
                 {quantidadeProdutos}
             </div>
             }  
