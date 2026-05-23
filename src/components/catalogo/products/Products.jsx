@@ -40,7 +40,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
                                 {authenticated && (dadosCliente?.favoritos.some(item => item.id === produto.id)? <div onClick={ () => handreFavoritar(produto)} className="absolute text-red-300 text-2xl right-4 top-3"><i class="fa-solid fa-heart"></i></div>:<div onClick={ () => handreFavoritar(produto)} className="absolute text-gray-300 text-2xl right-4 top-3"><i class="fa-regular fa-heart"></i></div>)}
                                 
                         <Link to={`/livro/${produto.id}`}>
-                            <div className="lg:h-100 rounded-2xl overflow-hidden shadow-xl ">
+                            <div className="h-75 rounded-2xl overflow-hidden shadow-xl ">
                                 <img  className="object-cover h-full w-full" src={produto.img_url} alt={produto.nome} />
                             </div>
                         </Link>
@@ -65,7 +65,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
     })
     return (
         <div className="flex flex-col justify-center gap-24">
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-8">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 lg:gap-8">
                 {listaNova}
             </div>
             {listaNova.length !== tamanho && <button className="py-4 border self-center w-100 rounded-full text-lg font-semibold bg-gray-200" onClick={()=> {alterarQuantidade(2)}}>Mostrar mais</button>}
