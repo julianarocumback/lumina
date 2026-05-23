@@ -1,4 +1,10 @@
-export default function OrderSummary(){
+import ProductList from '../productList/ProductList'
+import Delivery from '../delivery/Delivery'
+import Payment from '../payment/Payment';
+import Confirmation from '../confirmation/Confirmation'
+
+export default function OrderSummary({verificar}){
+
     return(
         <div className="w-140 max-h-fit p-8 gap-8 flex flex-col rounded-2xl bg-white shadow-xs">
 
@@ -22,7 +28,7 @@ export default function OrderSummary(){
                 <span className="font-semibold text-sm">TOTAL</span>
                 <span className="font-semibold text-3xl">R$ 500,00</span>
             </div>
-            <button  className="bg-red-200 py-4 rounded-full font-bold text-white text-lg">FINALIZAR COMPRA</button>
+            <button onClick={verificar} className="bg-red-200 py-4 rounded-full font-bold text-white text-lg">FINALIZAR COMPRA</button>
             <div className="bg-gray-100 rounded-2xl p-4 flex gap-4 items-center">
                 <div className="text-blue-500 text-xl">
                     <i class="fa-solid fa-shield-halved"></i>

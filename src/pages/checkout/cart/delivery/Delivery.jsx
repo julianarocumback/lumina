@@ -1,4 +1,11 @@
-export default function Delivery(){
+
+export default function Delivery({setDeliveryOk}){
+    
+    function delivery(){
+        setDeliveryOk(true)
+    }
+    
+    
     return(
         <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs p-8">
             <div className="pb-12 flex flex-col gap-2">
@@ -11,7 +18,7 @@ export default function Delivery(){
                 {/* endereços */}
                 <div className="flex gap-8">
 
-                    <div className="border p-4 flex flex-col gap-2 rounded-2xl">
+                    <div onClick={delivery} className="border p-4 flex flex-col gap-2 rounded-2xl">
                         <div className="flex justify-between">
                             <div className="flex gap-2">
                                 <div><i class="fa-regular fa-house"></i></div>

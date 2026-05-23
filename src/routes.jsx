@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { AuthProvider } from './contexts/AuthContext/AuthContext'
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute'
 
 import Header from "./components/header/Header";
 import Hero from "./components/hero/Hero";
@@ -15,23 +17,27 @@ import User from './pages/user/User'
 
 export default function MainRoutes(){
     return (
-        <Routes>
-            <Route path="/" element={
-                <>
-                    <Header/>
-                    <Hero/>
-                    <Catalogo/>
-                    <Explorar/>
-                    <Testemunhos/>
-                    <NewsLetter/>
-                    <Footer/>
-                </>
-            }/>
+        <AuthProvider>
+            <Routes>
+                <Route path="/" element={
+                    <>
+                        <Header/>
+                        <Hero/>
+                        <Catalogo/>
+                        <Explorar/>
+                        <Testemunhos/>
+                        <NewsLetter/>
+                        <Footer/>
+                    </>
+                }/>
 
-            <Route path='/livro/:id' element={<Produto/>}/>
-            <Route path='/checkout' element={<Checkout/>}/>
-            <Route path='/delivery' element={<Delivery/>}/>
-            <Route path='/user' element={<User/>}/>
-        </Routes>
+                <Route path='/delivery' element={<Delivery/>}/>
+                <Route path='/livro/:id' element={<Produto/>}/>
+                
+                
+                <Route path='/checkout' element={<ProtectedRoute><Checkout/></ProtectedRoute>}/>
+                <Route path='/user' element={<ProtectedRoute><User/></ProtectedRoute>}/>
+            </Routes>
+        </AuthProvider>
     )
 }

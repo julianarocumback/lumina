@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../../supabaseClient'
+import { useState, useContext } from 'react'
+import {AuthContext} from '../../contexts/AuthContext/AuthContext'
 // --------------------------------------------
 import Header from '../../components/header/Header'
 import Sidebar from './sidebar/Sidebar'
@@ -14,35 +14,19 @@ import HelpCenter from './helpCenter/HelpCenter'
 // --------------------------------------------
 
 export default function User() {
-    const [clientes, setClientes] = useState([])
     const [aberto, setAberto] = useState(1)
-
-    useEffect(()=> {
-        async function getClientes() {
-            try {
-                const {data, error} = await supabase
-                .from('clientes')
-                .select('nome')
-                if(error) throw error
-                setClientes(data)
-
-            }
-
-            catch(error) {
-                console.error('Erro ao buscar informações do usuário', error.message) 
-            }
-        }
-
-        getClientes()
-    },[])
+    const {dadosCliente, logout} = useContext(AuthContext)
 
     return (
-        <div className="h-screen w-screen">
+        <div className="h-full lg:h-screen w-screen bg-gray-50">
             <Header/>
             <div className="flex">
-                <Sidebar setAberto={setAberto}/>
+                <div className="hidden lg:block">
+                    <Sidebar setAberto={setAberto} logout={logout}/>
+
+                </div>
                 <div className="flex w-screen">
-                    {aberto === 1? <Geral clientes={clientes}/> : aberto === 2? <Pedidos/> : aberto === 3? <Perfil/> : aberto === 4? <Address/> : aberto === 5? <Payment/> : aberto === 6? <Favorites/> : <HelpCenter/>} 
+                    {aberto === 1? <Geral dadosCliente={dadosCliente}/> : aberto === 2? <Pedidos/> : aberto === 3? <Perfil/> : aberto === 4? <Address/> : aberto === 5? <Payment/> : aberto === 6? <Favorites dadosCliente={dadosCliente}/> : <HelpCenter/>} 
                 </div>
             </div>
         </div>

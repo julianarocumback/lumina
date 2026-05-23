@@ -1,15 +1,25 @@
 import { useCart } from '../../contexts/CartContext/CartContext'
-import { Link, useNavigate } from "react-router-dom"
-import { useState } from 'react'
+import { useNavigate } from "react-router-dom"
+import { useState, useContext } from 'react'
+import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 // import { useLocalStorage} from '../../hooks/useLocalStorage'
 
 export default function ListaCarrinho(){
     const {items, aumentarQuantidade, diminuirQuantidade} = useCart()
     const navigate = useNavigate()
-    const [logado, setLogado] = useState(false)
+    const {authenticated, user, logout} = useContext(AuthContext)
+    const {mensagem, setMensagem} = useState(true)
 
     function vericacao(){
-        if (items.length < 1) return
+        if (items.length === 0) {
+            setMensagem(true)
+            return
+        }
+
+        if (!authenticated) {
+            return
+        }
+
 
         navigate('/checkout')
 
@@ -70,9 +80,9 @@ export default function ListaCarrinho(){
             <div className="flex justify-between py-4">
                 <span className="text-lg text-[#474747]">Subtotal</span>
                 <span className="text-xl font-semibold">{subtotal}</span>
+                {/* {!mensagem && <p>aaaaaaaaa</p>} */}
             </div>
                 <button onClick={vericacao} className="cursor-pointer rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
-                {!logado && <p>teset</p>}
 
             </div>
         </div>

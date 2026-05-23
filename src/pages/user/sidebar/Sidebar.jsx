@@ -1,9 +1,11 @@
+
+
 import { MdOutlineAutoAwesome } from "react-icons/md";
 import { Link} from 'react-router-dom'
 
-export default function Sidebar({setAberto}) {
+export default function Sidebar({setAberto, logout}) {
 
-    function mostrar(idOpcao){
+       function mostrar(idOpcao){
         setAberto(idOpcao)
         
     }
@@ -60,7 +62,7 @@ export default function Sidebar({setAberto}) {
         },
     ]
     return (
-        <aside className="relative h-[calc(100vh-56px)] top-14 w-80 bg-gray-100 border">
+        <aside className="relative h-[calc(100vh-56px)] top-14 w-80 bg-gray-100">
             <div className="flex flex-col p-8 justify-between w-full h-full">
                 <div className="flex flex-col gap-8">
                     {opcoes.map(opcao=>{
@@ -76,7 +78,7 @@ export default function Sidebar({setAberto}) {
                 <Link to='/'>
                     <div className="flex gap-4 text-red-800 items-center">
                         <div><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
-                        <div className="font-semibold">Sair da conta</div>
+                        <button onClick={logout} className="font-semibold">Sair da conta</button>
                     </div>
                 </Link>
             </div>

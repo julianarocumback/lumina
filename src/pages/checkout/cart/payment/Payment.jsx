@@ -1,4 +1,9 @@
-export default function Payment(){
+export default function Payment({setPaymentOk}){
+
+    function payment(){
+        setPaymentOk(true)
+    }
+
     return(
         <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs p-8">
             <div className="pb-12 flex flex-col gap-2">
@@ -10,7 +15,7 @@ export default function Payment(){
             <div className="flex gap-4">
 
                 {/* CARTÃO DE CRÉDITO */}
-                <div className="border flex justify-between p-4 w-full rounded-2xl">
+                <div onClick={payment} className="border flex justify-between p-4 w-full rounded-2xl">
                     <div>
                         <div className="text-blue-700"><i className="fa-solid fa-credit-card"></i></div>
                         <p className="font-semibold">Cartão de crédito</p>

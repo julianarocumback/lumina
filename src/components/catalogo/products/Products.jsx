@@ -1,14 +1,27 @@
 import { useCart } from '../../../contexts/CartContext/CartContext'
+import { AuthContext } from '../../../contexts/AuthContext/AuthContext'
+import { useContext} from 'react'
 import { Link } from "react-router-dom"
 import Skeleton from "../skeleton/Skeleton";
 
 
 export default function Products({produtos, carregar, setQuantidade, tamanho}){
     const {addToCart} = useCart()
+    const {authenticated, dadosCliente,adicionarFavorito, removerFavorito} = useContext(AuthContext)
 
     function alterarQuantidade(valor){
         setQuantidade(prev => prev + valor)
     }
+
+    function handreFavoritar(produto){
+        if(dadosCliente?.favoritos.some(item => Number(item?.id) === produto?.id)){
+            removerFavorito(produto)
+        }else {
+            adicionarFavorito(produto)
+        }
+        
+    }
+
 
     if (carregar) {
         return (
@@ -23,7 +36,9 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
     const listaNova = produtos.map((produto) => {
         
             return(
-                    <div className="flex flex-col gap-4 cursor-pointer" key={produto.id}>
+                    <div className="flex flex-col gap-4 cursor-pointer relative select-none" key={produto.id}>
+                                {authenticated && (dadosCliente?.favoritos.some(item => item.id === produto.id)? <div onClick={ () => handreFavoritar(produto)} className="absolute text-red-300 text-2xl right-4 top-3"><i class="fa-solid fa-heart"></i></div>:<div onClick={ () => handreFavoritar(produto)} className="absolute text-gray-300 text-2xl right-4 top-3"><i class="fa-regular fa-heart"></i></div>)}
+                                {/* {authenticated && <div onClick={ () => handreFavoritar(produto)} className="absolute text-gray-300 text-2xl right-4 top-3"><i class="fa-regular fa-heart"></i></div>} */}
                         <Link to={`/livro/${produto.id}`}>
                             <div className="h-100 rounded-2xl overflow-hidden shadow-xl ">
                                 <img  className="object-cover h-full w-full" src={produto.img_url} alt={produto.nome} />
@@ -53,7 +68,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
             <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-8">
                 {listaNova}
             </div>
-            {listaNova.length !== tamanho&& <button className="py-4 border self-center w-100 rounded-full text-lg font-semibold bg-gray-200" onClick={()=> {alterarQuantidade(2)}}>Mostrar mais</button>}
+            {listaNova.length !== tamanho && <button className="py-4 border self-center w-100 rounded-full text-lg font-semibold bg-gray-200" onClick={()=> {alterarQuantidade(2)}}>Mostrar mais</button>}
             
 
         </div>
