@@ -11,7 +11,7 @@ export default function Catalogo(){
 
     const [categoria, setCategoria] = useState('Todos')
     const [ordem, setOrdem] = useState('padrao')
-    const [quantidade, setQuantidade] = useState(2)
+    const [quantidade, setQuantidade] = useState(3)
 
 
     useEffect(() => {

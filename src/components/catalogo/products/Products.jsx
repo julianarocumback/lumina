@@ -67,7 +67,10 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
             <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4 lg:gap-8">
                 {listaNova}
             </div>
-            {listaNova.length !== tamanho && <button className="py-4 border self-center w-100 rounded-full text-lg font-semibold bg-gray-200" onClick={()=> {alterarQuantidade(2)}}>Mostrar mais</button>}
+            <div className="w-full flex justify-center">
+                {listaNova.length !== tamanho && <button className="py-2 self-center w-70 rounded-full text-lg font-semibold bg-gray-200" onClick={()=> {alterarQuantidade(3)}}>Mostrar mais</button>}
+
+            </div>
             
 
         </div>
