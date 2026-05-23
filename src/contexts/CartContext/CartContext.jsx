@@ -38,9 +38,7 @@ export function CartProvider({ children }) {
 
     // Diminuir a quantidade de um produto no carrinho
     function diminuirQuantidade(produto) {
-        if(produto.quantidade === 1) {
-            removeToCart(produto)
-        }
+        if(produto.quantidade === 1) return
 
         setItems(prev => prev.map(item => {
             if(item.id === produto.id) {

@@ -5,7 +5,7 @@ import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 // import { useLocalStorage} from '../../hooks/useLocalStorage'
 
 export default function ListaCarrinho(){
-    const {items, aumentarQuantidade, diminuirQuantidade} = useCart()
+    const {items, aumentarQuantidade, diminuirQuantidade, removeToCart} = useCart()
     const navigate = useNavigate()
     const {authenticated, user, logout} = useContext(AuthContext)
     const {mensagem, setMensagem} = useState(true)
@@ -51,9 +51,9 @@ export default function ListaCarrinho(){
 
                                         </div>
                                     </div>
-                                        <div className="absolute right-0">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </div>
+                                    <div onClick={()=> removeToCart(item)} className="absolute right-0 hover:text-red-500 cursor-pointer transition-colors">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </div>
                                     <div className="flex justify-between">
                                         <span className="text- font-semibold">
                                             {item.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}
@@ -63,7 +63,7 @@ export default function ListaCarrinho(){
                                         <div className="flex border border-gray-300 w-20 items-center justify-around bg-white rounded-3xl px-2 select-none">
 
                                             {/* Diminuir a quantidade */}
-                                            <div className="text-xs cursor-pointer" onClick={()=> diminuirQuantidade(item)}><i class="fa-solid fa-minus"></i></div>
+                                            <div className={`text-xs cursor-pointer ${item.quantidade === 1 && 'text-gray-300'}`} onClick={()=> diminuirQuantidade(item)}><i class="fa-solid fa-minus"></i></div>
 
                                             {/* Quantidade atual */}
                                             <div>{item.quantidade}</div>
