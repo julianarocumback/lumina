@@ -45,7 +45,7 @@ export default function ListaCarrinho(){
                                 <div className="flex flex-col gap-4 py-2 justify-between overflow-hidden w-3/4 relative">
                                     <div className="flex justify-between">
                                         <div className="w-[85%]">
-                                            <h4 className="lg:text-lg font-semibold text-[#1a1c1d]  truncate ">
+                                            <h4 className="lg:text-lg font-semibold text-[#1a1c1d] truncate ">
                                                 {item.nome}</h4>
                                             <p>descrição</p>
 

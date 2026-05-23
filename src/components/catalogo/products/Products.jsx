@@ -47,7 +47,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
                         <div className="flex  flex-col">
                             <span className="text-xs uppercase text-gray-400 font-semibold">{produto.livros.autor}</span>
                             <div className="flex flex-col gap-2">
-                                <span className="font-semibold lg:text-lg">{produto.nome}</span>
+                                <span className="font-semibold lg:text-lg truncate">{produto.nome}</span>
                                 <div className="flex justify-between items-center">
                                     <span className="font-semibold lg:text-lg text-blue-700">{produto.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
                                     <button className="px-3 lg:px-2 py-0.5 lg:py-1 cursor-pointer rounded-xl bg-black/80 text-white text-sm font-semibold" onClick={() => addToCart(produto)}>+ carrinho</button>
