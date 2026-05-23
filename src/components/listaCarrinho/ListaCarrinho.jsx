@@ -28,7 +28,7 @@ export default function ListaCarrinho(){
     const subtotal = items.map(item => item.valor * item.quantidade).reduce((a,b) => a + b, 0).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
 
     return (
-        <div className="h-screen w-100 bg-white absolute right-0 top-14 flex flex-col  shadow-sm ">
+        <div className="h-screen w-50 lg:w-100 bg-white absolute right-0 top-14 flex flex-col  shadow-sm ">
             <div className="p-7 gap-7 flex flex-col w-full h-3/4">
                 <div className="text-2xl font-semibold">Carrinho</div>
 
