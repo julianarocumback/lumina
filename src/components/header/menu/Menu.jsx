@@ -8,13 +8,23 @@ export default function Menu(){
     }
 
     return (
-        <div>
-            <div onClick={handleIsOpen} className='md:hidden'>
+        <div onClick={handleIsOpen} className='lg:hidden'>
+            <div >
                 <i className="fa-solid fa-bars"></i>
             </div>
 
-            {isOpen&& <div className="h-screen w-50 bg-white z-50 fixed top-14 left-0 shadow-lg p-4">
-                a
+            {isOpen&& <div className="h-screen w-50 bg-white z-50 fixed top-14 left-0 shadow-lg p-4 border">
+                <div className="flex flex-col justify-between border h-full">
+                    <div>a</div>
+                <div className="flex gap-4">
+                    <div><i class="fa-regular fa-circle-user"></i></div>
+                    <p>
+                        Fazer login
+
+                    </p>
+
+                </div>
+                </div>
             </div>}
 
 
