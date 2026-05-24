@@ -13,7 +13,7 @@ export default function Menu(){
                 <i className="fa-solid fa-bars"></i>
             </div>
 
-            {isOpen&& <div className="h-screen w-50 bg-white z-50 fixed top-14 left-0 shadow-lg p-4 border">
+            {isOpen&& <div className="h-[calc(100vh-100px)] w-50 bg-white z-50 fixed top-14 left-0 shadow-lg p-4 border">
                 <div className="flex flex-col justify-between border h-full">
                     <div>a</div>
                 <div className="flex gap-4">
