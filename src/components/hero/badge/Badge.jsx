@@ -4,7 +4,7 @@ export default function Badge(){
             <div className="text-[8px] text-[#BC004B]">
                 <i className="fa-solid fa-circle"></i>
             </div>
-            <span className="text-xs">EDIÇÃO DE LUXO 2026</span>
+            <span className="text-xs">NOVA EDIÇÃO 2026</span>
         </div>
     )
 }
