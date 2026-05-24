@@ -57,12 +57,13 @@ export default function Menu({authenticated, dadosCliente, login, logout}){
                     
                 </div>
 
-                {isLogin&& <div className="absolute bottom-15 left-0 border w-full bg-white h-30 p-2 z-50">
+                {isLogin&& <div className="absolute bottom-15 text-center left-0 border-y border-gray-200 shadow-xs w-full bg-white h-37 p-2 z-50">
                     <div className="flex flex-col gap-4">
                         <form onSubmit={handleSubmit} className="w-full flex flex-col gap-2">
-                            <input value={email} onChange={(e)=>setEmail(e.target.value)} className="border w-full rounded-lg" type="email"/>
-                            <input value={password} onChange={(e)=> setPassword(e.target.value)} className="border w-full rounded-lg" type="password"/>
-                            <button type='submit' className="border w-full rounded-lg">Entrar</button>
+                           <input value={email} onChange={(e)=>setEmail(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="email"/>
+                    <input value={password} onChange={(e)=> setPassword(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="password"/>
+                    <button type='submit' className=" w-full bg-black/70 text-white py-1 rounded-lg cursor-pointer">Entrar</button>
+                    <p className="text-md text-gray-700 cursor-pointer">Esqueci a senha</p>
                         </form>
                     </div>
                 </div>}
