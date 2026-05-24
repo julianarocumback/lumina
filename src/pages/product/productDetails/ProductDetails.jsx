@@ -8,7 +8,7 @@ export default function ProductDetails({produto}){
             <div className="flex flex-col gap-10 flex-wrap">
                 <h2 className="text-2xl font-semibold">Detalhes</h2>
 
-                <div className="flex gap-8 flex-wrap">
+                <div className="flex gap-8 lg:flex-nowrap flex-wrap">
                     <div className="w-full flex flex-col gap-10">
                         <h3 className="text-xl font-bold">Especificações</h3>
                         <div className="w-full shadow-sm rounded-2xl border border-gray-200/20">
