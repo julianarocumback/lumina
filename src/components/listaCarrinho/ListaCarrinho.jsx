@@ -7,7 +7,7 @@ import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 export default function ListaCarrinho(){
     const {items, aumentarQuantidade, diminuirQuantidade, removeToCart} = useCart()
     const navigate = useNavigate()
-    const {authenticated, user, logout} = useContext(AuthContext)
+    const {authenticated} = useContext(AuthContext)
     const {mensagem, setMensagem} = useState(true)
 
     function vericacao(){
@@ -60,6 +60,7 @@ export default function ListaCarrinho(){
 
                                         </span>
                                         
+                                        {/* QUANTIDADE DE PRODUTOS */}
                                         <div className="flex border border-gray-300 w-20 items-center justify-around bg-white rounded-3xl px-2 select-none">
 
                                             {/* Diminuir a quantidade */}

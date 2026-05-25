@@ -18,7 +18,7 @@ export default function ProductDetails({produto}){
                     <div className="w-full flex flex-col gap-10">
                         <h3 className="text-xl font-bold">O que há na caixa</h3>
                         <div className="w-full shadow-sm rounded-2xl border border-gray-200/20">
-                            <Box/>
+                            <Box produto={produto}/>
                         </div>
                         <Warning/>
                     </div>

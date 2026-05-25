@@ -11,7 +11,7 @@ import Divisor from "./divisor/Divisor";
 export default function ProductInfo({produto}){
     return(
         <div className="w-full flex flex-col justify-center">
-            <Badge/>
+            <Badge produto={produto}/>
             <div className="py-4">
                 <Title produto={produto}/>
             </div>

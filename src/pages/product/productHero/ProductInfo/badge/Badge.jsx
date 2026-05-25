@@ -1,7 +1,7 @@
-export default function Badge(){
+export default function Badge({produto}){
     return(
         <div>
-            <span className="font-semibold text-sm text-blue-700">DEVOCIONAL</span>
+            <span className="font-semibold text-sm lg:text-xl text-blue-700">{produto.categoria}</span>
         </div>
     )
 }

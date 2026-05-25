@@ -20,7 +20,7 @@ export default function Catalogo(){
                 setCarregando(true)
                 const {data, error} = await supabase
                 .from('produtos')
-                .select('id,nome,ano,valor,img_url,categoria,livros(autor,tipo_capa,tipo_folha,quantidade_paginas,isbn)')
+                .select('*, livros(*)')
                 if (error) throw error
                 setProdutos(data)
             } catch (error) {

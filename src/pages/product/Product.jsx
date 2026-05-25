@@ -14,6 +14,7 @@ export default function Product(){
     const [produto, setProduto] = useState(null)
     const [carregando, setCarregando] = useState(false)
     const [idFoto, setIdFoto] = useState('0')
+    console.log(produto)
 
     useEffect(() => {
         async function getProdutos() {
@@ -21,7 +22,7 @@ export default function Product(){
                 setCarregando(true)
                 const {data, error} = await supabase
                 .from('produtos')
-                .select('*')
+                .select('*, livros(*)')
                 .eq('id', id)
                 .single()
                 if (error) throw error
