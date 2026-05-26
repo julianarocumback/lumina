@@ -1,86 +1,69 @@
+import { NavLink } from 'react-router-dom'
 
-
-import { MdOutlineAutoAwesome } from "react-icons/md";
-import { Link} from 'react-router-dom'
-
-export default function Sidebar({setAberto, logout}) {
-
-       function mostrar(idOpcao){
-        setAberto(idOpcao)
-        
-    }
+export default function Sidebar({logout}) {
 
     const opcoes = [
         {
-            id: 1,
+            path: '/user',
+            end: 'end',
             icone: <span className="material-icons">dashboard</span>,
-            nome: 'Visão Geral',
-            link: '',
-            status: true
+            nome: 'Visão Geral'
         },
         {
-            id: 2,
-            icone: <i class="fa-solid fa-box-open"></i>,
-            nome: 'Meus Pedidos',
-            link: '',
-            status: false
+            path: '/user/orders',
+            icone: <i className="fa-solid fa-box-open"></i>,
+            nome: 'Pedidos'
         },
         {
-            id: 3,
-            icone: <i class="fa-solid fa-user-shield"></i>,
-            nome: 'Perfil',
-            link: '',
-            status: false
+            path: '/user/profile',
+            icone: <i className="fa-solid fa-user-shield"></i>,
+            nome: 'Perfil'
         },
         {
-            id: 4,
-            icone: <i class="fa-solid fa-location-dot"></i>,
-            nome: 'Endereço',
-            link: '',
-            status: false
+            path: '/user/address',
+    
+            icone: <i className="fa-solid fa-location-dot"></i>,
+            nome: 'Endereço'
         },
         {
-            id: 5,
-            icone: <i class="fa-solid fa-credit-card"></i>,
-            nome: 'Pagamento',
-            link: '',
-            status: false
+            path: '/user/payment',
+            icone: <i className="fa-solid fa-credit-card"></i>,
+            nome: 'Pagamento'
         },
         {
-            id: 6,
-            icone: <i class="fa-solid fa-heart"></i>,
-            nome: 'Favoritos',
-            link: '',
-            status: false
+            path: '/user/favorites',
+            icone: <i className="fa-solid fa-heart"></i>,
+            nome: 'Favoritos'
         },
         {
-            id: 7,
-            icone: <i class="fa-solid fa-circle-question"></i>,
-            nome: 'Central de Ajuda',
-            link: '',
-            status: false
-        },
+            path: '/user/help-center',
+            icone: <i className="fa-solid fa-circle-question"></i>,
+            nome: 'Central de Ajuda'
+        }
     ]
+
     return (
         <aside className="relative h-[calc(100vh-56px)] top-14 w-80 bg-gray-100">
             <div className="flex flex-col p-8 justify-between w-full h-full">
+
+                {/* Navegação */}
                 <div className="flex flex-col gap-8">
-                    {opcoes.map(opcao=>{
+                    {opcoes.map(opcao=> {
                         return (
-                            <div onClick={()=> mostrar(opcao.id)}  className="flex gap-4 text-[#474747] items-center text-">
+                            <NavLink key={opcao.path} to={opcao.path} end={opcao.end} className={({isActive}) => `flex gap-4 text-[#474747] items-center ${isActive && 'text-red-500'}`}>
                                 {opcao.icone}
                                 {opcao.nome}
-                                
-                            </div>)}   
+                            </NavLink>
                         )
-                    }
+                    })}
                 </div>
-                <Link to='/'>
-                    <div className="flex gap-4 text-red-800 items-center">
-                        <div><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
-                        <button onClick={logout} className="font-semibold">Sair da conta</button>
-                    </div>
-                </Link>
+
+                {/* Logout */}
+                <div className="flex gap-4 text-red-800 items-center">
+                    <div><i className="fa-solid fa-arrow-right-from-bracket"></i></div>
+                    <button onClick={logout} className="font-semibold">Sair da conta</button>
+                </div>
+            
             </div>
         </aside>
     )

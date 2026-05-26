@@ -4,7 +4,6 @@ import { useContext} from 'react'
 import { Link } from "react-router-dom"
 import Skeleton from "../skeleton/Skeleton";
 
-
 export default function Products({produtos, carregar, setQuantidade, tamanho}){
     const {addToCart, items} = useCart()
     const {authenticated, dadosCliente,adicionarFavorito, removerFavorito} = useContext(AuthContext)
@@ -37,9 +36,9 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
     const listaNova = produtos.map((produto) => {
             return (
                     <div className="flex flex-col gap-4 cursor-pointer relative select-none" key={produto.id}>
-                                {authenticated && (dadosCliente?.favoritos.some(item => item.id === produto.id)? <div onClick={ () => handreFavoritar(produto)} className="absolute text-red-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-solid fa-heart"></i></div>:<div onClick={ () => handreFavoritar(produto)} className="absolute text-gray-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-regular fa-heart"></i></div>)}
+                                {authenticated && (dadosCliente?.favoritos.some(item => item.id === produto.id)? <div onClick={ () => handreFavoritar(produto)} className="absolute text-red-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-solid fa-heart"></i></div>:<div onClick={ () => handreFavoritar(produto)} className="absolute text-gray-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-solid fa-heart"></i></div>)}
                                 
-                        <Link to={`/livro/${produto.id}`}>
+                        <Link to={`/produto/${produto.id}`}>
                             <div className="h-70 lg:h-100 rounded-2xl overflow-hidden shadow-xl ">
                                 <img  className="object-cover h-full w-full" src={produto.img_url} alt={produto.nome} />
                             </div>

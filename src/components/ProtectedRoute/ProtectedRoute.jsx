@@ -1,17 +1,17 @@
 import { useContext } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { AuthContext} from '../../contexts/AuthContext/AuthContext'
 
-export function ProtectedRoute({children}) {
+export function ProtectedRoute() {
     const {authenticated, loading} = useContext(AuthContext)
     if(loading) {
         return<div>Carregando...</div>
     }
 
     if (!authenticated) {
-        return <Navigate to='/'/>
+        return <Navigate to='/' replace/>
     }
 
-    return children
+    return <Outlet/>
 
 }
