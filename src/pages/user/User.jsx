@@ -13,7 +13,7 @@ export default function User() {
         <div className="h-full lg:h-screen w-screen bg-gray-50">
             <Header/>
             <div className="flex">
-                <div className="hidden lg:block">
+                <div className="">
                     <Sidebar logout={logout}/>
                 </div>
 

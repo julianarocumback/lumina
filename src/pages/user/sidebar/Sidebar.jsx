@@ -43,28 +43,31 @@ export default function Sidebar({logout}) {
     ]
 
     return (
-        <aside className="relative h-[calc(100vh-56px)] top-14 w-80 bg-gray-100">
-            <div className="flex flex-col p-8 justify-between w-full h-full">
+        <aside className="relative h-[calc(100vh-56px)] top-14 w-15 lg:w-80 bg-gray-100">
+            <div className="flex flex-col p-8 items-center lg:items-start justify-between w-full h-full">
 
                 {/* Navegação */}
                 <div className="flex flex-col gap-8">
                     {opcoes.map(opcao=> {
                         return (
                             <NavLink key={opcao.path} to={opcao.path} end={opcao.end} className={({isActive}) => `flex gap-4 text-[#474747] items-center ${isActive && 'text-red-500'}`}>
-                                {opcao.icone}
-                                {opcao.nome}
+                                <span className="">{opcao.icone}</span>
+                                <span className="hidden lg:inline"> {opcao.nome}</span>
+                                
                             </NavLink>
                         )
                     })}
                 </div>
 
                 {/* Logout */}
-                <div className="flex gap-4 text-red-800 items-center">
-                    <div><i className="fa-solid fa-arrow-right-from-bracket"></i></div>
-                    <button onClick={logout} className="font-semibold">Sair da conta</button>
-                </div>
-            
+                <button onClick={logout} className="font-semibold flex gap-4 text-red-800 items-center cursor-pointer">
+                    <div className=""><i className="fa-solid fa-arrow-right-from-bracket"></i></div>
+                    <span className="hidden lg:block">Sair da conta</span>
+                </button>
+                    
             </div>
+            
+           
         </aside>
     )
 }
