@@ -12,6 +12,8 @@ export default function Checkout(){
     const [deliveryOk, setDeliveryOk] = useState(false)
     const [paymentOk, setPaymentOk] = useState(false)
 
+    const [listaAtualizada, setListaAtualizada] =useState(items)
+
     const [etapa1ok, SetEtapa1Ok] = useState(false)
     const [etapa2ok, SetEtapa2Ok] = useState(false)
     const [etapa3ok, SetEtapa3Ok] = useState(false)
@@ -38,7 +40,7 @@ export default function Checkout(){
             <Header/>
             <div className="px-90">
                 <Stepper etapa1ok={etapa1ok} etapa2ok={etapa2ok} etapa3ok={etapa3ok}/>
-                <Cart lista={items} deliveryOk={deliveryOk} setDeliveryOk={setDeliveryOk} setPaymentOk={setPaymentOk} verificar={verificar} etapa1ok={etapa1ok} etapa2ok={etapa2ok} etapa3ok={etapa3ok} setValorFrete={setValorFrete} valorFrete={valorFrete} desconto={desconto} setDesconto={setDesconto}/>
+                <Cart lista={items} deliveryOk={deliveryOk} setDeliveryOk={setDeliveryOk} setPaymentOk={setPaymentOk} verificar={verificar} etapa1ok={etapa1ok} etapa2ok={etapa2ok} etapa3ok={etapa3ok} setValorFrete={setValorFrete} valorFrete={valorFrete} desconto={desconto} setDesconto={setDesconto} listaAtualizada={listaAtualizada} setListaAtualizada={setListaAtualizada}/>
                 <BackLink/>
             </div>
             <Footer/>

@@ -10,6 +10,8 @@ export default function ListaCarrinho(){
     const {authenticated} = useContext(AuthContext)
     const {mensagem, setMensagem} = useState(true)
 
+    
+
     function vericacao(){
         if (items.length === 0) {
             setMensagem(true)

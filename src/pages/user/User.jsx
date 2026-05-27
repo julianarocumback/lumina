@@ -18,7 +18,7 @@ export default function User() {
                 </div>
 
                 <div className="flex w-screen">
-                    <Outlet/>
+                    <Outlet context={{dadosCliente}}/>
                 </div>
             </div>
         </div>

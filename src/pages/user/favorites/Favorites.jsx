@@ -1,4 +1,8 @@
-export default function Favorites({dadosCliente}){
+import { useOutletContext } from 'react-router-dom'
+
+export default function Favorites(){
+
+    const {dadosCliente} = useOutletContext()
 
     return(
         <div className="relative h-[calc(100vh-56px)] top-14 w-full">
@@ -13,7 +17,7 @@ export default function Favorites({dadosCliente}){
                             <div className="flex lg:flex-col lg:h-full gap-4 lg:gap-2 h-45 p-4 rounded-2xl bg-white shadow-xs">
                                 <div className="w-25 lg:w-50 rounded-xl bg-gray-200 overflow-hidden">
                                     
-                                    <img src={favorito.img_url} alt="" />
+                                    <img className='w-full h-full' src={favorito.img_url} alt="" />
                                 </div>
                                 <div className="flex flex-col justify-between lg:gap-2">
                                     <div>

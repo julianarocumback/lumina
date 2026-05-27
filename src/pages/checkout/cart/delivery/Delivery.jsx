@@ -1,23 +1,34 @@
 import { useState } from "react";
 
-export default function Delivery({setDeliveryOk, setValorFrete}){
+export default function Delivery({setDeliveryOk, setValorFrete, listaAtualizada, setListaAtualizada}){
 
     const [casaSelecinada, setCasaSelecionado] =useState(false)
     const [trabalhoSelecinado, setTrabalhoSelecionado] =useState(false)
     const [adicionarNovoEndereco, setAdicionarNovoEndereco] = useState(false)
     const [fretePadraoSelecionado, setFretePadraoSelecionado] = useState(false)
     const [freteRapidoSelecionado, setFreteRapidoSelecionado] = useState(false)
+
+    const [frete, setFrete] = useState('a')
+    const [endereco, setEndereco] = useState('b')
     
     // Selecionar a entrega rápida
     function handleEntregaRapida(){
         setFreteRapidoSelecionado(prev => !prev)
         setFretePadraoSelecionado(false)
+        setListaAtualizada(prev => [...prev, {entrega: 25}])
+            console.log(listaAtualizada)
+
+
     }
 
     // Selecionar a entrega padrão
     function handleEntregaPadrao(){
         setFretePadraoSelecionado(prev => !prev)
         setFreteRapidoSelecionado(false)
+        setListaAtualizada(prev => [...prev, {entrega: 15}])
+            console.log(listaAtualizada)
+
+
     }
 
     // Alterar o valor do frete
@@ -48,6 +59,7 @@ export default function Delivery({setDeliveryOk, setValorFrete}){
 
     // Alterar o valor do Delivery
     if((fretePadraoSelecionado || freteRapidoSelecionado) && (casaSelecinada || trabalhoSelecinado)){
+
             setDeliveryOk(true)
     } else {
         setDeliveryOk(false)
