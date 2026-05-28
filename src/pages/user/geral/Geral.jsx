@@ -8,7 +8,7 @@ export default function Geral(){
     const {dadosCliente} = useOutletContext()
 
     return (
-        <div className="flex flex-col lg:h-screen  gap-4 lg:gap-8 py-20 lg:py-30 pl-20 pr-5 lg:pl-100 lg:pr-20  border">
+        <div className="flex flex-col lg:h-screen  gap-4 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-100 lg:pr-20  border">
             
             <Welcome dadosCliente={dadosCliente}/>
            
