@@ -10,7 +10,7 @@ export default function User() {
     const {dadosCliente, logout} = useContext(AuthContext)
 
     return (
-        <div className="h-full lg:h-screen w-screen bg-gray-50">
+        <div className="h-full lg:h-screen w-full lg:w-screen bg-gray-50">
             <Header/>
             <div className="flex">
                 <div className="">
