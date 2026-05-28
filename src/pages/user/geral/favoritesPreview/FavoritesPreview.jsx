@@ -29,7 +29,7 @@ export default function FavoritesPreview(){
     ]
 
     return (
-        <div className="h-110 rounded-3xl w-1/4 bg-white p-8 shadow-lg flex flex-col gap-4">
+        <div className="h-110 rounded-3xl lg:w-1/4 bg-white p-8 shadow-lg flex flex-col gap-4 border">
             <div className="flex justify-between">
                 <h3 className="font-semibold text-lg">Favoritos recentes</h3>
             </div>

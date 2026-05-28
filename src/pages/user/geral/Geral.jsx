@@ -12,7 +12,7 @@ export default function Geral(){
             
             <Welcome dadosCliente={dadosCliente}/>
            
-            <div className="flex-col lg:flex-row gap-10">
+            <div className="flex-col lg:flex-row flex  gap-4 lg:gap-8 border">
                 <OrderPreview/>
                 <FavoritesPreview/>
             </div>

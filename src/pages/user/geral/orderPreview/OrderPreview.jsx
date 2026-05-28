@@ -2,7 +2,7 @@ import Stepper from './stepper/Stepper'
 
 export default function OrderPreview(){
     return (
-        <div className="h-110 rounded-3xl w-3/4 p-8 flex flex-col justify-around bg-white shadow-lg">
+        <div className="lg:h-110 rounded-3xl lg:w-3/4 p-8 flex flex-col justify-around bg-white shadow-lg border overflow-hidden">
             <div className="flex flex-col">
                 <div className="flex gap-2">
                     <h2 className="font-semibold">ÚLTIMO PEDIDO</h2>
