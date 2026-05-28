@@ -23,7 +23,7 @@ export default function Favorites(){
                                 </div>
                                 <div className="flex flex-col justify-between lg:gap-2">
                                     <div>
-                                        <p className="text-lg font-semibold">{favorito.nome}</p>
+                                        <p className="text-lg/tight font-semibold">{favorito.nome}</p>
                                         <p className="text-xl lg:text-base font-bold text-blue-500">{favorito.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
                                     </div>
                                     <div className="flex gap-4 lg:flex-col">
