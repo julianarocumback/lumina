@@ -19,3 +19,13 @@
     }
   }
 }
+
+@utility no-scrollbar {
+  /* Chrome, Safari e Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* IE, Edge e Firefox */
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
