@@ -5,16 +5,19 @@ export default function Favorites(){
     const {dadosCliente} = useOutletContext()
 
     return(
-        <div className="relative h-[calc(100vh-56px)] top-14 w-full">
-            <div className="flex flex-col w-full py-16 px-8 lg:px-60 gap-16">
+        <div className="flex flex-col py-25 pl-20 pr-5 lg:pl-100 lg:pr-20  gap-8 top-14 w-full ">
+
+
                 <div className="flex flex-col gap-2">
                     <h2 className="text-2xl font-semibold lg:text-4xl">Minha Lista de Desejos</h2>
                     <p className="lg:text-lg">Guarde aqui os tesouros que você deseja iluminar sua biblioteca em breve. Cada página é um passo em direção à sabedoria.</p>
                 </div>
-                <div className="flex flex-col lg:flex-row gap-8">
+
+
+                <div className="flex flex-col lg:flex-row gap-8 flex-wrap border">
                     {dadosCliente?.favoritos.map(favorito => {
                         return (
-                            <div className="flex lg:flex-col lg:h-full gap-4 lg:gap-2 h-45 p-4 rounded-2xl bg-white shadow-xs">
+                            <div className="flex lg:flex-col lg:h-120 gap-4 lg:gap-2 h-45 p-4 rounded-2xl bg-white shadow-xs ">
                                 <div className="w-25 lg:w-50 rounded-xl bg-gray-200 overflow-hidden">
                                     
                                     <img className='w-full h-full' src={favorito.img_url} alt="" />
@@ -43,7 +46,7 @@ export default function Favorites(){
                     
                 </div>
 
-            </div>
-            </div>
+        
+        </div>
     )
 }
