@@ -30,14 +30,15 @@ export default function Pedidos(){
         <div className="flex flex-col lg:h-screen  gap-4 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-100 lg:pr-20">
             <div className="flex flex-col w-full h-full gap-8">
                 <div>
-                    <h2 className="text-2xl font-semibold">Meus Pedidos</h2>
-                    <p>Acompanhe suas jornadas literárias. Aqui você encontra o histórico de todas as suas aquisições e o status atual das suas entregas.</p>
+                    <h2 className=" text-2xl font-semibold">Meus Pedidos</h2>
+                    <p className="hidden lg:block">Acompanhe suas jornadas literárias. Aqui você encontra o histórico de todas as suas aquisições e o status atual das suas entregas.</p>
 
                 </div>
 
-                <div className="flex flex-col gap-4">
-                    <div className="">
-                        <input className="border w-full p-2 rounded-xl" type="text" placeholder="Busque por número do pedido ou livro..."/>
+                <div className="flex flex-col gap-4 relative">
+                    <div className="relative">
+                        <div className="absolute top-3 left-3 text-gray-900"><i class="fa-solid fa-magnifying-glass"></i></div>
+                        <input className=" bg-gray-200 w-full py-3 pl-10 pr-2 rounded-3xl" type="text" placeholder="Busque por número do pedido ou livro..."/>
                     </div>
 
                     <div className="flex gap-4 overflow-x-auto">
