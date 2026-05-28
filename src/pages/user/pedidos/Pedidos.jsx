@@ -27,7 +27,7 @@ export default function Pedidos(){
     ]
 
     return (
-        <div className="relative h-[calc(100vh-56px)] top-14 py-8 px-56 w-full">
+        <div className="flex flex-col lg:h-screen  gap-4 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-100 lg:pr-20">
             <div className="flex flex-col w-full h-full gap-8">
                 <div>
                     <h2 className="text-2xl font-semibold">Meus Pedidos</h2>
@@ -40,7 +40,7 @@ export default function Pedidos(){
                         <input className="border w-full p-2 rounded-xl" type="text" placeholder="Busque por número do pedido ou livro..."/>
                     </div>
 
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 overflow-x-auto">
                         <button className="border">Todos</button>
                         <button className="border">Processando</button>
                         <button className="border">Em Transporte</button>
