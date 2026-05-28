@@ -7,17 +7,16 @@ export default function Favorites(){
     return(
         <div className="flex flex-col py-25 pl-20 pr-5 lg:pl-100 lg:pr-20  gap-8 top-14 w-full ">
 
-
                 <div className="flex flex-col gap-2">
                     <h2 className="text-2xl font-semibold lg:text-4xl">Minha Lista de Desejos</h2>
                     <p className="lg:text-lg">Guarde aqui os tesouros que você deseja iluminar sua biblioteca em breve. Cada página é um passo em direção à sabedoria.</p>
                 </div>
 
 
-                <div className="flex flex-col lg:flex-row gap-8 flex-wrap border">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
                     {dadosCliente?.favoritos.map(favorito => {
                         return (
-                            <div className="flex lg:flex-col lg:h-120 gap-4 lg:gap-2 h-45 p-4 rounded-2xl bg-white shadow-xs ">
+                            <div className="flex lg:flex-col lg:h-120 gap-4 lg:gap-2 h-45 p-4 rounded-2xl bg-white shadow-xs border ">
                                 <div className="w-25 lg:w-50 rounded-xl bg-gray-200 overflow-hidden">
                                     
                                     <img className='w-full h-full' src={favorito.img_url} alt="" />
