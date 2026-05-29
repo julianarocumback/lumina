@@ -41,8 +41,9 @@ export default function Address(){
                                     {endereco.status && <span className="text-xs font-semibold text-red-800 bg-red-300/30 px-2 py-0.5 rounded-full">{endereco.status}</span>}
                                 </div>
                             </div>
-                            <div>
-                                aaa
+                            <div className="flex gap-4 text-gray-500">
+                                <div><i class="fa-solid fa-pencil"></i></div>
+                                <div><i class="fa-solid fa-trash"></i></div>
                             </div>
                         </div>
 
@@ -53,9 +54,11 @@ export default function Address(){
                 )
             })}
 
-                <div className="p-8 border">ccccccccccc</div>
-                <div className="p-8">ccccccccccc</div>
-                <div className="p-8">ccccccccccc</div>
+            <div className="flex gap-2 border rounded-xl h-15 justify-center items-center text-blue-700 font-semibold border-dashed border-gray-400">
+                <div><i class="fa-solid fa-location-dot"></i></div>
+                Adicionar outro endereço
             </div>
+
+        </div>
     )
 }
