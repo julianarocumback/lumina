@@ -1,13 +1,15 @@
-export default function OrderSummary({verificar, lista, valorFrete, desconto}){
+export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, pagamentoOk, etapa1, etapa2, etapa3, verificar}){
     if(!lista) return
 
-    const valorProdutos = lista.map(items => items.valor * items.quantidade).reduce((a,b)=> a+b,0)
-    const frete = valorFrete
-    const valordesconto = desconto
+    const valorProdutos = lista.map(items => items.valor * items.quantidade).reduce((a, b) => a + b, 0)
+    const valorFrete = frete?.valor
+    const valorCupom = cupom?.valor
+    const valordesconto = 0.1
+
     const totalProdutos = valorProdutos + frete - valordesconto
     const totalDesconto = totalProdutos * valordesconto
 
-    return(
+    return (
         <div className="w-140 max-h-fit p-8 gap-8 flex flex-col rounded-2xl bg-white shadow-xs">
 
             <h3 className="text-2xl ">Resumo do Pedido</h3>
@@ -18,7 +20,7 @@ export default function OrderSummary({verificar, lista, valorFrete, desconto}){
                 </div>
                 <div className="flex text-sm justify-between w-full">
                     <span>Frete</span>
-                    <span className="text-red-500 font-semibold">{valorFrete > 0? valorFrete.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
+                    <span className="text-red-500 font-semibold">{frete > 0? frete.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
                 </div>
                 <div className="flex text-sm justify-between w-full">
                     <span>Cupom de desconto</span>
@@ -30,7 +32,15 @@ export default function OrderSummary({verificar, lista, valorFrete, desconto}){
                 <span className="font-semibold text-sm">TOTAL</span>
                 <span className="font-semibold text-3xl">{totalProdutos}</span>
             </div>
-            <button onClick={verificar} className={` py-4 rounded-full font-bold text-white text-lg ${lista.length !== 0 ? ' bg-black cursor-pointer': 'bg-gray-200 cursor-auto'}`}>{lista.length !== 0 ? 'Ir para entrega': 'aaaaa'}</button>
+
+
+
+            <button onClick={verificar} className={`py-4 rounded-full font-bold text-white text-lg ${lista.length !== 0 ? ' bg-black cursor-pointer': 'bg-gray-200 cursor-auto'}`}>
+                {pagamentoOk && !etapa3 ? 'Confirmar': enderecoOk && !etapa2 ? 'Selecionar pagamento' : listaOk && !etapa1 ? 'Selecionar endereço' : 'Aguardando'}
+            </button>
+
+
+
             
             <div className="bg-gray-100 rounded-2xl p-4 flex gap-4 items-center">
                 <div className="text-blue-500 text-xl">

@@ -4,43 +4,69 @@ import Cart from './cart/Cart'
 import BackLink  from './backLink/BackLink'
 import Footer from '../../components/footer/Footer'
 
-import {useCart} from '../../contexts/CartContext/CartContext'
-import {useState } from 'react'
+import { useCart } from '../../contexts/CartContext/CartContext'
+import { useState } from 'react'
 
-export default function Checkout(){
-    const {items} = useCart()
-    const [deliveryOk, setDeliveryOk] = useState(false)
-    const [paymentOk, setPaymentOk] = useState(false)
+export default function Checkout() {
+    const {items, aumentarQuantidade, diminuirQuantidade, removeToCart} = useCart()
+    const [endereco, setEndereco] = useState({})
+    const [frete, setFrete] = useState({})
+    const [pagamento, setPagamento] = useState({})
+    const [cupom, setCupom] = useState('')
 
-    const [listaAtualizada, setListaAtualizada] =useState(items)
+    const [etapa1, setEtapa1] = useState(false)
+    const [etapa2, setEtapa2] = useState(false)
+    const [etapa3, setEtapa3] = useState(false)
 
-    const [etapa1ok, SetEtapa1Ok] = useState(false)
-    const [etapa2ok, SetEtapa2Ok] = useState(false)
-    const [etapa3ok, SetEtapa3Ok] = useState(false)
+    const [pedido, setPedido] = useState([])
 
-    const [valorFrete, setValorFrete] = useState(0)
-    const [desconto, setDesconto] = useState(0)
-
-
+    const listaOk = items.length > 0
+    const enderecoOk = Object.keys(endereco).length > 0 && Object.keys(frete).length > 0
+    const pagamentoOk = Object.keys(pagamento).length > 0
+    
+    console.log('etapa1', etapa1)
+    console.log('etapa2', etapa2)
+    console.log('etapa3', etapa3)
+    console.log(' ')
+    console.log('endereço',endereco)
+    console.log('frete',frete)
+    console.log('pagamento',pagamento)
+    console.log(' ')
+    console.log('listaok', listaOk)
+    console.log('endereçook', enderecoOk)
+    console.log('pagamentook', pagamentoOk)
+    
     function verificar(){
-        if(paymentOk && deliveryOk && items.length !== 0){
-            SetEtapa3Ok(true)
-        } else if (deliveryOk && items.length !== 0) {
-            SetEtapa2Ok(true)
-        } else if (items.length !== 0) {
-            SetEtapa1Ok(true)
-        } else {return}
+        if(listaOk && pagamentoOk && enderecoOk) {
+            setEtapa3(true)
+        } else if (listaOk && enderecoOk && !pagamentoOk) {
+            setEtapa2(true)
+            setPedido(prev => [...prev, endereco, frete])
+        } else if (listaOk && !enderecoOk && !pagamentoOk) {
+            setEtapa1(true)
+            setPedido(prev => [...prev, [items]])
+        } else {
+            return
+        }
     }
-
+    console.log('Pedido',pedido)
+    
     if(!items) return
-
-
+    
+    
     return(
         <div className="bg-gray-100" >
             <Header/>
             <div className="px-90">
-                <Stepper etapa1ok={etapa1ok} etapa2ok={etapa2ok} etapa3ok={etapa3ok}/>
-                <Cart lista={items} deliveryOk={deliveryOk} setDeliveryOk={setDeliveryOk} setPaymentOk={setPaymentOk} verificar={verificar} etapa1ok={etapa1ok} etapa2ok={etapa2ok} etapa3ok={etapa3ok} setValorFrete={setValorFrete} valorFrete={valorFrete} desconto={desconto} setDesconto={setDesconto} listaAtualizada={listaAtualizada} setListaAtualizada={setListaAtualizada}/>
+                <Stepper etapa1={etapa1} etapa2={etapa2} etapa3ok={etapa3}/>
+
+                <Cart 
+                etapa1={etapa1} etapa2={etapa2} etapa3={etapa3} SetEtapa1={setEtapa1} SetEtapa2={setEtapa2} SetEtapa3={setEtapa3}
+                lista={items} aumentarQuantidade={aumentarQuantidade} diminuirQuantidade={diminuirQuantidade} removerDoCarrinho={removeToCart} 
+                endereco={endereco} setEndereco={setEndereco} frete={frete} setFrete={setFrete}
+                pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom}
+                
+                listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar}/>
                 <BackLink/>
             </div>
             <Footer/>

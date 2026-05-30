@@ -1,43 +1,33 @@
 import { useState } from "react";
 
-export default function Delivery({setDeliveryOk, setValorFrete, listaAtualizada, setListaAtualizada}){
+export default function Delivery({endereco, setEndereco, frete, setFrete, setEtapa2}){
 
-    const [casaSelecinada, setCasaSelecionado] =useState(false)
-    const [trabalhoSelecinado, setTrabalhoSelecionado] =useState(false)
+    const casa = 'casa'
+    const trabalho = 'trabalho'
     const [adicionarNovoEndereco, setAdicionarNovoEndereco] = useState(false)
-    const [fretePadraoSelecionado, setFretePadraoSelecionado] = useState(false)
-    const [freteRapidoSelecionado, setFreteRapidoSelecionado] = useState(false)
 
-    const [frete, setFrete] = useState('a')
-    const [endereco, setEndereco] = useState('b')
-    
-    // Selecionar a entrega rápida
-    function handleEntregaRapida(){
-        setFreteRapidoSelecionado(prev => !prev)
-        setFretePadraoSelecionado(false)
-        setListaAtualizada(prev => [...prev, {entrega: 25}])
-            console.log(listaAtualizada)
-
-
+    // Selecionar a casa como endereço de entrega    
+    function handleCasaSelecionado(){
+        if(Object.keys(endereco).length === 0){
+            setEndereco(prev => ({...prev, teste: casa}))
+        } else if(endereco?.teste === trabalho){
+            setEndereco(prev => ({...prev, teste: casa}))
+        }  else {
+            setEndereco({})
+            setEtapa2(false)
+        }
     }
 
-    // Selecionar a entrega padrão
-    function handleEntregaPadrao(){
-        setFretePadraoSelecionado(prev => !prev)
-        setFreteRapidoSelecionado(false)
-        setListaAtualizada(prev => [...prev, {entrega: 15}])
-            console.log(listaAtualizada)
-
-
-    }
-
-    // Alterar o valor do frete
-    if (freteRapidoSelecionado){
-        setValorFrete(25)
-    } else if (fretePadraoSelecionado){
-        setValorFrete(15)
-    } else {
-        setValorFrete(0)
+    // Selecionar o trabalho como endereço de entrega    
+    function handleTrabalhoSelecionado(){
+        if(Object.keys(endereco).length === 0){
+            setEndereco(prev => ({...prev, teste: trabalho}))
+        } else if(endereco?.teste === casa){
+            setEndereco(prev => ({...prev, teste: trabalho}))
+        }  else {
+            setEndereco({})
+            setEtapa2(false)
+        }
     }
 
     // Mostrar os inputs para adicionar novo endereço
@@ -45,24 +35,28 @@ export default function Delivery({setDeliveryOk, setValorFrete, listaAtualizada,
         setAdicionarNovoEndereco(prev => !prev)
     }
 
-    // Selecionar a casa como endereço de entrega    
-    function handleCasaSelecionado(){
-        setCasaSelecionado(prev => !prev)
-        setTrabalhoSelecionado(false)
+    // Selecionar o frete padrão    
+    function handleFretePadrao(){
+        if(Object.keys(frete).length === 0){
+            setFrete(prev => ({...prev, valor: 15}))
+        }else if(frete?.valor === 25){
+            setFrete(prev => ({...prev, valor: 15}))
+        } else {
+            setFrete({})
+            setEtapa2(false)
+        }
     }
 
-    // Selecionar a casa como endereço de entrega    
-    function handleTrabalhoSelecionado(){
-        setTrabalhoSelecionado(prev => !prev)
-        setCasaSelecionado(false)
-    }
-
-    // Alterar o valor do Delivery
-    if((fretePadraoSelecionado || freteRapidoSelecionado) && (casaSelecinada || trabalhoSelecinado)){
-
-            setDeliveryOk(true)
-    } else {
-        setDeliveryOk(false)
+    // Selecionar frete rápido
+    function handleFreteRapido(){
+        if(Object.keys(frete).length === 0){
+            setFrete(prev => ({...prev, valor: 25}))
+        } else if(frete?.valor === 15){
+            setFrete(prev => ({...prev, valor: 25}))
+        } else {
+            setFrete({})
+            setEtapa2(false)
+        }
     }
 
     return (
@@ -77,7 +71,7 @@ export default function Delivery({setDeliveryOk, setValorFrete, listaAtualizada,
                 {/* endereços */}
                 <div className="flex gap-8">
 
-                    <div onClick={handleCasaSelecionado} className={`border p-4 flex flex-col gap-2 rounded-2xl ${casaSelecinada && 'border-red-500'}`}>
+                    <div onClick={handleCasaSelecionado} className={`border p-4 flex flex-col gap-2 rounded-2xl ${endereco.teste === 'casa' && 'border-red-500'}`}>
                         <div className="flex justify-between">
                             <div className="flex gap-2">
                                 <div><i class="fa-regular fa-house"></i></div>
@@ -93,7 +87,7 @@ export default function Delivery({setDeliveryOk, setValorFrete, listaAtualizada,
                     </div>
 
 
-                    <div onClick={handleTrabalhoSelecionado} className={`border p-4 flex flex-col gap-2 rounded-2xl ${trabalhoSelecinado && 'border-red-500'}`}>
+                    <div onClick={handleTrabalhoSelecionado} className={`border p-4 flex flex-col gap-2 rounded-2xl ${endereco.teste === 'trabalho' && 'border-red-500'}`}>
                         <div className="flex justify-between">
                             <div className="flex gap-2">
                                 <div><i class="fa-solid fa-briefcase"></i></div>
@@ -179,14 +173,14 @@ export default function Delivery({setDeliveryOk, setValorFrete, listaAtualizada,
                     <p className="font-semibold">Modalidade de envio</p>
                 </div>
                 <div className="flex flex-col gap-5">
-                    <div  onClick={handleEntregaRapida} className={`${freteRapidoSelecionado? 'border-amber-200': 'border-black'} border rounded-2xl p-4 flex justify-between items-center`}>
+                    <div  onClick={handleFreteRapido} className={`${frete.valor === 25? 'border-amber-200': 'border-black'} border rounded-2xl p-4 flex justify-between items-center`}>
                         <div className="flex gap-4 items-center">
                             <div>
                                 <i class="fa-regular fa-circle"></i>
                             </div>
                             <div >
                                 <p className="font-semibold text-lg text-gray-500">Entrega rápida</p>
-                                <p className="text-xs italic text-gray-400">Receba em até 4 dias</p>
+                                <p className="text-xs italic text-gray-400">Receba em até 2 dias</p>
                             </div>
 
                         </div>
@@ -195,14 +189,14 @@ export default function Delivery({setDeliveryOk, setValorFrete, listaAtualizada,
                         </div>
                     </div>
 
-                     <div  onClick={handleEntregaPadrao} className={`${fretePadraoSelecionado? 'border-amber-200': 'border-black'} border rounded-2xl p-4 flex justify-between items-center`}>
+                     <div  onClick={handleFretePadrao} className={`${frete.valor === 15? 'border-amber-200': 'border-black'} border rounded-2xl p-4 flex justify-between items-center`}>
                         <div className="flex gap-4 items-center">
                             <div>
                                 <i class="fa-regular fa-circle"></i>
                             </div>
                             <div >
-                                <p className="font-semibold text-lg text-gray-500">Entrega rápida</p>
-                                <p className="text-xs italic text-gray-400">Receba em até 4 dias</p>
+                                <p className="font-semibold text-lg text-gray-500">Entrega padrão</p>
+                                <p className="text-xs italic text-gray-400">Receba em até 5 dias</p>
                             </div>
 
                         </div>

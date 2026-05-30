@@ -1,8 +1,4 @@
-import { useCart } from '../../../../contexts/CartContext/CartContext'
-
-
-export default function ProductList({lista}){
-    const {items, aumentarQuantidade, diminuirQuantidade, removeToCart} = useCart()
+export default function ProductList({lista, aumentarQuantidade, diminuirQuantidade, removerDoCarrinho}){
 
     if(!lista) return
     return(
@@ -45,7 +41,7 @@ export default function ProductList({lista}){
                             </td>
                             <td>{(produto.valor*produto.quantidade).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                             <td>
-                                <div onClick={()=> removeToCart(produto)} className=" text-center hover:text-red-500 cursor-pointer transition-colors">
+                                <div onClick={()=> removerDoCarrinho(produto)} className=" text-center hover:text-red-500 cursor-pointer transition-colors">
                                         <i class="fa-solid fa-trash"></i>
                                     </div>
                             </td>
