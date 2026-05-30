@@ -1,18 +1,18 @@
 export default function HelpCenter(){
     return(
         <div className="flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-100 lg:pr-20 h-full">
-                <div className="p-8 bg-white border rounded-2xl gap-4 flex flex-col">
+                <div className="p-8 border border-gray-100 rounded-2xl gap-4 flex flex-col bg-[radial-gradient(at_0%_100%,#0288D120,transparent_30%),radial-gradient(at_100%_0%,#E91E6310,transparent_30%)] shadow-xs">
                     <h1 className="text-2xl font-semibold">Problemas com um pedido?</h1>
-                    <p>Nossa equipe de suporte está pronta para resolver qualquer dúvida sobre suas entregas ou pagamentos.</p>
-                    <button className="flex gap-2 bg-pink-700 text-white font-semibold px-3 py-3 rounded-3xl">
+                    <p className="text-[14px]">Nossa equipe de suporte está pronta para resolver qualquer dúvida sobre suas entregas ou pagamentos.</p>
+                    <button className="flex gap-2 bg-pink-700 text-white font-semibold px-3 py-3 rounded-3xl justify-center">
                         <div><i class="fa-solid fa-headset"></i></div>
-                        Abrir chamado sobre um pedido
+                        Abrir chamado
                     </button>
                 </div>
 
                 <div>
 
-                <div className="p-8 flex flex-col gap-8 ">
+                <div className="py-8 flex flex-col gap-8 ">
                     <h2 className="text-xl font-semibold">Histórico de atendimento</h2>
                     <div className="flex justify-between gap-4 bg-gray-200 p-1 rounded-2xl">
                         <button className="w-full bg-white p-2 rounded-xl text-blue-700 font-semibold">Em aberto</button>

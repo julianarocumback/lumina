@@ -3,6 +3,8 @@ import Stepper from './stepper/Stepper'
 import Cart from './cart/Cart'
 import BackLink  from './backLink/BackLink'
 import Footer from '../../components/footer/Footer'
+import Confirmation from './cart/confirmation/Confirmation'
+import Payment from './cart/payment/Payment'
 
 import { useCart } from '../../contexts/CartContext/CartContext'
 import { useState } from 'react'
@@ -53,14 +55,15 @@ export default function Checkout() {
         }
     }
     
-    if(!items) return
     
+
+    if(!items) return
     
     return(
         <div className="bg-gray-100" >
             <Header/>
             <div className="px-90">
-                <Stepper etapa1={etapa1} etapa2={etapa2} etapa3ok={etapa3}/>
+                <Stepper etapa1={etapa1} etapa2={etapa2} etapa3={etapa3} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk}/>
 
                 <Cart 
                 etapa1={etapa1} etapa2={etapa2} etapa3={etapa3} SetEtapa1={setEtapa1} SetEtapa2={setEtapa2} SetEtapa3={setEtapa3}
