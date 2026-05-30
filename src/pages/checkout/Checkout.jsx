@@ -37,22 +37,21 @@ export default function Checkout() {
     console.log('endereçook', enderecoOk)
     console.log('pagamentook', pagamentoOk)
     console.log(' ')
+    console.log('Pedido',pedido)
 
     
     function verificar(){
         if(listaOk && pagamentoOk && enderecoOk) {
             setEtapa3(true)
+            setPedido(prev => [...prev, items, endereco, frete, pagamento, cupom])
         } else if (listaOk && enderecoOk && !pagamentoOk) {
             setEtapa2(true)
-            setPedido(prev => [...prev, endereco, frete])
         } else if (listaOk && !enderecoOk && !pagamentoOk) {
             setEtapa1(true)
-            setPedido(prev => [...prev, [items]])
         } else {
             return
         }
     }
-    // console.log('Pedido',pedido)
     
     if(!items) return
     

@@ -4,10 +4,12 @@ export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, 
     const valorProdutos = lista.map(items => items.valor * items.quantidade).reduce((a, b) => a + b, 0)
     const valorFrete = frete?.valor
     const valorCupom = cupom?.valor
-    const valordesconto = 0.1
+    const desconto = (valorProdutos + valorFrete) * valorCupom
+    const total = valorProdutos + (valorFrete > 0? valorFrete:0) - (desconto > 0? desconto:0)
+    
+    console.log(valorFrete)
+    console.log(valorCupom)
 
-    const totalProdutos = valorProdutos + frete - valordesconto
-    const totalDesconto = totalProdutos * valordesconto
 
     return (
         <div className="w-140 max-h-fit p-8 gap-8 flex flex-col rounded-2xl bg-white shadow-xs">
@@ -15,22 +17,22 @@ export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, 
             <h3 className="text-2xl ">Resumo do Pedido</h3>
             <div className="flex gap-2 flex-col text-gray-400">
                 <div className="flex text-sm justify-between w-full">
-                    <span>Subtotal</span>
-                    <span className="text-gray-800">{lista.map(items => items.valor * items.quantidade).reduce((a,b)=> a+b,0).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
+                    <span>Produtos</span>
+                    <span className="text-gray-800">{valorProdutos.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
                 </div>
                 <div className="flex text-sm justify-between w-full">
                     <span>Frete</span>
-                    <span className="text-red-500 font-semibold">{frete > 0? frete.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
+                    <span className="text-red-500 font-semibold">{Object.keys(frete).length > 0? valorFrete.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
                 </div>
                 <div className="flex text-sm justify-between w-full">
-                    <span>Cupom de desconto</span>
-                    <span className="text-green-500 font-semibold">{valordesconto > 0? totalDesconto.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
+                    <span>Desconto</span>
+                    <span className="text-green-500 font-semibold">{Object.keys(cupom).length > 0? desconto.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
                 </div>
             </div>
             <div className="w-full h-0.5 bg-gray-400"></div>
             <div className="flex justify-between">
                 <span className="font-semibold text-sm">TOTAL</span>
-                <span className="font-semibold text-3xl">{totalProdutos}</span>
+                <span className="font-semibold text-3xl">{total.toLocaleString('pt-BR', {style:'currency', currency: 'BRL'})}</span>
             </div>
 
 

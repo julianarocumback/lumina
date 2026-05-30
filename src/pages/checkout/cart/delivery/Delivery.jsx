@@ -9,9 +9,9 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, setEta
     // Selecionar a casa como endereço de entrega    
     function handleCasaSelecionado(){
         if(Object.keys(endereco).length === 0){
-            setEndereco(prev => ({...prev, teste: casa}))
-        } else if(endereco?.teste === trabalho){
-            setEndereco(prev => ({...prev, teste: casa}))
+            setEndereco(prev => ({...prev, tipo: casa}))
+        } else if(endereco?.tipo === trabalho){
+            setEndereco(prev => ({...prev, tipo: casa}))
         }  else {
             setEndereco({})
             setEtapa2(false)
@@ -21,9 +21,9 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, setEta
     // Selecionar o trabalho como endereço de entrega    
     function handleTrabalhoSelecionado(){
         if(Object.keys(endereco).length === 0){
-            setEndereco(prev => ({...prev, teste: trabalho}))
-        } else if(endereco?.teste === casa){
-            setEndereco(prev => ({...prev, teste: trabalho}))
+            setEndereco(prev => ({...prev, tipo: trabalho}))
+        } else if(endereco?.tipo === casa){
+            setEndereco(prev => ({...prev, tipo: trabalho}))
         }  else {
             setEndereco({})
             setEtapa2(false)
@@ -71,7 +71,7 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, setEta
                 {/* endereços */}
                 <div className="flex gap-8">
 
-                    <div onClick={handleCasaSelecionado} className={`border p-4 flex flex-col gap-2 rounded-2xl ${endereco.teste === 'casa' && 'border-red-500'}`}>
+                    <div onClick={handleCasaSelecionado} className={`border p-4 flex flex-col gap-2 rounded-2xl ${endereco.tipo === 'casa' && 'border-red-500'}`}>
                         <div className="flex justify-between">
                             <div className="flex gap-2">
                                 <div><i class="fa-regular fa-house"></i></div>
@@ -87,7 +87,7 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, setEta
                     </div>
 
 
-                    <div onClick={handleTrabalhoSelecionado} className={`border p-4 flex flex-col gap-2 rounded-2xl ${endereco.teste === 'trabalho' && 'border-red-500'}`}>
+                    <div onClick={handleTrabalhoSelecionado} className={`border p-4 flex flex-col gap-2 rounded-2xl ${endereco.tipo === 'trabalho' && 'border-red-500'}`}>
                         <div className="flex justify-between">
                             <div className="flex gap-2">
                                 <div><i class="fa-solid fa-briefcase"></i></div>

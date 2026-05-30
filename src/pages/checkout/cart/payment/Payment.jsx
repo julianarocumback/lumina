@@ -30,14 +30,13 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, setEta
 
     function handleVerificarCupom(){
         if(cupomAdicionado === 'DEUS'){
-            setCupom(prev => ({...prev, cupom: cupomAdicionado}))
+            setCupom(prev => ({...prev, valor: 0.1}))
             setCupomAdicionado('')
         }
     }
 
     function handleRemoverCupom(){
         setCupom({})
-
     }
 
 
