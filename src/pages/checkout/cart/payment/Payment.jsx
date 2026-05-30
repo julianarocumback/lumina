@@ -1,33 +1,47 @@
 import { useState } from "react";
 
-export default function Payment({setPaymentOk, desconto, setDesconto}){
-    const [cartaoSelecioando, setCartaoSelecionado] = useState(false)
-    const [pixSelecioando, setPixSelecionado] = useState(false)
-    const [cupomDesconto, setCupomDesconto] = useState('')
+export default function Payment({pagamento, setPagamento,cupom, setCupom, setEtapa3}) {
+    const [cupomAdicionado, setCupomAdicionado] = useState('')
+    console.log(cupomAdicionado)
+
 
     function handleCartaoSelecionado(){
-        setCartaoSelecionado(prev => !prev)
-        setPixSelecionado(false)
+        if(Object.keys(pagamento).length === 0){
+            setPagamento(prev => ({...prev, metodo: 'Cartão'}))
+        } else if(pagamento?.metodo === 'Pix'){
+            setPagamento(prev => ({...prev, metodo: 'Cartão'}))
+        }  else {
+            setPagamento({})
+            setEtapa3(false)
+        }
     }
 
     function handlePixSelecionado(){
-        setPixSelecionado(prev => !prev)
-        setCartaoSelecionado(false)
+        if(Object.keys(pagamento).length === 0){
+            setPagamento(prev => ({...prev, metodo: 'Pix'}))
+        } else if(pagamento?.metodo === 'Cartão'){
+            setPagamento(prev => ({...prev, metodo: 'Pix'}))
+        }  else {
+            setPagamento({})
+            setEtapa3(false)
+        }
     }
 
-    function handleCupomDesconto(cupom){
-        setCupomDesconto(cupom)
+
+    function handleVerificarCupom(){
+        if(cupomAdicionado === 'DEUS'){
+            setCupom(prev => ({...prev, cupom: cupomAdicionado}))
+            setCupomAdicionado('')
+        }
     }
 
-    if(cupomDesconto === 'DEUS'){
-        setDesconto(0.1)
+    function handleRemoverCupom(){
+        setCupom({})
+
     }
 
-    if(cartaoSelecioando || pixSelecioando){
-        setPaymentOk(true)
-    }
 
-    return(
+    return (
         <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs p-8">
             <div className="pb-12 flex flex-col gap-2">
                 <h2 className="text-2xl">Forma de pagamento</h2>
@@ -38,7 +52,7 @@ export default function Payment({setPaymentOk, desconto, setDesconto}){
             <div className="flex gap-4">
 
                 {/* CARTÃO DE CRÉDITO */}
-                <div onClick={handleCartaoSelecionado} className="border flex justify-between p-4 w-full rounded-2xl">
+                <div onClick={handleCartaoSelecionado} className={`${pagamento?.metodo === 'Cartão' && ' border-red-500' } border flex  justify-between p-4 w-full rounded-2xl`}>
                     <div>
                         <div className="text-blue-700"><i className="fa-solid fa-credit-card"></i></div>
                         <p className="font-semibold">Cartão de crédito</p>
@@ -49,7 +63,7 @@ export default function Payment({setPaymentOk, desconto, setDesconto}){
                 </div>
 
                 {/* PIX */}
-                <div onClick={handlePixSelecionado} className="border flex justify-between p-4 w-full rounded-2xl">
+                <div onClick={handlePixSelecionado} className={`${pagamento?.metodo === 'Pix' && 'border-red-500' } border flex  justify-between p-4 w-full rounded-2xl`}>
                     <div>
                         <div className="text-blue-700"><i class="fa-brands fa-pix"></i></div>
                         <div className="flex gap-2 items-center">
@@ -65,7 +79,7 @@ export default function Payment({setPaymentOk, desconto, setDesconto}){
             </div>
 
             {/* INFORMAÇÕES DO CARTÃO */}
-            {cartaoSelecioando && <div className="py-8 flex flex-col gap-8">
+            {pagamento.metodo === 'Cartão' && <div className="py-8 flex flex-col gap-8">
                 <div className="flex flex-col gap-2">
                     <label htmlFor="numero">Número do cartão</label>
                     <input className="border p-2 rounded-lg" type="text" placeholder="0000 0000 0000 0000" />
@@ -99,15 +113,16 @@ export default function Payment({setPaymentOk, desconto, setDesconto}){
             </div>}
 
             {/* INFORMAÇÕES DO CARTÃO */}
-            {pixSelecioando && 
+            {pagamento.metodo === 'Pix' && 
                 <div className="py-8 flex flex-col gap-8">
                     <p>Pix</p>
                 </div>}
 
             <div>
-                <p>Cupom de desconto</p>
-                <input className="border" value={cupomDesconto} onChange={(e)=>handleCupomDesconto(e.target.value)} type="text" />
-                <button>Adicionar</button>
+                <label htmlFor="cupom">Cupom de desconto</label>
+                <input id="cupom" className="border" value={cupomAdicionado} onChange={(e)=> setCupomAdicionado(e.target.value)} type="text" />
+                <button onClick={handleVerificarCupom}>Adicionar</button>
+                {Object.keys(cupom).length > 0 && <button onClick={handleRemoverCupom}>Remover</button>}
             </div>
         </div>
     )

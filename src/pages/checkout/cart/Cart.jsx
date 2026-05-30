@@ -12,7 +12,7 @@ export default function Cart({etapa1, etapa2, etapa3, setEtapa1, setEtapa2, setE
                 <Confirmation/>
             :etapa1 && etapa2 ?
                 <div className="flex gap-20 py-7">
-                    <Payment setPagamento={setPagamento} cupom={cupom} setCupom={setCupom}/>
+                    <Payment pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom} setEtapa3={setEtapa3}/>
                     <OrderSummary lista={lista} frete={frete} desconto={cupom} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar}/>
                 </div>
             :etapa1 ?

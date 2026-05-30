@@ -12,7 +12,7 @@ export default function Checkout() {
     const [endereco, setEndereco] = useState({})
     const [frete, setFrete] = useState({})
     const [pagamento, setPagamento] = useState({})
-    const [cupom, setCupom] = useState('')
+    const [cupom, setCupom] = useState({})
 
     const [etapa1, setEtapa1] = useState(false)
     const [etapa2, setEtapa2] = useState(false)
@@ -31,10 +31,13 @@ export default function Checkout() {
     console.log('endereço',endereco)
     console.log('frete',frete)
     console.log('pagamento',pagamento)
+    console.log('cupom',cupom)
     console.log(' ')
     console.log('listaok', listaOk)
     console.log('endereçook', enderecoOk)
     console.log('pagamentook', pagamentoOk)
+    console.log(' ')
+
     
     function verificar(){
         if(listaOk && pagamentoOk && enderecoOk) {
@@ -49,7 +52,7 @@ export default function Checkout() {
             return
         }
     }
-    console.log('Pedido',pedido)
+    // console.log('Pedido',pedido)
     
     if(!items) return
     
