@@ -8,7 +8,7 @@ export default function ListaCarrinho(){
     const {items, aumentarQuantidade, diminuirQuantidade, removeToCart} = useCart()
     const navigate = useNavigate()
     const {authenticated} = useContext(AuthContext)
-    const {mensagem, setMensagem} = useState(true)
+    const {mensagem, setMensagem} = useState(false)
 
     
 
@@ -27,7 +27,7 @@ export default function ListaCarrinho(){
 
     }
 
-    const subtotal = items.map(item => item.valor * item.quantidade).reduce((a,b) => a + b, 0).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+    const subtotal = items.map(item => item?.valor * item?.quantidade).reduce((a,b) => a + b, 0).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
 
     return (
         <div className="h-screen w-75 pt-4 pb-8 lg:w-100 bg-white absolute right-0 top-14 flex flex-col  shadow-sm ">
@@ -92,7 +92,6 @@ export default function ListaCarrinho(){
                     {/* {!mensagem && <p>aaaaaaaaa</p>} */}
                 </div>
                     <button onClick={vericacao} className="cursor-pointer rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
-
                 </div>
         </div>
     )
