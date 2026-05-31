@@ -1,4 +1,9 @@
+import { useOutletContext } from 'react-router-dom'
+
 export default function Pedidos(){
+    const {dadosCliente} = useOutletContext()
+
+
     const pedidos = [
         {
             capa: 'capa',
@@ -56,6 +61,8 @@ export default function Pedidos(){
         },
     ]
 
+
+
     return (
         <div className="flex flex-col gap-4 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-100 lg:pr-20">
             <div className="flex flex-col w-full h-full gap-8">
@@ -83,7 +90,7 @@ export default function Pedidos(){
                 </div>
 
                 <div className="flex flex-col gap-4">
-                    {pedidos.map(pedido => {
+                    {dadosCliente?.pedidos?.map(pedido => {
                         return (
                             <div className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col ">
 
@@ -91,7 +98,7 @@ export default function Pedidos(){
                                     <div className="flex flex-col gap-4 ">
                                         <div className="flex gap-4 lg:justify-start">
                                             <p className="text-gray-500 font-semibold">#LM9942</p>
-                                            <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold ">ENTREGUE</span>
+                                            <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold ">{pedido.status}</span>
                                             <p className="hidden lg:block font-light">Realizado em 12 out 2026</p>
                                         </div>
 
@@ -121,7 +128,7 @@ export default function Pedidos(){
 
                                 <div className="font-semibold flex gap-8 justify-between items-center">
                                     <div>
-                                        {pedido.valor.toLocaleString('BRL', {style: 'currency', currency: 'BRL'})}
+                                        {/* {pedido.valor.toLocaleString('BRL', {style: 'currency', currency: 'BRL'})} */}
                                     </div>
                                     <button className="bg-gray-200 font-semibold  rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4 lg:hidden">Ver detalhes</button>
                                 </div>

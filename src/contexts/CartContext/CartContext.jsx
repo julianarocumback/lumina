@@ -5,6 +5,7 @@ const CartContext = createContext()
 
 export function CartProvider({ children }) {
     const [items, setItems] = useLocalStorage('carrinho_compras', [])
+    console.log(items)
 
     if(!items){
         return

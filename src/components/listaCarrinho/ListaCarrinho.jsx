@@ -8,6 +8,7 @@ export default function ListaCarrinho(){
     const {items, aumentarQuantidade, diminuirQuantidade, removeToCart} = useCart()
     const navigate = useNavigate()
     const {authenticated} = useContext(AuthContext)
+    
     const {mensagem, setMensagem} = useState(false)
 
     
@@ -27,7 +28,7 @@ export default function ListaCarrinho(){
 
     }
 
-    const subtotal = items.map(item => item?.valor * item?.quantidade).reduce((a,b) => a + b, 0).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})
+    const subtotal = items.map(item => item?.valor * item?.quantidade).reduce((a,b) => a + b, 0)
 
     return (
         <div className="h-screen w-75 pt-4 pb-8 lg:w-100 bg-white absolute right-0 top-14 flex flex-col  shadow-sm ">
@@ -58,7 +59,7 @@ export default function ListaCarrinho(){
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text- font-semibold">
-                                            {item.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}
+                                            {item.valor}
 
                                         </span>
                                         
