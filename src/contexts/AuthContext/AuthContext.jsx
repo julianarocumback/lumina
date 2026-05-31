@@ -68,6 +68,40 @@ export function AuthProvider({ children }) {
       }
     }
 
+    async function adicionarCartao(produto) {
+      if (user?.id) {
+        const cartaoAtualizado = [...dadosCliente.cartoes, produto]
+        // A Cozinha: Consulta na tabela personalizada
+        const { data } = await supabase
+          .from('clientes')
+          .update({cartoes: cartaoAtualizado}) // Peça aqui todas as colunas que adicionou
+          .eq('id', user.id)
+          .select('*')
+          .single(); // Como é um usuário, trazemos apenas um registro
+
+        if (data) {
+          setDadosCliente(data);
+        }
+      }
+    }
+
+    async function removerCartao(produto) {
+      if (user?.id) {
+        const cartaoAtualizado = dadosCliente?.cartoes.filter(item => item.id !== produto.id)
+        // A Cozinha: Consulta na tabela personalizada
+        const { data } = await supabase
+          .from('clientes')
+          .update({favoritos: cartaoAtualizado}) // Peça aqui todas as colunas que adicionou
+          .eq('id', user.id)
+          .select('*')
+          .single(); // Como é um usuário, trazemos apenas um registro
+
+        if (data) {
+          setDadosCliente(data);
+        }
+      }
+    }
+
   useEffect(() => {
     // 1. Checa se já existe uma sessão ativa quando a página carrega
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -101,7 +135,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente,adicionarFavorito, removerFavorito}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao}}>
       {children}
     </AuthContext.Provider>
   );
