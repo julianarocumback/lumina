@@ -2,7 +2,15 @@ import { useOutletContext } from 'react-router-dom'
 
 export default function Favorites(){
 
-    const {dadosCliente} = useOutletContext()
+    const {dadosCliente, addToCart, removerFavorito, items} = useOutletContext()
+
+    function handleAdicionarCarrinho(favorito){
+        addToCart(favorito)
+    }
+
+    function handleRemoverFavorito(favorito){
+        removerFavorito(favorito)
+    }
 
     return(
         <div className="flex flex-col py-25 pl-20 pr-5 lg:pl-100 lg:pr-20  gap-8 top-14 w-full">
@@ -26,12 +34,13 @@ export default function Favorites(){
                                         <p className="text-xl lg:text-base font-bold text-blue-500">{favorito.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
                                     </div>
                                     <div className="flex gap-4 lg:flex-col">
-                                        <button className="flex items-center lg:justify-center lg:py-3 gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-red-500 text-white "> 
-                                            <div className="text-xs"><i class="fa-solid fa-plus"></i></div>
-                                            <div className="text-xs font-semibold">CARRINHO</div>
+                                        <button onClick={()=> handleAdicionarCarrinho(favorito)} className="flex items-center lg:justify-center lg:py-3 gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-red-500 text-white "> 
+                                            
+                                            
+                                            <div className="text-xs font-semibold">{items?.some(item => item.id === favorito.id)? 'ADICIONADO': <div className="flex items-center"><div className="text-xs"><i class="fa-solid fa-plus"></i></div>CARRINHO</div>}</div>
                                         </button>
                                         <button className="text-red-500 lg:hidden "><i class="fa-solid fa-trash"></i></button>
-                                        <button className="hover:text-red-500 cursor-pointer hidden lg:block">Remover</button>
+                                        <button onClick={()=> removerFavorito(favorito)} className="hover:text-red-500 cursor-pointer hidden lg:block">Remover</button>
 
                                     </div>
                                 </div>
