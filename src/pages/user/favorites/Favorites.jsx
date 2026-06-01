@@ -20,7 +20,7 @@ export default function Favorites(){
                                 <div className="w-30 lg:w-full lg:h-80 rounded-xl bg-gray-200 overflow-hidden">
                                     <img className='w-full h-full' src={favorito.img_url} alt="" />
                                 </div>
-                                <div className="flex flex-col justify-between lg:gap-2">
+                                <div className="w-full flex flex-col justify-between lg:gap-2">
                                     <div>
                                         <p className="text-lg/6 font-semibold truncate">{favorito.nome}</p>
                                         <p className="text-xl lg:text-base font-bold text-blue-500">{favorito.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
