@@ -16,7 +16,7 @@ export default function Favorites(){
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
                     {dadosCliente?.favoritos.map(favorito => {
                         return (
-                            <div className="flex flex-rol lg:flex-col lg:h-130 gap-4 lg:gap-2 h-40 p-4 rounded-2xl bg-white shadow-xs justify-between">
+                            <div className="flex flex-rol lg:flex-col lg:h-130 gap-4 lg:gap-2 h-40 p-4 rounded-2xl bg-white shadow-xs lg:justify-between">
                                 <div className="w-30 lg:w-full lg:h-80 rounded-xl bg-gray-200 overflow-hidden">
                                     <img className='w-full h-full' src={favorito.img_url} alt="" />
                                 </div>
