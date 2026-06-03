@@ -102,6 +102,40 @@ export function AuthProvider({ children }) {
       }
     }
 
+
+    async function AtualizarNome(novoNome) {
+      if (user?.id) {
+        // A Cozinha: Consulta na tabela personalizada
+        const { data } = await supabase
+          .from('clientes')
+          .update({nome: novoNome}) // Peça aqui todas as colunas que adicionou
+          .eq('id', user.id)
+          .select('*')
+          .single(); // Como é um usuário, trazemos apenas um registro
+
+        if (data) {
+          setDadosCliente(data);
+        }
+      }
+    }
+
+    async function AtualizarCPF(novoCPF) {
+      if (user?.id) {
+        // A Cozinha: Consulta na tabela personalizada
+        const { data } = await supabase
+          .from('clientes')
+          .update({cpf: novoCPF}) // Peça aqui todas as colunas que adicionou
+          .eq('id', user.id)
+          .select('*')
+          .single(); // Como é um usuário, trazemos apenas um registro
+
+        if (data) {
+          setDadosCliente(data);
+        }
+      }
+    }
+
+
   useEffect(() => {
     // 1. Checa se já existe uma sessão ativa quando a página carrega
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -135,7 +169,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, AtualizarNome, AtualizarCPF}}>
       {children}
     </AuthContext.Provider>
   );

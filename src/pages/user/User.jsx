@@ -8,14 +8,14 @@ import Sidebar from './sidebar/Sidebar'
 // --------------------------------------------
 
 export default function User() {
-    const {dadosCliente, logout, removerFavorito} = useContext(AuthContext)
+    const {dadosCliente, logout, removerFavorito, AtualizarNome, AtualizarCPF} = useContext(AuthContext)
     const {addToCart, items} = useCart()
 
     return (
         <div className="h-full w-full bg-gray-50 border">
             <Header/>
             <Sidebar logout={logout}/>
-            <Outlet context={{dadosCliente, addToCart, removerFavorito, items}}/>
+            <Outlet context={{dadosCliente, addToCart, removerFavorito, items, AtualizarNome, AtualizarCPF}}/>
         </div>
     )
 }
