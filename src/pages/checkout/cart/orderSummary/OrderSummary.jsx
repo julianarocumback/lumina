@@ -1,4 +1,4 @@
-export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, pagamentoOk, etapa1, etapa2, etapa3, verificar}){
+export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, pagamentoOk, verificar, etapa}){
     if(!lista) return
 
     const valorProdutos = lista.map(items => items.valor * items.quantidade).reduce((a, b) => a + b, 0)
@@ -38,7 +38,7 @@ export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, 
 
 
             <button onClick={verificar} className={`py-4 rounded-full font-bold text-white text-lg ${lista.length !== 0 ? ' bg-black cursor-pointer': 'bg-gray-200 cursor-auto'}`}>
-                {pagamentoOk && !etapa3 ? 'Confirmar': enderecoOk && !etapa2 ? 'Selecionar pagamento' : listaOk && !etapa1 ? 'Selecionar endereço' : 'Aguardando'}
+                {pagamentoOk && listaOk && enderecoOk ? 'Confirmar': enderecoOk && etapa === 1 ? 'Selecionar pagamento' : listaOk && etapa === 0 ? 'Selecionar endereço' : 'Aguardando'}
             </button>
 
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Delivery({endereco, setEndereco, frete, setFrete, setEtapa2}){
+export default function Delivery({endereco, setEndereco, frete, setFrete}){
 
     const casa = 'casa'
     const trabalho = 'trabalho'
@@ -14,7 +14,6 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, setEta
             setEndereco(prev => ({...prev, tipo: casa}))
         }  else {
             setEndereco({})
-            setEtapa2(false)
         }
     }
 
@@ -26,7 +25,6 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, setEta
             setEndereco(prev => ({...prev, tipo: trabalho}))
         }  else {
             setEndereco({})
-            setEtapa2(false)
         }
     }
 
@@ -43,7 +41,6 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, setEta
             setFrete(prev => ({...prev, valor: 15}))
         } else {
             setFrete({})
-            setEtapa2(false)
         }
     }
 
@@ -55,7 +52,6 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, setEta
             setFrete(prev => ({...prev, valor: 25}))
         } else {
             setFrete({})
-            setEtapa2(false)
         }
     }
 

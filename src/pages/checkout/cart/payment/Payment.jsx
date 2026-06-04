@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Payment({pagamento, setPagamento,cupom, setCupom, setEtapa3}) {
+export default function Payment({pagamento, setPagamento,cupom, setCupom}) {
     const [cupomAdicionado, setCupomAdicionado] = useState('')
     console.log(cupomAdicionado)
 
@@ -12,7 +12,6 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, setEta
             setPagamento(prev => ({...prev, metodo: 'Cartão'}))
         }  else {
             setPagamento({})
-            setEtapa3(false)
         }
     }
 
@@ -23,7 +22,6 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, setEta
             setPagamento(prev => ({...prev, metodo: 'Pix'}))
         }  else {
             setPagamento({})
-            setEtapa3(false)
         }
     }
 

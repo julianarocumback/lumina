@@ -7,7 +7,7 @@ import Confirmation from './cart/confirmation/Confirmation'
 import Payment from './cart/payment/Payment'
 
 import { useCart } from '../../contexts/CartContext/CartContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Checkout() {
     const {items, aumentarQuantidade, diminuirQuantidade, removeToCart} = useCart()
@@ -16,19 +16,14 @@ export default function Checkout() {
     const [pagamento, setPagamento] = useState({})
     const [cupom, setCupom] = useState({})
 
-    const [etapa1, setEtapa1] = useState(false)
-    const [etapa2, setEtapa2] = useState(false)
-    const [etapa3, setEtapa3] = useState(false)
-
+    const [etapa, setEtapa] = useState(0)
     const [pedido, setPedido] = useState([])
 
     const listaOk = items.length > 0
     const enderecoOk = Object.keys(endereco).length > 0 && Object.keys(frete).length > 0
     const pagamentoOk = Object.keys(pagamento).length > 0
     
-    console.log('etapa1', etapa1)
-    console.log('etapa2', etapa2)
-    console.log('etapa3', etapa3)
+    console.log('etapa', etapa)
     console.log(' ')
     console.log('endereço',endereco)
     console.log('frete',frete)
@@ -41,20 +36,37 @@ export default function Checkout() {
     console.log(' ')
     console.log('Pedido',pedido)
 
-    
+    // verificar informações antes de ir para a próxima etapa
     function verificar(){
         if(listaOk && pagamentoOk && enderecoOk) {
-            setEtapa3(true)
+            setEtapa(3)
             setPedido(prev => [...prev, items, endereco, frete, pagamento, cupom])
         } else if (listaOk && enderecoOk && !pagamentoOk) {
-            setEtapa2(true)
+            setEtapa(2)
         } else if (listaOk && !enderecoOk && !pagamentoOk) {
-            setEtapa1(true)
+            setEtapa(1)  
         } else {
             return
         }
     }
-    
+
+    useEffect(()=> {
+        
+    })
+
+    useEffect(()=> {
+        function teste(){
+            if(!listaOk){
+                setEndereco({})
+                setFrete({})
+                setPagamento({})
+                setCupom({})
+            }
+        }
+        teste()
+
+    }, [listaOk])
+        
     
 
     if(!items) return
@@ -63,10 +75,10 @@ export default function Checkout() {
         <div className="bg-gray-100" >
             <Header/>
             <div className="px-90">
-                <Stepper etapa1={etapa1} etapa2={etapa2} etapa3={etapa3} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk}/>
+                <Stepper listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} etapa={etapa} setEtapa={setEtapa}/>
 
                 <Cart 
-                etapa1={etapa1} etapa2={etapa2} etapa3={etapa3} SetEtapa1={setEtapa1} SetEtapa2={setEtapa2} SetEtapa3={setEtapa3}
+                etapa={etapa} setEtapa={setEtapa}
                 lista={items} aumentarQuantidade={aumentarQuantidade} diminuirQuantidade={diminuirQuantidade} removerDoCarrinho={removeToCart} 
                 endereco={endereco} setEndereco={setEndereco} frete={frete} setFrete={setFrete}
                 pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom}
