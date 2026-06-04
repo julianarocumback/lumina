@@ -59,7 +59,7 @@ export default function ListaCarrinho(){
                                     </div>
                                     <div className="flex justify-between">
                                         <span className="text- font-semibold">
-                                            {item.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}
+                                            {item?.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}
 
                                         </span>
                                         
