@@ -89,7 +89,7 @@ export default function ListaCarrinho(){
             <div className="bg-gray-50 h-1/4 p-7 flex flex-col lg:gap-4">
                 <div className="flex justify-between py-4">
                     <span className="text-lg text-[#474747]">Subtotal</span>
-                    <span className="text-xl font-semibold">{subtotal.toLocaleString('pt-BR', {style:'currency', currency: 'BRL'})}</span>
+                    <span className="text-xl font-semibold">{subtotal?.toLocaleString('pt-BR', {style:'currency', currency: 'BRL'})}</span>
                     {/* {!mensagem && <p>aaaaaaaaa</p>} */}
                 </div>
                     <button onClick={vericacao} className="cursor-pointer rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
