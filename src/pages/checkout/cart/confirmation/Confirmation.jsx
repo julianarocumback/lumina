@@ -1,19 +1,19 @@
 export default function Confirmation(){
     return(
-        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs p-20">
+        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs px-4 py-8 lg:p-20">
             <div className="flex flex-col gap-8">
 
-                <div className="flex flex-col items-center text-center gap-4">
-                    <div className="text-white text-4xl shadow-xs bg-amber-200 rounded-full w-20 h-20 flex justify-center items-center"><i class="fa-solid fa-circle-check"></i></div>
-                    <h2 className="text-5xl font-semibold">Pedido realizado com sucesso!</h2>
-                    <div className="px-25 text-lg italic">
+                <div className="flex flex-col items-center text-center gap-2 lg:gap-4">
+                    <div className="text-white text-lg lg:text-4xl shadow-xs bg-amber-200 rounded-full w-10 h-10 lg:w-20 lg:h-20 flex justify-center items-center"><i class="fa-solid fa-circle-check"></i></div>
+                    <h2 className="text-lg lg:text-5xl font-semibold">Pedido realizado com sucesso!</h2>
+                    <div className="lg:px-25 lg:text-lg italic">
                         <p>Obrigado por fazer parte da nossa jornada. Preparamos sua encomenda com todo o cuidado e carinho. Você receberá uma confirmação em seu e-mail em instantes.</p>
 
                     </div>
                 </div>
 
 
-                <div className="flex gap-7">
+                <div className="flex flex-col lg:flex-row gap-4">
                     <div className="border w-full bg-gray-200 p-4 rounded-2xl">
                         <p>IDENTIFICAÇÃO DO PEDIDO</p>
                         <p>#RL-SÓ-DEUS-SABE</p>
@@ -29,7 +29,7 @@ export default function Confirmation(){
                 </div>
 
 
-                <div className="flex gap-7 mx-20 py-16">
+                <div className="flex gap-7 lg:mx-20 lg:py-16">
                     <button className="flex items-center p-4 w-full rounded-full bg-red-300 justify-center font-semibold">ACOMPANHAR PEDIDO</button>
                     <button className="flex items-center border p-4 w-full rounded-full  justify-center font-semibold">VOLTAR PARA A LOJA</button>
                 </div>
