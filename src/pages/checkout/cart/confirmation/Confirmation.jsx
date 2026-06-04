@@ -1,6 +1,6 @@
 export default function Confirmation(){
     return(
-        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs p-20 mx-30">
+        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs p-20">
             <div className="flex flex-col gap-8">
 
                 <div className="flex flex-col items-center text-center gap-4">

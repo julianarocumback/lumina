@@ -84,7 +84,6 @@ export default function Checkout() {
                 pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom}
                 
                 listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar}/>
-                <BackLink/>
             </div>
             <Footer/>
         </div>
