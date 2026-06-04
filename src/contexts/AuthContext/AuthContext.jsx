@@ -102,8 +102,8 @@ export function AuthProvider({ children }) {
       }
     }
 
-
-    async function AtualizarNome(novoNome) {
+    // Atualizar nome
+    async function atualizarNome(novoNome) {
       if (user?.id) {
         // A Cozinha: Consulta na tabela personalizada
         const { data } = await supabase
@@ -119,12 +119,41 @@ export function AuthProvider({ children }) {
       }
     }
 
-    async function AtualizarCPF(novoCPF) {
+    // Atualizar email
+    async function atualizarEmail(novoEmail){
+      const { data, error } = await supabase.auth.updateUser({
+          email: novoEmail
+      })
+
+      if(error) {
+        console.error("Erro ao atualizar o email", error.message)
+      }
+
+      console.log('E-mail atualizada com sucesso!', data)
+
+    }
+
+    // Atualizar email
+    async function atualizarSenha(novoSenha){
+      const { data, error } = await supabase.auth.updateUser({
+          password: novoSenha
+      })
+
+      if(error) {
+        console.error("Erro ao atualizar a senha", error.message)
+      }
+
+      console.log('Senha atualizada com sucesso!', data)
+
+    }
+
+    // Atualizar WhatsApp
+    async function atualizarWhatsApp(novoWhatsApp) {
       if (user?.id) {
         // A Cozinha: Consulta na tabela personalizada
         const { data } = await supabase
           .from('clientes')
-          .update({cpf: novoCPF}) // Peça aqui todas as colunas que adicionou
+          .update({whatsapp: novoWhatsApp}) // Peça aqui todas as colunas que adicionou
           .eq('id', user.id)
           .select('*')
           .single(); // Como é um usuário, trazemos apenas um registro
@@ -134,6 +163,8 @@ export function AuthProvider({ children }) {
         }
       }
     }
+
+    
 
 
   useEffect(() => {
@@ -169,7 +200,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, AtualizarNome, AtualizarCPF}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, atualizarNome, atualizarEmail, atualizarWhatsApp, atualizarSenha}}>
       {children}
     </AuthContext.Provider>
   );

@@ -13,7 +13,7 @@ export default function Favorites(){
     }
 
     return(
-        <div className="flex flex-col py-25 pl-20 pr-5 lg:pl-100 lg:pr-20  gap-8 top-14 w-full">
+        <div className={`${dadosCliente?.favoritos.length <= 4 ? 'h-screen': 'h-full'} flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70`}>
 
                 <div className="flex flex-col gap-2">
                     <h2 className="text-2xl font-semibold lg:text-4xl"> Lista de Desejos</h2>
@@ -21,7 +21,7 @@ export default function Favorites(){
                 </div>
 
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 overflow-hidden">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 overflow-hidden">
                     {dadosCliente?.favoritos.map(favorito => {
                         return ( 
                             <div className="flex flex-rol lg:flex-col lg:h-130 gap-4 lg:gap-2 h-40 p-4 rounded-2xl bg-white shadow-xs lg:justify-between ">
