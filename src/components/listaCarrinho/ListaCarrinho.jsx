@@ -28,7 +28,7 @@ export default function ListaCarrinho(){
 
     }
     if(!items) return
-    const subtotal = items.map(item => item?.valor * item?.quantidade).reduce((a,b) => a + b, 0)
+    const subtotal = items?.map(item => item?.valor * item?.quantidade).reduce((a,b) => a + b, 0)
 
     return (
         <div className="h-screen w-75 pt-4 pb-8 lg:w-100 bg-white absolute right-0 top-14 flex flex-col  shadow-sm ">
