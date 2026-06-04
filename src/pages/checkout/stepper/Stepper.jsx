@@ -4,7 +4,7 @@ import ProgressLine from './progressLine/ProgressLine'
 
 export default function Stepper({etapa, setEtapa, listaOk, enderecoOk, pagamentoOk}){
     return(
-        <div className="flex justify-between items-center gap-2 pt-30 pb-10 px-30 ">
+        <div className="flex justify-between items-center gap-2 pt-30 pb-10 lg:px-30 px-4 ">
             <Step icone={<i class="fa-solid fa-bag-shopping"></i>} texto={'CARRINHO'} link={'/checkout'} estilo={`cursor-pointer ${listaOk ? 'bg-green-300' :etapa === 0 &&' border-blue-500 border-2'}`} etapa={etapa} setEtapa={setEtapa} valorEtapa={0} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk}/>
             <ProgressLine estilo={`${listaOk && 'bg-green-300'}`}/>
             

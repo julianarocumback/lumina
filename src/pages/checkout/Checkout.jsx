@@ -74,7 +74,7 @@ export default function Checkout() {
     return(
         <div className="bg-gray-100" >
             <Header/>
-            <div className="px-90">
+            <div className="flex flex-col gap-4 px-4 lg:px-90">
                 <Stepper listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} etapa={etapa} setEtapa={setEtapa}/>
 
                 <Cart 
