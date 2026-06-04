@@ -153,14 +153,15 @@ export default function Perfil(){
 
                     <div className="flex-col flex gap-4">
 
-                    <h2 className="text-xl font-semibold">Dados pessoais</h2>
+                    <h2 className="text-xl font-semibold">Segurança da conta</h2>
 
-                    <div className="bg-white border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex items-center">
-                        <div className="bg-blue-300/20 w-12 h-12 flex justify-center items-center rounded-2xl text-blue-800"><i class="fa-solid fa-lock"></i></div>
-                        <div>
-                            <h3 className="font-semibold">Alterar Senha</h3>
-                            <p className="text-xs text-gray-500">Última alteração há 3 meses</p>
-
+                    <div className="bg-white border border-gray-100 rounded-2xl shadow-xs p-6 flex lg:justify-between items-center">
+                        <div className="flex gap-8 items-center">
+                            <div className="bg-blue-300/20 w-12 h-12 flex justify-center items-center rounded-2xl text-blue-800"><i class="fa-solid fa-lock"></i></div>
+                            <div>
+                                <h3 className="font-semibold">Alterar Senha</h3>
+                                <p className="text-xs text-gray-500">Última alteração há 3 meses</p>
+                            </div>
                         </div>
                         <div>
                             <button className="bg-blue-500 px-4 py-2 rounded-full font-semibold text-white">Alterar</button>
@@ -168,15 +169,18 @@ export default function Perfil(){
                         
                     </div>
 
-                    <div className="bg-white border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex items-center">
+                    <div className="bg-white border border-gray-100 rounded-2xl shadow-xs p-6 flex lg:justify-between items-center">
+                        <div className="flex gap-8 items-center">
                         <div className="bg-yellow-300/20 w-12 h-12 flex justify-center items-center rounded-2xl text-yellow-800"><i class="fa-solid fa-shield-halved"></i></div>
                         <div>
-                            <h3 className="font-semibold">Alterar Senha</h3>
+                            <h3 className="font-semibold">Ativar proteção 2FA</h3>
                             <p className="text-xs text-gray-500">Proteção adicional ativada</p>
 
                         </div>
+
+                        </div>
                         <div>
-                            <button className="bg-blue-500 px-4 py-2 rounded-full font-semibold text-white">Alterar</button>
+                            <button className="bg-blue-500 px-4 py-2 rounded-full font-semibold text-white">Ativar</button>
                         </div>
                         
                     </div>

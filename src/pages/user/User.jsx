@@ -12,7 +12,7 @@ export default function User() {
     const {addToCart, items} = useCart()
 
     return (
-        <div className="h-full w-full bg-gray-50 border">
+        <div className="h-full w-full bg-gray-50">
             <Header/>
             <Sidebar logout={logout}/>
             <Outlet context={{dadosCliente, addToCart, removerFavorito, items, atualizarNome, atualizarEmail, atualizarWhatsApp}}/>
