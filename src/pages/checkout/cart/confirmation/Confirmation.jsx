@@ -1,6 +1,6 @@
 export default function Confirmation(){
     return(
-        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs px-4 py-8 lg:p-20">
+        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs px-4 py-8 lg:p-20 mx-4 ">
             <div className="flex flex-col gap-8">
 
                 <div className="flex flex-col items-center text-center gap-2 lg:gap-4">
@@ -29,9 +29,9 @@ export default function Confirmation(){
                 </div>
 
 
-                <div className="flex gap-7 lg:mx-20 lg:py-16">
-                    <button className="flex items-center p-4 w-full rounded-full bg-red-300 justify-center font-semibold">ACOMPANHAR PEDIDO</button>
-                    <button className="flex items-center border p-4 w-full rounded-full  justify-center font-semibold">VOLTAR PARA A LOJA</button>
+                <div className="flex flex-col lg:flex-row lg:gap-7 gap-2 lg:mx-20 lg:py-16">
+                    <button className="flex items-center p-4 w-full rounded-full justify-center font-semibold bg-gradient-to-r from-[#00639a] to-[#bc004b] text-white">ACOMPANHAR PEDIDO</button>
+                    <button className="flex items-center lg:border text-xs lg:text-base p-4 w-full rounded-full  justify-center font-semibold">VOLTAR PARA A LOJA</button>
                 </div>
 
             </div>
