@@ -59,15 +59,9 @@ export default function Sidebar({logout}) {
                     })}
                 </div>
 
-                {/* Logout */}
-                <button onClick={logout} className="font-semibold flex gap-4 text-red-800 items-center cursor-pointer">
-                    <div className=""><i className="fa-solid fa-arrow-right-from-bracket"></i></div>
-                    <span className="hidden lg:block">Sair da conta</span>
-                </button>
+               
                     
             </div>
-            
-           
         </aside>
     )
 }

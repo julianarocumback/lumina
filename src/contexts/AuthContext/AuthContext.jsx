@@ -17,18 +17,18 @@ export function AuthProvider({ children }) {
     useEffect(() => {
     async function buscarDados() {
       if (user?.id) {
-        // A Cozinha: Consulta na tabela personalizada
         const { data } = await supabase
           .from('clientes')
-          .select('*') // Peça aqui todas as colunas que adicionou
+          .select('*, pedidos!cliente_id(*)')
           .eq('id', user.id)
-          .single(); // Como é um usuário, trazemos apenas um registro
+          .single();
 
         if (data) {
           setDadosCliente(data);
         }
       }
     }
+
 
     buscarDados();
   }, [user])
@@ -164,6 +164,24 @@ export function AuthProvider({ children }) {
       }
     }
 
+    async function adicionarPedido(pedido) {
+      if (user?.id) {
+        const { data, error } = await supabase
+          .from('pedidos')
+          .insert([pedido]) 
+          .select('*')
+   
+
+        if (data) {
+          console.log('adicionou');
+        }
+
+        if (error) {
+          console.log("Erro exato do Supabase:", error.message, error.details, error.hint)
+        }
+      }
+    }
+
     
 
 
@@ -200,7 +218,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, atualizarNome, atualizarEmail, atualizarWhatsApp, atualizarSenha}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, atualizarNome, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido}}>
       {children}
     </AuthContext.Provider>
   );

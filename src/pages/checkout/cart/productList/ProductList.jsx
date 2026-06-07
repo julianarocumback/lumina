@@ -3,7 +3,7 @@ export default function ProductList({lista, aumentarQuantidade, diminuirQuantida
     if(!lista) return
     return(
 
-        <div className="w-full h-145 rounded-2xl overflow-hidden bg-white shadow-xs overflow-y-auto relative mx-4 ">
+        <div className="w-full h-145 rounded-2xl overflow-hidden bg-white shadow-xs overflow-y-auto relative mx-4 lg:py-0 mt-50 lg:mt-0">
             <table className="w-full">
                 <thead className="bg-gray-200 text-sm text-gray-700 font-semibold  h-12">
                     <tr className="indent-7">

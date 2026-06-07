@@ -1,7 +1,7 @@
 import { useState,  } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-export default function ModalLogin({login}){
+export default function ModalLogin({login, setOpen}){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
@@ -15,7 +15,7 @@ export default function ModalLogin({login}){
         try {
             setError('')
             await login(email, password)
-            navigate('/user')
+            setOpen(false)
         } catch(err) {
             setError('E-mail ou senha incorretos')
         }

@@ -29,3 +29,74 @@
   -ms-overflow-style: none;  /* IE/Edge */
   scrollbar-width: none;     /* Firefox */
 }
+
+@property --cor1-pos {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherits: false;
+}
+
+@property --cor2-pos {
+  syntax: '<percentage>';
+  initial-value: 15%;
+  inherits: false;
+}
+
+@property --cor3-pos {
+  syntax: '<percentage>';
+  initial-value:30%;
+  inherits: false;
+}
+
+@property --cor4-pos {
+  syntax: '<percentage>';
+  initial-value: 50%;
+  inherits: false;
+}
+
+@property --cor5-pos {
+  syntax: '<percentage>';
+  initial-value: 65%;
+  inherits: false;
+}
+
+@property --cor6-pos {
+  syntax: '<percentage>';
+  initial-value: 75%;
+  inherits: false;
+}
+
+@property --cor7-pos {
+  syntax: '<percentage>';
+  initial-value: 100%;
+  inherits: false;
+}
+
+/* Criamos uma classe customizada misturando CSS puro e Tailwind */
+.bg-gradient-animado {
+  background: linear-gradient(45deg, rgba(231,76,60,1) var(--cor1-pos), rgba(255,107,107,1) var(--cor2-pos),rgb(187, 189, 62) var(--cor3-pos), rgba(46,204,133) var(--cor4-pos), rgba(59,130,246) var(--cor5-pos), rgb(11, 104, 255) var(--cor6-pos), rgba(147,51,234) var(--cor7-pos));
+  animation: moverCores 5s ease-in-out infinite alternate;
+}
+
+@keyframes moverCores {
+   0% {
+    --cor1-pos: 0%;
+    --cor2-pos: 15%;
+    --cor3-pos: 30%;
+    --cor4-pos: 50%;
+    --cor5-pos: 65%;
+    --cor6-pos: 75%;
+    --cor7-pos: 100%;
+  }
+  100% {
+    --cor1-pos: 15%;
+    --cor2-pos: 35%;
+    --cor3-pos: 45%;
+    --cor4-pos: 60%;
+    --cor5-pos: 75%;
+    --cor6-pos: 100%;
+    --cor7-pos: 120%;
+  } 
+}
+
+/* bg-[radial-gradient(at_0%_0%,rgba(59,130,246,0.3),transparent_50%),radial-gradient(at_50%_0%,rgba(147,51,234,0.3),transparent_50%),radial-gradient(at_100%_0%,rgba(46,204,133,0.3),transparent_50%),radial-gradient(at_0%_100%,rgba(231,76,60,0.3),transparent_50%),radial-gradient(at_90%_100%,rgba(254,202,87,0.3),transparent_50%),radial-gradient(at_0%_100%,rgba(255,107,107,0.3),transparent_50%),radial-gradient(50%_100%,rgba(46,204,133,0.10),transparent_50%)] */

@@ -97,24 +97,29 @@ export default function Pedidos(){
                                 <div className="flex justify-between items-end">
                                     <div className="flex flex-col gap-4 ">
                                         <div className="flex gap-4 lg:justify-start">
-                                            <p className="text-gray-500 font-semibold">#LM9942</p>
-                                            <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold ">{pedido.status}</span>
-                                            <p className="hidden lg:block font-light">Realizado em 12 out 2026</p>
+                                            <p className="text-gray-500 font-semibold">#{[...pedido.id].map((letra, index)=> {
+                                                if(index > 7) return 
+                                                return letra
+                                            }).join('')}                             </p>
+                                            <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold uppercase">{pedido.status}</span>
+                                            <p className="hidden lg:block font-light">{pedido.created_at}</p>
                                         </div>
 
                                         <p className="font-light lg:hidden">Realizado em 12 out 2026</p>
 
-                                        <div className="flex items-center gap-4">
-                                            <div>
-                                                <div className="h-20 w-15 rounded-xl bg-gray-400"> </div>
-                                            </div>
-                                            <div>
-                                                <div className="h-20 w-15 rounded-xl bg-gray-400"> </div>
-                                            </div>
-                                            <div>
-                                                <div className="h-20 w-15 rounded-xl bg-gray-400"> </div>
-                                            </div> 
+                                        <div className="flex gap-4">
+                                            {pedido.produtos.map(produto => {
+                                                return(
+                                                    <div className="border border-gray-200 w-15 rounded-xl overflow-hidden flex">
+                                                        <img src={produto.img_url} alt="" />
+
+                                                    </div>
+                                                )
+                                            })
+                                            }
+
                                         </div>
+                                     
                                     </div>
                                     
                                     <div className="lg:flex flex-col gap-4 hidden">
