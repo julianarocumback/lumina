@@ -16,15 +16,15 @@ export default function Header() {
 
 
     return (
-        <header className="relative">
+        <header className="">
             {/* <div className="lg:hidden flex justify-around w-full p-8">
                 <Logo/>
                 <Explorar/>
                 <Login authenticated={authenticated} dadosCliente={dadosCliente} login={login} logout={logout} />
                     <Carrinho carrinhoIsOpen={carrinhoIsOpen} setCarrinhoIsOpen={setCarrinhoIsOpen}/>
                 {carrinhoIsOpen? (<ListaCarrinho/>): ('')}
-            </div> */}
-            {/* <div className=" lg:flex justify-between gap-4 w-full items-center">
+            </div> 
+            <div className=" lg:flex justify-between gap-4 w-full items-center">
                 <Logo/>
                 <div className="flex gap-4">
                     <Login authenticated={authenticated} dadosCliente={dadosCliente} login={login} logout={logout} />
