@@ -24,7 +24,7 @@ export default function ModalLogin({login, setOpen}){
     
 
     return (
-        <div className="absolute top-14 right-0 shadow-lg border-gray-700 w-70 bg-white h-50 p-8 z-50">
+        <div className="absolute bottom-14 left-0 lg:left-auto lg:right-0 lg:top-14 shadow-lg border-gray-700 w-full lg:w-70 bg-white h-50 p-8 z-50">
             <div className="flex flex-col gap-4 text-center">
                 <form onSubmit={handleSubmit} className="w-full flex flex-col gap-2">
                     <input value={email} onChange={(e)=>setEmail(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="email"/>

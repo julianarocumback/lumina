@@ -11,7 +11,7 @@ export default function Login({authenticated, dadosCliente, login, logout}) {
     }
 
     return (
-        <div className=" lg:flex relative">
+        <div className="lg:flex">
             <div onClick={handleOpen} className=' md:flex lg:text-xl gap-2 items-center'>
                 <i className="fa-regular fa-circle-user"></i>
                 <div className="text-base hidden lg:block">
@@ -20,9 +20,8 @@ export default function Login({authenticated, dadosCliente, login, logout}) {
             </div>
 
             <div>
-                {open && <div>{authenticated? <div className="absolute"><Info authenticated={authenticated} logout={logout}/></div>:<ModalLogin authenticated={authenticated} login={login} setOpen={setOpen} />}</div>}
+                {open && <div>{authenticated? <div><Info authenticated={authenticated} logout={logout}/></div>:<ModalLogin authenticated={authenticated} login={login} setOpen={setOpen} />}</div>}
             </div>
-            
         </div>    
     )
 }

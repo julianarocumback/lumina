@@ -11,9 +11,9 @@ export default function Info({authenticated, logout}){
     }
 
     return (
-        <div className="lg:absolute  top-10 border border-gray-100 lg:-right-19 shadow-xs lg:w-70 bg-white h-fit px-8 py-6 z-50">
-            <div className="flex flex-col gap-4">
-               <button onClick={handleSubmit} className="flex justify-items-start items-center cursor-pointer gap-4">
+        <div className="absolute bottom-14 left-0 w-full lg:left-auto lg:right-0 lg:top-14 border-gray-100  shadow-xs lg:w-70 bg-white h-fit px-8 py-6 z-50">
+            <div className="flex flex-col items-center justify-center gap-4">
+               <button onClick={handleSubmit} className="flex lg:justify-items-start items-center  cursor-pointer gap-4">
                     <div><i class="fa-solid fa-user"></i></div>
                     <span className="font-semibold">Minha conta</span>
                 </button>
