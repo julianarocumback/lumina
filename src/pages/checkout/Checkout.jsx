@@ -54,11 +54,11 @@ export default function Checkout() {
     if(!items) return
     
     return(
-        <div className="bg-gray-100" >
+        <div className="bg-gray-100 relative" >
             <Header/>
-            <div className="flex flex-col gap-4 lg:px-90">
+            <div className="flex flex-col gap-4 lg:px-90 relative">
                 <Stepper listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} etapa={etapa} setEtapa={setEtapa}/>
-
+                <div className='lg:pt-70'>
                 <Cart 
                 etapa={etapa} setEtapa={setEtapa}
                 lista={items} aumentarQuantidade={aumentarQuantidade} diminuirQuantidade={diminuirQuantidade} removerDoCarrinho={removeToCart} 
@@ -66,6 +66,8 @@ export default function Checkout() {
                 pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom}
                 
                 listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar}/>
+
+                </div>
             </div>
             <Footer/>
         </div>
