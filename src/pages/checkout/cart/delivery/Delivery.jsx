@@ -56,7 +56,7 @@ export default function Delivery({endereco, setEndereco, frete, setFrete}){
     }
 
     return (
-        <div className="w-full lg:rounded-2xl overflow-hidden bg-white shadow-xs p-8">
+        <div className="w-full h-full lg:rounded-2xl overflow-hidden bg-white shadow-xs p-8">
             <div className="pb-12 flex flex-col gap-2">
                 <h2 className="text-2xl">Endereço de Entrega</h2>
                 <p>Onde devemos entregar sua nova leitura edificante?</p>
