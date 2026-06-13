@@ -3,10 +3,67 @@ import pinkCollection from './pinkCollection.png'
 import yellowCollection from './yellowCollection.png'
 import greenCollection from './greenCollection.png'
 
+const lista = [
+    {
+        img: '',
+        title: 'Tons de Azul',
+        subtitle: 'Bíblias de Estudo e Edições de Luxo',
+        link: 'tons-azul',
+        opacity: '0',
+        color: `rgba(0,99,154, )`
+    },
+    {
+        img: '',
+        title: 'Tons de Rosa',
+        subtitle: 'Devocionais Diários e Inspiração',
+        link: 'tons-rosa',
+        opacity: '0',
+        color: `rgba(0,99,154, )`
+    },
+    {
+        img: '',
+        title: 'Tons de Rosa',
+        subtitle: 'Devocionais Diários e Inspiração',
+        link: 'tons-rosa',
+        opacity: '0',
+        color: `rgba(0,99,154,)`
+    },
+    {
+        img: '',
+        title: 'Tons de Rosa',
+        subtitle: 'Devocionais Diários e Inspiração',
+        link: 'tons-rosa',
+        opacity: '0',
+        color: `rgba(0,99,154, )`
+    },
+]
+
+
 export const Carrossel = () => {
     return(
-        <div className="w-full">
-            <p>aaaaaaaaaa</p>
+        <div className="w-full overflow-hidden flex flex-col gap-8">
+            <span className="text-[#BC004B] text-base font-bold">EXPLORE POR CORES</span>
+            <div className='flex snap-x snap-mandatory overflow-x-auto no-scrollbar gap-8'>
+                {lista.map(item => {
+                    return(
+                        <div className="rounded-2xl overflow-hidden flex-none snap-always snap-center">
+                        <div className={`h-70 w-full bg-linear-to-t from-[${item.color}] via-(${item.color})] to-[${item.color}] relative snap-`}>
+                            <img className='h-full w-full object-cover' src={blueCollection} alt="" />
+                            <div className='flex flex-col justify-end absolute inset-0 py-6 px-6 gap-3'>
+                                <div>
+                                    <p className=' text-white text-3xl'>{item.title}</p>
+                                    <p className=' text-white/80'>{item.subtitle}</p>
+                                </div>
+                                <div>
+                                    <p className=' text-white font-bold'>Ver Coleção</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    )
+                })}
+
+            </div>
         </div>
     )
 }
@@ -35,7 +92,7 @@ export const BentoGrid = () => {
                     </div>
                 </div>
                 <div className="col-span-2 row-span-1 rounded-2xl  overflow-hidden">
-                    <div className='h-full bg-linear-to-t from-[rgba(188,0,75,90)] via-[rgba(188,0,75,70)] to-[rgba(188,0,75,10)] relative'>
+                    <div className='{h-full bg-linear-to-t from-[rgba(188,0,75,90)] via-[rgba(188,0,75,70)] to-[rgba(188,0,75,10)] relative'>
                         <img className='h-full w-full object-cover' src={pinkCollection} alt="" />
                         <div className='flex flex-col justify-end absolute inset-0 py-6 px-6 gap-3'>
                             <div>
