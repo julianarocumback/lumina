@@ -8,7 +8,7 @@ export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, 
     const total = valorProdutos + (valorFrete > 0? valorFrete:0) - (desconto > 0? desconto:0)
 
     return (
-        <div className="h-fit lg:w-140 max-h-fit p-4 gap-4 lg:p-8 lg:gap-8 flex flex-col rounded-t-2xl lg:rounded-2xl bg-white shadow-xs sticky bottom-14">
+        <div className="h-fit lg:w-140 max-h-fit p-6 border border-gray-100 gap-4 lg:p-8 lg:gap-8 flex flex-col rounded-t-2xl lg:rounded-2xl bg-white shadow-xs sticky bottom-14">
 
             <h3 className="text-lg font-semibold lg:text-2xl ">Resumo do Pedido</h3>
             <div className="flex gap-2 flex-col text-gray-400">
@@ -40,7 +40,7 @@ export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, 
 
 
             
-            <div className="bg-gray-100 rounded-2xl p-2 lg:p-4  gap-4 items-center flex">
+            <div className="bg-gray-100 rounded-2xl p-2  lg:p-4 hidden  gap-4 items-center lg:flex">
                 <div className="text-blue-500 text-xl">
                     <i class="fa-solid fa-shield-halved"></i>
                 </div>
