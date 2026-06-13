@@ -39,7 +39,7 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom}) {
 
 
     return (
-        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs p-8 mx-4 ">
+        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs p-8">
             <div className="pb-12 flex flex-col gap-2">
                 <h2 className="text-2xl">Forma de pagamento</h2>
                 <p>Escolha como deseja concluir sua aquisição</p>
