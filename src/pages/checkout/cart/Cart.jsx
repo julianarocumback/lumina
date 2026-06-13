@@ -15,7 +15,7 @@ export default function Cart({lista, aumentarQuantidade, diminuirQuantidade, rem
                 </div>
             :etapa === 2 ?
                 <div className="flex flex-col lg:gap-8 lg:py-7 ">
-                    <div className="flex flex-col lg:flex-row gap-8">
+                    <div className="flex flex-col lg:flex-row lg:gap-8">
                         <Payment pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom} />
                         <OrderSummary lista={lista} frete={frete} cupom={cupom} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar} etapa={etapa}/>
                     </div>
@@ -23,7 +23,7 @@ export default function Cart({lista, aumentarQuantidade, diminuirQuantidade, rem
                 </div>
             :etapa === 1 ?
                 <div className="flex flex-col lg:gap-8 lg:py-7">
-                    <div className="flex flex-col lg:flex-row gap-8">
+                    <div className="flex flex-col lg:flex-row lg:gap-8">
                         <Delivery endereco={endereco} setEndereco={setEndereco} frete={frete} setFrete={setFrete}/>
                         <OrderSummary lista={lista} frete={frete} cupom={cupom} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar} etapa={etapa}/>
                     </div>
@@ -31,7 +31,7 @@ export default function Cart({lista, aumentarQuantidade, diminuirQuantidade, rem
                 </div>
             :
                 <div className="flex flex-col lg:gap-8 lg:py-7 relative">
-                    <div className="flex flex-col lg:flex-row gap-8 relative">
+                    <div className="flex flex-col lg:flex-row lg:gap-8 relative">
                         <ProductList lista={lista} aumentarQuantidade={aumentarQuantidade} diminuirQuantidade={diminuirQuantidade} removerDoCarrinho={removerDoCarrinho}/>
                         <OrderSummary lista={lista} frete={frete} cupom={cupom} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar} etapa={etapa}/>
                     </div>
