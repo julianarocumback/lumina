@@ -21,7 +21,7 @@ const lista = [
 
 const depoimentos = lista.map(depoimento => {
     return(
-        <div className="shrink-0 w-70 border border-[#f0f0f0] snap-start h-70 rounded-xl p-8 gap-8 flex flex-col bg-[#FAFAFA] bg-[radial-gradient(at_100%_0%,rgba(0,99,154,0.1),transparent_50%)]">
+        <div className="shrink-0 w-70 border border-[#f0f0f0] snap-center snap-always h-70 rounded-xl p-8 gap-8 flex flex-col bg-[#FAFAFA] bg-[radial-gradient(at_100%_0%,rgba(0,99,154,0.1),transparent_50%)]">
             
             <p className="text-base text-left text-[#1E293B]"><q>{depoimento.testemunho}</q></p>
             <div className="flex gap-2 items-center my-auto">
@@ -39,28 +39,12 @@ const depoimentos = lista.map(depoimento => {
 
 export const Carrossel = () => {
     return(
-        <section className=" w-full">
-            <div className="border flex flex-col text-center gap-4 py-8">
+        <section className=" w-full bg-[#f3f3f5]">
+            <div className="flex flex-col gap-4 p-8">
                 <h3 className="text-xl">Testemunhos</h3>
-                <div className="flex overflow-x-scroll gap-8 px-25 snap-mandatory">
-                    <div className="shrink-0 w-70 border snap-start h-70">
-                        <img src="" alt="" />
-                        <p><q>A curadoria da Radiant é impecável. Cada livro que compro aqui parece ter sido escolhido especificamente para o meu momento o de vida.</q></p>
-                        <span>Ana Clara Mendes</span>
-                        <span>Leitora Assídua</span>
-                    </div>
-                    <div className="shrink-0 w-70 snap-start border" >
-                        <img src="" alt="" />
-                        <p><q>A curadoria da Radiant é impecável. Cada livro que compro aqui parece ter sido escolhido especificamente para o meu momento o de vida.</q></p>
-                        <span>Ana Clara Mendes</span>
-                        <span>Leitora Assídua</span>
-                    </div>
-                    <div className="shrink-0 w-70 snap-start border">
-                        <img src="" alt="" />
-                        <p><q>A curadoria da Radiant é impecável. Cada livro que compro aqui parece ter sido escolhido especificamente para o meu momento o de vida.</q></p>
-                        <span>Ana Clara Mendes</span>
-                        <span>Leitora Assídua</span>
-                    </div>
+                <div className="flex overflow-x-scroll gap-8 snap-mandatory snap-x no-scrollbar">
+                    {depoimentos}
+                   
 
                 </div>
             </div>
