@@ -14,7 +14,7 @@ export default function Confirmation(){
                 </div>
 
 
-                <div className="flex flex-col lg:flex-row px-50">
+                <div className="flex flex-col lg:flex-row lg:px-50">
                     <div className=" w-full bg-gray-200 p-4 rounded-2xl text-center">
                         <p className="font-semibold">IDENTIFICAÇÃO DO PEDIDO</p>
                         <p>#RL-SÓ-DEUS-SABE</p>
