@@ -13,7 +13,7 @@ import Comments from "./Comments/Comments"
 
 export default function Product(){
 
-    const {dadosCliente, adicionarFavorito, removerFavorito} = useContext(AuthContext)
+    const {authenticated, dadosCliente, adicionarFavorito, removerFavorito} = useContext(AuthContext)
     const {id} =  useParams()
     const [produto, setProduto] = useState(null)
     const [carregando, setCarregando] = useState(false)
@@ -49,7 +49,7 @@ export default function Product(){
     return(
     <div className="h-full w-full bg-[rgba(249,249,251,1)]">
         <Header/>
-        <ProductHero foto={foto} gallery={gallery} setIdFoto={setIdFoto} produto={produto} adicionarFavorito={adicionarFavorito} removerFavorito={removerFavorito} dadosCliente={dadosCliente}/>
+        <ProductHero foto={foto} gallery={gallery} setIdFoto={setIdFoto} produto={produto} adicionarFavorito={adicionarFavorito} removerFavorito={removerFavorito} dadosCliente={dadosCliente} authenticated={authenticated}/>
         <ProductDetails produto={produto}/>
         <Comments/>
         <Footer/>
