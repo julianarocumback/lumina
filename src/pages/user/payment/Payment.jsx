@@ -1,6 +1,7 @@
 import { useOutletContext } from 'react-router-dom'
+
 export default function Payment(){
-    const {dadosCliente} = useOutletContext()
+    const {dadosCliente, setNewPayment} = useOutletContext()
     if(!dadosCliente) return
     return(
         <div className="flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full lg:h-screen">
@@ -40,7 +41,7 @@ export default function Payment(){
                             )
                         })}
                     </div>
-                    <button className="h-40 flex-none lg:h-45 lg:w-75  w-full md:w-70 justify-center items-center gap-2 rounded-2xl p-4 flex flex-col border-dashed border border-gray-300">
+                    <button onClick={()=>setNewPayment(true)} className="h-40 flex-none lg:h-45 lg:w-75  w-full md:w-70 justify-center items-center gap-2 rounded-2xl p-4 flex flex-col border-dashed border border-gray-300">
                             
                             <div className="flex justify-center items-center rounded-full bg-gray-200 w-10 h-10 text-gray-500"><i class="fa-solid fa-plus "></i></div>
                            

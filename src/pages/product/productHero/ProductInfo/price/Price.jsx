@@ -1,10 +1,7 @@
 export default function Price({produto}){
     return (
         <div>
-            <span className="text-2xl lg:text-3xl">{produto?.valor.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            })}</span>
+            <span className="text-2xl lg:text-3xl">{produto?.valor}</span>
         </div>
     )
 }

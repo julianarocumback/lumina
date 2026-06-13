@@ -17,15 +17,21 @@ export function AuthProvider({ children }) {
     useEffect(() => {
     async function buscarDados() {
       if (user?.id) {
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('clientes')
-          .select('*, pedidos!cliente_id(*)')
+          .select('*, pedidos!cliente_id(*), address(*), payment(*)')
           .eq('id', user.id)
           .single();
 
         if (data) {
           setDadosCliente(data);
         }
+
+        if (error) {
+  // Isso vai te mostrar a mensagem real do banco (ex: "invalid input syntax for type boolean")
+  console.error("Erro detalhado do Supabase:", error.message); 
+  console.error("Código do erro:", error.code);
+}
       }
     }
 
@@ -37,16 +43,15 @@ export function AuthProvider({ children }) {
     async function adicionarFavorito(produto) {
       if (user?.id) {
         const favoritoAtualizado = [...dadosCliente.favoritos, produto]
-        // A Cozinha: Consulta na tabela personalizada
         const { data } = await supabase
           .from('clientes')
-          .update({favoritos: favoritoAtualizado}) // Peça aqui todas as colunas que adicionou
+          .update({favoritos: favoritoAtualizado}) 
           .eq('id', user.id)
           .select('*')
-          .single(); // Como é um usuário, trazemos apenas um registro
+          .single()
 
         if (data) {
-          setDadosCliente(data);
+          setDadosCliente(data)
         }
       }
     }
@@ -54,16 +59,15 @@ export function AuthProvider({ children }) {
     async function removerFavorito(produto) {
       if (user?.id) {
         const favoritoAtualizado = dadosCliente?.favoritos.filter(item => item.id !== produto.id)
-        // A Cozinha: Consulta na tabela personalizada
         const { data } = await supabase
           .from('clientes')
-          .update({favoritos: favoritoAtualizado}) // Peça aqui todas as colunas que adicionou
+          .update({favoritos: favoritoAtualizado})
           .eq('id', user.id)
           .select('*')
-          .single(); // Como é um usuário, trazemos apenas um registro
+          .single()
 
         if (data) {
-          setDadosCliente(data);
+          setDadosCliente(data)
         }
       }
     }
@@ -71,13 +75,12 @@ export function AuthProvider({ children }) {
     async function adicionarCartao(produto) {
       if (user?.id) {
         const cartaoAtualizado = [...dadosCliente.cartoes, produto]
-        // A Cozinha: Consulta na tabela personalizada
         const { data } = await supabase
           .from('clientes')
-          .update({cartoes: cartaoAtualizado}) // Peça aqui todas as colunas que adicionou
+          .update({cartoes: cartaoAtualizado})
           .eq('id', user.id)
           .select('*')
-          .single(); // Como é um usuário, trazemos apenas um registro
+          .single()
 
         if (data) {
           setDadosCliente(data);
@@ -88,33 +91,96 @@ export function AuthProvider({ children }) {
     async function removerCartao(produto) {
       if (user?.id) {
         const cartaoAtualizado = dadosCliente?.cartoes.filter(item => item.id !== produto.id)
-        // A Cozinha: Consulta na tabela personalizada
         const { data } = await supabase
           .from('clientes')
-          .update({favoritos: cartaoAtualizado}) // Peça aqui todas as colunas que adicionou
+          .update({favoritos: cartaoAtualizado})
           .eq('id', user.id)
           .select('*')
-          .single(); // Como é um usuário, trazemos apenas um registro
+          .single()
+
+        if (data) {
+          setDadosCliente(data)
+        }
+      }
+    }
+
+    async function adicionarEndereco(address) {
+      if (user?.id) {
+        const { data } = await supabase
+          .from('address')
+          .insert([{
+              user_id: address.userId,
+              zip_code: address.zipCode,
+              street: address.street,
+              street_number: address.streetNumber,
+              complement: address.complement,
+              neighborhood: address.neighborhood,
+              city: address.city,
+              state: address.state,
+              type: address.type,
+              is_main: address.isMain
+          }])
+          .select('*')
+          .single() 
+
 
         if (data) {
           setDadosCliente(data);
         }
       }
+    } 
+
+    async function addPayment(payment) {
+      if(user?.id){
+        const { data } = await supabase
+        .from('payment')
+        .insert([{
+          user_id: payment.userId,
+          holder_name: payment.holderName,
+          last_four: payment.lastFour,
+          expiration_date: payment.expirationDate,
+          brand: payment.brand,
+          is_main: payment.isMain
+        }])
+        .select('*')
+        .single()
+
+        if(data){
+          setDadosCliente(data)
+        }
+      }
     }
+
+    async function removerEndereco(endereco) {
+      if (user?.id) {
+        const enderecoRemovido = dadosCliente?.enderecos.filter(item => item.id !== endereco.id)
+        const { data } = await supabase
+          .from('clientes')
+          .update({enderecos: enderecoRemovido}) 
+          .eq('id', user.id)
+          .select('*')
+          .single()
+
+        if (data) {
+          setDadosCliente(data)
+        }
+      }
+    }
+
+   
 
     // Atualizar nome
     async function atualizarNome(novoNome) {
       if (user?.id) {
-        // A Cozinha: Consulta na tabela personalizada
         const { data } = await supabase
           .from('clientes')
-          .update({nome: novoNome}) // Peça aqui todas as colunas que adicionou
+          .update({nome: novoNome})
           .eq('id', user.id)
           .select('*')
-          .single(); // Como é um usuário, trazemos apenas um registro
+          .single()
 
         if (data) {
-          setDadosCliente(data);
+          setDadosCliente(data)
         }
       }
     }
@@ -218,7 +284,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, atualizarNome, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, atualizarNome, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, adicionarEndereco, removerEndereco, addPayment}}>
       {children}
     </AuthContext.Provider>
   );

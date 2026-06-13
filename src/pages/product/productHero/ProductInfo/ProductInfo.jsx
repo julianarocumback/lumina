@@ -8,7 +8,8 @@ import Info from "./info/Info";
 import Divisor from "./divisor/Divisor";
 
 
-export default function ProductInfo({produto}){
+export default function ProductInfo({produto, adicionarFavorito, removerFavorito, dadosCliente}){
+    
     return(
         <div className="w-full flex flex-col justify-center">
             <Badge produto={produto}/>
@@ -20,8 +21,8 @@ export default function ProductInfo({produto}){
             <Divisor/>
             <Info/>
             <div className="flex flex-col py-10 gap-4">
-                <Cart produto={produto}/>
-                <Favorite/>
+                <Cart produto={produto}/> 
+                <Favorite adicionarFavorito={adicionarFavorito} removerFavorito={removerFavorito} dadosCliente={dadosCliente} produto={produto}/>
             </div>
             <div className="lg:flex lg:gap-8 hidden">
                 <div className="flex gap-2">

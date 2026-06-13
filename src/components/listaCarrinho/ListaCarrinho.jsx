@@ -14,7 +14,7 @@ export default function ListaCarrinho(){
     
 
     function vericacao(){
-        if (items.length === 0) {
+        if (items?.length === 0) {
             setMensagem(true)
             return
         }
@@ -37,7 +37,7 @@ export default function ListaCarrinho(){
 
                 {/* Produtos no carrinho */}
                 <div className="flex flex-col w-full h-full gap-4 overflow-y-auto">
-                    {items.map((item, index) => {
+                    {items?.map((item, index) => {
                         return(
 
                             // Card do produto
@@ -58,7 +58,7 @@ export default function ListaCarrinho(){
                                         <i class="fa-solid fa-trash"></i>
                                     </div>
                                     <div className="flex justify-between">
-                                        {item && <span className="text- font-semibold">{item?.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>}
+                                        {item && <span className="text- font-semibold">{item.valor}</span>}
                                         
                                         
                                         {/* QUANTIDADE DE PRODUTOS */}
@@ -87,7 +87,7 @@ export default function ListaCarrinho(){
             <div className="bg-gray-50 h-1/4 p-7 flex flex-col lg:gap-4">
                 <div className="flex justify-between py-4">
                     <span className="text-lg text-[#474747]">Subtotal</span>
-                    {subtotal && <span className="text-xl font-semibold">{subtotal.toLocaleString('pt-BR', {style:'currency', currency: 'BRL'})}</span>}
+                    {subtotal && <span className="text-xl font-semibold">{subtotal}</span>}
                     
                     {/* {!mensagem && <p>aaaaaaaaa</p>} */}
                 </div>

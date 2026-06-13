@@ -22,7 +22,6 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
     }
 
 
-
     if (carregar) {
         return (
             <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-8">
@@ -34,6 +33,8 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
     if (!produtos || produtos.length === 0) return <p>Nenhum livro encontrado.</p>;
 
     const listaNova = produtos.map((produto) => {
+    console.log(produto)
+
             return (
                     <div className="flex flex-col gap-4 cursor-pointer relative select-none" key={produto.id}>
                                 {authenticated && (dadosCliente?.favoritos.some(item => item.id === produto.id)? <div onClick={ () => handreFavoritar(produto)} className="absolute text-red-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-solid fa-heart"></i></div>:<div onClick={ () => handreFavoritar(produto)} className="absolute text-gray-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-solid fa-heart"></i></div>)}

@@ -1,6 +1,9 @@
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { supabase } from "../../supabaseClient"
+import { useContext} from 'react'
+
+import {AuthContext } from '../../contexts/AuthContext/AuthContext'
 
 import Header from "../../components/header/Header"
 import Footer from "../../components/footer/Footer"
@@ -10,12 +13,13 @@ import Comments from "./Comments/Comments"
 
 export default function Product(){
 
+    const {dadosCliente, adicionarFavorito, removerFavorito} = useContext(AuthContext)
     const {id} =  useParams()
     const [produto, setProduto] = useState(null)
     const [carregando, setCarregando] = useState(false)
     const [idFoto, setIdFoto] = useState('0')
-    console.log(produto)
-
+    
+    
     useEffect(() => {
         async function getProdutos() {
             try {
@@ -45,7 +49,7 @@ export default function Product(){
     return(
     <div className="h-full w-full bg-[rgba(249,249,251,1)]">
         <Header/>
-        <ProductHero foto={foto} gallery={gallery} setIdFoto={setIdFoto} produto={produto}/>
+        <ProductHero foto={foto} gallery={gallery} setIdFoto={setIdFoto} produto={produto} adicionarFavorito={adicionarFavorito} removerFavorito={removerFavorito} dadosCliente={dadosCliente}/>
         <ProductDetails produto={produto}/>
         <Comments/>
         <Footer/>
