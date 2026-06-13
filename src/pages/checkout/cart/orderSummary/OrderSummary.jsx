@@ -8,10 +8,10 @@ export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, 
     const total = valorProdutos + (valorFrete > 0? valorFrete:0) - (desconto > 0? desconto:0)
 
     return (
-        <div className="h-fit lg:w-140 max-h-fit p-6 border border-gray-100 gap-4 lg:p-8 lg:gap-8 flex flex-col rounded-t-2xl lg:rounded-2xl bg-white shadow-xs sticky bottom-14">
+        <div className="h-fit lg:w-140 max-h-fit px-6 pt-2 border border-gray-100 gap-2 lg:p-8 lg:gap-8 flex flex-col rounded-t-2xl lg:rounded-2xl bg-white shadow-xs sticky bottom-14">
 
             <h3 className="text-lg font-semibold lg:text-2xl ">Resumo do Pedido</h3>
-            <div className="flex gap-2 flex-col text-gray-400">
+            <div className="flex gap-1 flex-col text-gray-400">
                 <div className="flex text-sm justify-between w-full">
                     <span>Produtos</span>
                     <span className="text-gray-800">{valorProdutos.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
@@ -25,7 +25,7 @@ export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, 
                     <span className="text-green-500 font-semibold">{Object.keys(cupom).length > 0? desconto.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
                 </div>
             </div>
-            <div className="w-full h-0.5 bg-gray-400"></div>
+            <div className="w-full h-0.5 bg-gray-200 lg:bg-gray-400"></div>
             <div className="flex items-center justify-between">
                 <span className="font-semibold text-sm">TOTAL</span>
                 <span className="font-semibold text-lg lg:text-3xl">{total.toLocaleString('pt-BR', {style:'currency', currency: 'BRL'})}</span>
