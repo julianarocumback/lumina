@@ -59,13 +59,13 @@ export default function Checkout() {
             <div className="flex flex-col gap-4 lg:px-90 relative">
                 <Stepper listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} etapa={etapa} setEtapa={setEtapa}/>
                 <div className='lg:pt-70'>
-                <Cart 
-                etapa={etapa} setEtapa={setEtapa}
-                lista={items} aumentarQuantidade={aumentarQuantidade} diminuirQuantidade={diminuirQuantidade} removerDoCarrinho={removeToCart} 
-                endereco={endereco} setEndereco={setEndereco} frete={frete} setFrete={setFrete}
-                pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom}
-                
-                listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar}/>
+                    <Cart 
+                    etapa={etapa} setEtapa={setEtapa}
+                    lista={items} aumentarQuantidade={aumentarQuantidade} diminuirQuantidade={diminuirQuantidade} removerDoCarrinho={removeToCart} 
+                    endereco={endereco} setEndereco={setEndereco} frete={frete} setFrete={setFrete}
+                    pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom}
+                    
+                    listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar}/>
 
                 </div>
             </div>

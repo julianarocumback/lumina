@@ -1,7 +1,8 @@
+import {Link} from 'react-router-dom'
 export default function Confirmation(){
     return(
-        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs px-4 py-8 lg:p-20 mx-4 ">
-            <div className="flex flex-col gap-8">
+        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs px-4 py-8 lg:p-20">
+            <div className="flex flex-col gap-8 pt-40 lg:pt-0">
 
                 <div className="flex flex-col items-center text-center gap-2 lg:gap-4">
                     <div className="text-white text-lg lg:text-4xl shadow-xs bg-amber-200 rounded-full w-10 h-10 lg:w-20 lg:h-20 flex justify-center items-center"><i class="fa-solid fa-circle-check"></i></div>
@@ -13,25 +14,25 @@ export default function Confirmation(){
                 </div>
 
 
-                <div className="flex flex-col lg:flex-row gap-4">
-                    <div className="border w-full bg-gray-200 p-4 rounded-2xl">
-                        <p>IDENTIFICAÇÃO DO PEDIDO</p>
+                <div className="flex flex-col lg:flex-row px-50">
+                    <div className=" w-full bg-gray-200 p-4 rounded-2xl text-center">
+                        <p className="font-semibold">IDENTIFICAÇÃO DO PEDIDO</p>
                         <p>#RL-SÓ-DEUS-SABE</p>
                     </div>
 
-                    <div className="border w-full bg-blue-200 p-4 rounded-2xl flex gap-4 items-center">
-                        <div><i class="fa-solid fa-truck-fast"></i></div>
-                        <div>
-                            <p>PREVISÃO</p>
-                            <p>ATÉ 2 DIAS ÚTEIS</p>
-                        </div>
-                    </div>
+                 
                 </div>
 
 
-                <div className="flex flex-col lg:flex-row lg:gap-7 gap-2 lg:mx-20 lg:py-16">
-                    <button className="flex items-center p-4 w-full rounded-full justify-center font-semibold bg-gradient-to-r from-[#00639a] to-[#bc004b] text-white">ACOMPANHAR PEDIDO</button>
-                    <button className="flex items-center lg:border text-xs lg:text-base p-4 w-full rounded-full  justify-center font-semibold">VOLTAR PARA A LOJA</button>
+                <div className="flex flex-col lg:justify-center lg:flex-row lg:gap-4 gap-2 lg:py-4 ">
+                    <Link to='/user/orders'>
+                        <button className="flex items-center py-4 px-8 w-full rounded-full justify-center font-semibold bg-gradient-to-r from-[#00639a] to-[#bc004b] text-white">ACOMPANHAR PEDIDO</button>
+                    
+                    </Link>
+                    <Link to='/'>
+                        <button className="flex items-center lg:border text-xs lg:text-base py-4 px-8 w-full rounded-full  justify-center font-semibold">VOLTAR PARA A LOJA</button>
+                    
+                    </Link>
                 </div>
 
             </div>
