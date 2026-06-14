@@ -7,8 +7,6 @@ import Logo from "./logo/Logo"
 import Explorar from './explorar/Explorar'
 import Login from "./login/Login"
 import Carrinho from "./carrinho/Carrinho"
-import HeaderMobile from './headerMobile/HeaderMobile'
-import HeaderDesktop from './headerDesktop/HeaderDesktop'
 
 export default function Header() {
     const [carrinhoIsOpen, setCarrinhoIsOpen] = useState(false)
