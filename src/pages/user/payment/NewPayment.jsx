@@ -44,20 +44,19 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
     console.log(payment)
 
     return (
-        <div className="absolute flex justify-center items-center top-0 h-screen w-full transition-colors bg-black/30">
-            <div className='border rounded-2xl lg:w-150 lg:h-100 right-50 left-50 bg-white p-8 shadow-lg border-gray-200 gap-4 flex flex-col relative'>
-                <h2 className="text-xl font-semibold text-blue-700">Novo endereço</h2>
+        <div className="absolute flex justify-items-start lg:justify-center lg:items-center items-center top-0 h-full lg:h-screen w-full transition-colors bg-black/30">
+            <div className='border rounded-2xl w-full h-fit lg:w-150 lg:h-100 lg:right-50 lg:left-50 bg-white p-8 shadow-lg border-gray-200 gap-4 flex flex-col relative'>
+                <h2 className="text-xl font-semibold text-blue-700">Novo cartão</h2>
                 <button onClick={()=> setNewPayment(false)} className="absolute right-8 w-7 h-7" ><i class="fa-solid fa-xmark" ></i></button>
             
             
-            <div className='flex flex-col gap-4'>
-                <div className="flex flex-col gap-2">
+            <div className='flex flex-col gap-4 '>
+                <div className="flex flex-col gap-2 ">
                 <label className='font-semibold text-xs text-gray-700' htmlFor="holderName">Nome completo</label>
                 <div className='flex gap-4 h-7'>
-                    <input id='holderName' onChange={handleHolderNameChange}  type="text" value={payment.holderName} placeholder='Seu nome' className={` rounded-lg bg-gray-100 px-4 text-xs h-full`}/>
+                    <input id='holderName' onChange={handleHolderNameChange}  type="text" value={payment.holderName} placeholder='Seu nome' className={` rounded-lg bg-gray-100 px-4 text-xs h-full w-full`}/>
                 </div>
             </div>
-
             <div className="flex flex-col gap-7 ">
                 <div className="flex gap-4 h-fit">
                     <div className="flex flex-col gap-2  w-4/5">
@@ -65,7 +64,7 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
                         <input id='lastFour' onChange={handleLastFourChange} type="text" value={payment.lastFour} placeholder='Número' className={` rounded-lg bg-gray-100 px-4 text-xs  h-7`}/>
                     </div>
                     <div className=' w-1/5 flex flex-col gap-2'>
-                        <label className='font-semibold text-xs text-gray-700' htmlFor="expirationDate">Data de validade</label>
+                        <label className='font-semibold text-xs text-gray-700' htmlFor="expirationDate">Validade</label>
                         <input id='expirationDate' onChange={handleExpirationDate} type="text" value={payment.expirationDate} placeholder='número' className={` rounded-lg bg-gray-100 px-4 text-xs h-7`}/>
                 </div>
             </div>
