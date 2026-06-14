@@ -14,7 +14,7 @@ export default function Header() {
 
 
     return (
-        <header className="fixed bottom-0 z-50 lg:top-0 h-12 lg:h-14 w-screen items-center flex left-0 bg-white border border-gray-200 shadow-xs">
+        <header className="fixed bottom-0 z-50 lg:top-0 h-14 lg:h-14 w-screen items-center flex left-0 bg-white border border-gray-200 shadow-xs">
             <div className="lg:hidden button-0 px-8 flex justify-around w-full">
                 <Logo/>
                 <Explorar/>
