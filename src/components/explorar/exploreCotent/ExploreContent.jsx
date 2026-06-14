@@ -5,37 +5,37 @@ import greenCollection from './greenCollection.png'
 
 const lista = [
     {
-        img: '',
+        img: blueCollection,
         title: 'Tons de Azul',
-        subtitle: 'Bíblias de Estudo e Edições de Luxo',
+        subtitle: 'Bíblias de Estudo',
         link: 'tons-azul',
         opacity: '0',
-        color: `rgba(0,99,154, )`
+        color: 'rgba(0,99,154)'
     },
     {
-        img: '',
+        img: pinkCollection,
         title: 'Tons de Rosa',
         subtitle: 'Devocionais Diários e Inspiração',
         link: 'tons-rosa',
         opacity: '0',
-        color: `rgba(0,99,154, )`
+        color: '#000'
     },
     {
-        img: '',
-        title: 'Tons de Rosa',
-        subtitle: 'Devocionais Diários e Inspiração',
+        img: yellowCollection,
+        title: 'Tons de Amarelo',
+        subtitle: 'Literatura Cristã Infantil',
         link: 'tons-rosa',
         opacity: '0',
-        color: `rgba(0,99,154,)`
+        color: 'rgba(112,93,0)'
     },
     {
-        img: '',
-        title: 'Tons de Rosa',
-        subtitle: 'Devocionais Diários e Inspiração',
+        img: greenCollection,
+        title: 'Tons de Verde',
+        subtitle: 'Teologia e Clássicos',
         link: 'tons-rosa',
         opacity: '0',
-        color: `rgba(0,99,154, )`
-    },
+        color: 'rgba(15,23,42)'
+    }
 ]
 
 
@@ -47,15 +47,15 @@ export const Carrossel = () => {
                 {lista.map(item => {
                     return(
                         <div className="rounded-2xl overflow-hidden flex-none snap-always snap-center">
-                        <div className={`h-70 w-full bg-linear-to-t from-[${item.color}] via-(${item.color})] to-[${item.color}] relative snap-`}>
-                            <img className='h-full w-full object-cover' src={blueCollection} alt="" />
+                        <div className={`h-70 w-70 bg-linear-to-t from-[${item.color}] via-[${item.color}] to-[${item.color}] relative`}>
+                            <img className='h-full w-full object-cover' src={item.img} alt="" />
                             <div className='flex flex-col justify-end absolute inset-0 py-6 px-6 gap-3'>
                                 <div>
-                                    <p className=' text-white text-3xl'>{item.title}</p>
-                                    <p className=' text-white/80'>{item.subtitle}</p>
+                                    <p className='text-white text-3xl'>{item.title}</p>
+                                    <p className='text-white/80'>{item.subtitle}</p>
                                 </div>
                                 <div>
-                                    <p className=' text-white font-bold'>Ver Coleção</p>
+                                    <p className='text-white font-bold'>Ver Coleção</p>
                                 </div>
                             </div>
                         </div>
@@ -91,8 +91,8 @@ export const BentoGrid = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-span-2 row-span-1 rounded-2xl  overflow-hidden">
-                    <div className='{h-full bg-linear-to-t from-[rgba(188,0,75,90)] via-[rgba(188,0,75,70)] to-[rgba(188,0,75,10)] relative'>
+                <div className="col-span-2 row-span-1 rounded-2xl overflow-hidden">
+                    <div className='h-full bg-linear-to-t from-[rgba(188,0,75,90)] via-[rgba(188,0,75,70)] to-[rgba(188,0,75,10)] relative'>
                         <img className='h-full w-full object-cover' src={pinkCollection} alt="" />
                         <div className='flex flex-col justify-end absolute inset-0 py-6 px-6 gap-3'>
                             <div>
@@ -102,7 +102,7 @@ export const BentoGrid = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-span-1 rounded-2xl  overflow-hidden">
+                <div className="col-span-1 rounded-2xl overflow-hidden">
                     <div className='h-full bg-linear-to-t from-[rgba(112,93,0,90)] via-[rgba(112,93,0,70)] to-[rgba(112,93,0,10)] relative'>
                         <img className='h-full w-full object-cover' src={yellowCollection} alt="" />
                         <div className='flex flex-col justify-end absolute inset-0 py-6 px-6 gap-3'>
@@ -113,7 +113,7 @@ export const BentoGrid = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-span-1 rounded-2xl  overflow-hidden">
+                <div className="col-span-1 rounded-2xl overflow-hidden">
                     <div className='h-full bg-linear-to-t from-[rgba(15,23,42,90)] via-[rgba(15,23,42,70)] to-[rgba(15,23,42,10)] relative'>
                         <img className='h-full w-full object-cover' src={greenCollection} alt="" />
                         <div className='flex flex-col justify-end absolute inset-0 py-6 px-6 gap-3'>
