@@ -1,30 +1,15 @@
 import { useState } from "react";
 
-export default function Payment({pagamento, setPagamento,cupom, setCupom}) {
+export default function Payment({pagamento, setPagamento,cupom, setCupom, payments}) {
     const [cupomAdicionado, setCupomAdicionado] = useState('')
-    console.log(cupomAdicionado)
 
-
-    function handleCartaoSelecionado(){
+    function handleCartaoSelecionado(payment){
         if(Object.keys(pagamento).length === 0){
-            setPagamento(prev => ({...prev, metodo: 'Cartão'}))
-        } else if(pagamento?.metodo === 'Pix'){
-            setPagamento(prev => ({...prev, metodo: 'Cartão'}))
-        }  else {
+            setPagamento(payment)
+        } else {
             setPagamento({})
         }
     }
-
-    function handlePixSelecionado(){
-        if(Object.keys(pagamento).length === 0){
-            setPagamento(prev => ({...prev, metodo: 'Pix'}))
-        } else if(pagamento?.metodo === 'Cartão'){
-            setPagamento(prev => ({...prev, metodo: 'Pix'}))
-        }  else {
-            setPagamento({})
-        }
-    }
-
 
     function handleVerificarCupom(){
         if(cupomAdicionado === 'DEUS'){
@@ -37,7 +22,6 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom}) {
         setCupom({})
     }
 
-
     return (
         <div className="w-full h-full lg:rounded-2xl overflow-hidden bg-white shadow-xs p-8">
             <div className="pb-12 flex flex-col gap-2">
@@ -48,30 +32,28 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom}) {
             {/* FORMA DE PAGAMENTO */}
             <div className="flex gap-4">
 
-                {/* CARTÃO DE CRÉDITO */}
-                <div onClick={handleCartaoSelecionado} className={`${pagamento?.metodo === 'Cartão' && ' border-red-500' } border flex  justify-between p-4 w-full rounded-2xl`}>
-                    <div>
-                        <div className="text-blue-700"><i className="fa-solid fa-credit-card"></i></div>
-                        <p className="font-semibold">Cartão de crédito</p>
-                    </div>
-                    <div>
-                        <div><i class="fa-regular fa-circle"></i></div>
-                    </div>
-                </div>
-
-                {/* PIX */}
-                <div onClick={handlePixSelecionado} className={`${pagamento?.metodo === 'Pix' && 'border-red-500' } border flex  justify-between p-4 w-full rounded-2xl`}>
-                    <div>
-                        <div className="text-blue-700"><i class="fa-brands fa-pix"></i></div>
-                        <div className="flex gap-2 items-center">
-                            <p className="font-semibold">Pix</p>
-                             <div className="bg-red-700 rounded-2xl px-2 text-xs flex h-5 items-center font-semibold text-white">10% OFF</div>   
+                {payments.map(payment => {
+                    return (
+                          <div onClick={()=>handleCartaoSelecionado(payment)} className={`border w-full p-4 flex flex-col gap-2 rounded-2xl ${payment.is_main === 'Casa' && 'border-red-500'}`}>
+                        <div className="flex justify-between">
+                            <div className="flex gap-2">
+                                <div><i class="fa-regular fa-house"></i></div>
+                                <span className="font-semibold"></span>
+                            </div>
+                            <div>
+                                <i class="fa-regular fa-circle"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <div>{payment.brand},{payment.expiration_date} {payment.holder_name} {payment.last_four} {payment.is_main}</div>
                         </div>
                     </div>
-                    <div>
-                        <div><i class="fa-regular fa-circle"></i></div>
-                    </div>
-                </div>
+
+                    )
+                })}
+
+
+          
 
             </div>
 

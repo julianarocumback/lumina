@@ -9,13 +9,14 @@ import { useState, useEffect, useContext } from 'react'
 
 export default function Checkout() {
     const {items, setItems, aumentarQuantidade, diminuirQuantidade, removeToCart } = useCart()
-    const {user, adicionarPedido} = useContext(AuthContext)
+    const {user, adicionarPedido, dadosCliente} = useContext(AuthContext)
 
     const [endereco, setEndereco] = useState({})
     const [frete, setFrete] = useState({})
     const [pagamento, setPagamento] = useState({})
     const [cupom, setCupom] = useState({})
     const [etapa, setEtapa] = useState(0)
+    console.log('pagamento', pagamento)
 
     const listaOk = items.length > 0
     const enderecoOk = Object.keys(endereco).length > 0 && Object.keys(frete).length > 0
@@ -65,7 +66,9 @@ export default function Checkout() {
                     endereco={endereco} setEndereco={setEndereco} frete={frete} setFrete={setFrete}
                     pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom}
                     
-                    listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar}/>
+                    listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar}
+                    addresses={dadosCliente?.address} payments={dadosCliente?.payment}
+                    />
 
                 </div>
             </div>

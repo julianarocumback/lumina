@@ -57,6 +57,8 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
                     <input id='holderName' onChange={handleHolderNameChange}  type="text" value={payment.holderName} placeholder='Seu nome' className={` rounded-lg bg-gray-100 px-4 text-xs h-full w-full`}/>
                 </div>
             </div>
+
+            {/* VER O QUE FAÇO PARA GUARDAR NO CARTÃO */}
             <div className="flex flex-col gap-7 ">
                 <div className="flex gap-4 h-fit">
                     <div className="flex flex-col gap-2  w-4/5">

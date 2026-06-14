@@ -1,29 +1,14 @@
 import { useState } from "react";
 
-export default function Delivery({endereco, setEndereco, frete, setFrete}){
+export default function Delivery({endereco, setEndereco, frete, setFrete, addresses}){
 
-    const casa = 'casa'
-    const trabalho = 'trabalho'
     const [adicionarNovoEndereco, setAdicionarNovoEndereco] = useState(false)
 
     // Selecionar a casa como endereço de entrega    
-    function handleCasaSelecionado(){
+    function handleCasaSelecionado(address){
         if(Object.keys(endereco).length === 0){
-            setEndereco(prev => ({...prev, tipo: casa}))
-        } else if(endereco?.tipo === trabalho){
-            setEndereco(prev => ({...prev, tipo: casa}))
-        }  else {
-            setEndereco({})
-        }
-    }
-
-    // Selecionar o trabalho como endereço de entrega    
-    function handleTrabalhoSelecionado(){
-        if(Object.keys(endereco).length === 0){
-            setEndereco(prev => ({...prev, tipo: trabalho}))
-        } else if(endereco?.tipo === casa){
-            setEndereco(prev => ({...prev, tipo: trabalho}))
-        }  else {
+            setEndereco(address)
+        }else {
             setEndereco({})
         }
     }
@@ -67,36 +52,26 @@ export default function Delivery({endereco, setEndereco, frete, setFrete}){
                 {/* endereços */}
                 <div className="flex gap-8">
 
-                    <div onClick={handleCasaSelecionado} className={`border p-4 flex flex-col gap-2 rounded-2xl ${endereco.tipo === 'casa' && 'border-red-500'}`}>
+                    {addresses.map(address => {
+                        return (
+                            <div onClick={()=>handleCasaSelecionado(address)} className={`border w-full p-4 flex flex-col gap-2 rounded-2xl ${address.type === 'Casa' && 'border-red-500'}`}>
                         <div className="flex justify-between">
                             <div className="flex gap-2">
                                 <div><i class="fa-regular fa-house"></i></div>
-                                <span className="font-semibold">Casa</span>
+                                <span className="font-semibold">{address.type}</span>
                             </div>
                             <div>
                                 <i class="fa-regular fa-circle"></i>
                             </div>
                         </div>
                         <div>
-                            <div>Av. Aliança, 777, São Paulo - SP, CEP: 01234-567</div>
+                            <div>{address.street},{address.streetNumber} {address.neighborhood} {address.city} {address.state}, {address.zip_code}</div>
                         </div>
                     </div>
+                        )
+                    })}
 
-
-                    <div onClick={handleTrabalhoSelecionado} className={`border p-4 flex flex-col gap-2 rounded-2xl ${endereco.tipo === 'trabalho' && 'border-red-500'}`}>
-                        <div className="flex justify-between">
-                            <div className="flex gap-2">
-                                <div><i class="fa-solid fa-briefcase"></i></div>
-                                <span className="font-semibold">Trabalho</span>
-                            </div>
-                            <div>
-                                <i class="fa-regular fa-circle"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <div>Av. Aliança, 777, São Paulo - SP, CEP: 01234-567</div>
-                        </div>
-                    </div>
+                    
                 </div>
                 {!adicionarNovoEndereco && <button onClick={handleAdicionarNovoEndereco} className="font-semibold text-sm text-blue-800 w-50">+ Adicionar novo endereço</button>}
             </div>
