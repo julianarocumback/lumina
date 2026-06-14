@@ -2,6 +2,8 @@ import { useOutletContext } from 'react-router-dom'
 
 export default function Payment(){
     const {dadosCliente, setNewPayment} = useOutletContext()
+    
+    
     if(!dadosCliente) return
     return(
         <div className="flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full lg:h-screen">
