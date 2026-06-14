@@ -52,24 +52,39 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
                 {/* endereços */}
                 <div className="flex gap-8">
 
-                    {addresses.map(address => {
+                    {addresses.filter(address => address.is_main).map(address => {
                         return (
                             <div onClick={()=>handleCasaSelecionado(address)} className={`border w-full p-4 flex flex-col gap-2 rounded-2xl ${address.type === 'Casa' && 'border-red-500'}`}>
-                        <div className="flex justify-between">
-                            <div className="flex gap-2">
-                                <div><i class="fa-regular fa-house"></i></div>
-                                <span className="font-semibold">{address.type}</span>
+                                <div className="flex justify-between">
+                                    <div className="flex gap-2">
+                                        <div><i class="fa-regular fa-house"></i></div>
+                                        <span className="font-semibold">{address.type}</span>
+                                    </div>
+                                    <div>
+                                        <i class="fa-regular fa-circle"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>{address.street},{address.streetNumber} {address.neighborhood} {address.city} {address.state}, {address.zip_code}</div>
+                                </div>
                             </div>
-                            <div>
-                                <i class="fa-regular fa-circle"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <div>{address.street},{address.streetNumber} {address.neighborhood} {address.city} {address.state}, {address.zip_code}</div>
-                        </div>
-                    </div>
                         )
                     })}
+
+                    <div  className={`border w-full p-4 flex flex-col gap-2 rounded-2xl `}>
+                                <div className="flex justify-between">
+                                    <div className="flex gap-2">
+                                        <div><i class="fa-regular fa-house"></i></div>
+                                        <span className="font-semibold"></span>
+                                    </div>
+                                    <div>
+                                        <i class="fa-regular fa-circle"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                  <div>Selecione outro endereço</div>
+                                </div>
+                            </div>
 
                     
                 </div>

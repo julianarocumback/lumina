@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
     const [payment, setPayment] = useState({
@@ -20,7 +20,7 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
     function handleLastFourChange(event) {
         const lastFour = event.target.value
         console.log(lastFour[0])
-        if(!(/^[1-9]+$/).test(lastFour)) return
+        // if(!(/^[1-9]+$/).test(lastFour)) return
         if(lastFour.length > 16) return
         if(lastFour){
             console.log('é 4')
@@ -35,7 +35,26 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
 
     function handleAddPayment(){
         addPayment(payment)
+        setNewPayment(false)
     }
+
+    useEffect(()=> {
+        function brand() {
+            if(/^4/.test(payment.lastFour)) {
+                setPayment(prev => ({...prev, brand: 'Visa'}))
+            } else if(/^5[1-5]/.test(payment.lastFour)) {
+                setPayment(prev => ({...prev, brand: 'Mastercard'}))
+            }else if(/^3[4|7]/.test(payment.lastFour)) {
+                setPayment(prev => ({...prev, brand: 'American Express'}))
+            } else {
+                setPayment(prev => ({...prev, brand: ''}))
+            }
+        } 
+
+        brand()
+
+    },[payment.lastFour])
+
 
     console.log(payment)
 
@@ -43,7 +62,7 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
         <div className="absolute flex justify-items-start lg:justify-center lg:items-center items-center top-0 h-full lg:h-screen w-full transition-colors bg-black/30 overflow-hidden">
             <div className='border rounded-2xl w-full h-fit lg:w-100 lg:left-40 bg-white p-8 shadow-lg border-gray-200 gap-8 flex flex-col relative'>
                 <div className='flex'>
-                    <h2 className="text-xl font-semibold text-blue-700">Novo cartão</h2>
+                    <h2 className="text-xl font-semibold">Novo cartão</h2>
                     <button onClick={()=> setNewPayment(false)} className="absolute right-8 w-7 h-7 hover:cursor-pointer hover:text-red-400 transition-colors" ><i class="fa-solid fa-xmark" ></i></button>
                 </div>
 
@@ -56,13 +75,18 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
                         {/* NÚMERO DO CARTÃO */}
                         <div className="flex flex-col gap-2">
                             <label htmlFor='lastFour' className='font-semibold text-xs text-gray-700'>NÚMERO DO CARTÃO</label>
-                            <input id='lastFour' onChange={handleLastFourChange} type="text" value={payment.lastFour} placeholder='0000 0000 0000 0000' className={`rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
+                            <div className='w-full relative'>
+                                <input id='lastFour' onChange={handleLastFourChange} type="text" value={payment.lastFour} placeholder='0000 0000 0000 0000' className={`focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
+                                {payment.brand === 'Visa'? <div className='absolute top-1 right-3 text-blue-800'><i class="fa-brands fa-cc-visa"></i></div>
+                                :payment.brand === 'Mastercard' ?<div className='absolute top-1 right-3 text-red-900 '><i class="fa-brands fa-cc-mastercard"></i></div>
+                                :payment.brand === 'American Express' && <div className='absolute top-1 right-3 text-gray-700'><i class="fa-brands fa-cc-amex"></i></div>}
+                            </div>
                         </div>
 
                         {/* NOME NO CARTÃO */}
                         <div className="flex flex-col gap-2">
                             <label className='font-semibold text-xs text-gray-700' htmlFor="holderName">NOME NO CARTÃO</label>
-                            <input id='holderName' onChange={handleHolderNameChange}  type="text" value={payment.holderName} placeholder='Como impresso no cartão' className={`rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
+                            <input id='holderName' onChange={handleHolderNameChange}  type="text" value={payment.holderName} placeholder='Como impresso no cartão' className={`focus:outline-none rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
                         </div>
 
                         {/* VALIDADE E CVV */}

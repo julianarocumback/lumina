@@ -23,7 +23,7 @@ export default function User() {
         <div className={`h-full w-full`}>
             <Header/>
             <Sidebar logout={logout}/>
-            <Outlet context={{dadosCliente, addToCart, removerFavorito, items, atualizarNome, atualizarEmail, atualizarWhatsApp, adicionarEndereco, removerEndereco, newAddress, setNewAddress , newPayment,setNewPayment}}/>
+            <Outlet context={{dadosCliente , addToCart, removerFavorito, items, atualizarNome, atualizarEmail, atualizarWhatsApp, adicionarEndereco, removerEndereco, newAddress, setNewAddress , newPayment,setNewPayment}}/>
             {newAddress && <NewAddress adicionarEndereco={adicionarEndereco} setNewAddress={setNewAddress} dadosCliente={dadosCliente}/>}
             {newPayment && <NewPayment addPayment={addPayment} setNewPayment={setNewPayment} dadosCliente={dadosCliente}/>}
             

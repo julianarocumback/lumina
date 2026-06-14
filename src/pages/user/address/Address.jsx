@@ -4,7 +4,7 @@ export default function Address(){
     const {dadosCliente, removerEndereco, setNewAddress} = useOutletContext()
 
     return (
-        <div className={` ${dadosCliente?.enderecos.length < 3 ? 'h-screen' : 'h-full' } flex flex-col gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 `}>
+        <div className={` ${dadosCliente?.enderecos?.length < 3 ? 'h-screen' : 'h-full' } flex flex-col gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 `}>
             
             <h1 className="text-2xl font-semibold">Endereços</h1>
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 relative">
