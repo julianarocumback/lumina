@@ -40,8 +40,8 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
     console.log(payment)
 
     return (
-        <div className="absolute flex justify-items-start lg:justify-center lg:items-center items-center top-0 h-full lg:h-screen w-full transition-colors bg-black/30">
-            <div className='border rounded-2xl w-full h-fit lg:w-100 lg:h-fit lg:right-50 lg:left-50 bg-white p-8 shadow-lg border-gray-200 gap-8 flex flex-col relative'>
+        <div className="absolute flex justify-items-start lg:justify-center lg:items-center items-center top-0 h-full lg:h-screen w-full transition-colors bg-black/30 overflow-hidden">
+            <div className='border rounded-2xl w-full h-fit lg:w-100 lg:left-40 bg-white p-8 shadow-lg border-gray-200 gap-8 flex flex-col relative'>
                 <div className='flex'>
                     <h2 className="text-xl font-semibold text-blue-700">Novo cartão</h2>
                     <button onClick={()=> setNewPayment(false)} className="absolute right-8 w-7 h-7 hover:cursor-pointer hover:text-red-400 transition-colors" ><i class="fa-solid fa-xmark" ></i></button>
