@@ -28,7 +28,7 @@ export default function Payment(){
                             </div>
 
                             <div className="bg-yellow-500 w-6 rounded-md h-4"></div>
-                            <div className="self-center text-white font-semibold -tracking-tighter">{card.last_four}</div>
+                            <div className="self-center text-white font-semibold -tracking-tighter">{card.last_four.replace(/\D/g,'').replace(/^(\d{4})(\d{4})(\d{4})(\d{4})$/, '•••• •••• •••• $4')}</div>
                             <div className="flex justify-between text-white">
                                 <div className="">
                                     <span className="text-[8px] font-semibold text-gray-400">Nome</span>

@@ -76,7 +76,7 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
                         <div className="flex flex-col gap-2">
                             <label htmlFor='lastFour' className='font-semibold text-xs text-gray-700'>NÚMERO DO CARTÃO</label>
                             <div className='w-full relative'>
-                                <input id='lastFour' onChange={handleLastFourChange} type="text" value={payment.lastFour} placeholder='0000 0000 0000 0000' className={`focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
+                                <input id='lastFour' onChange={handleLastFourChange}  type="text" value={payment.lastFour} placeholder='0000 0000 0000 0000' className={`focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
                                 {payment.brand === 'Visa'? <div className='absolute top-1 right-3 text-blue-800'><i class="fa-brands fa-cc-visa"></i></div>
                                 :payment.brand === 'Mastercard' ?<div className='absolute top-1 right-3 text-red-900 '><i class="fa-brands fa-cc-mastercard"></i></div>
                                 :payment.brand === 'American Express' && <div className='absolute top-1 right-3 text-gray-700'><i class="fa-brands fa-cc-amex"></i></div>}
