@@ -131,8 +131,20 @@ export function AuthProvider({ children }) {
     } 
 
     async function addPayment(payment) {
-      if(user?.id){
+
+      if(user?.id) {
         const { data } = await supabase
+        .from('payment')
+        .update({is_main: false})
+        .eq('user_id', user.id)
+
+        if(data){
+          setDadosCliente(data)
+        }
+      }
+
+      if(user?.id){
+        const { data: newCard } = await supabase
         .from('payment')
         .insert([{
           user_id: payment.userId,
@@ -145,8 +157,18 @@ export function AuthProvider({ children }) {
         .select('*')
         .single()
 
-        if(data){
-          setDadosCliente(data)
+        if(newCard){
+          const OldersCards = dadosCliente?.payment?.map(card => ({
+            ...card,
+            is_main:false
+          })) || []
+
+          const allCards = [...OldersCards, newCard]
+
+          setDadosCliente({...dadosCliente, payment: allCards})
+
+
+
         }
       }
     }

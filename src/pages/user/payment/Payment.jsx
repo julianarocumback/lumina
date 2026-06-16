@@ -22,24 +22,25 @@ export default function Payment(){
                         {dadosCliente?.payment?.map(card => {
                             return (
                                 <div className="h-40 lg:h-45 lg:w-75 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col">
-                            <div className="flex justify-between">
-                            <div className="text-white"><i class="fa-brands fa-cc-visa"></i></div>
-                            <span className="text-xs font-bold text-gray-400">{card.brand}</span>
-                            </div>
+                                    <div className="flex justify-between">
+                                        <div className="text-white"><i class="fa-brands fa-cc-visa"></i></div>
+                                        <span className="text-xs font-bold text-gray-400">{card.brand}</span>
+                                    </div>
 
-                            <div className="bg-yellow-500 w-6 rounded-md h-4"></div>
-                            <div className="self-center text-white font-semibold -tracking-tighter">{card.last_four.replace(/\D/g,'').replace(/^(\d{4})(\d{4})(\d{4})(\d{4})$/, '•••• •••• •••• $4')}</div>
-                            <div className="flex justify-between text-white">
-                                <div className="">
-                                    <span className="text-[8px] font-semibold text-gray-400">Nome</span>
-                                <p className="text-xs font-semibold">{card.holder_name}</p>
+                                    <div className="bg-yellow-500 w-6 rounded-md h-4"></div>
+                                    
+                                    <div className="self-center text-white font-semibold -tracking-tighter">{card.last_four.replace(/\D/g,'').replace(/^(\d{4})(\d{4})(\d{4})(\d{4})$/, '•••• •••• •••• $4')}</div>
+                                    <div className="flex justify-between text-white">
+                                        <div className="">
+                                            <span className="text-[8px] font-semibold text-gray-400">Nome</span>
+                                            <p className="text-xs font-semibold capitalize">{card.holder_name}</p>
+                                        </div>
+                                        <div>
+                                            <span className="text-[8px] font-semibold text-gray-400 text-right">Validade</span>
+                                            <p className="text-xs font-semibold">{card.expiration_date}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span className="text-[8px] font-semibold text-gray-400 text-right">Validade</span>
-                                    <p className="text-xs font-semibold">{card.expiration_date}</p>
-                                </div>
-                            </div>
-                        </div>
                             )
                         })}
                     </div>

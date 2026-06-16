@@ -2,17 +2,18 @@ import { useState } from "react";
 
 export default function Payment({pagamento, setPagamento,cupom, setCupom, payments}) {
     const [cupomAdicionado, setCupomAdicionado] = useState('')
-    const [isCardOpen, setIsCardOpen] = useState(false)
-    const [paymentId, setPaymentId] = useState('')
+    const [paymentType, setPaymentType] = useState('card')
     
-    const paymentType = [
+    const paymentTypeList = [
         {
+            id: 'card',
             main: true,
             title: 'Cartão de crédito',
             type: 'card',
             status: false
         },
         {
+            id: 'pix',
             main: true,
             title: 'Pix',
             type: 'card',
@@ -20,7 +21,10 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
         }
     ]
 
-
+    function handlePaymentType(paymentID){
+        setPaymentType(paymentID)
+    }
+    
     function handleCartaoSelecionado(payment){
         if(Object.keys(pagamento).length === 0){
             setPagamento(payment)
@@ -54,9 +58,9 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
             {/* FORMA DE PAGAMENTO */}
             <div className="flex flex-col gap-4">
                 <div className="flex gap-4">
-                    {paymentType.map(payment =>{
+                    {paymentTypeList.map(payment => {
                         return (
-                            <div onClick={()=>setIsCardOpen(payment.status)} className={`w-full ${payment.status ? 'border-red-500 ':'border-blue-400'} border rounded-2xl h-30 p-4 flex flex-col justify-between`} >
+                            <div onClick={()=>handlePaymentType(payment.id)} className={`w-full ${paymentType === payment.id && 'border-red-500'} border rounded-2xl h-30 p-4 flex flex-col justify-between`} >
                                 <div>
                                     <i class="fa-solid fa-credit-card"></i>
                                 </div>
@@ -67,32 +71,40 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
             </div>   
 
             {/* OPÇÕES DE PAGAMENTO */}
-            {isCardOpen ? 
+            {paymentType === 'card' ? 
             // PIX
-            <div>aaaaaaaa</div>
-            :
+            
+            
             // CARTÃO DE CRÉDITO
             <div className="flex gap-4 overflow-x-auto no-scrollbar bg-gradient-to-r from-[#fff] from-95% to-[#0002] py-2">
                 {payments.map(payment => {
                     return (
-                          <div onClick={()=>handleCartaoSelecionado(payment)} className={` flex-none w-70 h-40 border border-gray-200 shadow-md p-4 rounded-2xl ${payment.is_main === 'Casa' && 'border-red-500'}`}>
-                        <div className="flex justify-between">
-                            <div className="flex gap-2">
-                                <div><i class="fa-regular fa-house"></i></div>
-                                <span className="font-semibold"></span>
-                            </div>
-                            <div>
-                                <i class="fa-regular fa-circle"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <div>{payment.brand},{payment.expiration_date} {payment.holder_name} {payment.last_four} {payment.is_main}</div>
-                        </div>
-                    </div>
+                          <div onClick={()=>handleCartaoSelecionado(payment)} className="h-40 lg:h-40  lg:w-65 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col">
+                                    <div className="flex justify-between">
+                                        <div className="text-white"><i class="fa-brands fa-cc-visa"></i></div>
+                                        <span className="text-xs font-bold text-gray-400">{payment.brand}</span>
+                                    </div>
+
+                                    <div className="bg-yellow-500 w-6 rounded-md h-4"></div>
+                                    
+                                    <div className="self-center text-white font-semibold -tracking-tighter">{payment.last_four.replace(/\D/g,'').replace(/^(\d{4})(\d{4})(\d{4})(\d{4})$/, '•••• •••• •••• $4')}</div>
+                                    <div className="flex justify-between text-white">
+                                        <div className="">
+                                            <span className="text-[8px] font-semibold text-gray-400">Nome</span>
+                                            <p className="text-xs font-semibold capitalize">{payment.holder_name}</p>
+                                        </div>
+                                        <div>
+                                            <span className="text-[8px] font-semibold text-gray-400 text-right">Validade</span>
+                                            <p className="text-xs font-semibold">{payment.expiration_date}</p>
+                                        </div>
+                                    </div>
+                                </div>
 
                     )}
                 )}
             </div>
+            :
+                <div>aaaaaaaa</div>
             }
                 
             

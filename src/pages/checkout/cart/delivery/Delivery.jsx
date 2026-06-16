@@ -52,7 +52,7 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
                 {/* endereços */}
                 <div className="flex gap-8">
 
-                    {addresses.filter(address => address.is_main).map(address => {
+                    {addresses?.filter(address => address.is_main).map(address => {
                         return (
                             <div onClick={()=>handleCasaSelecionado(address)} className={`border w-full p-4 flex flex-col gap-2 rounded-2xl ${address.type === 'Casa' && 'border-red-500'}`}>
                                 <div className="flex justify-between">
