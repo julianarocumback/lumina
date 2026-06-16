@@ -23,7 +23,7 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
 
     function handleLastFourChange(event) {
         const lastFour = event.target.value
-        const numeroLimpo = lastFour.replace(/\D/g, '')
+        let numeroLimpo = lastFour.replace(/\D/g, '')
 
         if (numeroLimpo.length > 16) {
             numeroLimpo = numeroLimpo.slice(0, 16);
