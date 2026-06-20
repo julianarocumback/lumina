@@ -28,6 +28,7 @@ export default function Pedidos(){
         }
     ]
     console.log(dadosCliente?.pedidos?.map(item => item?.produtos.map(item => item.nome).map(item=> item)))
+    if(!dadosCliente)return
    
     
  
