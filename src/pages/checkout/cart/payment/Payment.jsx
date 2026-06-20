@@ -115,13 +115,13 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
 
                     <div className="h-50 border border-gray-200 rounded-2xl overflow-hidden shadow-xl"><img className="h-full" src={QRCode} alt="" /></div>
                     <div className="flex flex-col gap-4 w-full">
-                        <p className="text-[14px] lg:text-base font-semibold text-gray-700">CÓDIGO PIX COPIA E COLA</p>
+                        <p className="text-[14px] lg:text-base font-semibold text-gray-700">Código PIX copia e cola</p>
                         <div className="flex gap-4">
                             <div className="border w-full text-xs truncate p-2 bg-gray-100 border-gray-200 rounded-lg">00020101021226850014br.gov.bcb.pix0123radianteditorialpix@checkout.com.br5204000053039865406409.235802BR5920Radiant Editorial6009SAO PAULO62070503***6304E2B1</div>
                             <button className="bg-blue-400 text-white font-semibold rounded-lg px-2 text-xs ">COPIAR</button>
 
                         </div>
-                            <div className="flex gap-2 text-gray-700 items-center justify-center text-[14px] lg:text-base">
+                            <div className="flex gap-2 text-gray-700 items-center justify-center text-[12px] lg:text-base">
                                 <div><i class="fa-regular fa-clock"></i></div>
                                 <div className="">Este código expira em <span className="text-pink-600 font-semibold">30:00</span> minutos</div>
                             </div>
