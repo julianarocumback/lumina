@@ -28,14 +28,13 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
     function handleCartaoSelecionado(payment){
         if(Object.keys(pagamento).length === 0){
             setPagamento(payment)
+        } if(pagamento.id !== payment.id){
+            setPagamento(payment)
         } else {
             setPagamento({})
         }
     }
 
-    function handlePixSelecionado(){
-        setPagamento({})
-    }
 
     function handleVerificarCupom(){
         if(cupomAdicionado === 'DEUS'){
@@ -78,8 +77,10 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
             // CARTÃO DE CRÉDITO
             <div className="flex gap-4 overflow-x-auto no-scrollbar bg-gradient-to-r from-[#fff] from-95% to-[#0002] py-2">
                 {payments.map(payment => {
+                    const isSelected = pagamento.id === payment.id
+
                     return (
-                          <div onClick={()=>handleCartaoSelecionado(payment)} className="h-40 lg:h-40  lg:w-65 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col">
+                          <div onClick={()=>handleCartaoSelecionado(payment)} className={`${isSelected && ' outline-1 outline-red-500'} h-40 lg:h-40  lg:w-65 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col`}>
                                     <div className="flex justify-between">
                                         <div className="text-white"><i class="fa-brands fa-cc-visa"></i></div>
                                         <span className="text-xs font-bold text-gray-400">{payment.brand}</span>

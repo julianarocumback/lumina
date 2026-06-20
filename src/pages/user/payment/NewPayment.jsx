@@ -74,7 +74,7 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
                 <div className='flex flex-col gap-6 w-full h-fit'>
 
                     {/* INFORMAÇÕES DO CARTÃO */}
-                    <div className='flex flex-col gap-4'>
+                    <div className='flex flex-col gap-4 relative'>
 
                         {/* NÚMERO DO CARTÃO */}
                         <div className="flex flex-col gap-2">
@@ -115,7 +115,6 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
                                 <label htmlFor='main' className='font-semibold text-xs text-gray-700'>Definir como cartão principal</label>
                             </div>
                         </div>
-                        
                     </div>
 
                     {/* SALVAR CARTÃO */}

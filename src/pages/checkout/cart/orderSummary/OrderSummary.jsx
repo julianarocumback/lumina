@@ -2,7 +2,7 @@ export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, 
     if(!lista) return
 
     const valorProdutos = lista.map(items => items.valor * items.quantidade).reduce((a, b) => a + b, 0)
-    const valorFrete = frete?.valor
+    const valorFrete = frete?.price
     const valorCupom = cupom?.valor
     const desconto = (valorProdutos + valorFrete) * valorCupom
     const total = valorProdutos + (valorFrete > 0? valorFrete:0) - (desconto > 0? desconto:0)
@@ -14,21 +14,21 @@ export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, 
             <div className="flex gap-1 flex-col text-gray-400">
                 <div className="flex text-sm justify-between w-full">
                     <span>Produtos</span>
-                    <span className="text-gray-800">{valorProdutos.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
+                    <span className="text-gray-800">{valorProdutos?.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
                 </div>
                 <div className="flex text-sm justify-between w-full">
                     <span>Frete</span>
-                    <span className="text-red-500 font-semibold">{Object.keys(frete).length > 0? valorFrete.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
+                    <span className="text-red-500 font-semibold">{Object.keys(frete).length > 0? valorFrete?.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
                 </div>
                 <div className="flex text-sm justify-between w-full">
                     <span>Desconto</span>
-                    <span className="text-green-500 font-semibold">{Object.keys(cupom).length > 0? desconto.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
+                    <span className="text-green-500 font-semibold">{Object.keys(cupom).length > 0? desconto?.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'}): '---'}</span>
                 </div>
             </div>
             <div className="w-full h-0.5 bg-gray-200 lg:bg-gray-400"></div>
             <div className="flex items-center justify-between">
                 <span className="font-semibold text-sm">TOTAL</span>
-                <span className="font-semibold text-lg lg:text-3xl">{total.toLocaleString('pt-BR', {style:'currency', currency: 'BRL'})}</span>
+                <span className="font-semibold text-lg lg:text-3xl">{total?.toLocaleString('pt-BR', {style:'currency', currency: 'BRL'})}</span>
             </div>
 
 

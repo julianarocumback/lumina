@@ -1,27 +1,35 @@
+import { use, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 
 export default function Payment(){
     const {dadosCliente, newPayment, setNewPayment} = useOutletContext()
+    const [isOpen, setIsOpen] = useState(false)
+
+    function handleIsOpen(){
+        setIsOpen(prev => !prev)
+    }
     
     
     if(!dadosCliente) return
     return(
-        <div className={`${newPayment && 'fixed'} flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full lg:h-screen`}>
+        <div onMouseMove={(e) =>  {e.stopPropagation() ;setIsOpen(false)}} className={`${newPayment && 'fixed'} flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full lg:h-screen`}>
             <div className="flex flex-col gap-4">
                 <h1 className="text-2xl lg:text-4xl font-semibold">Pagamentos</h1>
                 <h3 className="hidden md:block text-lg text-gray-600">Gerencie suas formas de pagamento e acompanhe suas compras com total transparência e segurança.</h3>
 
             </div>
 
-                <div className="flex flex-col gap-8">
+                <div   className="flex flex-col gap-8">
                     <h2 className="text-xl lg:text-2xl font-semibold">Cartões Salvos</h2>
                     {/* CARTÕES  */}
                     <div className="flex flex-col lg:flex-row gap-4 flex-wrap md:flex-row">
 
-                    <div className="flex flex-col lg:flex-row gap-4 flex-wrap md:flex-row">
+                    <div  className="flex flex-col lg:flex-row gap-4 flex-wrap md:flex-row">
                         {dadosCliente?.payment?.map(card => {
                             return (
-                                <div className="h-40 lg:h-45 lg:w-75 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col">
+                                <div onMouseMove={(e) =>  {e.stopPropagation() ;setIsOpen(true)}} className="h-40 lg:h-45 lg:w-75 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col relative">
+                                    
+                        {isOpen && <div className='absolute top-3 right-10 text-lg text-white'><i class="fa-brands fa-cc-visa"></i></div>}
                                     <div className="flex justify-between">
                                         <div className="text-white"><i class="fa-brands fa-cc-visa"></i></div>
                                         <span className="text-xs font-bold text-gray-400">{card.brand}</span>

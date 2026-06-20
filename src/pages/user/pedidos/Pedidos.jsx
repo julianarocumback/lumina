@@ -1,35 +1,9 @@
 import { useOutletContext } from 'react-router-dom'
+import { useState } from 'react'
 
 export default function Pedidos(){
     const {dadosCliente} = useOutletContext()
-
-
-    const pedidos = [
-        {
-            capa: 'capa',
-            nome: 'aaa',
-            numero: 'numero',
-            valor: 123,
-            status: 'Entregue',
-            dataCompra: '12/12/26'
-        },
-        {
-            capa: 'capa',
-            nome: 'aaa',
-            numero: 'numero',
-            valor: 123,
-            status: 'Entregue',
-            dataCompra: '12/12/26'
-        },
-        {
-            capa: 'capa',
-            nome: 'aaa',
-            numero: 'numero',
-            valor: 123,
-            status: 'Entregue',
-            dataCompra: '12/12/26'
-        }
-    ]
+    const [status, setStatus] = useState()
 
     const categorias = [
         {
@@ -53,16 +27,10 @@ export default function Pedidos(){
             ativo: false
         }
     ]
-
-    const produtos = [
-        {
-            imagem: ''
-
-        },
-    ]
-
-
-
+    console.log(dadosCliente?.pedidos?.map(item => item?.produtos.map(item => item.nome).map(item=> item)))
+   
+    
+ 
     return (
         <div className="flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full">
             <div className="flex flex-col w-full h-full gap-8">
@@ -81,16 +49,17 @@ export default function Pedidos(){
                     <div className="text-nowrap flex gap-4 overflow-x-auto no-scrollbar ">
                         {categorias.map(categoria => {
                             return (
-                                <button className={`border border-gray-100 py-2 px-4 font-semibold rounded-full  ${categoria.ativo? 'bg-blue-400 text-white ':'bg-white'}`}>{categoria.status}</button>
+                                <button onClick={()=> setStatus(categoria.status)} className={`border border-gray-100 py-2 px-4 font-semibold rounded-full  ${categoria.ativo? 'bg-blue-400 text-white ':'bg-white'}`}>{categoria.status}</button>
                             )
                         })}
+                        {dadosCliente?.pedidos?.produtos.map(item => <div>{item?.nome}</div>)} 
                     </div>
 
 
                 </div>
-
+                                             
                 <div className="flex flex-col gap-4">
-                    {dadosCliente?.pedidos?.map(pedido => {
+                    {dadosCliente?.pedidos?.filter(pedido => pedido.status === (status === 'Todos' ? pedido.status : status ?? pedido.status)).map(pedido => {
                         return (
                             <div className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col ">
 
@@ -108,7 +77,7 @@ export default function Pedidos(){
                                         <p className="font-light lg:hidden">Realizado em 12 out 2026</p>
 
                                         <div className="flex gap-4">
-                                            {pedido.produtos.map(produto => {
+                                            {pedido?.produtos.map(produto => {
                                                 return(
                                                     <div className="border border-gray-200 w-15 rounded-xl overflow-hidden flex">
                                                         <img src={produto.img_url} alt="" />
@@ -117,9 +86,9 @@ export default function Pedidos(){
                                                 )
                                             })
                                             }
-
+                                            
                                         </div>
-                                     
+                                         
                                     </div>
                                     
                                     <div className="lg:flex flex-col gap-4 hidden">
@@ -140,6 +109,7 @@ export default function Pedidos(){
                             </div>
                         )
                     })}
+                    {dadosCliente?.pedidos?.filter(pedido => pedido.status === undefined)}
                 </div>
             </div>
         </div>

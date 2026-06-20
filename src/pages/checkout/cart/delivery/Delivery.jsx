@@ -1,12 +1,29 @@
 import { useState } from "react";
 
 export default function Delivery({endereco, setEndereco, frete, setFrete, addresses}){
+    const deliveries = [
+        {
+            id: 1,
+            type: 'padrão',
+            days: '5',
+            price: 15
+        },
+        {
+            id: 2,
+            type: 'rápida',
+            days: '2',
+            price: 25
+        }
+    ]
 
     const [adicionarNovoEndereco, setAdicionarNovoEndereco] = useState(false)
+
 
     // Selecionar a casa como endereço de entrega    
     function handleCasaSelecionado(address){
         if(Object.keys(endereco).length === 0){
+            setEndereco(address)
+        }if(endereco.id !== address.id){
             setEndereco(address)
         }else {
             setEndereco({})
@@ -16,6 +33,17 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
     // Mostrar os inputs para adicionar novo endereço
     function handleAdicionarNovoEndereco(){
         setAdicionarNovoEndereco(prev => !prev)
+    }
+
+    // Selecionar o frete    
+    function handleFrete(delivery){
+        if(Object.keys(frete).length === 0){
+            setFrete(delivery)
+        }else if(frete?.price !== delivery?.price){
+            setFrete(delivery)
+        } else {
+            setFrete({})
+        }
     }
 
     // Selecionar o frete padrão    
@@ -50,11 +78,12 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
             <div className="flex flex-col gap-4 pb-8">
                 <p className="font-semibold">Selecione um endereço de entrega</p>
                 {/* endereços */}
-                <div className="flex gap-8">
+                <div className="flex gap-8 select-none">
 
-                    {addresses?.filter(address => address.is_main).map(address => {
+                    {addresses?.map(address => {
+                        const isSelected = endereco.type === address.type
                         return (
-                            <div onClick={()=>handleCasaSelecionado(address)} className={`border w-full p-4 flex flex-col gap-2 rounded-2xl ${address.type === 'Casa' && 'border-red-500'}`}>
+                            <div onClick={()=>handleCasaSelecionado(address)} className={`hover:cursor-pointer border w-full p-4 flex flex-col gap-2 rounded-2xl ${isSelected && 'border-red-500'}`}>
                                 <div className="flex justify-between">
                                     <div className="flex gap-2">
                                         <div><i class="fa-regular fa-house"></i></div>
@@ -71,24 +100,9 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
                         )
                     })}
 
-                    <div  className={`border w-full p-4 flex flex-col gap-2 rounded-2xl `}>
-                                <div className="flex justify-between">
-                                    <div className="flex gap-2">
-                                        <div><i class="fa-regular fa-house"></i></div>
-                                        <span className="font-semibold"></span>
-                                    </div>
-                                    <div>
-                                        <i class="fa-regular fa-circle"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                  <div>Selecione outro endereço</div>
-                                </div>
-                            </div>
-
-                    
+                 
                 </div>
-                {!adicionarNovoEndereco && <button onClick={handleAdicionarNovoEndereco} className="font-semibold text-sm text-blue-800 w-50">+ Adicionar novo endereço</button>}
+                {!adicionarNovoEndereco && <button onClick={handleAdicionarNovoEndereco} className="hover:cursor-pointer font-semibold text-sm text-blue-800 w-50">+ Adicionar novo endereço</button>}
             </div>
 
             
@@ -158,38 +172,28 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
                 <div>
                     <p className="font-semibold">Modalidade de envio</p>
                 </div>
+                
                 <div className="flex flex-col gap-5">
-                    <div  onClick={handleFreteRapido} className={`${frete.valor === 25? 'border-amber-200': 'border-black'} border rounded-2xl p-4 flex justify-between items-center`}>
+                    {deliveries.map(delivery => {
+                        const isSelected = frete.type === delivery.type
+                        return (
+                            <div onClick={()=> handleFrete(delivery)} className={`${isSelected && 'border-amber-200'} hover:cursor-pointer border rounded-2xl p-4 flex justify-between items-center`}>
                         <div className="flex gap-4 items-center">
                             <div>
                                 <i class="fa-regular fa-circle"></i>
                             </div>
                             <div >
-                                <p className="font-semibold text-lg text-gray-500">Entrega rápida</p>
-                                <p className="text-xs italic text-gray-400">Receba em até 2 dias</p>
+                                <p className="font-semibold text-lg text-gray-500">Entrega {delivery.type}</p>
+                                <p className="text-xs italic text-gray-400">Receba em até {delivery.days} dias</p>
                             </div>
 
                         </div>
                         <div className="text-lg font-semibold text-gray-500">
-                            R$ 25,00
+                            {delivery.price.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}
                         </div>
                     </div>
-
-                     <div  onClick={handleFretePadrao} className={`${frete.valor === 15? 'border-amber-200': 'border-black'} border rounded-2xl p-4 flex justify-between items-center`}>
-                        <div className="flex gap-4 items-center">
-                            <div>
-                                <i class="fa-regular fa-circle"></i>
-                            </div>
-                            <div >
-                                <p className="font-semibold text-lg text-gray-500">Entrega padrão</p>
-                                <p className="text-xs italic text-gray-400">Receba em até 5 dias</p>
-                            </div>
-
-                        </div>
-                        <div className="text-lg font-semibold text-gray-500">
-                            R$ 15,00
-                        </div>
-                    </div>
+                        )
+                    })}
             </div>
 
 
