@@ -55,7 +55,7 @@ export default function Checkout() {
     if(!items) return
     
     return(
-        <div className="bg-gray-100 relative" >
+        <div className=" relative bg-[radial-gradient(at_0%_0%,#cee5ff90,transparent_50%),radial-gradient(at_100%_100%,#fb923c20,transparent_50%),radial-gradient(at_0%_100%,#ec489910,transparent_50%),radial-gradient(at_100%_0%,#22c55e10,transparent_50%)]" >
             <Header/>
             <div className="flex flex-col gap-4 lg:px-90 relative">
                 <Stepper listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} etapa={etapa} setEtapa={setEtapa}/>

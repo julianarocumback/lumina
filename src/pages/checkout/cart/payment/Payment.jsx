@@ -1,4 +1,5 @@
 import { useState } from "react";
+import QRCode from './qr-code.svg'
 
 export default function Payment({pagamento, setPagamento,cupom, setCupom, payments}) {
     const [cupomAdicionado, setCupomAdicionado] = useState('')
@@ -39,12 +40,13 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
     function handleVerificarCupom(){
         if(cupomAdicionado === 'DEUS'){
             setCupom(prev => ({...prev, valor: 0.1}))
-            setCupomAdicionado('')
         }
     }
 
     function handleRemoverCupom(){
         setCupom({})
+            setCupomAdicionado('')
+
     }
 
     return (
@@ -56,10 +58,10 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
 
             {/* FORMA DE PAGAMENTO */}
             <div className="flex flex-col gap-4">
-                <div className="flex gap-4">
+                <div className="flex w-fit text-nowrap gap-4">
                     {paymentTypeList.map(payment => {
                         return (
-                            <div onClick={()=>handlePaymentType(payment.id)} className={`w-full ${paymentType === payment.id && 'border-red-500'} border rounded-2xl h-30 p-4 flex flex-col justify-between`} >
+                            <div onClick={()=>handlePaymentType(payment.id)} className={`w-full ${paymentType === payment.id && ' outline-green-300 bg-green-400 border-none text-white'} border border-gray-300 rounded-2xl px py-3 font-semibold px-4 flex text-gray-700 gap-4`} >
                                 <div>
                                     <i class="fa-solid fa-credit-card"></i>
                                 </div>
@@ -75,12 +77,12 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
             
             
             // CARTÃO DE CRÉDITO
-            <div className="flex gap-4 overflow-x-auto no-scrollbar bg-gradient-to-r from-[#fff] from-95% to-[#0002] py-2">
+            <div className="flex gap-4 overflow-x-auto no-scrollbar from-95% to-[#0002] py-2">
                 {payments.map(payment => {
                     const isSelected = pagamento.id === payment.id
 
                     return (
-                          <div onClick={()=>handleCartaoSelecionado(payment)} className={`${isSelected && ' outline-1 outline-red-500'} h-40 lg:h-40  lg:w-65 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col`}>
+                          <div onClick={()=>handleCartaoSelecionado(payment)} className={`${isSelected && ' outline-green-500 bg-green-700 outline-2 text-gray-700'} h-40 lg:h-40  lg:w-65 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col`}>
                                     <div className="flex justify-between">
                                         <div className="text-white"><i class="fa-brands fa-cc-visa"></i></div>
                                         <span className="text-xs font-bold text-gray-400">{payment.brand}</span>
@@ -105,7 +107,28 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                 )}
             </div>
             :
-                <div>aaaaaaaa</div>
+                <div className="flex flex-col gap-8 text-center items-center p-8">
+                    <div className="flex flex-col gap-2">
+                        <h2 className="text-lg font-semibold text-gray-700">Escaneie o QR Code ou copie o código</h2>
+                        <p className="text-xs text-gray-500">O pagamento via PIX é instantâneo e seguro.</p>
+                    </div>
+
+                    <div className="h-50 border border-gray-200 rounded-2xl overflow-hidden shadow-xl"><img className="h-full" src={QRCode} alt="" /></div>
+                    <div className="flex flex-col gap-4 w-full">
+                        <p className="font-semibold text-gray-700">CÓDIGO PIX COPIA E COLA</p>
+                        <div className="flex gap-4">
+                            <div className="border w-full text-xs truncate p-2 bg-gray-100 border-gray-200 rounded-lg">00020101021226850014br.gov.bcb.pix0123radianteditorialpix@checkout.com.br5204000053039865406409.235802BR5920Radiant Editorial6009SAO PAULO62070503***6304E2B1</div>
+                            <button className="bg-blue-400 text-white font-semibold rounded-lg px-2 text-xs ">COPIAR</button>
+
+                        </div>
+                            <div className="flex gap-2 text-gray-700 items-center justify-center">
+                                <div><i class="fa-regular fa-clock"></i></div>
+                                <div className="">Este código expira em <span className="text-pink-600 font-semibold">30:00</span> minutos</div>
+                            </div>
+
+                    </div>
+
+                </div>
             }
                 
             
@@ -154,12 +177,17 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                     <p>Pix</p>
                 </div>}
 
-            <div className="border">
-                <label htmlFor="cupom">Cupom de desconto</label>
-                <input id="cupom" className="border" value={cupomAdicionado} onChange={(e)=> setCupomAdicionado(e.target.value)} type="text" />
-                <button onClick={handleVerificarCupom}>Adicionar</button>
-                {Object.keys(cupom).length > 0 && <button onClick={handleRemoverCupom}>Remover</button>}
-            </div>
+            {paymentType === 'card' && 
+                <div className="flex flex-col gap-2">
+                    <label htmlFor="cupom" className="font-semibold">Adicionar cupom de desconto</label>
+                    <div className="flex gap-4">
+                        <input disabled={Object.keys(cupom).length > 0} id="cupom" className="disabled:bg-gray-100 disabled:border-gray-300 border rounded-lg px-2 w-50" value={cupomAdicionado} onChange={(e)=> setCupomAdicionado(e.target.value)} type="text" />
+                        {Object.keys(cupom).length === 0 && <button onClick={handleVerificarCupom}>Adicionar</button>}
+                        {Object.keys(cupom).length > 0 && <button onClick={handleRemoverCupom}>Remover</button>}
+
+                    </div>
+                </div>
+            }
         </div>
     )
 }

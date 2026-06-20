@@ -8,7 +8,7 @@ import BackLink from '../backLink/BackLink'
 export default function Cart({lista, aumentarQuantidade, diminuirQuantidade, removerDoCarrinho, endereco, setEndereco, frete, setFrete, pagamento, setPagamento, cupom, setCupom, listaOk, enderecoOk, pagamentoOk, verificar, etapa, addresses, payments}){
 
     return (
-        <div className="">
+        <div className="lg:sh">
             {etapa === 3 ?
                 <div className="flex pb-16">
                     <Confirmation/>

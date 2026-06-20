@@ -69,7 +69,7 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
     }
 
     return (
-        <div className="w-full h-full lg:rounded-2xl overflow-hidden bg-white shadow-xs p-8">
+        <div className="w-full  lg:rounded-2xl overflow-hidden bg-white shadow-xs p-8 border-red-400 h-full select-none">
             <div className="pb-12 flex flex-col gap-2">
                 <h2 className="text-2xl">Endereço de Entrega</h2>
                 <p>Onde devemos entregar sua nova leitura edificante?</p>
@@ -78,23 +78,21 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
             <div className="flex flex-col gap-4 pb-8">
                 <p className="font-semibold">Selecione um endereço de entrega</p>
                 {/* endereços */}
-                <div className="flex gap-8 select-none">
+                <div className="flex gap-8">
 
                     {addresses?.map(address => {
                         const isSelected = endereco.type === address.type
                         return (
-                            <div onClick={()=>handleCasaSelecionado(address)} className={`hover:cursor-pointer border w-full p-4 flex flex-col gap-2 rounded-2xl ${isSelected && 'border-red-500'}`}>
+                            <div onClick={()=>handleCasaSelecionado(address)} className={`hover:cursor-pointer shadow-md outline-1 outline-gray-200 w-full p-4 flex flex-col gap-2 rounded-2xl ${isSelected && ' outline-green-300 bg-green-100 outline-1 text-gray-700'}`}>
                                 <div className="flex justify-between">
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-2 text-lg">
                                         <div><i class="fa-regular fa-house"></i></div>
-                                        <span className="font-semibold">{address.type}</span>
+                                        <span className="font-semibold ">{address.type}</span>
                                     </div>
-                                    <div>
-                                        <i class="fa-regular fa-circle"></i>
-                                    </div>
+                                    <div className={` ${isSelected && 'bg-green-300 border-green-400 border-5'} h-5 w-5 border-1 border-gray-200 rounded-full bg-white`}></div>
                                 </div>
                                 <div>
-                                    <div>{address.street},{address.streetNumber} {address.neighborhood} {address.city} {address.state}, {address.zip_code}</div>
+                                    <div className="">{address.street},{address.streetNumber} {address.neighborhood} {address.city} {address.state}, {address.zip_code}</div>
                                 </div>
                             </div>
                         )
@@ -177,11 +175,9 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
                     {deliveries.map(delivery => {
                         const isSelected = frete.type === delivery.type
                         return (
-                            <div onClick={()=> handleFrete(delivery)} className={`${isSelected && 'border-amber-200'} hover:cursor-pointer border rounded-2xl p-4 flex justify-between items-center`}>
+                            <div onClick={()=> handleFrete(delivery)} className={`${isSelected && 'outline-green-300 bg-green-100 outline-1'} hover:cursor-pointer border border-gray-200 rounded-2xl p-4 flex justify-between items-center`}>
                         <div className="flex gap-4 items-center">
-                            <div>
-                                <i class="fa-regular fa-circle"></i>
-                            </div>
+                            <div className={` ${isSelected && 'bg-green-300 border-green-400 border-5'} h-5 w-5 border-1 border-gray-200 rounded-full bg-white`}></div>
                             <div >
                                 <p className="font-semibold text-lg text-gray-500">Entrega {delivery.type}</p>
                                 <p className="text-xs italic text-gray-400">Receba em até {delivery.days} dias</p>
