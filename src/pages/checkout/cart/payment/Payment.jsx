@@ -107,8 +107,8 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                 )}
             </div>
             :
-                <div className="flex flex-col gap-8 text-center items-center p-8">
-                    <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-4 lg:gap-8 text-center items-center p-2 lg:p-8">
+                    <div className="flex flex-col gap-1 lg:gap-2">
                         <h2 className="text-[14px] lg:text-lg font-semibold text-gray-700">Escaneie o QR Code ou copie o código</h2>
                         <p className="text-xs text-gray-500">O pagamento via PIX é instantâneo e seguro.</p>
                     </div>
