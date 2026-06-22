@@ -4,12 +4,15 @@ import { useContext} from 'react'
 import { Link } from "react-router-dom"
 import Skeleton from "../skeleton/Skeleton";
 
-export default function Products({produtos, carregar, setQuantidade, tamanho}){
+export default function Products({produtos, carregar, setQuantidade, pesquisaLista}){
     const {addToCart, items} = useCart()
     const {authenticated, dadosCliente,adicionarFavorito, removerFavorito} = useContext(AuthContext)
 
     function alterarQuantidade(valor){
         setQuantidade(prev => prev + valor)
+        const a = pesquisaLista
+        console.log(produtos)
+
     }
 
     function handreFavoritar(produto){
@@ -20,7 +23,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
         }
         
     }
-
+ 
 
     if (carregar) {
         return (
@@ -30,9 +33,13 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
         )
     }
 
-    if (!produtos || produtos.length === 0) return <p>Nenhum livro encontrado.</p>;
+    if (!pesquisaLista || produtos?.length === 0) return <p>Nenhum livro encontrado.</p>;
 
-    const listaNova = produtos.map((produto) => {
+   
+    return (
+        <div className="flex flex-col justify-center gap-24">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-4 gap-y-8 lg:gap-8">
+           {pesquisaLista?.map((produto) => {
 
             return (
                     <div className="flex flex-col gap-4 cursor-pointer relative select-none" key={produto.id}>
@@ -61,18 +68,8 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
 
             
         
-    })
-    return (
-        <div className="flex flex-col justify-center gap-24">
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-4 gap-y-8 lg:gap-8">
-                {listaNova}
-            </div>
-            <div className="w-full flex justify-center">
-                {listaNova.length !== tamanho && <button className="py-2 self-center w-70 rounded-full text-lg font-semibold bg-gray-200" onClick={()=> {alterarQuantidade(3)}}>Mostrar mais</button>}
-
-            </div>
-            
-
+        })}
+        </div>
         </div>
     )
 }

@@ -100,3 +100,211 @@
 }
 
 /* bg-[radial-gradient(at_0%_0%,rgba(59,130,246,0.3),transparent_50%),radial-gradient(at_50%_0%,rgba(147,51,234,0.3),transparent_50%),radial-gradient(at_100%_0%,rgba(46,204,133,0.3),transparent_50%),radial-gradient(at_0%_100%,rgba(231,76,60,0.3),transparent_50%),radial-gradient(at_90%_100%,rgba(254,202,87,0.3),transparent_50%),radial-gradient(at_0%_100%,rgba(255,107,107,0.3),transparent_50%),radial-gradient(50%_100%,rgba(46,204,133,0.10),transparent_50%)] */
+
+/* ====================================================================
+   ESTRUTURA FÍSICA E ANIMAÇÕES DO LIVRO 3D (PRISMA LITERÁRIO)
+   ==================================================================== */
+
+@property --p1-x { syntax: '<percentage>'; initial-value: 15%; inherits: false; }
+@property --p1-y { syntax: '<percentage>'; initial-value: 20%; inherits: false; }
+@property --p2-x { syntax: '<percentage>'; initial-value: 80%; inherits: false; }
+@property --p2-y { syntax: '<percentage>'; initial-value: 15%; inherits: false; }
+@property --p3-x { syntax: '<percentage>'; initial-value: 25%; inherits: false; }
+@property --p3-y { syntax: '<percentage>'; initial-value: 75%; inherits: false; }
+@property --p4-x { syntax: '<percentage>'; initial-value: 75%; inherits: false; }
+@property --p4-y { syntax: '<percentage>'; initial-value: 80%; inherits: false; }
+@property --p5-x { syntax: '<percentage>'; initial-value: 48%; inherits: false; }
+@property --p5-y { syntax: '<percentage>'; initial-value: 45%; inherits: false; }
+@property --p6-x { syntax: '<percentage>'; initial-value: 85%; inherits: false; }
+@property --p6-y { syntax: '<percentage>'; initial-value: 65%; inherits: false; }
+
+:root {
+  --bg-base: #fcfcfd; 
+  --blur-strength: 140px; 
+  --gradient-opacity: 0.58; 
+  --speed-ratio: 1.5;
+  --mouse-offset-x: 0%;
+  --mouse-offset-y: 0%;
+  --anim-state: running;
+
+  /* Parâmetros Físicos */
+  --book-depth: 20px;       
+  --cover-overhang: 10px;   
+  --spine-radius: 0px;      
+}
+
+/* Malha Ativa de Fundo */
+.prisma-light-mesh {
+  background-color: var(--bg-base);
+  background-image: 
+    radial-gradient(circle at calc(var(--p1-x) + var(--mouse-offset-x)) calc(var(--p1-y) + var(--mouse-offset-y)), var(--c-blue) 0%, transparent 45%),
+    radial-gradient(circle at calc(var(--p2-x) - var(--mouse-offset-x)) calc(var(--p2-y) - var(--mouse-offset-y)), var(--c-purple) 0%, transparent 40%),
+    radial-gradient(circle at calc(var(--p3-x) + var(--mouse-offset-x)) calc(var(--p3-y) - var(--mouse-offset-y)), var(--c-green) 0%, transparent 42%),
+    radial-gradient(circle at calc(var(--p4-x) - var(--mouse-offset-x)) calc(var(--p4-y) + var(--mouse-offset-y)), var(--c-yellow) 0%, transparent 38%),
+    radial-gradient(circle at calc(var(--p5-x) + var(--mouse-offset-x)) calc(var(--p5-y) + var(--mouse-offset-y)), var(--c-orange) 0%, transparent 35%),
+    radial-gradient(circle at calc(var(--p6-x) - var(--mouse-offset-x)) calc(var(--p6-y) - var(--mouse-offset-y)), var(--c-red) 0%, transparent 38%);
+  filter: blur(var(--blur-strength)) saturate(1.45);
+  opacity: var(--gradient-opacity);
+  transition: opacity 0.5s ease, filter 0.5s ease;
+  animation-play-state: var(--anim-state) !important;
+  animation: 
+    drift-1 calc(17s / var(--speed-ratio)) ease-in-out infinite alternate,
+    drift-2 calc(23s / var(--speed-ratio)) ease-in-out infinite alternate,
+    drift-3 calc(29s / var(--speed-ratio)) ease-in-out infinite alternate,
+    drift-4 calc(31s / var(--speed-ratio)) ease-in-out infinite alternate,
+    drift-5 calc(37s / var(--speed-ratio)) ease-in-out infinite alternate,
+    drift-6 calc(41s / var(--speed-ratio)) ease-in-out infinite alternate;
+}
+
+@keyframes drift-1 { 0% { --p1-x: 5%; --p1-y: 10%; } 100% { --p1-x: 45%; --p1-y: 45%; } }
+@keyframes drift-2 { 0% { --p2-x: 95%; --p2-y: 5%; } 100% { --p2-x: 45%; --p2-y: 40%; } }
+@keyframes drift-3 { 0% { --p3-x: 5%; --p3-y: 90%; } 100% { --p3-x: 45%; --p3-y: 50%; } }
+@keyframes drift-4 { 0% { --p4-x: 95%; --p4-y: 95%; } 100% { --p4-x: 40%; --p4-y: 45%; } }
+@keyframes drift-5 { 0% { --p5-x: 50%; --p5-y: 10%; } 100% { --p5-x: 15%; --p5-y: 65%; } }
+@keyframes drift-6 { 0% { --p6-x: 90%; --p6-y: 85%; } 100% { --p6-x: 50%; --p6-y: 25%; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .prisma-light-mesh {
+    animation: none !important;
+    --mouse-offset-x: 0% !important;
+    --mouse-offset-y: 0% !important;
+  }
+}
+
+/* Estrutura 3D */
+.book-3d-wrapper {
+  perspective: 1500px;
+}
+
+.book-3d-entity {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Sombra Traseira Dinâmica */
+.book-shadow-plane {
+  position: absolute;
+  inset: 15px;
+  background: rgba(15, 23, 42, 0.28);
+  border-radius: 24px;
+  filter: blur(28px);
+  transform: translateZ(calc(var(--book-depth) * -2));
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Capa Traseira */
+.book-back-cover {
+  position: absolute;
+  inset: 0;
+  background: #f1f3f9;
+  border-radius: var(--spine-radius) 24px 24px var(--spine-radius);
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  transform: translateZ(calc(var(--book-depth) * -1));
+  box-shadow: inset -5px 0 15px rgba(0,0,0,0.02);
+}
+
+/* Capa Frontal Transparente */
+.book-front-cover {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(12px) saturate(1.65) contrast(1.1);
+  -webkit-backdrop-filter: blur(12px) saturate(1.65) contrast(1.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--spine-radius) 24px 24px var(--spine-radius);
+  transform: translateZ(var(--book-depth));
+  transform-style: preserve-3d;
+  z-index: 10;
+}
+
+/* Canaleta da Lombada */
+.book-spine-groove {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 14px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.18) 0%,
+    rgba(0, 0, 0, 0.04) 30%,
+    rgba(255, 255, 255, 0.28) 50%,
+    rgba(0, 0, 0, 0.08) 75%,
+    transparent 100%
+  );
+  border-right: 1.5px solid rgba(15, 23, 42, 0.05);
+  z-index: 20;
+}
+
+/* Lombada Convexa Sólida */
+.book-spine-left {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--book-depth) * -1);
+  width: calc(var(--book-depth) * 2);
+  background: linear-gradient(
+    to right,
+    rgba(180, 185, 200, 0.98) 0%,
+    rgba(220, 225, 240, 0.96) 20%,
+    rgba(255, 255, 255, 0.98) 50%,
+    rgba(215, 220, 235, 0.96) 80%,
+    rgba(155, 160, 175, 0.98) 100%
+  );
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-right: none;
+  border-radius: var(--spine-radius) 0 0 var(--spine-radius);
+  transform: rotateY(-90deg);
+  transform-origin: center center;
+  z-index: 9;
+}
+
+/* Blocos de Páginas Internas */
+.book-pages-right {
+  position: absolute;
+  top: var(--cover-overhang);
+  bottom: var(--cover-overhang);
+  width: calc(var(--book-depth) * 2 - 6px);
+  right: calc(var(--cover-overhang) - var(--book-depth) + 3px);
+  background-color: #fdfbf7;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: calc(24px - var(--cover-overhang));
+  background-image: 
+    linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, transparent 12px, transparent 94%, rgba(0,0,0,0.08) 100%),
+    repeating-linear-gradient(90deg, #f3efe6 0px, #f3efe6 1.5px, #ffffff 1.5px, #ffffff 3.5px);
+  transform: rotateY(90deg);
+  transform-origin: center center;
+}
+
+.book-pages-top {
+  position: absolute;
+  left: 2px;
+  right: calc(var(--cover-overhang) + 2px);
+  height: calc(var(--book-depth) * 2 - 6px);
+  top: calc(var(--cover-overhang) - var(--book-depth) + 3px);
+  background-color: #faf7f2;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 0 calc(24px - var(--cover-overhang)) calc(24px - var(--cover-overhang)) 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.35) 0%, transparent 20px, transparent 88%, rgba(0,0,0,0.08) 100%),
+    repeating-linear-gradient(0deg, #f3efe6 0px, #f3efe6 1.5px, #ffffff 1.5px, #ffffff 3.5px);
+  transform: rotateX(90deg);
+  transform-origin: center center;
+}
+
+.book-pages-bottom {
+  position: absolute;
+  left: 2px;
+  right: calc(var(--cover-overhang) + 2px);
+  height: calc(var(--book-depth) * 2 - 6px);
+  bottom: calc(var(--cover-overhang) - var(--book-depth) + 3px);
+  background-color: #faf7f2;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 0 calc(24px - var(--cover-overhang)) calc(24px - var(--cover-overhang)) 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.35) 0%, transparent 20px, transparent 88%, rgba(0,0,0,0.08) 100%),
+    repeating-linear-gradient(0deg, #f3efe6 0px, #f3efe6 1.5px, #ffffff 1.5px, #ffffff 3.5px);
+  transform: rotateX(-90deg);
+  transform-origin: center center;
+}

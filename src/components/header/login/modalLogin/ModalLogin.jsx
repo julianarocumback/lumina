@@ -1,10 +1,14 @@
 import { useState,  } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-export default function ModalLogin({login, setOpen}){
+export default function ModalLogin({login, setOpen, cadastrar}){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
+
+    const [newEmail, setNewEmail] = useState('')
+    const [newPassword, setNewPassword] = useState('')
 
     const navigate = useNavigate()
     const [novaConta, setNovaConta] = useState(false)
@@ -21,6 +25,24 @@ export default function ModalLogin({login, setOpen}){
             setError('E-mail ou senha incorretos')
         }
     }
+
+    const cadastro = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      // Chama a função do contexto passando os dados recolhidos pelo formulário
+      await cadastrar(newEmail, newPassword);
+      
+      alert('Usuário cadastrado com sucesso! Verifique seu e-mail.');
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      alert('Erro ao enviar dados para o Supabase: ' + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
     
 
@@ -39,11 +61,12 @@ export default function ModalLogin({login, setOpen}){
                 </div>
                 :
                 <div>
-                    <form className="w-full flex flex-col gap-2">
-                        <input value={email} onChange={(e)=>setEmail(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="email"/>
-                        <input value={password} onChange={(e)=> setPassword(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="password"/>
-                        <input value={password} onChange={(e)=> setPassword(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="password"/>
-                        <button type='submit' className=" w-full bg-black/70 text-white py-1 rounded-lg cursor-pointer">Entrar</button>
+                    <form onSubmit={cadastro} className="w-full flex flex-col gap-2">
+                        <input value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="email"/>
+                        <input value={newPassword} onChange={(e)=> setNewPassword(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="password"/>
+                        <button className=" w-full bg-black/70 text-white py-1 rounded-lg cursor-pointer" type='submit' disabled={loading} className="w-full bg-black/70 text-white py-1 rounded-lg cursor-pointer disabled:bg-gray-400">
+                            {loading ? 'Cadastrando...' : 'Cadastrar'}
+                        </button>
                     </form>
                     <button onClick={()=>setNovaConta(false)}>Voltar para login</button>
                 </div>

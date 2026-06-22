@@ -6,6 +6,7 @@ import App from '../App'
 import User from '../pages/user/User'
 import Produto from '../pages/product/Product'
 import Checkout from '../pages/checkout/Checkout'
+import Bundle from '../pages/bundle/Bundle'
 
 // Rotas secundárias
 import Geral from '../pages/user/geral/Geral'
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
     {
         path:'/produto/:id',
         element: <Produto/>
+    },
+    {
+        path: '/bundle/:link',
+        element: <Bundle/>
     },
 
     // Rotas protegidas

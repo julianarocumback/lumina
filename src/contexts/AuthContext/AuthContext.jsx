@@ -270,6 +270,16 @@ export function AuthProvider({ children }) {
       }
     }
 
+    const cadastrar = async (email, password) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+    
+    if (error) throw error; // Lança o erro para ser capturado no componente do formulário
+    return data;
+  };
+
     
 
 
@@ -306,7 +316,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, atualizarNome, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, adicionarEndereco, removerEndereco, addPayment}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, atualizarNome, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, adicionarEndereco, removerEndereco, addPayment, cadastrar}}>
       {children}
     </AuthContext.Provider>
   );
