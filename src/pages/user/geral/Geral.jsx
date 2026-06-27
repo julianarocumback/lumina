@@ -13,8 +13,8 @@ export default function Geral(){
             
             <Welcome dadosCliente={dadosCliente}/>
            
-            <div className="flex-col lg:flex-row flex  gap-4 lg:gap-8">
-                <OrderPreview/>
+            <div className="flex-col lg:flex-row flex gap-4 lg:gap-8">
+                <OrderPreview orders={dadosCliente.pedidos}/>
                 <FavoritesPreview favorites={dadosCliente.favoritos}/>
             </div>
 

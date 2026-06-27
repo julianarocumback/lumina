@@ -3,6 +3,8 @@ import { useOutletContext } from 'react-router-dom'
 export default function Favorites(){
 
     const {dadosCliente, addToCart, removerFavorito, items} = useOutletContext()
+    const favorites = dadosCliente?.favoritos || []
+    console.log(dadosCliente)
 
     function handleAdicionarCarrinho(favorito){
         addToCart(favorito)
@@ -12,8 +14,11 @@ export default function Favorites(){
         removerFavorito(favorito)
     }
 
+   
+
+
     return(
-        <div className={`${dadosCliente?.favoritos.length <= 4 ? 'h-screen': 'h-full'} flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70`}>
+        <div className={`${favorites.length <= 4 ? 'h-screen': 'h-full'} flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70`}>
 
                 <div className="flex flex-col gap-2">
                     <h2 className="text-2xl font-semibold lg:text-4xl"> Lista de Desejos</h2>
@@ -22,9 +27,10 @@ export default function Favorites(){
 
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 overflow-hidden">
-                    {dadosCliente?.favoritos?.map(favorito => {
+                    {favorites.length > 0 ? 
+                    favorites.map(favorito => {
                         return ( 
-                            <div className="flex flex-rol lg:flex-col lg:h-130 gap-4 lg:gap-2 h-40 p-4 rounded-2xl bg-white shadow-xs lg:justify-between ">
+                            <div key={favorito.id} className="flex flex-rol lg:flex-col lg:h-130 gap-4 lg:gap-2 h-40 p-4 rounded-2xl bg-white shadow-xs lg:justify-between ">
                                 <div className="w-20 flex-none  lg:w-full lg:h-80 rounded-xl bg-gray-200 overflow-hidden">
                                     <img className='w-full h-full' src={favorito.img_url} alt="" />
                                 </div>
@@ -47,7 +53,13 @@ export default function Favorites(){
                             </div>
                                 
                         )
-                    })}
+                    })
+                    : 
+                    <div className='h-full text-3xl font-semibold py-50 flex justify-center col-span-full'>
+                        adicione favoritos a sua lista!
+                    </div>
+                    }
+                    
                     
                 </div>
 

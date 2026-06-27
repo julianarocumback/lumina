@@ -1,9 +1,14 @@
 import { useOutletContext } from 'react-router-dom'
 import { useState } from 'react'
 
-export default function Pedidos(){
+export default function Orders(){
+    const [status, setStatus] = useState('Todos')
+    const [search, setSearch] = useState('')
     const {dadosCliente} = useOutletContext()
-    const [status, setStatus] = useState()
+    if(!dadosCliente) return
+    const orders = dadosCliente.pedidos ?? []
+    console.log(orders.map(item => item.produtos).map(item => item).flatMap(item => item))
+    
 
     const categorias = [
         {
@@ -27,8 +32,12 @@ export default function Pedidos(){
             ativo: false
         }
     ]
-    console.log(dadosCliente?.pedidos?.map(item => item?.produtos.map(item => item.nome).map(item=> item)))
-    if(!dadosCliente)return
+
+    function SearchChange(e){
+        const search = e.target.value
+        setSearch(search)
+    }
+
    
     
  
@@ -44,7 +53,7 @@ export default function Pedidos(){
                 <div className="flex flex-col gap-8 relative">
                     <div className="relative">
                         <div className="absolute top-3 left-3 text-gray-900"><i class="fa-solid fa-magnifying-glass"></i></div>
-                        <input className=" bg-gray-200 w-full py-3 pl-10 pr-2 rounded-3xl" type="text" placeholder="Busque por número do pedido ou livro..."/>
+                        <input onChange={SearchChange} value={search} className=" bg-gray-200 w-full py-3 pl-10 pr-2 rounded-3xl" type="text" placeholder="Busque por número do pedido ou livro..."/>
                     </div>
 
                     <div className="text-nowrap flex gap-4 overflow-x-auto no-scrollbar ">
@@ -53,14 +62,22 @@ export default function Pedidos(){
                                 <button onClick={()=> setStatus(categoria.status)} className={`border border-gray-100 py-2 px-4 font-semibold rounded-full  ${categoria.ativo? 'bg-blue-400 text-white ':'bg-white'}`}>{categoria.status}</button>
                             )
                         })}
-                        {dadosCliente?.pedidos?.produtos.map(item => <div>{item?.nome}</div>)} 
+                        {orders.map(item => <div>{item?.nome}</div>)} 
                     </div>
 
 
                 </div>
-                                             
+                {search !== ''?
+                
+                
                 <div className="flex flex-col gap-4">
-                    {dadosCliente?.pedidos?.filter(pedido => pedido.status === (status === 'Todos' ? pedido.status : status ?? pedido.status)).map(pedido => {
+                    
+                </div>
+                :
+                
+                
+                <div className="flex flex-col gap-4">
+                    {orders.filter(pedido => pedido.status === (status === 'Todos' ? pedido.status : status ?? pedido.status)).map(pedido => {
                         return (
                             <div className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col ">
 
@@ -110,8 +127,8 @@ export default function Pedidos(){
                             </div>
                         )
                     })}
-                    {dadosCliente?.pedidos?.filter(pedido => pedido.status === undefined)}
                 </div>
+                }                   
             </div>
         </div>
     )

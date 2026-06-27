@@ -12,7 +12,7 @@ import Bundle from '../pages/bundle/Bundle'
 import Geral from '../pages/user/geral/Geral'
 import Favorites from '../pages/user/favorites/Favorites'
 import Profile from '../pages/user/profile/Profile'
-import Orders from '../pages/user/pedidos/Pedidos'
+import Orders from '../pages/user/orders/Orders'
 import Address from '../pages/user/address/Address'
 import HelpCenter from '../pages/user/helpCenter/HelpCenter'
 import Payment from '../pages/user/payment/Payment'
@@ -48,7 +48,6 @@ export const router = createBrowserRouter([
                         path:'favorites',
                         element: <Favorites/>
                     },
-
                     {
                         path:'profile',
                         element: <Profile/>

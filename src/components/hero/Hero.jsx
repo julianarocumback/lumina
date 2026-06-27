@@ -123,7 +123,7 @@ export default function Hero() {
       </div>
 
       {/* Conteúdo da Hero */}
-      <main className="flex-1 h-full flex flex-col justify-between p-6 md:p-12 z-10 relative overflow-y-auto lg:overflow-y-visible select-none">
+      <main className="flex-1 h-full flex flex-col justify-between px-10 md:p-12 z-10 relative  lg:overflow-y-visible select-none">
   
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 my-auto pt-10 lg:pt-0 items-center w-full max-w-7xl mx-auto">
           
@@ -136,7 +136,7 @@ export default function Hero() {
           <div className="lg:col-span-5 flex justify-center items-center py-6 book-3d-wrapper col-span-1 pointer-events-auto">
             <div 
               ref={tiltBookRef}
-              className="w-full max-w-[350px] aspect-[1/1.48] relative cursor-grab active:cursor-grabbing book-3d-entity"
+              className="w-full lg:max-w-[350px] aspect-[1/1.48] relative cursor-grab active:cursor-grabbing book-3d-entity"
               style={{ transform: `rotateX(${defaultRotX}deg) rotateY(${defaultRotY}deg) scale3d(1, 1, 1)` }}
               onMouseMove={(e) => handleBookMove(e.clientX, e.clientY)}
               onMouseLeave={handleMouseLeave}
