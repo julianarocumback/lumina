@@ -3,7 +3,7 @@ import { supabase } from "../../supabaseClient"
 import Order from "./order/Order"
 import Filter from "./filter/Filter"
 import Products from "./products/Products"
-import Pesquisa from './pesquisa/Pesquisa'
+import {MobileSearch, DesktopSearch} from './pesquisa/Pesquisa'
 
 export default function Catalogo(){
 
@@ -61,7 +61,8 @@ export default function Catalogo(){
     
 
     return (
-        <section className="px-5">
+        <section className="px-5 relative">
+            <MobileSearch lista={produtos} categoria={categoria} setCategoria={setCategoria} setPesquisa={setPesquisa} pesquisa={pesquisa}/>
             <div className="flex lg:px-80 py-12 lg:py-30 w-full">
                 <div className="hidden lg:flex lg:flex-col lg:p-6 gap-4">
                     <h3 className="text-2xl font-semibold">Catálogo</h3>
@@ -82,7 +83,7 @@ export default function Catalogo(){
                     <div className="flex flex-col gap-6 w-full">
                         <Order setOrdem={setOrdem} ordemAtiva={ordem} quantidade={pesquisaLista.length}/>
                         <div className="h-[0.1px] w-full bg-gray-200"></div>
-                        <Pesquisa pesquisaLista={pesquisaLista}/>
+                        <DesktopSearch pesquisaLista={pesquisaLista}/>
                     </div>}
                 </div>
             

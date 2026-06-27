@@ -1,10 +1,44 @@
 import { useCart } from '../../../contexts/CartContext/CartContext'
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext'
-import { useContext} from 'react'
+import { useContext, useState, useEffect} from 'react'
 import { Link } from "react-router-dom"
 import Skeleton from "../skeleton/Skeleton";
 
-export default function Products({produtos, carregar, setQuantidade, pesquisaLista}){
+
+export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa}) => {
+    const [isFilterOpen, setIsFilterOpen] = useState(false)
+    if(!lista) return null
+
+    function searchChange(e){
+        const search = e.target.value
+        if (search.length > 10) return 
+        setPesquisa(search)
+     
+    }
+    
+    
+    
+  
+    const filters = [...new Set(lista.map(item => item.categoria))].map(item => <div onClick={()=>setCategoria(item)}>{item}</div>)
+
+
+    return (
+        <div className='absolute lg:hidden flex flex-col z-10 left-0 -top-10 w-full p-4 gap-8 items-center'>
+            <div className='flex w-full gap-4'>
+                <input value={pesquisa} onChange={(e)=> searchChange(e)} className='w-full shadow rounded-full py-2 px-4 bg-white' type="text" />
+                <button onClick={() => setIsFilterOpen(prev => !prev)} className=' shadow p-2 rounded-xl bg-white'><i class="fa-solid fa-filter"></i></button>
+            </div>
+            {isFilterOpen &&
+                <div className='bg-white w-full h-full  flex gap-4'>
+                    {filters}
+                </div>
+            }
+            
+        </div>
+    )
+}
+
+export const DesktopSearch = ({produtos, carregar, setQuantidade, pesquisaLista}) => {
     const {addToCart, items} = useCart()
     const {authenticated, dadosCliente,adicionarFavorito, removerFavorito} = useContext(AuthContext)
 
