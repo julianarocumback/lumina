@@ -1,11 +1,11 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useState } from 'react'
 import useLocalStorage  from '../../hooks/useLocalStorage'
 
 const CartContext = createContext()
 
 export function CartProvider({ children }) {
     const [items, setItems] = useLocalStorage('carrinho_compras', [])
-    console.log(items)
+
 
     if(!items){
         return
@@ -18,7 +18,7 @@ export function CartProvider({ children }) {
             return
         }
         const p = ({...produto, quantidade : 1})
-        setItems(prev => [...prev, p]) 
+        setItems(prev => [...prev, p])
     }
 
     // Remover o produto do carrinho

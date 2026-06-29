@@ -3,8 +3,6 @@ import { useCart } from '../../../../../contexts/CartContext/CartContext'
 
 export default function Cart(produto){
     const {addToCart,items} = useCart()
-    console.log(produto)
-    console.log(items)
 
     if(!produto){
         return

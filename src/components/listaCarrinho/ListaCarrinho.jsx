@@ -1,40 +1,54 @@
 import { useCart } from '../../contexts/CartContext/CartContext'
 import { useNavigate } from "react-router-dom"
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 import {currencyFormatter} from '../../utils/formatCurrency'
 // import { useLocalStorage} from '../../hooks/useLocalStorage'
+
 
 export default function ListaCarrinho(){
     const {items, aumentarQuantidade, diminuirQuantidade, removeToCart} = useCart()
     const navigate = useNavigate()
     const {authenticated} = useContext(AuthContext)
-    
-    const {mensagem, setMensagem} = useState(false)
+
+    const [caution, setCaution] = useState('')
 
     
 
     function vericacao(){
-        if (items?.length === 0) {
-            setMensagem(true)
+        if(items?.length === 0 && !authenticated){
+            setCaution('tudo')
             return
-        }
-
-        if (!authenticated) {
+        } else if (items?.length === 0 && authenticated) {
+            setCaution('carrinho')
             return
-        }
-
-
+        } else if (items?.length > 0 && !authenticated) {
+            setCaution('logar')
+            return
+            
+        } 
         navigate('/checkout')
-
     }
+
+    useEffect(()=> {
+        function aaa (){
+            if(authenticated ||items?.length > 0 ){
+                setCaution('')
+            }
+        }
+
+        aaa()
+    }, [authenticated, items?.length])
+
+
+
     if(!items) return
     const subtotal = items?.map(item => item?.valor * item?.quantidade).reduce((a,b) => a + b, 0)
 
     return (
-        <div className="h-screen w-85 pt-4 pb-8 lg:w-100 bg-white absolute bottom-14 lg:top-14 right-0 flex flex-col shadow-sm">
-            <div className="p-2 pt-16 px-6 lg:p-7 gap-7 flex flex-col w-full h-3/4">
-                <div className="text-lg lg:text-2xl font-semibold">Carrinho</div>
+        <div className="h-screen w-82 pt-4 lg:pt-0 lg:w-100 bg-white absolute bottom-13 lg:top-13 right-0 flex flex-col shadow-sm">
+            <div className="p-2 pt-16 px-6 lg:p-7 gap-7 flex flex-col w-full h-4/5 lg:3/4">
+                <div className="text-lg lg:text-xl font-semibold">Carrinho</div>
 
                 {/* Produtos no carrinho */}
                 <div className="flex flex-col w-full h-full gap-4 overflow-y-auto">
@@ -85,14 +99,21 @@ export default function ListaCarrinho(){
 
 
             </div>
-            <div className="bg-gray-50 h-1/4 p-7 flex flex-col lg:gap-4">
-                <div className="flex justify-between py-4">
+            <div className="bg-gray-50 h-1/5 lg:h-1/4 px-7 lg:px-7 lg:py-3 flex flex-col gap-3 lg:gap-3 text-center">
+                <div className="flex justify-between py-2">
                     <span className="text-lg text-[#474747]">Subtotal</span>
                     <span className="text-xl font-semibold">{currencyFormatter(subtotal)}</span>
                     
-                    {/* {!mensagem && <p>aaaaaaaaa</p>} */}
                 </div>
-                    <button onClick={vericacao} className="cursor-pointer rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
+                <button onClick={vericacao} className="cursor-pointer rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
+                <div className='text-red-500'>
+                    {caution === 'tudo'?
+                    <p>Faça login e adicione itens ao carrinho!</p>
+                    :caution === 'carrinho'? <p>Adicione itens ao carrinho!</p>
+                    :caution === 'logar' &&<p>Faça login!</p>
+                    }
+
+                </div>
                 </div>
         </div>
     )
