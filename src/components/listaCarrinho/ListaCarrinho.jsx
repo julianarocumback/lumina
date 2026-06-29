@@ -2,6 +2,7 @@ import { useCart } from '../../contexts/CartContext/CartContext'
 import { useNavigate } from "react-router-dom"
 import { useState, useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
+import {currencyFormatter} from '../../utils/formatCurrency'
 // import { useLocalStorage} from '../../hooks/useLocalStorage'
 
 export default function ListaCarrinho(){
@@ -58,7 +59,7 @@ export default function ListaCarrinho(){
                                         <i class="fa-solid fa-trash"></i>
                                     </div>
                                     <div className="flex justify-between">
-                                        {item && <span className="text- font-semibold">{item.valor}</span>}
+                                        {item && <span className="text- font-semibold">{currencyFormatter(item.valor)}</span>}
                                         
                                         
                                         {/* QUANTIDADE DE PRODUTOS */}
@@ -87,7 +88,7 @@ export default function ListaCarrinho(){
             <div className="bg-gray-50 h-1/4 p-7 flex flex-col lg:gap-4">
                 <div className="flex justify-between py-4">
                     <span className="text-lg text-[#474747]">Subtotal</span>
-                    {subtotal && <span className="text-xl font-semibold">{subtotal}</span>}
+                    <span className="text-xl font-semibold">{currencyFormatter(subtotal)}</span>
                     
                     {/* {!mensagem && <p>aaaaaaaaa</p>} */}
                 </div>

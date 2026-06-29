@@ -50,7 +50,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
                                 <span className="font-semibold lg:text-lg truncate">{produto.nome}</span>
                                 <div className="flex justify-between items-center">
                                     <span className="font-semibold lg:text-lg text-blue-700">{produto.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
-                                    <button disabled={items?.some(item => item.id === produto.id)} className={`px-3 lg:px-2 py-0.5 lg:py-1  rounded-xl bg-black/80 cursor-pointer text-white text-sm font-semibold   disabled:bg-gray-200 disabled:cursor-default disabled:transition-all`} onClick={() => addToCart(produto)}>+ carrinho</button>
+                                    <button disabled={items?.some(item => item.id === produto.id)} className={`px-3 lg:px-2 py-0.5 lg:py-1  rounded-xl bg-black/80 cursor-pointer text-white text-sm font-semibold   disabled:bg-gray-200 disabled:cursor-default disabled:transition-all`} onClick={() => addToCart(produto)}>{!items?.some(item => item.id === produto.id)? '+ Carrinho': 'Adicionado'}</button>
                                 
                             </div>
                             </div>
