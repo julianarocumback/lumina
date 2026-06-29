@@ -16,7 +16,7 @@ export default function Payment(){
     
     if(!dadosCliente) return
     return(
-        <div className={`${newPayment && 'fixed'} flex flex-col gap-8 lg:gap-8 py-7 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full lg:h-screen`}>
+        <div className={`${newPayment && 'fixed'} flex flex-col gap-8 lg:gap-8 pt-7 pb-25 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full lg:h-screen`}>
             <div className="flex flex-col gap-4">
                 <h1 className="text-2xl lg:text-4xl font-semibold">Pagamentos</h1>
                 <h3 className="hidden md:block text-lg text-gray-600">Gerencie suas formas de pagamento e acompanhe suas compras com total transparência e segurança.</h3>
