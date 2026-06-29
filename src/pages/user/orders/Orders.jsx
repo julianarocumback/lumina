@@ -76,13 +76,13 @@ export default function Orders(){
                 :
                 
                 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 overflow-hidden">
                     {orders.filter(pedido => pedido.status === (status === 'Todos' ? pedido.status : status ?? pedido.status)).map(pedido => {
                         return (
-                            <div className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col ">
+                            <div className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col w-full">
 
                                 <div className="flex justify-between items-end">
-                                    <div className="flex flex-col gap-4 ">
+                                    <div className="flex flex-col gap-4 w-full">
                                         <div className="flex gap-4 lg:justify-start">
                                             <p className="text-gray-500 font-semibold">#{[...pedido.id].map((letra, index)=> {
                                                 if(index > 7) return 
@@ -94,10 +94,10 @@ export default function Orders(){
 
                                         <p className="font-light lg:hidden">Realizado em 12 out 2026</p>
 
-                                        <div className="flex gap-4">
+                                        <div className=" overflow-x-scroll w-full flex gap-4 no-scrollbar">
                                             {pedido?.produtos.map(produto => {
                                                 return(
-                                                    <div className="border border-gray-200 w-15 rounded-xl overflow-hidden flex">
+                                                    <div className="border border-gray-200 w-15 rounded-xl overflow-hidden flex flex-none">
                                                         <img src={produto.img_url} alt="" />
 
                                                     </div>

@@ -127,6 +127,7 @@ export default function Perfil(){
                                 <div className="flex justify-between w-full">
                                     <input disabled={ativarBotaoEmail} onChange={(e)=> setNovoEmail(e.target.value)} value={novoEmail} type="email" placeholder={dadosCliente?.email} className={`${!ativarBotaoEmail && 'border'}  text-gray-black font-semibold px-2 -left-2 relative`}/>
                                 </div>
+                            </div>
                                     <div>
                                         <div className="flex">
                                         {   ativarBotaoEmail && <div onClick={handleAtivarBotaoEmail} className="font-semibold text-blue-700">Editar</div>}
@@ -136,7 +137,6 @@ export default function Perfil(){
                                     </div>
                                 </div>
                                 </div>
-                            </div>
                             
                         </div>
 
