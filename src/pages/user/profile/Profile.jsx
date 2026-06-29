@@ -82,7 +82,7 @@ export default function Perfil(){
     if(!dadosCliente) return
 
     return(
-        <div className="flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full">
+        <div className="flex flex-col gap-8 lg:gap-8 pt-7 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full">
                 <h1 className="text-2xl font-semibold">Configurações</h1>
 
                 <div className="flex flex-col gap-4">
@@ -96,13 +96,16 @@ export default function Perfil(){
                             <div className='flex flex-col gap-1 w-full'>
                                 <h3 className="font-semibold text-[11px] text-gray-500">NOME COMPLETO</h3>
 
-                                <div className="flex justify-between w-full">
-                                    <input disabled={ativarBotaoNome} onChange={(e)=>setNovoNome(e.target.value)} value={novoNome} type="text" placeholder={dadosCliente?.nome} className={`${!ativarBotaoNome && 'border'} text-gray-black font-semibold px-2 rounded-lg relative -left-2`}/>
+                                <div className="flex flex-col lg:flex-row justify-between w-full ">
+                                    <input disabled={ativarBotaoNome} onChange={(e)=>setNovoNome(e.target.value)} value={novoNome} type="text" placeholder={dadosCliente?.nome} className={`${!ativarBotaoNome && 'border left-0'} text-gray-black font-semibold px-2 rounded-lg relative -left-2`}/>
+                                    <div>
+                                        {ativarBotaoNome && <div onClick={handleAtivarBotaoNome} className="font-semibold text-blue-700">Editar</div>}
+                                        <div className="flex gap-4">
+                                        {!ativarBotaoNome && <div onClick={handleCancelarAtualizacaoNome} className='text-red-500 font-semibold'>Cancelar</div>}
+                                        {!ativarBotaoNome && <div onClick={handleAtualizarNome} className='font-semibold'>Salvar</div>}
+
+                                    </div>
                                     <div className="flex">
-                                    {ativarBotaoNome && <div onClick={handleAtivarBotaoNome} className="font-semibold text-blue-700">Editar</div>}
-                                    <div className="flex gap-4">
-                                    {!ativarBotaoNome && <div onClick={handleCancelarAtualizacaoNome} className='text-red-500 font-semibold'>Cancelar</div>}
-                                    {!ativarBotaoNome && <div onClick={handleAtualizarNome} className='font-semibold'>Salvar</div>}
                                 </div>
                             </div>
                                 </div>
@@ -118,12 +121,14 @@ export default function Perfil(){
                         </div>
 
                         {/* E-MAIL */}
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center flex-col lg:flex-row">
                             <div className='flex flex-col gap-1  w-full'>
                                 <h3 className="font-semibold text-[11px] text-gray-500">E-MAIL</h3>
                                 <div className="flex justify-between w-full">
-                                    <input disabled={ativarBotaoEmail} onChange={(e)=> setNovoEmail(e.target.value)} value={novoEmail} type="email" placeholder={dadosCliente?.email} className={`${!ativarBotaoEmail && 'border'} text-gray-black font-semibold px-2`}/>
-                                    <div className="flex">
+                                    <input disabled={ativarBotaoEmail} onChange={(e)=> setNovoEmail(e.target.value)} value={novoEmail} type="email" placeholder={dadosCliente?.email} className={`${!ativarBotaoEmail && 'border'}  text-gray-black font-semibold px-2 -left-2 relative`}/>
+                                </div>
+                                    <div>
+                                        <div className="flex">
                                         {   ativarBotaoEmail && <div onClick={handleAtivarBotaoEmail} className="font-semibold text-blue-700">Editar</div>}
                                         <div className="flex gap-4">
                                         {!ativarBotaoEmail && <div onClick={handleCancelarAtualizacaoEmail} className='text-red-500 font-semibold'>Cancelar</div>}
@@ -136,19 +141,22 @@ export default function Perfil(){
                         </div>
 
                         {/* WHATSAPP  */}
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-between items-center flex-col lg:flex-row">
                             <div className='flex flex-col gap-1 w-full'>
                                 <h3 className="font-semibold text-[11px] text-gray-500">WHATSAPP</h3>
                                 <div className="flex justify-between w-full">
-                                    <input disabled={ativarBotaoWhatsapp} onChange={(e)=>setNovoWhatsApp(e.target.value)} value={novoWhatsApp} type="text" placeholder={dadosCliente?.whatsapp} className={`${!ativarBotaoWhatsapp && 'border'} text-gray-black font-semibold px-2`}/>
-                                    <div className="flex">
-                                        {ativarBotaoWhatsapp && <div onClick={handleAtivarBotaoWhatsApp} className="font-semibold text-blue-700">Editar</div>}
-                                        <div className="flex gap-4">
-                                        {!ativarBotaoWhatsapp && <div onClick={handleCancelarAtualizacaoWhatsApp} className='text-red-500 font-semibold'>Cancelar</div>}
-                                        {!ativarBotaoWhatsapp && <div onClick={handleAtualizarWhatsApp} className='font-semibold'>Salvar</div>}
+                                    <input disabled={ativarBotaoWhatsapp} onChange={(e)=>setNovoWhatsApp(e.target.value)} value={novoWhatsApp} type="text" placeholder={dadosCliente?.whatsapp} className={`${!ativarBotaoWhatsapp && 'border left-0'} text-gray-black font-semibold px-2 -left-2 relative`}/>
+                                </div>
+                                    <div>
+                                        <div className="flex">
+                                            {ativarBotaoWhatsapp && <div onClick={handleAtivarBotaoWhatsApp} className="font-semibold text-blue-700">Editar</div>}
+                                            <div className="flex gap-4">
+                                            {!ativarBotaoWhatsapp && <div onClick={handleCancelarAtualizacaoWhatsApp} className='text-red-500 font-semibold'>Cancelar</div>}
+                                            {!ativarBotaoWhatsapp && <div onClick={handleAtualizarWhatsApp} className='font-semibold'>Salvar</div>}
+                                        </div>
                                     </div>
-                                </div>
-                                </div>
+
+                                    </div>
                             </div>
                             
                         </div>

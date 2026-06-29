@@ -5,7 +5,7 @@ export default function OrderPreview({orders}){
     const latestOrder = orderArray.length > 0? [...orders].reverse()[0] : null
    
     return (
-        <div className="lg:h-125 rounded-3xl lg:w-3/4 p-8 flex flex-col bg-white shadow-lg overflow-hidden gap-4">
+        <div className="lg:h-125 rounded-3xl lg:w-3/4 p-8  flex flex-col bg-white shadow-lg overflow-hidden gap-4">
             {latestOrder?
             <div className='flex flex-col gap-8'>
 

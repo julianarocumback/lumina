@@ -43,7 +43,7 @@ export default function Sidebar({logout}) {
     ]
 
     return (
-        <aside className="fixed h-[calc(100vh-56px)] top-14 w-15 lg:w-80 bg-gray-100">
+        <aside className="fixed h-[calc(100vh-56px)] lg:top-14 w-15 lg:w-80 bg-gray-100">
             <div className="flex flex-col p-8 items-center lg:items-start justify-between w-full h-full">
 
                 {/* Navegação */}

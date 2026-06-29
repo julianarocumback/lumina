@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import HeroContent from "./heroContent/HeroCotent";
 import Cuidado from './o_cuidado_do_corpo.jpg';
+import Heroc from './hero.jpeg'
 
 export default function Hero() {
   // Configurações físicas e visuais fixas do componente
@@ -158,9 +159,9 @@ export default function Hero() {
               
               {/* LOMBADA DO LIVRO (COSTAS) SÓLIDA */}
               <div className="book-spine-left absolute overflow-hidden">
-                <div className="absolute inset-y-0 left-1/4 w-1/3 bg-gradient-to-b from-blue-400/10 via-purple-500/10 to-pink-500/10 blur-[3px] pointer-events-none"></div>
-                <span className="text-[7.5px] font-bold tracking-[0.25em] text-slate-800/80 uppercase whitespace-nowrap absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-90" style={{ filter: 'drop-shadow(0 0.5px 1px rgba(0,0,0,0.1))' }}>
-                  O cuidado com o corpo
+                <div className="absolute inset-y-0 left-1/4 w-1/3 bg-black pointer-events-none"></div>
+                <span className="text-[7.5px] font-bold tracking-[0.25em] text-white uppercase whitespace-nowrap absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-90" style={{ filter: 'drop-shadow(0 0.5px 1px rgba(0,0,0,0.1))' }}>
+                  Bíblia Sagrada
                 </span>
               </div>
 
@@ -174,7 +175,7 @@ export default function Hero() {
                 
                 {/* Folha de Guarda Interna */}
                 <div className="absolute inset-0 bg-[#faf8f5]  z-0 overflow-hidden pointer-events-none">
-                  <img className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-multiply" src={Cuidado} alt="" />
+                  <img className="absolute inset-0 w-full h-full object-cover opacity-90 mix-blend-multiply" src={Heroc} alt="" />
                 </div>
 
                 {/* Vinco da Lombada do Livro (Canaleta) */}

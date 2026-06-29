@@ -16,7 +16,7 @@ export default function ProductGallery({foto, gallery, setIdFoto}){
     })
 
     return (
-        <div className="lg:w-250 h-full flex flex-col gap-4 relative">
+        <div className="lg:w-240 h-full flex flex-col gap-4 relative">
             <Photo foto={foto}/>
             <Gallery galeria={galeria}/>
         </div>

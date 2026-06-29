@@ -47,7 +47,7 @@ export default function Product(){
     }
     
     return(
-    <div className="h-full w-full bg-[rgba(249,249,251,1)]">
+    <div className="h-full w-full py-8 bg-[rgba(249,249,251,1)]">
         <Header/>
         <ProductHero foto={foto} gallery={gallery} setIdFoto={setIdFoto} produto={produto} adicionarFavorito={adicionarFavorito} removerFavorito={removerFavorito} dadosCliente={dadosCliente} authenticated={authenticated}/>
         <ProductDetails produto={produto}/>
