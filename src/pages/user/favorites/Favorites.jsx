@@ -18,7 +18,7 @@ export default function Favorites(){
 
 
     return(
-        <div className={`${favorites.length <= 4 ? 'h-screen': 'h-full'} flex flex-col gap-8 lg:gap-8 pt-7 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70`}>
+        <div className={`${favorites.length <= 4 ? 'h-screen': 'h-full'} flex flex-col gap-8 lg:gap-8 py-7 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70`}>
 
                 <div className="flex flex-col gap-2">
                     <h2 className="text-2xl font-semibold lg:text-4xl"> Lista de Desejos</h2>
