@@ -106,7 +106,7 @@ export default function ListaCarrinho(){
                     
                 </div>
                 <button onClick={vericacao} className="cursor-pointer rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
-                <div className='text-red-500'>
+                <div className='text-red-500 text-xs lg:text-base'>
                     {caution === 'tudo'?
                     <p>Faça login e adicione itens ao carrinho!</p>
                     :caution === 'carrinho'? <p>Adicione itens ao carrinho!</p>
