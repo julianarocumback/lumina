@@ -9,7 +9,7 @@ import { useState, useEffect, useContext } from 'react'
 
 export default function Checkout() {
     const {items, setItems, aumentarQuantidade, diminuirQuantidade, removeToCart } = useCart()
-    const {user, adicionarPedido, dadosCliente} = useContext(AuthContext)
+    const {user, adicionarPedido, dadosCliente, addAddress, addPayment, setNewAddress} = useContext(AuthContext)
 
     const [endereco, setEndereco] = useState({})
     const [frete, setFrete] = useState({})
@@ -63,11 +63,11 @@ export default function Checkout() {
                     <Cart 
                     etapa={etapa} setEtapa={setEtapa}
                     lista={items} aumentarQuantidade={aumentarQuantidade} diminuirQuantidade={diminuirQuantidade} removerDoCarrinho={removeToCart} 
-                    endereco={endereco} setEndereco={setEndereco} frete={frete} setFrete={setFrete}
-                    pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom}
+                    endereco={endereco} setEndereco={setEndereco} frete={frete} setFrete={setFrete} addAddress={addAddress}
+                    pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom} addPayment={addPayment}
                     
                     listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar}
-                    addresses={dadosCliente?.address} payments={dadosCliente?.payment}
+                    addresses={dadosCliente?.address} payments={dadosCliente?.payment} dadosCliente={dadosCliente} setNewAddress={setNewAddress}
                     />
 
                 </div>

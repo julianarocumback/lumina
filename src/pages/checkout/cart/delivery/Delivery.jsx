@@ -1,6 +1,89 @@
 import { useState } from "react";
 
-export default function Delivery({endereco, setEndereco, frete, setFrete, addresses}){
+export default function Delivery({endereco, setEndereco, frete, setFrete, addresses, addAddress, dadosCliente, setNewAddress}){
+    const [adicionarNovoEndereco, setAdicionarNovoEndereco] = useState(false)
+    const [address, setAddress] = useState({
+        userId: dadosCliente?.id,
+        zipCode: '',
+        street: '',
+        streetNumber: '',
+        complement: '',
+        neighborhood: '',
+        city: '',
+        state: '',
+        type: '',
+        isMain: false
+    })
+
+    function handleZipCodeChange(event) {
+        const zipCode = event.target.value
+        if(zipCode.length > 8) return
+        setAddress(prev => ({...prev, zipCode: zipCode}))
+    }
+
+    function handleStreetChange(event) {
+        const street = event.target.value
+        if(street.length > 53) return
+        setAddress(prev => ({...prev, street: street}))
+    }
+
+    function handleStreetNumberChange(event) {
+        const streetNumber = event.target.value
+        if(streetNumber.length > 4) return
+        setAddress(prev => ({...prev, streetNumber: streetNumber}))
+    }
+
+    function handleComplementChange(event) {
+        const complement = event.target.value
+        if(complement.length > 40) return
+        setAddress(prev => ({...prev, complement: complement}))
+    }
+
+    function handleNeighborhoodChange(event) {
+        const neighborhood = event.target.value
+        if(neighborhood.length > 40) return
+        setAddress(prev => ({...prev, neighborhood: neighborhood}))
+    }
+
+    function handleCityChange(event) {
+        const city = event.target.value
+        if(city.length > 40) return
+        setAddress(prev => ({...prev, city: city}))
+    }
+
+    function handleStateChange(event) {
+        const state = event.target.value
+        setAddress(prev => ({...prev, state: state}))
+    }
+
+    function handleAddAddress(){
+        setAdicionarNovoEndereco(false)
+        addAddress(address)
+        setNewAddress(false)
+        setAddress({
+            userId: dadosCliente?.id,
+            zipCode: '',
+            street: '',
+            streetNumber: '',
+            complement: '',
+            neighborhood: '',
+            city: '',
+            state: '',
+            type: '',
+            isMain: false
+        })
+    }
+
+    function handleMainChange(event) {
+        const main = event.target.checked
+        setAddress(prev => ({...prev, isMain:main}))
+    }
+
+    function handleTypeChange(event) {
+        const type = event.target.value
+        setAddress(prev => ({...prev, type:type}))
+    }
+    
     const deliveries = [
         {
             id: 1,
@@ -16,15 +99,17 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
         }
     ]
 
-    const [adicionarNovoEndereco, setAdicionarNovoEndereco] = useState(false)
 
 
     // Selecionar a casa como endereço de entrega    
-    function handleCasaSelecionado(address){
+    function handleCasaSelecionado(selectedAddress){
+                        console.log(selectedAddress.id)
+                        console.log(endereco)
+
         if(Object.keys(endereco).length === 0){
-            setEndereco(address)
-        }if(endereco.id !== address.id){
-            setEndereco(address)
+            setEndereco(selectedAddress)
+        }if(endereco.id !== selectedAddress.id){
+            setEndereco(selectedAddress)
         }else {
             setEndereco({})
         }
@@ -46,28 +131,6 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
         }
     }
 
-    // Selecionar o frete padrão    
-    function handleFretePadrao(){
-        if(Object.keys(frete).length === 0){
-            setFrete(prev => ({...prev, valor: 15}))
-        }else if(frete?.valor === 25){
-            setFrete(prev => ({...prev, valor: 15}))
-        } else {
-            setFrete({})
-        }
-    }
-
-    // Selecionar frete rápido
-    function handleFreteRapido(){
-        if(Object.keys(frete).length === 0){
-            setFrete(prev => ({...prev, valor: 25}))
-        } else if(frete?.valor === 15){
-            setFrete(prev => ({...prev, valor: 25}))
-        } else {
-            setFrete({})
-        }
-    }
-
     return (
         <div className="w-full  lg:rounded-2xl overflow-hidden bg-white shadow-xs p-8 border-red-400 h-full select-none">
             <div className="pb-12 flex flex-col gap-2">
@@ -81,9 +144,9 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
                 <div className="flex gap-8">
 
                     {addresses?.map(address => {
-                        const isSelected = endereco.type === address.type
+                        const isSelected = endereco.id === address.id
                         return (
-                            <div onClick={()=>handleCasaSelecionado(address)} className={`hover:cursor-pointer shadow-md outline-1 outline-gray-200 w-full p-4 flex flex-col gap-2 rounded-2xl ${isSelected && ' outline-green-300 bg-green-100 outline-1 text-gray-700'}`}>
+                            <div onClick={()=>handleCasaSelecionado(address)} className={`flex-none w-70 hover:cursor-pointer shadow-md outline-1 outline-gray-200  p-4 flex flex-col gap-2 rounded-2xl ${isSelected && ' outline-green-300 bg-green-100 outline-1 text-gray-700'}`}>
                                 <div className="flex justify-between">
                                     <div className="flex gap-2 text-lg">
                                         <div><i class="fa-regular fa-house"></i></div>
@@ -106,61 +169,105 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
             
             {/* MOSTRAR SE HOUVER UM CLIQUE PARA ADICIONAR UM NOVO ENDEREÇO*/}
             {adicionarNovoEndereco && <div className="flex flex-col gap-8 ">
-                {/* CEP */}
-                <div className="flex flex-col gap-2">
-                    <label className="font-semibold text-sm" htmlFor="CEP">CEP</label>
-                    <div className="flex gap-4">
-                        <input className="border w-70 py-2 px-4 rounded-lg" type="text" name="" id="CEP" placeholder="00000-000" />
-                        <button className="border py-2 px-4 rounded-lg text-sm font-semibold bg-gray-200">Buscar</button>
+                <div className='flex flex-col gap-4'>
+
+                    {/* RUA E NÚMERO */}
+                    <div className='flex gap-4'>
+                        <div className="flex flex-col gap-2 w-4/5">
+                            <label className='font-semibold text-xs text-gray-700' htmlFor='street'>Rua</label>
+                            <input id='street' onChange={handleStreetChange} type="text" value={address.street} placeholder='Nome do logradouro' className={` rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
+                        </div>
+                        <div className='flex flex-col gap-2 w-1/5 '>
+                            <label className='font-semibold text-xs text-gray-700' htmlFor="streetNumber">Número</label>
+                            <input id='streetNumber' onChange={handleStreetNumberChange}  type="text" value={address.streetNumber} placeholder='Ex.: 123' className={`rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
+                        </div>
+                    </div>
+
+                    {/* COMPLEMENTO E BAIRRO */}
+                    <div className='flex gap-4'>
+                        <div className="flex flex-col gap-2 w-full">
+                            <label htmlFor='complement' className='font-semibold text-xs text-gray-700'>Complemento</label>
+                            <input id='complement' onChange={handleComplementChange} type="text" value={address.complement} placeholder='Ex.: Bloco A, Apto 10' className={` rounded-lg bg-gray-100 px-4 text-xs h-full py-2 w-full`}/>
+                        </div>
+                        <div className="flex flex-col gap-2 w-full">
+                            <label htmlFor="neighborhood" className='font-semibold text-xs text-gray-700'>Bairro</label>
+                            <input id='neighborhood' onChange={handleNeighborhoodChange} type="text" value={address.neighborhood} placeholder='Seu bairro' className={` rounded-lg bg-gray-100 px-4 py-2 text-xs h-full`}/>
+                        </div>
+                    </div>
+
+                    {/* CIDADE, ESTADO E CEP */}
+                    <div className='flex gap-4'>
+                        {/* CIDADE */}
+                        <div className="flex flex-col gap-2 w-2/5">
+                            <label className='font-semibold text-xs text-gray-700' htmlFor='city'>Cidade</label>
+                            <input id='city' onChange={handleCityChange} type="text" value={address.city} placeholder='Seu bairro' className={` rounded-lg bg-gray-100 px-4 text-xs py-2`}/>
+                        </div>
+                        {/* ESTADO */}
+                        <div className="flex flex-col gap-2 w-2/5">
+                            <label htmlFor="state" className='font-semibold text-xs text-gray-700' >Estado</label>
+                            <select id="state" onChange={handleStateChange} className='bg-gray-100 h-full rounded-lg px-2 w-full text-xs'>
+                                <option value='' selected disabled>Selecione</option>
+                                <option value='AC'>Acre</option>
+                                <option value='AL'>Alagoas</option>
+                                <option value='AP'>Amapá</option>
+                                <option value='AM'>Amazonas</option>
+                                <option value='BA'>Bahia</option>
+                                <option value='CE'>Ceará</option>
+                                <option value='DF'>Distrito Federal</option>
+                                <option value='ES'>Espírito Santo</option>
+                                <option value='GO'>Goiás</option>
+                                <option value='MA'>Maranhão</option>
+                                <option value='MT'>Mato Grosso</option>
+                                <option value='MS'>Mato Grosso do Sul</option>
+                                <option value='MG'>Minas Gerais</option>
+                                <option value='PA'>Pará</option>
+                                <option value='PB'>Paraíba</option>
+                                <option value='PR'>Paraná</option>
+                                <option value='PE'>Pernambuco</option>
+                                <option value='PI'>Piauí</option>
+                                <option value='RJ'>Rio de Janeiro</option>
+                                <option value='RN'>Rio Grande do Norte</option>
+                                <option value='RS'>Rio Grande do Sul</option>
+                                <option value='RO'>Rondônia</option>
+                                <option value='RR'>Roraima</option>
+                                <option value='SC'>Santa Catarina</option>
+                                <option value='SP'>São Paulo</option>
+                                <option value='SE'>Sergipe</option>
+                                <option value='TO'>Tocantins</option>
+                            </select>
+                        </div>
+
+                        {/* CEP */}
+                        <div className="flex flex-col gap-2 w-1/5">
+                            <label className='font-semibold text-xs text-gray-700' htmlFor="zipCode">CEP</label>
+                            <input id='zipCode' onChange={handleZipCodeChange}  type="text" value={address.zipCode} placeholder='00000-00' className={` rounded-lg bg-gray-100 px-4 text-xs py-2`}/>      
+                        </div>
+
+                    </div>
+
+                    {/* PRINCIPAL E TIPO  */}
+                    <div className='flex gap-4 justify-between'>                     
+                        <div className="flex items-center gap-2">
+                            <input id='main' onChange={handleMainChange} type="checkbox" value={address.complement} className={` rounded-lg bg-gray-100 px-4 text-xs h-full`}/>
+                            <label htmlFor='main' className='font-semibold text-xs text-gray-700'>Definir como endereço principal</label>
+                        </div>
+                        <div className='flex gap-2'>
+                            <label htmlFor='main' className='font-semibold text-xs text-gray-700'>Tipo:</label>
+                            <select onChange={handleTypeChange} className='text-xs '>
+                                <option value="" selected disabled>Selecione</option>
+                                <option value="Casa">Casa</option>
+                                <option value="Trabalho">Trabalho</option>
+                                <option value="Personalizado">Personalizado</option>
+                            </select>
+                                {address.type === 'Personalizado' && <div><input onChange={handleTypeChange} type="text" className="border" /></div>}
+                        </div>
                     </div>
                 </div>
-
-                {/* RUA E NÚMERO */}
                 <div className="flex gap-4">
+                <button onClick={handleAddAddress} className="font-semibold text-sm w-50 h-10 rounded-xl bg-black text-white">Adicionar</button>
+                <button onClick={handleAdicionarNovoEndereco} className="font-semibold text-sm w-50 h-10 rounded-xl bg-black text-white">Cancelar</button>
 
-                    <div className="flex flex-col gap-2">
-                        <label className="font-semibold text-sm" htmlFor="CEP">RUA</label>
-                        <input className="border w-70 py-2 px-4 rounded-lg" type="text" name="" id="CEP" placeholder="Nome do logradouro" />
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label className="font-semibold text-sm" htmlFor="CEP">NÚMERO</label>
-                        <input className="border w-70 py-2 px-4 rounded-lg" type="text" name="" id="CEP" placeholder="Ex.: 123" />
-                    </div>
                 </div>
-
-                {/* COMPLEMENTO E BAIRRO */}
-                <div className="flex gap-4">
-
-                    <div className="flex flex-col gap-2">
-                        <label className="font-semibold text-sm" htmlFor="CEP">COMPLEMENTO</label>
-                        <input className="border w-70 py-2 px-4 rounded-lg" type="text" name="" id="CEP" placeholder="Apto, bloco, etc." />
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label className="font-semibold text-sm" htmlFor="CEP">BAIRRO</label>
-                        <input className="border w-70 py-2 px-4 rounded-lg" type="text" name="" id="CEP" placeholder="Seu bairro" />
-                    </div>
-                </div>
-
-                {/* CIDADE E ESTADO */}
-                <div className="flex gap-4">
-
-                    <div className="flex flex-col gap-2">
-                        <label className="font-semibold text-sm" htmlFor="CEP">CIDADE</label>
-                        <input className="border w-70 py-2 px-4 rounded-lg" type="text" name="" id="CEP" placeholder="Sua cidade" />
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label className="font-semibold text-sm" htmlFor="CEP">ESTADO</label>
-                        <select className="border w-70 py-2 px-4 rounded-lg" name="" id="">
-                            <option value="">Seu estado</option>
-                            <option value="">AM</option>
-                            <option value="">SP</option>
-                        </select>
-                    </div>
-                </div>
-                {adicionarNovoEndereco && <button onClick={handleAdicionarNovoEndereco} className="font-semibold text-sm w-50 h-10 rounded-xl bg-black text-white">Cancelar</button>}
             <div className="h-0.5 bg-gray-200 w-full"></div>
             </div>}
 

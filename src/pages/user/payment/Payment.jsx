@@ -2,17 +2,21 @@ import { use, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 
 export default function Payment(){
-    const {dadosCliente, newPayment, setNewPayment} = useOutletContext()
+    const {dadosCliente, newPayment, setNewPayment, deleteCard} = useOutletContext()
     const [isOpen, setIsOpen] = useState(false)
 
     function handleIsOpen(){
         setIsOpen(prev => !prev)
     }
+
+    function handleDeleteCard(cardId){
+        deleteCard(cardId)
+    }
     
     
     if(!dadosCliente) return
     return(
-        <div onMouseMove={(e) =>  {e.stopPropagation() ;setIsOpen(false)}} className={`${newPayment && 'fixed'} flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full lg:h-screen`}>
+        <div className={`${newPayment && 'fixed'} flex flex-col gap-8 lg:gap-8 pt-20 pb-5 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full lg:h-screen`}>
             <div className="flex flex-col gap-4">
                 <h1 className="text-2xl lg:text-4xl font-semibold">Pagamentos</h1>
                 <h3 className="hidden md:block text-lg text-gray-600">Gerencie suas formas de pagamento e acompanhe suas compras com total transparência e segurança.</h3>
@@ -27,7 +31,12 @@ export default function Payment(){
                     <div  className="flex flex-col lg:flex-row gap-4 flex-wrap md:flex-row">
                         {dadosCliente?.payment?.map(card => {
                             return (
-                                <div onMouseMove={(e) =>  {e.stopPropagation() ;setIsOpen(true)}} className="h-40 lg:h-45 lg:w-75 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col relative">
+                                <div  className="h-40 lg:h-45 lg:w-75 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col relative">
+                                    <div className='text-white/70 absolute  top-4 right-5 flex gap-2'>
+                                        {/* <div className='hover:text-white transition-all'><i class="fa-solid fa-pencil"></i></div> */}
+                                        <div onClick={()=>handleDeleteCard(card.id)} className='hover:text-white transition-all'><i class="fa-solid fa-trash"></i></div>
+                                    </div>
+
                                     
                         {isOpen && <div className='absolute top-3 right-10 text-lg text-white'><i class="fa-brands fa-cc-visa"></i></div>}
                                     <div className="flex justify-between">

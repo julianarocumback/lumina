@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
-// Substitua pelas suas credenciais que estão no painel do Supabase
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 
@@ -38,8 +37,10 @@ export function AuthProvider({ children }) {
 
     buscarDados();
   }, [user])
+  // console.log(dadosCliente)
+    // FAVORITE
 
-  
+    // Add favorite
     async function adicionarFavorito(produto) {
       if (user?.id) {
         const favoritoAtualizado = [...dadosCliente.favoritos, produto]
@@ -56,6 +57,7 @@ export function AuthProvider({ children }) {
       }
     }
 
+    // Delete favorite
     async function removerFavorito(produto) {
       if (user?.id) {
         const favoritoAtualizado = dadosCliente?.favoritos.filter(item => item.id !== produto.id)
@@ -72,6 +74,10 @@ export function AuthProvider({ children }) {
       }
     }
 
+
+    // PAYMENT
+
+    // Add credit card
     async function adicionarCartao(produto) {
       if (user?.id) {
         const cartaoAtualizado = [...dadosCliente.cartoes, produto]
@@ -88,23 +94,27 @@ export function AuthProvider({ children }) {
       }
     }
 
-    async function removerCartao(produto) {
+    // Delete credit card
+    async function deleteCard(cardId) {
       if (user?.id) {
-        const cartaoAtualizado = dadosCliente?.cartoes.filter(item => item.id !== produto.id)
-        const { data } = await supabase
-          .from('clientes')
-          .update({favoritos: cartaoAtualizado})
-          .eq('id', user.id)
-          .select('*')
-          .single()
-
-        if (data) {
-          setDadosCliente(data)
+        const { error } = await supabase
+          .from('payment')
+          .delete()
+          .eq('id', cardId)
+          
+        if(!error) {
+          const deletedCard = dadosCliente?.payment?.filter(item => item.id !== cardId)
+          setDadosCliente(prev => ({...prev, payment: deletedCard}))
+        } else {
+          console.error('Erro ao deletar cartão', error.message)
         }
       }
     }
 
-    async function adicionarEndereco(address) {
+    // ADDRESS
+
+    // Add Address
+    async function addAddress(address) {
       if (user?.id) {
         const { data } = await supabase
           .from('address')
@@ -124,11 +134,28 @@ export function AuthProvider({ children }) {
           .single() 
 
 
-        if (data) {
-          setDadosCliente(data);
+          if (data) {
+            setDadosCliente(prev => ({...prev, address: [...prev.address, data]}))           
+          }
+        }
+    } 
+
+    // Delete address
+    async function deleteAddress(addressId) {
+      if (user?.id) {
+        const { error } = await supabase
+          .from('address')
+          .delete() 
+          .eq('id', addressId)
+
+        if (!error) {
+          const removedAddress = dadosCliente?.address.filter(item => item.id !== addressId)
+          setDadosCliente(prev => ({...prev, address: removedAddress}))
+        } else {
+          console.error('Erro ao remover endereço', error.message)
         }
       }
-    } 
+    }
 
     async function addPayment(payment) {
 
@@ -173,21 +200,7 @@ export function AuthProvider({ children }) {
       }
     }
 
-    async function removerEndereco(endereco) {
-      if (user?.id) {
-        const enderecoRemovido = dadosCliente?.enderecos.filter(item => item.id !== endereco.id)
-        const { data } = await supabase
-          .from('clientes')
-          .update({enderecos: enderecoRemovido}) 
-          .eq('id', user.id)
-          .select('*')
-          .single()
-
-        if (data) {
-          setDadosCliente(data)
-        }
-      }
-    }
+   
 
    
 
@@ -316,7 +329,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, atualizarNome, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, adicionarEndereco, removerEndereco, addPayment, cadastrar}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, atualizarNome, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, addAddress, deleteAddress, addPayment, cadastrar, deleteCard}}>
       {children}
     </AuthContext.Provider>
   );

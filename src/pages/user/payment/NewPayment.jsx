@@ -60,7 +60,6 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
     },[payment.lastFour])
 
 
-    console.log(payment)
 
     return (
         <div className="absolute flex justify-items-start lg:justify-center lg:items-center items-center top-0 h-full lg:h-screen w-full transition-colors bg-black/30 overflow-hidden">

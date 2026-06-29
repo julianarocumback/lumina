@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export default function NewAddress({setNewAddress, adicionarEndereco, dadosCliente}){
+export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
     const [address, setAddress] = useState({
         userId: dadosCliente?.id,
         zipCode: '',
@@ -56,7 +56,7 @@ export default function NewAddress({setNewAddress, adicionarEndereco, dadosClien
     }
 
     function handleAddAddress(){
-        adicionarEndereco(address)
+        addAddress(address)
         setNewAddress(false)
         setAddress({
         userId: dadosCliente?.id,
@@ -82,12 +82,11 @@ export default function NewAddress({setNewAddress, adicionarEndereco, dadosClien
         setAddress(prev => ({...prev, type:type}))
     }
 
-    console.log(address)
     return (
         <div className="absolute flex justify-center items-center top-0 h-screen w-full transition-colors bg-black/30">
             <div className='border rounded-2xl lg:w-150 h-fit left-40 bg-white p-8 shadow-lg border-gray-200 gap-6 flex flex-col relative'>
                 <h2 className="text-xl font-semibold">Novo endereço</h2>
-                <button onClick={()=> setNewAddress(false)} className="absolute right-8 w-7 h-7" ><i class="fa-solid fa-xmark" ></i></button>
+                <button onClick={()=> setNewAddress(false)} className="absolute right-8 w-7 h-7 hover:text-red-500 transition-all" ><i class="fa-solid fa-xmark" ></i></button>
             
                 {/* INFORMAÇÕES DE PAGAMENTO */}
                 <div className='flex flex-col gap-4'>
