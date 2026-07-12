@@ -48,7 +48,12 @@ export default function Catalogo(){
         return a.nome.localeCompare(b.nome)
     })
 
-    const pesquisaLista = produtos.filter(item => item.nome === pesquisa).filter(item => categoria === 'Todos' || item.categoria === categoria)
+    const pesquisaLista = produtos.filter(item => {
+        const nomeArrumado = item.nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim()
+        console.log(nomeArrumado)
+
+        if(nomeArrumado.includes(pesquisa)) return item
+    }).filter(item => categoria === 'Todos' || item.categoria === categoria)
     .toSorted((a,b) => {
         const valorA = Number(a.valor)
         const valorB = Number(b.valor)

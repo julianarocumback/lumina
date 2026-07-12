@@ -10,8 +10,10 @@ export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa}) => {
     if(!lista) return null
 
     function searchChange(e){
-        const search = e.target.value
-        if (search.length > 10) return 
+        const search = e.target.value.normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+     
         setPesquisa(search)
      
     }
