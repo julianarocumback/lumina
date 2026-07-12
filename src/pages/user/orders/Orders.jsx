@@ -7,8 +7,6 @@ export default function Orders(){
     const {dadosCliente} = useOutletContext()
     if(!dadosCliente) return
     const orders = dadosCliente.pedidos ?? []
-    console.log(orders.map(item => item.produtos).map(item => item).flatMap(item => item))
-    
 
     const categorias = [
         {
@@ -71,13 +69,70 @@ export default function Orders(){
                 
                 
                 <div className="flex flex-col gap-4">
-                    
+                    {dadosCliente.pedidos.filter(item => {
+                        const idArrumado = item.id.toLowerCase()
+                        const nomeArrumado = item.produtos.map(item => item.nome.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().trim())
+                        const busca = search.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase().trim()
+
+                        if(idArrumado.includes(busca) || nomeArrumado.some(item => item.includes(busca))) return item
+
+                    }).reverse().map(item => {
+                    return(
+
+                        <div className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col w-full">
+
+                                <div className="flex justify-between items-end">
+                                    <div className="flex flex-col gap-4 w-full">
+                                        <div className="flex gap-4 lg:justify-start">
+                                            <p className="text-gray-500 font-semibold">#{[...item.id].map((letra, index)=> {
+                                                if(index > 7) return 
+                                                return letra
+                                            }).join('')}                             </p>
+                                            <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold uppercase">{item.status}</span>
+                                            <p className="hidden lg:block font-light">{item.created_at}</p>
+                                        </div>
+
+                                        <p className="font-light lg:hidden">Realizado em 12 out 2026</p>
+
+                                        <div className=" overflow-x-scroll w-full flex gap-4 no-scrollbar">
+                                            {item?.produtos.map(produto => {
+                                                return(
+                                                    <div className="border border-gray-200 w-15 rounded-xl overflow-hidden flex flex-none">
+                                                        <img src={produto.img_url} alt="" />
+
+                                                    </div>
+                                                )
+                                            })
+                                            }
+                                            
+                                        </div>
+                                         
+                                    </div>
+                                    
+                                    <div className="lg:flex flex-col gap-4 hidden">
+                                        <button className="bg-gray-200 font-semibold  rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4">Ver detalhes</button>
+                                        <button className="bg-blue-900 font-semibold text-white rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4">
+                                            Comprar novamente
+                                        </button>
+                                    </div>
+                                </div>
+                                
+
+                                <div className="font-semibold flex gap-8 justify-between items-center">
+                                    <div>
+                                        {/* {pedido.valor.toLocaleString('BRL', {style: 'currency', currency: 'BRL'})} */}
+                                    </div>
+                                    <button className="bg-gray-200 font-semibold  rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4 lg:hidden">Ver detalhes</button>
+                                </div>
+                            </div>
+                                        )}
+                    )}
                 </div>
                 :
                 
                 
                 <div className="flex flex-col gap-4 overflow-hidden">
-                    {orders.filter(pedido => pedido.status === (status === 'Todos' ? pedido.status : status ?? pedido.status)).map(pedido => {
+                    {orders.filter(pedido => pedido.status === (status === 'Todos' ? pedido.status : status ?? pedido.status)).reverse().map(pedido => {
                         return (
                             <div className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col w-full">
 
