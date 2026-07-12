@@ -205,11 +205,11 @@ export function AuthProvider({ children }) {
    
 
     // Atualizar nome
-    async function atualizarNome(novoNome) {
+    async function submitName(name) {
       if (user?.id) {
         const { data } = await supabase
           .from('clientes')
-          .update({nome: novoNome})
+          .update({nome: name})
           .eq('id', user.id)
           .select('*')
           .single()
@@ -218,6 +218,29 @@ export function AuthProvider({ children }) {
           setDadosCliente(data)
         }
       }
+    }
+
+    // Adicionar CPF
+    const cpfAdd = async (cpf) => {
+      if(user?.id) {
+        const { data, error} = await supabase
+        .from('clientes')
+        .update({cpf: cpf})
+        .eq('id', user.id)
+        .select('*')
+        .single()
+
+
+        if(data){
+          setDadosCliente(data)
+        }
+
+        if(error) {
+          console.error(error.message)
+        }
+
+      }
+
     }
 
     // Atualizar email
@@ -329,7 +352,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, atualizarNome, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, addAddress, deleteAddress, addPayment, cadastrar, deleteCard}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, submitName, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, addAddress, deleteAddress, addPayment, cadastrar, deleteCard, cpfAdd}}>
       {children}
     </AuthContext.Provider>
   );
