@@ -50,9 +50,10 @@ export default function Catalogo(){
 
     const pesquisaLista = produtos.filter(item => {
         const nomeArrumado = item.nome.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim()
-        console.log(nomeArrumado)
+        const autorFormatado = item.livros.autor.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim()
+        console.log(autorFormatado)
 
-        if(nomeArrumado.includes(pesquisa)) return item
+        if(nomeArrumado.includes(pesquisa) || autorFormatado.includes(pesquisa) ) return item
     }).filter(item => categoria === 'Todos' || item.categoria === categoria)
     .toSorted((a,b) => {
         const valorA = Number(a.valor)
