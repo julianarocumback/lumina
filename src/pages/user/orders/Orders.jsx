@@ -1,5 +1,6 @@
 import { useOutletContext } from 'react-router-dom'
 import { useState } from 'react'
+import { motion} from 'framer-motion'
 
 export default function Orders(){
     const [status, setStatus] = useState('Todos')
@@ -79,7 +80,8 @@ export default function Orders(){
                     }).reverse().map(item => {
                     return(
 
-                        <div className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col w-full">
+                        <motion.div initial={{ opacity: 0, scale: 0.95 }}
+  animate={{ opacity: 1, scale: 1 }} className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col w-full">
 
                                 <div className="flex justify-between items-end">
                                     <div className="flex flex-col gap-4 w-full">
@@ -124,7 +126,7 @@ export default function Orders(){
                                     </div>
                                     <button className="bg-gray-200 font-semibold  rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4 lg:hidden">Ver detalhes</button>
                                 </div>
-                            </div>
+                            </motion.div>
                                         )}
                     )}
                 </div>

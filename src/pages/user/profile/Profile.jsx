@@ -10,7 +10,7 @@ import Password from './password'
 import DeleteAccount from './deleteAccount'
 
 export default function Profile(){
-    const {dadosCliente, submitName, atualizarEmail, atualizarWhatsApp, cpfAdd} = useOutletContext()
+    const {dadosCliente, submitName, atualizarEmail, atualizarWhatsApp, cpfAdd, birthdateAdd} = useOutletContext()
  
     if(!dadosCliente) return
 
@@ -35,10 +35,10 @@ export default function Profile(){
                     <Email dadosCliente={dadosCliente} atualizarEmail={atualizarEmail}/>
 
                     {/* WHATSAPP */}
-                    <Whatsapp dadosCliente={dadosCliente} atualizarWhatsApp={atualizarWhatsApp}/>
+                    <Whatsapp dadosCliente={dadosCliente} onSaveWhatsApp={atualizarWhatsApp}/>
                     
                     {/* BIRTHDATE */}
-                    <Birthdate dadosCliente={dadosCliente}/>
+                    <Birthdate dadosCliente={dadosCliente} onSaveBirthdate={birthdateAdd}/>
          
                 </div>
 

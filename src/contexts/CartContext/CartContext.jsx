@@ -21,6 +21,9 @@ export function CartProvider({ children }) {
         setItems(prev => [...prev, p])
     }
 
+
+
+
     // Remover o produto do carrinho
     function removeToCart(produto) {
         const produtos = items.filter(item => item?.id !== produto?.id)
@@ -32,6 +35,17 @@ export function CartProvider({ children }) {
         setItems(prev => prev.map(item => {
             if(item.id === produto.id){
                 return {...item, quantidade: item.quantidade + 1}
+            }
+            return item
+        }))
+    }
+
+    function quantidades(produto, quantidade) {
+        const quantidadeCerta = quantidade === '' ? 1 : quantidade
+        if(quantidade  > 101) return
+        setItems(prev => prev.map(item => {
+            if(item.id === produto.id){
+                return {...item, quantidade: quantidadeCerta}
             }
             return item
         }))
@@ -52,7 +66,7 @@ export function CartProvider({ children }) {
   
 
     return (
-        <CartContext.Provider value={{items, setItems, addToCart, removeToCart, aumentarQuantidade, diminuirQuantidade}}>
+        <CartContext.Provider value={{items, setItems, addToCart, removeToCart, aumentarQuantidade, diminuirQuantidade, quantidades}}>
             {children}
         </CartContext.Provider>
     )

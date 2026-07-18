@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom"
 import { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 import {currencyFormatter} from '../../utils/formatCurrency'
+import {motion, AnimatePresence} from 'framer-motion'
 // import { useLocalStorage} from '../../hooks/useLocalStorage'
 
 
 export default function ListaCarrinho(){
-    const {items, aumentarQuantidade, diminuirQuantidade, removeToCart} = useCart()
+    const {items, setItems, aumentarQuantidade, diminuirQuantidade, removeToCart, quantidades} = useCart()
+    const [quantidade, setQuantidade] = useState(0)
     const navigate = useNavigate()
     const {authenticated} = useContext(AuthContext)
 
@@ -48,15 +50,21 @@ export default function ListaCarrinho(){
     return (
         <div className="h-screen w-82 pt-4 lg:pt-0 lg:w-100 bg-white absolute bottom-13 lg:top-13 right-0 flex flex-col shadow-sm">
             <div className="p-2 pt-16 px-6 lg:p-7 gap-7 flex flex-col w-full h-4/5 lg:3/4">
+            <div className='flex justify-between items-center'>
                 <div className="text-lg lg:text-xl font-semibold">Carrinho</div>
+                <AnimatePresence>
+                    {items.length > 0 && <motion.button initial={{ opacity: 0}} animate={{ opacity: 1}}  transition={{ duration: 0.5 }}  exit={{ opacity: 0, transition: { duration: 0.20 } }}  className='hover:text-red-500 transition-all' onClick={() => setItems([])}>Limpar</motion.button>}
+                </AnimatePresence>
+
+            </div>
 
                 {/* Produtos no carrinho */}
                 <div className="flex flex-col w-full h-full gap-4 overflow-y-auto">
-                    {items?.map((item, index) => {
+                    <AnimatePresence>
+                    {items?.map((item) => {
                         return(
-
                             // Card do produto
-                            <div className="flex h-35 lg:h-35 w-full border border-gray-200 gap-4 overflow-hidden rounded-2xl shrink-0 shadow-xs p-4" key={index} >
+                            <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }}  transition={{ duration: 0.5 }}  exit={{ opacity: 0, y: -30, transition: { duration: 0.20 } }} key={item.id}  layout className="flex h-35 lg:h-35 w-full border border-gray-200 gap-4 overflow-hidden rounded-2xl shrink-0 shadow-xs p-4">
                                 <div className="h-full w-20 lg:w-1/4 ">
                                     <img className="h-full w-full rounded-2xl shadow-xs border border-gray-100" src={item.img_url} alt="" />
                                 </div>
@@ -65,7 +73,7 @@ export default function ListaCarrinho(){
                                         <div className="w-[85%]">
                                             <h4 className="lg:text-lg font-semibold text-[#1a1c1d] truncate ">
                                                 {item.nome}</h4>
-                                            <p>descrição</p>
+                                            <p className='truncate'>{item.description}</p>
 
                                         </div>
                                     </div>
@@ -80,21 +88,26 @@ export default function ListaCarrinho(){
                                         <div className="flex border border-gray-300 w-20 items-center justify-around bg-white rounded-3xl px-2 select-none">
 
                                             {/* Diminuir a quantidade */}
-                                            <div className={`text-xs cursor-pointer ${item.quantidade === 1 && 'text-gray-300'}`} onClick={()=> diminuirQuantidade(item)}><i class="fa-solid fa-minus"></i></div>
+                                            <div className={`text-xs cursor-pointer w-5 ${item.quantidade === 1 && 'text-gray-300'}`} onClick={()=> diminuirQuantidade(item)}><i class="fa-solid fa-minus"></i></div>
 
                                             {/* Quantidade atual */}
+                                            <div className='relative'>
                                             <div>{item.quantidade}</div>
+                                            <input onChange={(e) => quantidades(item, e.target.value.replace(/\D/g, ''))} className=' w-5 z-10  top-0 absolute focus:outline-none text-center caret-black  text-transparent ' type="text" value={item.quantidade}/>
+
+                                            </div>
 
                                             {/* Aumentar a quantidade */}
-                                            <div className="text-xs cursor-pointer" onClick={()=> aumentarQuantidade(item)}><i class="fa-solid fa-plus"></i></div>
+                                            <div className="text-xs cursor-pointer w-5" onClick={()=> aumentarQuantidade(item)}><i class="fa-solid fa-plus"></i></div>
                                             
                                         </div>
 
                                     </div>
                                 </div>
-                            </div>        
+                            </motion.div>        
                         )
                     })}
+                    </AnimatePresence>
                 </div>
 
 

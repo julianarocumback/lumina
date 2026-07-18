@@ -243,6 +243,29 @@ export function AuthProvider({ children }) {
 
     }
 
+    // Adicionar data de nascimento
+    const birthdateAdd = async (birthdate) => {
+      if(user?.id) {
+        const { data, error} = await supabase
+        .from('clientes')
+        .update({birthdate: birthdate})
+        .eq('id', user.id)
+        .select('*')
+        .single()
+
+
+        if(data){
+          setDadosCliente(data)
+        }
+
+        if(error) {
+          console.error(error.message)
+        }
+
+      }
+
+    }
+
     // Atualizar email
     async function atualizarEmail(novoEmail){
       const { data, error } = await supabase.auth.updateUser({
@@ -272,12 +295,12 @@ export function AuthProvider({ children }) {
     }
 
     // Atualizar WhatsApp
-    async function atualizarWhatsApp(novoWhatsApp) {
+    async function atualizarWhatsApp(whatsapp) {
       if (user?.id) {
         // A Cozinha: Consulta na tabela personalizada
         const { data } = await supabase
           .from('clientes')
-          .update({whatsapp: novoWhatsApp}) // Peça aqui todas as colunas que adicionou
+          .update({whatsapp: whatsapp}) // Peça aqui todas as colunas que adicionou
           .eq('id', user.id)
           .select('*')
           .single(); // Como é um usuário, trazemos apenas um registro
@@ -352,7 +375,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, submitName, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, addAddress, deleteAddress, addPayment, cadastrar, deleteCard, cpfAdd}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, submitName, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, addAddress, deleteAddress, addPayment, cadastrar, deleteCard, cpfAdd, birthdateAdd}}>
       {children}
     </AuthContext.Provider>
   );

@@ -12,7 +12,7 @@ import NewPayment from './payment/NewPayment'
 // --------------------------------------------
 
 export default function User() {
-    const {dadosCliente, logout, removerFavorito, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, addPayment, deleteCard, cpfAdd} = useContext(AuthContext)
+    const {dadosCliente, logout, removerFavorito, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, addPayment, deleteCard, cpfAdd, birthdateAdd} = useContext(AuthContext)
     const {addToCart, items} = useCart()
 
     const [newAddress, setNewAddress] = useState(false)
@@ -22,7 +22,7 @@ export default function User() {
         <div className={`h-full w-full`}>
             <Header/>
             <Sidebar logout={logout}/>
-            <Outlet context={{dadosCliente , addToCart, removerFavorito, items, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, newAddress, setNewAddress , newPayment,setNewPayment, deleteCard, cpfAdd}}/>
+            <Outlet context={{dadosCliente , addToCart, removerFavorito, items, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, newAddress, setNewAddress , newPayment,setNewPayment, deleteCard, cpfAdd, birthdateAdd}}/>
             {newAddress && <NewAddress addAddress={addAddress} setNewAddress={setNewAddress} dadosCliente={dadosCliente}/>}
             {newPayment && <NewPayment addPayment={addPayment} setNewPayment={setNewPayment} dadosCliente={dadosCliente}/>}
             

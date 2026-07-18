@@ -19,7 +19,7 @@ export default function ProductInfo({produto, adicionarFavorito, removerFavorito
 
             <Price produto={produto}/>
             <Divisor/>
-            <Info/>
+            <Info produto={produto}/>
             <div className="flex flex-col py-10 gap-4">
                 <Cart produto={produto}/> 
                 <Favorite adicionarFavorito={adicionarFavorito} removerFavorito={removerFavorito} dadosCliente={dadosCliente} produto={produto} authenticated={authenticated}/>
@@ -27,7 +27,7 @@ export default function ProductInfo({produto, adicionarFavorito, removerFavorito
             <div className="lg:flex lg:gap-8 hidden">
                 <div className="flex gap-2">
                     <div className="text-blue-800"><i className="fa-regular fa-truck"></i></div>
-                    <div>Frete Grátis para o Sul</div>      
+                    <div>Frete Grátis dependendo da região</div>      
                 </div>
                 <div className="flex gap-2">
                     <div className="text-blue-800"><i className="fa-regular fa-circle-check"></i></div>

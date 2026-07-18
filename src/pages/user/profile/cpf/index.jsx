@@ -2,7 +2,7 @@ import {useState} from 'react'
 
 export default function Cpf({dadosCliente, onSaveCpf}){
     const [cpf, setCpf] = useState('')
-    const [isEditingCPF, setIsEditionCPF] = useState(false)
+    const [isEditingCPF, setIsEditingCPF] = useState(false)
     const [isConfirming, setIsConfirming] = useState(false)
 
     const cpfPlaceholder = dadosCliente?.cpf ?? ''
@@ -40,7 +40,7 @@ export default function Cpf({dadosCliente, onSaveCpf}){
         if(cpf.length !== 11) return
         onSaveCpf(cpf)
         setIsConfirming(false)
-        setIsEditionCPF(false)
+        setIsEditingCPF(false)
        
     }
 
@@ -50,29 +50,29 @@ export default function Cpf({dadosCliente, onSaveCpf}){
     }
 
     const handleEditingCPF = () => {
-        setIsEditionCPF(true)
+        setIsEditingCPF(true)
     }
 
     // CANCEL EDIT CPF
     const handleCancelAddCpf = ()=> {
-        setIsEditionCPF(false)
+        setIsEditingCPF(false)
         setCpf('')
     }
     return (
         <div className="flex flex-col gap-1">
             <h3 className="font-semibold text-[11px] text-gray-500">CPF</h3>
             <div className='relative'>
-                {isEditingCPF && <span>{!dadosCliente?.cpf?cpfFormated:cpfparaplaceholder }</span>}
-                {!isEditingCPF && <div> <input disabled={isEditingCPF} onChange={(e) => handleAddCPF(e.target.value.replace(/\D/g, ''))}  type="text" className='absolute text-transparent bg-transparent caret-black border  cursor z-10' value={cpfFormatedValue()}/>
+                {!isEditingCPF && <span>{!dadosCliente?.cpf?cpfFormated:cpfparaplaceholder }</span>}
+                {isEditingCPF && <div> <input disabled={!isEditingCPF} onChange={(e) => handleAddCPF(e.target.value.replace(/\D/g, ''))}  type="text" className={`${isEditingCPF && 'enabled:outline'} absolute text-transparent bg-transparent caret-black   cursor z-10`} value={cpfFormatedValue()}/>
                 {/*  */}
                 {/*  */}
                 {/*  */}
                 <span className='select-none pointer-events-none relative -left-[0.2px] tracking-tight font-arial font-sans'>{cpfFormated}</span></div>}
            </div>
             <div className='flex flex-col lg:flex-row lg:justify-between'>
-                {!dadosCliente?.cpf && !isEditingCPF && <button onClick={handleEditingCPF} className='font-semibold text-blue-700 w-fit'>Adicionar</button>}
+                {!isEditingCPF && !dadosCliente?.cpf && <button onClick={handleEditingCPF} className='font-semibold text-blue-700 w-fit'>Adicionar</button>}
             </div>
-            {!dadosCliente?.cpf && isEditingCPF &&
+            {isEditingCPF &&
                 <div className='flex gap-4'>
                     <button onClick={handleCancelAddCpf}>Cancelar</button>
                     <button onClick={() => setIsConfirming(true)}>Adicionar</button>
@@ -82,7 +82,7 @@ export default function Cpf({dadosCliente, onSaveCpf}){
                 <div className='border '>
                     <p>Só é possível adicionar uma vez, após isso não será possível alterá-lo. Deseja continuar</p>
                     <div className='border flex justify-center items-center gap-8'>
-                        <button onClick={() => handleSaveCpf} className='bg-blue-500 py-2 px-8 rounded-xl font-semibold'>Sim</button>
+                        <button onClick={handleSaveCpf} className='bg-blue-500 py-2 px-8 rounded-xl font-semibold'>Sim</button>
                         <button className='bg-gray-200 py-2 px-8 rounded-xl font-semibold' onClick={()=>setIsConfirming(false)}>Não</button>
                     </div>    
                 </div>
