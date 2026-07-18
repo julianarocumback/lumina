@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { Carrossel, Cards } from "./content/Content"
+import { AnimatePresence } from 'framer-motion'
 
 
 export default function Testemunhos(){
@@ -19,7 +20,7 @@ export default function Testemunhos(){
 
     return (
         <section>
-            {isMobile? (<Carrossel/>):(<Cards/>)}     
+            <AnimatePresence>{isMobile? (<Carrossel/>):(<Cards/>)}</AnimatePresence> 
         </section>
     )
 }

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext/CartContext'
 import Header from '../../components/header/Header'
 import Footer from '../../components/footer/Footer'
+import {Link} from 'react-router-dom'
 
 export default function Bundle() {
     const [products, setProducts] = useState([])
@@ -132,7 +133,9 @@ export default function Bundle() {
                                     return (
                                         <div key={prod.id} className='relative'>
                                             <div className='h-50'>
-                                                <img className='h-full object-contain' src={prod.img_url} alt={prod.titulo} />
+                                                <Link to={`/produto/${prod.id}`}>
+                                                    <img className='h-full object-contain' src={prod.img_url} alt={prod.titulo} />
+                                                </Link>
                                             </div>
                                         </div>
                                     )

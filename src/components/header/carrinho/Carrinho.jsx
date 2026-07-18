@@ -11,7 +11,7 @@ export default function Carrinho({carrinhoIsOpen, setCarrinhoIsOpen}) {
     }
 
     return (
-        <div className="lg:text-xl relative cursor-pointer" onClick={alternar}>
+        <div className="botao-carrinho lg:text-xl relative cursor-pointer" onClick={alternar}>
             <i className="fa-solid fa-cart-shopping"></i>
             {/* Mostrar quantidade de produtos no carrinho */}
             {items.length > 0 && 

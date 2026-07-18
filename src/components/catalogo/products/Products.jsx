@@ -3,6 +3,7 @@ import { AuthContext } from '../../../contexts/AuthContext/AuthContext'
 import { useContext} from 'react'
 import { Link } from "react-router-dom"
 import Skeleton from "../skeleton/Skeleton";
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Products({produtos, carregar, setQuantidade, tamanho}){
     const {addToCart, items} = useCart()
@@ -35,7 +36,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
     const listaNova = produtos.map((produto) => {
 
             return (
-                    <div className="flex flex-col gap-4 cursor-pointer relative select-none" key={produto.id}>
+                    <motion.div initial={{opacity:0, }}  animate={{opacity: 1, y:0}}   transition={{ type: "tween", duration: 0.5 }} exit={{opacity:0}} layout className="flex flex-col gap-4 cursor-pointer relative select-none" key={produto.id}>
                                 {authenticated && (dadosCliente?.favoritos?.some(item => item.id === produto.id)? <div onClick={ () => handreFavoritar(produto)} className="absolute text-red-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-solid fa-heart"></i></div>:<div onClick={ () => handreFavoritar(produto)} className="absolute text-gray-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-solid fa-heart"></i></div>)}
                                 
                         <Link to={`/produto/${produto.id}`}>
@@ -55,7 +56,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
                             </div>
                             </div>
                         </div>  
-                    </div>
+                    </motion.div>
             )
         
 
@@ -63,9 +64,12 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
         
     })
     return (
-        <div className="flex flex-col justify-center gap-24">
+        <motion.div initial={{opacity:0, y:-30}} whileInView={{opacity:1, y:0}} transition={{duration: 0.5}} className="flex flex-col justify-center gap-24">
             <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-4 gap-y-8 lg:gap-8">
-                {listaNova}
+                <AnimatePresence>
+                    {listaNova}
+
+                </AnimatePresence>
             </div>
             <div className="w-full flex justify-center">
                 {listaNova.length !== tamanho && <button className="py-2 self-center w-70 rounded-full text-lg font-semibold bg-gray-200" onClick={()=> {alterarQuantidade(3)}}>Mostrar mais</button>}
@@ -73,6 +77,6 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
             </div>
             
 
-        </div>
+        </motion.div>
     )
 }

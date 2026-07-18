@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { Carrossel, BentoGrid } from "./exploreCotent/ExploreContent"
+import {motion, AnimatePresence} from 'framer-motion'
 
 export default function Explorar(){
     const [isMobile, setIsMobile] = useState(false)
@@ -16,7 +17,7 @@ export default function Explorar(){
     },[])
     return (
         <section className="w-full px-8 py-12 lg:py-24 lg:px-86">
-            {isMobile? (<Carrossel/>): (<BentoGrid/>)}
+            <AnimatePresence>{isMobile? (<Carrossel/>): (<BentoGrid/>)}</AnimatePresence>
         </section>
     )
 }

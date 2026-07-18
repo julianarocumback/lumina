@@ -1,6 +1,8 @@
 import { useState, useContext } from "react"
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
 import ListaCarrinho from "../listaCarrinho/ListaCarrinho"
+import {AnimatePresence} from 'framer-motion'
+
 
 
 import Logo from "./logo/Logo"
@@ -20,14 +22,17 @@ export default function Header() {
                 <Explorar/>
                 <Login authenticated={authenticated} dadosCliente={dadosCliente} login={login} logout={logout} cadastrar={cadastrar}/>
                     <Carrinho carrinhoIsOpen={carrinhoIsOpen} setCarrinhoIsOpen={setCarrinhoIsOpen} />
-                {carrinhoIsOpen? (<ListaCarrinho/>): ('')}
+                <AnimatePresence>
+                    {carrinhoIsOpen && (<ListaCarrinho isOpen={carrinhoIsOpen} setCarrinho={setCarrinhoIsOpen}/>)}
+
+                </AnimatePresence>
             </div> 
             <div className="hidden px-8 lg:flex justify-between gap-4 w-full items-center">
                 <Logo/>
                 <div className="flex gap-4">
                     <Login authenticated={authenticated} dadosCliente={dadosCliente} login={login} logout={logout} cadastrar={cadastrar}/>
-                    <Carrinho carrinhoIsOpen={carrinhoIsOpen} setCarrinhoIsOpen={setCarrinhoIsOpen} />
-                    {carrinhoIsOpen? (<ListaCarrinho/>): ('')}
+                    <Carrinho carrinhoIsOpen={carrinhoIsOpen} isOpen={carrinhoIsOpen} setCarrinhoIsOpen={setCarrinhoIsOpen} />
+                    <AnimatePresence>{carrinhoIsOpen && <ListaCarrinho/>}</AnimatePresence>
                 </div>
             </div>
         </header>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { motion, AnimatePresence} from 'framer-motion'
 
 import blueCollection from './blueCollection.png'
 import pinkCollection from './pinkCollection.png'
@@ -44,7 +45,7 @@ const lista = [
 export const Carrossel = () => {
     return(
     
-        <div className="w-full overflow-hidden flex flex-col gap-8">
+        <motion.div className="w-full overflow-hidden flex flex-col gap-8">
             <span className="text-[#BC004B] text-base font-bold">EXPLORE POR CORES</span>
             <div className='flex snap-x snap-mandatory overflow-x-auto no-scrollbar gap-8'>
                 {lista.map(item => {
@@ -69,13 +70,13 @@ export const Carrossel = () => {
                 })}
 
             </div>
-        </div>
+        </motion.div>
     )
 }
 
 export const BentoGrid = () => {
     return (
-        <div className="flex flex-col gap-16">
+        <motion.div initial={{opacity:0, y:-50}} whileInView={{opacity:1, y:0}} transition={{duration: 0.5}} className="flex flex-col gap-16">
             <div className="flex flex-col gap-2 text-center">
                 <span className="text-[#BC004B] text-base font-bold">EXPLORE POR CORES</span>
                 <h3 className="text-4xl text-[#1A1C1D]">A Cromatografia da Fé</h3>
@@ -143,6 +144,6 @@ export const BentoGrid = () => {
 
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }

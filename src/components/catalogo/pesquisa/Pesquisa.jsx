@@ -3,6 +3,7 @@ import { AuthContext } from '../../../contexts/AuthContext/AuthContext'
 import { useContext, useState, useEffect} from 'react'
 import { Link } from "react-router-dom"
 import Skeleton from "../skeleton/Skeleton";
+import {motion, AnimatePresence} from 'framer-motion'
 
 
 export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa}) => {
@@ -25,7 +26,8 @@ export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa}) => {
 
 
     return (
-        <div className='absolute lg:hidden flex flex-col z-10 left-0 -top-10 w-full p-4 gap-8 items-center'>
+        <motion.div initial={{opacity:0, }} layout animate={{opacity: 1, y:0}}   transition={{ type: "tween", duration: 0.5 }} exit={{opacity:0}} className='absolute lg:hidden flex flex-col z-10 left-0 -top-10 w-full p-4 gap-8 items-center'>
+            
             <div className='flex w-full gap-4'>
                 <div className='w-full relative flex items-center justify-center'>
                     <input value={pesquisa} onChange={(e)=> searchChange(e)} className='w-full shadow rounded-full py-2 px-4 bg-white' type="text" />
@@ -36,11 +38,14 @@ export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa}) => {
             </div>
             {isFilterOpen &&
                 <div className='bg-white w-full h-full  flex gap-4'>
-                    {filters}
+                    <AnimatePresence>
+                        {filters}
+
+                    </AnimatePresence>
                 </div>
             }
             
-        </div>
+        </motion.div>
     )
 }
 
@@ -79,10 +84,12 @@ export const DesktopSearch = ({produtos, carregar, setQuantidade, pesquisaLista}
     return (
         <div className="flex flex-col justify-center gap-24">
             <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-4 gap-y-8 lg:gap-8">
+            <AnimatePresence>
+                
            {pesquisaLista?.map((produto) => {
-
-            return (
-                    <div className="flex flex-col gap-4 cursor-pointer relative select-none" key={produto.id}>
+               
+               return (
+                   <motion.div initial={{opacity:0, }}  animate={{opacity: 1, y:0}} layout  transition={{ type: "tween", duration: 0.5 }} exit={{opacity:0}} className="flex flex-col gap-4 cursor-pointer relative select-none" key={produto.id}>
                                 {authenticated && (dadosCliente?.favoritos?.some(item => item.id === produto.id)? <div onClick={ () => handreFavoritar(produto)} className="absolute text-red-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-solid fa-heart"></i></div>:<div onClick={ () => handreFavoritar(produto)} className="absolute text-gray-300 text-xl lg:text-2xl right-4 top-3"><i className="fa-solid fa-heart"></i></div>)}
                                 
                         <Link to={`/produto/${produto.id}`}>
@@ -102,13 +109,14 @@ export const DesktopSearch = ({produtos, carregar, setQuantidade, pesquisaLista}
                             </div>
                             </div>
                         </div>  
-                    </div>
+                    </motion.div>
             )
         
 
             
         
         })}
+        </AnimatePresence>
         </div>
         </div>
     )
