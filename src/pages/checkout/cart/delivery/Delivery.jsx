@@ -132,13 +132,13 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
     }
 
     return (
-        <div className="w-full  lg:rounded-2xl overflow-hidden bg-white shadow-xs p-8 border-red-400 h-full select-none">
-            <div className="pb-12 flex flex-col gap-2">
-                <h2 className="text-2xl">Endereço de Entrega</h2>
+        <div className="w-full mt-20 lg:mt-0 lg:rounded-2xl overflow-hidden bg-white shadow-xs p-8 border-red-400 h-full select-none gap-8 flex flex-col">
+            <div className=" flex flex-col gap-2">
+                <h2 className="text-lg font-semibold lg:text-2xl">Endereço de Entrega</h2>
                 <p>Onde devemos entregar sua nova leitura edificante?</p>
             </div>
 
-            <div className="flex flex-col gap-4 pb-8">
+            <div className="flex flex-col gap-4">
                 <p className="font-semibold">Selecione um endereço de entrega</p>
                 {/* endereços */}
                 <div className="flex gap-8">
@@ -273,7 +273,7 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
 
             
            
-            <div className="py-8 flex flex-col gap-5">
+            <div className="flex flex-col gap-5">
                 <div>
                     <p className="font-semibold">Modalidade de envio</p>
                 </div>

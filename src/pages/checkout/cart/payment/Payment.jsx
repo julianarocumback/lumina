@@ -142,7 +142,7 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                     const isSelected = pagamento.id === payment.id
 
                     return (
-                          <div onClick={()=>handleCartaoSelecionado(payment)} className={`${isSelected && ' outline-green-500 bg-green-700 outline-2 text-gray-700'} h-40 lg:h-40  lg:w-65 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col`}>
+                          <div onClick={()=>handleCartaoSelecionado(payment)} className={`${isSelected && ' outline-green-500 bg-green-700 outline-2 text-gray-700'}   h-40 lg:h-40  lg:w-65 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col`}>
                                     <div className="flex justify-between">
                                         <div className="text-white"><i class="fa-brands fa-cc-visa"></i></div>
                                         <span className="text-xs font-bold text-gray-400">{payment.brand}</span>

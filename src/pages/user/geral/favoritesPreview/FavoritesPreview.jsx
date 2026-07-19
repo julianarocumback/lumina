@@ -6,7 +6,7 @@ export default function FavoritesPreview({favorites}){
     const recentFavorites = favorites ?? []
   
     return (
-        <div className="h-fit lg:h-125 justify-center rounded-3xl lg:w-1/4 bg-white p-8 shadow-lg flex flex-col gap-4">
+        <div className="h-fit lg:h-125 justify-center rounded-3xl lg:w-1/4 border border-gray-100 bg-white p-8 shadow-lg flex flex-col gap-4">
             <div className="flex justify-between">
                 <h3 className="font-semibold text-lg">Favoritos recentes</h3>
             </div>
