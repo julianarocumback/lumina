@@ -1,4 +1,5 @@
 import { useOutletContext } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 import Welcome from './welcome/Welcome'
 import OrderPreview from './orderPreview/OrderPreview'
@@ -9,7 +10,7 @@ export default function Geral(){
     if(!dadosCliente) return
  
     return (
-        <div className="flex flex-col gap-8 lg:gap-8 pt-7 pb-25 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full">
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className="flex flex-col gap-8 lg:gap-8 pt-7 pb-25 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full">
             
             <Welcome dadosCliente={dadosCliente}/>
            
@@ -18,6 +19,6 @@ export default function Geral(){
                 <FavoritesPreview favorites={dadosCliente.favoritos}/>
             </div>
 
-        </div>
+        </motion.div>
     )
 }

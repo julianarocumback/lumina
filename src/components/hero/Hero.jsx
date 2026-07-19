@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { motion} from 'framer-motion'
 import HeroContent from "./heroContent/HeroCotent";
 import Cuidado from './o_cuidado_do_corpo.jpg';
 import Heroc from './hero.jpeg'
@@ -115,7 +116,7 @@ export default function Hero() {
   };
 
   return (
-    <div className="w-full h-screen relative overflow-hidden flex flex-col bg-[#f0f2f5] font-sans antialiased text-slate-900">
+    <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className="w-full h-screen relative overflow-hidden flex flex-col bg-[#f0f2f5] font-sans antialiased text-slate-900">
       
       {/* Background Activo */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -188,6 +189,6 @@ export default function Hero() {
         </div>
 
       </main>
-    </div>
+    </motion.div>
   );
 }

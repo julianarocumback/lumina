@@ -4,6 +4,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../../contexts/AuthContext/AuthContext'
 import { useCart } from '../../contexts/CartContext/CartContext'
 import { Outlet } from 'react-router-dom';
+import { AnimatePresence} from 'framer-motion'
 // --------------------------------------------
 import Header from '../../components/header/Header'
 import Sidebar from './sidebar/Sidebar'
@@ -22,7 +23,9 @@ export default function User() {
         <div className={`h-full w-full`}>
             <Header/>
             <Sidebar logout={logout}/>
-            <Outlet context={{dadosCliente , addToCart, removerFavorito, items, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, newAddress, setNewAddress , newPayment,setNewPayment, deleteCard, cpfAdd, birthdateAdd}}/>
+            <AnimatePresence>
+                <Outlet context={{dadosCliente , addToCart, removerFavorito, items, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, newAddress, setNewAddress , newPayment,setNewPayment, deleteCard, cpfAdd, birthdateAdd}}/>
+            </AnimatePresence>
             {newAddress && <NewAddress addAddress={addAddress} setNewAddress={setNewAddress} dadosCliente={dadosCliente}/>}
             {newPayment && <NewPayment addPayment={addPayment} setNewPayment={setNewPayment} dadosCliente={dadosCliente}/>}
             

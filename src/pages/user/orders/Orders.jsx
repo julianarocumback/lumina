@@ -112,7 +112,7 @@ export default function Orders(){
                                     </div>
                                     
                                     <div className="lg:flex flex-col gap-4 hidden">
-                                        <button className="bg-gray-200 font-semibold  rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4">Ver detalhes</button>
+                                        <button className="bg-gray-200 font-semibold  rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4">Rastrear pedido</button>
                                         <button className="bg-blue-900 font-semibold text-white rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4">
                                             Comprar novamente
                                         </button>
@@ -167,7 +167,7 @@ export default function Orders(){
                                     </div>
                                     
                                     <div className="lg:flex flex-col gap-4 hidden">
-                                        <button className="bg-gray-200 font-semibold  rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4">Ver detalhes</button>
+                                        <button className="bg-gray-200 font-semibold  rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4">Rastrear pedido</button>
                                         <button className="bg-blue-900 font-semibold text-white rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4">
                                             Comprar novamente
                                         </button>

@@ -1,7 +1,9 @@
-export default function Button({texto, icone, style, children}) {
+import {motion} from 'framer-motion'
+ 
+export default function Button({texto, icone, style, children, whileHover, whileTap, transition}) {
     return (
-        <button className={style} onClick={texto}>
+        <motion.button whileHover={whileHover} whileTap={whileTap} transition={transition} className={style} onClick={texto}>
             {texto}{icone}{children}
-        </button>
+        </motion.button>
     )
 }
