@@ -12,7 +12,7 @@ export default function HeroContent() {
                 <cite className="text-xs text-blue-500 lg:text-xl"><span className='hidden md:inline'>-</span> <span className='uppercase md:capitalize'>Salmos 119:105</span></cite>
             </div>
                 <motion.button 
-                className="flex justify-center items-center gap-4 relative overflow-hidden rounded-full p-2 w-1/3 bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg"
+                className="flex justify-center items-center gap-4 relative overflow-hidden rounded-full p-2 w-1/3 bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg hidden lg:flex"
                 whileHover={{ scale: 1.02 }}
                 >
                 <span class="material-icons-outlined">auto_awesome</span>
