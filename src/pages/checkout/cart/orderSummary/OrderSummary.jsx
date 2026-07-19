@@ -22,7 +22,7 @@ export default function OrderSummary({lista, frete, cupom, listaOk, enderecoOk, 
     }
 
     return (
-        <div className="h-fit lg:w-140 max-h-fit px-6 py-2 border border-gray-100 gap-2 lg:p-8 lg:gap-8 flex flex-col rounded-t-2xl lg:rounded-2xl bg-white shadow-xs fixed w-full bottom-14">
+        <div className="h-fit lg:w-140 max-h-fit px-6 py-2 border border-gray-100 gap-2 lg:p-8 lg:gap-8 flex flex-col rounded-t-2xl lg:rounded-2xl bg-white shadow-xs fixed lg:static w-full bottom-14">
             
             <motion.div 
                 drag="y"
