@@ -156,7 +156,7 @@ export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
 
     return (
         <div className="absolute flex justify-center items-center top-0 h-screen w-full transition-colors bg-black/30">
-            <div className='border rounded-2xl lg:w-150 h-fit left-40 bg-white p-8 shadow-lg border-gray-200 gap-6 flex flex-col relative'>
+            <div className='border lg:rounded-2xl w-full h-full  lg:w-150 lg:h-fit lg:left-40 bg-white p-8 shadow-lg border-gray-200 gap-6 flex flex-col relative'>
                 <h2 className="text-xl font-semibold">Novo endereço</h2>
                 <button onClick={()=> setNewAddress(false)} className="absolute right-8 w-7 h-7 hover:text-red-500 transition-all" ><i class="fa-solid fa-xmark" ></i></button>
             

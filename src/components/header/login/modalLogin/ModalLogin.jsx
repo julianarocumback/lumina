@@ -52,8 +52,8 @@ export default function ModalLogin({login, setOpen, cadastrar}){
                 {!novaConta ? 
                 <div>
                     <form onSubmit={handleSubmit} className="w-full flex flex-col gap-2">
-                        <input value={email} onChange={(e)=>setEmail(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="email"/>
-                        <input value={password} onChange={(e)=> setPassword(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="password"/>
+                        <input value={email} placeholder='E-mail' onChange={(e)=>setEmail(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="email"/>
+                        <input value={password} placeholder='Senha' onChange={(e)=> setPassword(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="password"/>
                         <button type='submit' className=" w-full bg-black/70 text-white py-1 rounded-lg cursor-pointer">Entrar</button>
                         <p className="text-md text-gray-700 cursor-pointer">Esqueci a senha</p>
                     </form>
@@ -62,8 +62,8 @@ export default function ModalLogin({login, setOpen, cadastrar}){
                 :
                 <div>
                     <form onSubmit={cadastro} className="w-full flex flex-col gap-2">
-                        <input value={newEmail} onChange={(e)=>setNewEmail(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="email"/>
-                        <input value={newPassword} onChange={(e)=> setNewPassword(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="password"/>
+                        <input value={newEmail} placeholder='E-mail' onChange={(e)=>setNewEmail(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="email"/>
+                        <input value={newPassword} placeholder='Senha' onChange={(e)=> setNewPassword(e.target.value)} className="border border-gray-400 w-full rounded-lg px-2" type="password"/>
                         <button className=" w-full bg-black/70 text-white py-1 rounded-lg cursor-pointer" type='submit' disabled={loading} className="w-full bg-black/70 text-white py-1 rounded-lg cursor-pointer disabled:bg-gray-400">
                             {loading ? 'Cadastrando...' : 'Cadastrar'}
                         </button>

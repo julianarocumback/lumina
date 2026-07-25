@@ -5,14 +5,15 @@ import { Link } from "react-router-dom"
 import Skeleton from "../skeleton/Skeleton";
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function Products({produtos, carregar, setQuantidade, tamanho}){
+export default function Products({produtos, carregar, setQuantidade, tamanho, categoria, listaFiltrada}){
     const {addToCart, items} = useCart()
     const {authenticated, dadosCliente,adicionarFavorito, removerFavorito} = useContext(AuthContext)
 
+    
     function alterarQuantidade(valor){
         setQuantidade(prev => prev + valor)
     }
-
+    
     function handreFavoritar(produto){
         if(dadosCliente?.favoritos?.some(item => Number(item?.id) === produto?.id)){
             removerFavorito(produto)
@@ -21,18 +22,19 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
         }
         
     }
-
+    
 
     if (carregar) {
         return (
             <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-8">
-                {[...Array(8)].map((_, i) => <Skeleton key={i}/>)}
+                {[...Array(3)].map((_, i) => <Skeleton key={i}/>)}
             </div>
         )
     }
-
+    
     if (!produtos || produtos.length === 0) return <p>Nenhum livro encontrado.</p>;
-
+    
+    console.log(produtos.length)
     const listaNova = produtos.map((produto) => {
 
             return (
@@ -72,7 +74,7 @@ export default function Products({produtos, carregar, setQuantidade, tamanho}){
                 </AnimatePresence>
             </div>
             <div className="w-full flex justify-center">
-                {listaNova.length !== tamanho && <button className="py-2 self-center w-70 rounded-full text-lg font-semibold bg-gray-200" onClick={()=> {alterarQuantidade(3)}}>Mostrar mais</button>}
+                {listaNova.length <  listaFiltrada && <button className="py-2 self-center w-70 rounded-full text-lg font-semibold bg-gray-200" onClick={()=> {alterarQuantidade(3)}}>Mostrar mais</button>}
 
             </div>
             

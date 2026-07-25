@@ -22,9 +22,9 @@ export default function FavoritesPreview({favorites}){
                     if(index < 5) {
                         return (
                             <Link key={favorite.id} to={`/produto/${favorite?.id}`}>
-                                <div className="  flex">
-                                    <div className="h-20 w-25  py-2 overflow-hidden ">
-                                        <img className="border border-gray-200 rounded-lg h-full" src={favorite?.img_url} alt="imagem do produto favorito" />
+                                <div className="flex gap-4">
+                                    <div className="h-20 w-16  py-2 overflow-hidden ">
+                                        <img className="border border-gray-200 rounded-lg h-full object-cover" src={favorite?.img_url} alt="imagem do produto favorito" />
                                     </div>
                                     <div className="flex flex-col justify-center gap-1 w-full">
                                         <h4 className="text-[14px]/4">{favorite?.nome}</h4>

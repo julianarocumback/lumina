@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { dateFormated } from '../../../../utils/formatDate'
+
 
 export default function OrderPreview({orders}){
     const orderArray = orders ?? []
@@ -18,17 +20,20 @@ export default function OrderPreview({orders}){
                                 return letra
                             }).join('')}     
                         </span>
+                        <p className="hidden lg:block font-light">{dateFormated(latestOrder.created_at)}</p>
+
                     </div>
                     <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold uppercase">{latestOrder.status}</span>
+                    
                 </div>
             
                 
-                <div className="flex flex-col gap-4 border">
+                <div className="flex flex-col gap-4">
                       
                     <div className="flex gap-4">
                         {latestOrder?.produtos?.map(produto => {
                             return(
-                                <div key={produto.id} className="border border-gray-200 w-25 rounded-xl overflow-hidden flex">
+                                <div key={produto.id} className="border border-gray-200 w-35 rounded-xl overflow-hidden flex">
                                     <img src={produto.img_url} alt="" />
 
                                 </div>
@@ -40,7 +45,7 @@ export default function OrderPreview({orders}){
 
 
                     <div className="lg:flex justify-between hidden ">
-                        <div className="text-right">
+                        <div className="text-right flex gap-4 items-center">
                             <p className="text-lg text-[rgba(71,71,71,0.7)]">ENTREGA ESTIMADA</p>
                             <p className="font-semibold">25 de maio,2026</p>
                         </div>
@@ -48,7 +53,6 @@ export default function OrderPreview({orders}){
 
                     <div className="flex gap-4 lg:justify-start">
                         <p className="text-gray-500 font-semibold">                        </p>
-                        <p className="hidden lg:block font-light">{latestOrder.created_at}</p>
                     </div>
                                  
                 </div>

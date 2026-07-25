@@ -1,6 +1,7 @@
 import { useOutletContext } from 'react-router-dom'
 import { useState } from 'react'
 import { motion} from 'framer-motion'
+import {dateFormated} from '../../../utils/formatDate'
 
 export default function Orders(){
     const [status, setStatus] = useState('Todos')
@@ -58,7 +59,7 @@ export default function Orders(){
                     <div className="text-nowrap flex gap-4 overflow-x-auto no-scrollbar ">
                         {categorias.map(categoria => {
                             return (
-                                <button onClick={()=> setStatus(categoria.status)} className={`border border-gray-100 py-2 px-4 font-semibold rounded-full  ${categoria.ativo? 'bg-blue-400 text-white ':'bg-white'}`}>{categoria.status}</button>
+                                <button onClick={()=> setStatus(categoria.status)} className={`border border-gray-100 py-2 px-4 font-semibold rounded-full cursor-pointer ${categoria.ativo? 'bg-blue-400 text-white ':'bg-white'}`}>{categoria.status}</button>
                             )
                         })}
                         {orders.map(item => <div>{item?.nome}</div>)} 
@@ -91,10 +92,10 @@ export default function Orders(){
                                                 return letra
                                             }).join('')}                             </p>
                                             <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold uppercase">{item.status}</span>
-                                            <p className="hidden lg:block font-light">{item.created_at}</p>
+                                            <p className="hidden lg:block font-light text-gray-500">{dateFormated(item.created_at)}</p>
                                         </div>
 
-                                        <p className="font-light lg:hidden">Realizado em 12 out 2026</p>
+                                        <p className="font-light lg:hidden text-gray-500">{dateFormated(item.created_at)}</p>
 
                                         <div className=" overflow-x-scroll w-full flex gap-4 no-scrollbar">
                                             {item?.produtos.map(produto => {
@@ -146,10 +147,10 @@ export default function Orders(){
                                                 return letra
                                             }).join('')}                             </p>
                                             <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold uppercase">{pedido.status}</span>
-                                            <p className="hidden lg:block font-light">{pedido.created_at}</p>
+                                            <p className="hidden lg:block text-gray-500">{dateFormated(pedido.created_at)}</p>
                                         </div>
 
-                                        <p className="font-light lg:hidden">Realizado em 12 out 2026</p>
+                                        <p className="font-light lg:hidden text-gray-500">{dateFormated(pedido.created_at)}</p>
 
                                         <div className=" overflow-x-scroll w-full flex gap-4 no-scrollbar">
                                             {pedido?.produtos.map(produto => {
