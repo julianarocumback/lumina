@@ -167,16 +167,16 @@ export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
                     <div className='flex gap-4'>
                         <div className="flex flex-col gap-2 w-4/5">
                             <label className='font-semibold text-xs text-gray-700' htmlFor='street'>Rua</label>
-                            <input id='street' onChange={handleStreetChange} type="text" value={address.street} placeholder='Nome do logradouro' className={`${addressError.street && 'outline outline-red-500 focus:outline-1 focus:outline-red-500 '} rounded-lg bg-gray-100 px-3 text-xs py-2 focus:outline-none`}/>
+                            <input id='street' onChange={handleStreetChange} type="text" value={address.street} placeholder='Nome do logradouro' className={`${addressError.street && 'outline outline-red-500 focus:outline-1 focus:outline-red-500 '} rounded-lg bg-gray-100 px-2 lg:px-3 text-xs py-2 focus:outline-none`}/>
                         </div>
                         <div className='flex flex-col gap-2 w-1/5 '>
                             <label className='font-semibold text-xs text-gray-700' htmlFor="streetNumber">Número</label>
-                            <input id='streetNumber' onChange={(e) => handleStreetNumberChange(e.target.value.replace(/\D/g, ""))}  type="text" value={address.streetNumber} placeholder='Ex.: 123' className={`${addressError.streetNumber && 'outline outline-red-500'} rounded-lg bg-gray-100 px-3 text-xs py-2 focus:outline-none`}/>
+                            <input id='streetNumber' onChange={(e) => handleStreetNumberChange(e.target.value.replace(/\D/g, ""))}  type="text" value={address.streetNumber} placeholder='Ex.: 123' className={`${addressError.streetNumber && 'outline outline-red-500'} rounded-lg bg-gray-100 px-2 lg:px-3 text-xs py-2 focus:outline-none`}/>
                         </div>
                     </div>
 
                     {/* COMPLEMENTO E BAIRRO */}
-                    <div className='flex gap-4'>
+                    <div className='flex flex-col lg:flex-row gap-4'>
                         <div className="flex flex-col gap-2 w-full">
                             <label htmlFor='complement' className='font-semibold text-xs text-gray-700'>Complemento</label>
                             <input id='complement' onChange={handleComplementChange} type="text" value={address.complement} placeholder='Ex.: Bloco A, Apto 10' className={`${addressError.complement && 'outline outline-red-500'} rounded-lg bg-gray-100 px-4 text-xs h-full py-2 w-full focus:outline-none`}/>
@@ -188,14 +188,16 @@ export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
                     </div>
 
                     {/* CIDADE, ESTADO E CEP */}
-                    <div className='flex gap-4'>
+                    <div className='flex flex-col lg:flex-row gap-4'>
                         {/* CIDADE */}
-                        <div className="flex flex-col gap-2 w-2/5">
+                        <div className='flex gap-4 w-full lg:w-3/4'>
+
+                        <div className="flex flex-col gap-2 w-3/5 lg:w-3/4">
                             <label className={'font-semibold text-xs text-gray-700'} htmlFor='city'>Cidade</label>
                             <input id='city' onChange={handleCityChange} type="text" value={address.city} placeholder='Sua cidade' className={`${addressError.city && 'outline outline-red-500'} rounded-lg bg-gray-100 px-4 text-xs py-2 focus:outline-none`}/>
                         </div>
                         {/* ESTADO */}
-                        <div className="flex flex-col gap-2 w-2/5">
+                        <div className="flex flex-col gap-2 w-2/5 lg:w-1/4">
                             <label htmlFor="state" className='font-semibold text-xs text-gray-700' >Estado</label>
                             <select id="state" onChange={handleStateChange} className={`${addressError.zipCode && 'outline outline-red-500'} bg-gray-100 h-full rounded-lg px-2 w-full text-xs focus:outline-none`}>
                                 <option value='' selected disabled>Selecione</option>
@@ -228,9 +230,10 @@ export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
                                 <option value='TO'>Tocantins</option>
                             </select>
                         </div>
+                        </div>
 
                         {/* CEP */}
-                        <div className="flex flex-col gap-2 w-1/5">
+                        <div className="flex flex-col gap-2 w-full lg:w-1/4">
                             <label className='font-semibold text-xs text-gray-700' htmlFor="zipCode">CEP</label>
                             <input id='zipCode' onChange={(e) => handleZipCodeChange(e.target.value.replace(/\D/g, ""))}  type="text" value={address.zipCode.replace(/^(\d{5})(\d)/, "$1-$2")} placeholder='00000-000' className={`${addressError.zipCode && 'outline outline-red-500'} rounded-lg bg-gray-100 px-4 text-xs py-2 focus:outline-none`}/>      
                         </div>
@@ -238,10 +241,10 @@ export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
                     </div>
 
                     {/* PRINCIPAL E TIPO  */}
-                    <div className='flex gap-4 justify-between'>                     
+                    <div className='flex  gap-4 justify-between'>                     
                         <div className="flex items-center gap-2 select-none">
                             <input id='main' onChange={handleMainChange} type="checkbox" value={address.isMain} className={`rounded-lg bg-gray-100 px-4 text-xs h-full focus:outline-none`}/>
-                            <label htmlFor='main' className={`${addressError.complement && ' text-red-500 '} font-semibold text-xs text-gray-700`}>Definir como endereço principal</label>
+                            <label htmlFor='main' className={`${addressError.complement && ' text-red-500 '} font-semibold text-xs text-gray-700`}>Definir como principal</label>
                         </div>
                         <div className='flex gap-2'>
                             <label htmlFor='main' className='font-semibold text-xs text-gray-700'>Tipo:</label>
