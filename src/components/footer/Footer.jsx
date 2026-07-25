@@ -20,13 +20,13 @@ export default function Footer() {
     },[])
 
     return(
-        <div className="bg-[#f8fafc]">
+        <div className="bg-[#f8fafc] mb-14 lg:mb-0">
             {isMobile? (
-                <footer className=" w-full h-full">
+                <footer className=" w-full h-full ">
                     <MobileAbout/>
                 </footer>
             ): (
-                <footer className="w-full h-full grid grid-cols-4 gap-4 px-16 ">
+                <footer className="w-full h-full grid grid-cols-4 gap-4 px-16">
                 <DesktopAbout/>
                 <Navegation/>
                 <Support/>
