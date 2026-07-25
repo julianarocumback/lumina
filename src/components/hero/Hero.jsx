@@ -24,7 +24,10 @@ export default function Hero() {
           </div>
 
           {/* LIVRO 3D INTERATIVO */}
-          <Book/>
+        
+        
+    <Book />
+
 
           <motion.button 
                 className="flex justify-center items-center gap-4 relative overflow-hidden rounded-full p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg lg:hidden "
