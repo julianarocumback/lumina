@@ -1,14 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute'
 
-// Rotas principais
+// Main routes
 import App from '../App'
 import User from '../pages/user/User'
 import Produto from '../pages/product/Product'
 import Checkout from '../pages/checkout/Checkout'
 import Bundle from '../pages/bundle/Bundle'
 
-// Rotas secundárias
+// Secondary routes
 import Geral from '../pages/user/geral/Geral'
 import Favorites from '../pages/user/favorites/Favorites'
 import Profile from '../pages/user/profile/Profile'
@@ -19,6 +19,7 @@ import Payment from '../pages/user/payment/Payment'
 
 
 export const router = createBrowserRouter([
+    // Public routes
     {
         path: '/',
         element: <App/>
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
         element: <Bundle/>
     },
 
-    // Rotas protegidas
+    // Protected routes
     {
         element: <ProtectedRoute/>,
         children: [

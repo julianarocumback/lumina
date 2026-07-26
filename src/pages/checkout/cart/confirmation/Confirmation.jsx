@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom'
 export default function Confirmation(){
     return(
-        <div className="w-full rounded-2xl overflow-hidden bg-white shadow-xs px-4 py-8 lg:p-20">
+        <div className="h-screen lg:h-fit w-full rounded-2xl overflow-hidden bg-white shadow-xs px-4 py-8 lg:p-20">
             <div className="flex flex-col gap-8 pt-40 lg:pt-0">
 
                 <div className="flex flex-col items-center text-center gap-2 lg:gap-4">

@@ -1,19 +1,17 @@
-import {useState} from 'react'
-
-import { useContext } from 'react'
-import { AuthContext } from '../../contexts/AuthContext/AuthContext'
-import { useCart } from '../../contexts/CartContext/CartContext'
+import {useState, useContext} from 'react'
 import { Outlet } from 'react-router-dom';
 import { AnimatePresence} from 'framer-motion'
+
+import { AuthContext } from '../../contexts/AuthContext/AuthContext'
+import { useCart } from '../../contexts/CartContext/CartContext'
 // --------------------------------------------
 import Header from '../../components/header/Header'
 import Sidebar from './sidebar/Sidebar'
 import NewAddress from './address/NewAddress'
-import NewPayment from './payment/NewPayment'
 // --------------------------------------------
 
 export default function User() {
-    const {dadosCliente, logout, removerFavorito, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, addPayment, deleteCard, cpfAdd, birthdateAdd} = useContext(AuthContext)
+    const {dadosCliente, removerFavorito, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, addPayment, onDeleteCard, cpfAdd, birthdateAdd} = useContext(AuthContext)
     const {addToCart, items} = useCart()
 
     const [newAddress, setNewAddress] = useState(false)
@@ -22,12 +20,11 @@ export default function User() {
     return (
         <div className={`h-full w-full`}>
             <Header/>
-            <Sidebar logout={logout}/>
+            <Sidebar/>
             <AnimatePresence>
-                <Outlet context={{dadosCliente , addToCart, removerFavorito, items, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, newAddress, setNewAddress , newPayment,setNewPayment, deleteCard, cpfAdd, birthdateAdd}}/>
+                <Outlet context={{dadosCliente , addToCart, removerFavorito, items, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, newAddress, setNewAddress , newPayment,setNewPayment, onDeleteCard, cpfAdd, birthdateAdd, addPayment}}/>
             </AnimatePresence>
             {newAddress && <NewAddress addAddress={addAddress} setNewAddress={setNewAddress} dadosCliente={dadosCliente}/>}
-            {newPayment && <NewPayment addPayment={addPayment} setNewPayment={setNewPayment} dadosCliente={dadosCliente}/>}
             
         </div>
     )

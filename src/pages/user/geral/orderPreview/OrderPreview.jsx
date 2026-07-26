@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { dateFormated } from '../../../../utils/formatDate'
+import { formatDate } from '../../../../utils/formatters'
 
 
 export default function OrderPreview({orders}){
@@ -20,7 +20,7 @@ export default function OrderPreview({orders}){
                                 return letra
                             }).join('')}     
                         </span>
-                        <p className="hidden lg:block font-light">{dateFormated(latestOrder.created_at)}</p>
+                        <p className="hidden lg:block font-light">{formatDate(latestOrder.created_at)}</p>
 
                     </div>
                     <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold uppercase">{latestOrder.status}</span>

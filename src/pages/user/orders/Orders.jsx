@@ -1,7 +1,7 @@
 import { useOutletContext } from 'react-router-dom'
 import { useState } from 'react'
 import { motion} from 'framer-motion'
-import {dateFormated} from '../../../utils/formatDate'
+import {formatDate} from '../../../utils/formatters'
 
 export default function Orders(){
     const [status, setStatus] = useState('Todos')
@@ -92,10 +92,10 @@ export default function Orders(){
                                                 return letra
                                             }).join('')}                             </p>
                                             <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold uppercase">{item.status}</span>
-                                            <p className="hidden lg:block font-light text-gray-500">{dateFormated(item.created_at)}</p>
+                                            <p className="hidden lg:block font-light text-gray-500">{formatDate(item.created_at)}</p>
                                         </div>
 
-                                        <p className="font-light lg:hidden text-gray-500">{dateFormated(item.created_at)}</p>
+                                        <p className="font-light lg:hidden text-gray-500">{formatDate(item.created_at)}</p>
 
                                         <div className=" overflow-x-scroll w-full flex gap-4 no-scrollbar">
                                             {item?.produtos.map(produto => {
@@ -147,10 +147,10 @@ export default function Orders(){
                                                 return letra
                                             }).join('')}                             </p>
                                             <span className="bg-green-300/30 text-green-700 text-xs rounded-full py-1 px-3 font-semibold uppercase">{pedido.status}</span>
-                                            <p className="hidden lg:block text-gray-500">{dateFormated(pedido.created_at)}</p>
+                                            <p className="hidden lg:block text-gray-500">{formatDate(pedido.created_at)}</p>
                                         </div>
 
-                                        <p className="font-light lg:hidden text-gray-500">{dateFormated(pedido.created_at)}</p>
+                                        <p className="font-light lg:hidden text-gray-500">{formatDate(pedido.created_at)}</p>
 
                                         <div className=" overflow-x-scroll w-full flex gap-4 no-scrollbar">
                                             {pedido?.produtos.map(produto => {

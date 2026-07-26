@@ -110,7 +110,7 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
     },[payment.lastFour])
 
     return (
-        <div className="w-full h-full lg:rounded-2xl overflow-hidden bg-white shadow-xs flex flex-col gap-8 p-8">
+        <div className="w-full h-full lg:rounded-2xl overflow-hidden bg-white shadow-xs flex flex-col gap-8 p-8 mb-50 lg:mb-0">
             <div className="flex flex-col gap-2">
                 <h2 className="text-2xl">Forma de pagamento</h2>
                 <p>Escolha como deseja concluir sua aquisição</p>
@@ -142,7 +142,7 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                     const isSelected = pagamento.id === payment.id
 
                     return (
-                          <div onClick={()=>handleCartaoSelecionado(payment)} className={`${isSelected && ' outline-green-500 bg-green-700 outline-2 text-gray-700'}   h-40 lg:h-40  lg:w-65 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col`}>
+                          <div onClick={()=>handleCartaoSelecionado(payment)} className={`${isSelected && ' outline-green-500 bg-green-700 outline-2 text-gray-700'}   h-40 lg:h-40  lg:w-65 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col `}>
                                     <div className="flex justify-between">
                                         <div className="text-white"><i class="fa-brands fa-cc-visa"></i></div>
                                         <span className="text-xs font-bold text-gray-400">{payment.brand}</span>

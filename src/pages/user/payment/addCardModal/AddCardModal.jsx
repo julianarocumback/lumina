@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
-export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
-    const [payment, setPayment] = useState({
+
+
+export default function Teste({setNewPayment, onAddCard, dadosCliente}){
+      const [payment, setPayment] = useState({
         userId: dadosCliente?.id,
         holderName: '',
         lastFour: '',
@@ -18,12 +21,16 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
         if(holderName.length > 40) return
 
 
+
+
         setPayment(prev => ({...prev, holderName:holderName}))
     }
 
     function handleLastFourChange(event) {
         const lastFour = event.target.value
         let numeroLimpo = lastFour.replace(/\D/g, '')
+
+        
 
         if (numeroLimpo.length > 16) {
             numeroLimpo = numeroLimpo.slice(0, 16);
@@ -38,7 +45,9 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
     }
 
     function handleAddPayment(){
-        addPayment(payment)
+        if(payment.lastFour.length < 16) return
+
+        onAddCard(payment)
         setNewPayment(false)
     }
 
@@ -58,14 +67,14 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
         brand()
 
     },[payment.lastFour])
+    return(
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.3}} className="absolute flex left-0 top-0 h-full w-full bg-black/30 z-50  items-center justify-center">
 
-
-
-    return (
-        <div className="absolute flex justify-items-start lg:justify-center lg:items-center items-center top-0 h-full lg:h-screen w-full transition-colors bg-black/30 overflow-hidden">
-            <div className='border rounded-2xl w-full h-fit lg:w-100 lg:left-40 bg-white p-8 shadow-lg border-gray-200 gap-8 flex flex-col relative'>
+        <div className='border rounded-2xl w-full h-fit lg:w-100  lg:left-40 bg-white p-8 shadow-lg border-gray-200 gap-8 flex flex-col relative'>
                 <div className='flex'>
                     <h2 className="text-xl font-semibold">Novo cartão</h2>
+
+                    {/* Close modal */}
                     <button onClick={()=> setNewPayment(false)} className="absolute right-8 w-7 h-7 hover:cursor-pointer hover:text-red-400 transition-colors" ><i class="fa-solid fa-xmark" ></i></button>
                 </div>
 
@@ -122,6 +131,6 @@ export default function NewPayment({setNewPayment, addPayment, dadosCliente}){
                 </div>
 
             </div>
-        </div>
+        </motion.div>
     )
 }
