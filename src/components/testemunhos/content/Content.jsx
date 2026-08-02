@@ -8,7 +8,7 @@ const lista = [
         id:1,
         img: <span className="material-icons">face_2</span>,
         nome:'Ana Clara Mendes',
-        testemunho: 'A curadoria da Radiant é impecável. Cada livro que compro aqui parece ter sido escolhido especificamente para o meu momento o de vida.',
+        testemunho: 'A curadoria do Lumina é impecável. Cada livro que compro aqui parece ter sido escolhido especificamente para o meu momento de vida.',
         label: 'LEITORA ASSÍDUA'
     },
 
@@ -16,7 +16,7 @@ const lista = [
         id:2,
         img: <span className="material-icons">face_6</span>,
         nome:'Marcos Oliveira',
-        testemunho: 'O cuidado com o design e a estética do site torna a experiência de compra um momento de meditação.Simplesmente maravilhoso.',
+        testemunho: 'O cuidado com o design e a estética do site torna a experiência de compra um momento de meditação. Simplesmente maravilhoso.',
         label: 'COLECIONADOR'
     },
 
@@ -24,7 +24,7 @@ const lista = [
         id:3,
         img: <span className="material-icons">face_3</span>,
         nome:'Helena Santos',
-        testemunho: 'Presentear alguém com um livro da Radiant é Entregar uma obra de arte. A embalagem e o carinho transparecem em tudo.',
+        testemunho: 'Presentear alguém com um livro do Lumina é entregar uma obra de arte. A embalagem e o carinho transparecem em tudo.',
         label: 'CLIENTE'
     }
 ]

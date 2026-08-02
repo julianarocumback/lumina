@@ -34,7 +34,6 @@ export default function Products({produtos, carregar, setQuantidade, tamanho, ca
     
     if (!produtos || produtos.length === 0) return <p>Nenhum livro encontrado.</p>;
     
-    console.log(produtos.length)
     const listaNova = produtos.map((produto) => {
 
             return (

@@ -7,10 +7,18 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
     const [whatsapp, setWhatsapp] = useState('')
     const [isEditingWhatsapp, setIsEditingWhatsap] = useState(false)
 
-    
+    const whatsappFormatinho = useMemo(()=>{
+        if(!dadosCliente.whatsapp) return ''
+        const whatsappEdited = dadosCliente.whatsapp + '___________'
+        const pt1 = whatsappEdited.slice(0,2)
+        const pt2 = whatsappEdited.slice(2,7)
+        const pt3 = whatsappEdited.slice(7,11)
+
+        return `(${pt1}) ${pt2}-${pt3}`
+    })
 
     const whatsappFormated = useMemo(()=>{
-        if(!whatsapp) return ''
+        if(!dadosCliente.whatsapp) return ''
         const whatsappEdited = whatsapp + '___________'
         const pt1 = whatsappEdited.slice(0,2)
         const pt2 = whatsappEdited.slice(2,7)
@@ -34,12 +42,11 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
         return whatsappEdited
     }, [whatsapp])
     
-    console.log(whatsappFormated)
-    console.log(whatsappValue)
+    console.log(dadosCliente.whatsapp)
 
     // ATIVAR EDIÇÃO DO WHATSAPP
     function handleEditWhatsApp(){
-        setIsEditingWhatsap(false)
+        setIsEditingWhatsap(true)
     }
 
     // SALVAR NO ESTADO
@@ -53,7 +60,7 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
 
     // Cancel edition
     function handleCancelUpdateWhatsApp(){
-        setIsEditingWhatsap(true)
+        setIsEditingWhatsap(false)
         setNovoWhatsApp('')
         setWhatsapp('')
        
@@ -61,10 +68,9 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
     
     // Save whatsapp
     function handleAtualizarWhatsApp(){
-        if(novoWhatsApp.length < 11) return
         onSaveWhatsApp(whatsapp)
-        setIsEditingWhatsap(true)
         setIsEditingWhatsap(false)
+        setWhatsapp('')
     }
 
     const whatsappFormatado = (whatsapp) => {
@@ -86,19 +92,20 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
                                 <div className="flex justify-between w-full">
                                     <input
                                     type="text"
-                                    disabled={isEditingWhatsapp}
+                                    disabled={!isEditingWhatsapp}
                                     value={whatsappValue}
                                     className={`${!isEditingWhatsapp && 'border left-0'} text-gray-black font-semibold px-2 -left-2 relative tracking-wider text-transparent caret-black z-10`}
                                     onChange={handleEditingWhatsapp}
                                     />
-                                    <span className='absolute'>{whatsappFormated}</span>
+                                    {isEditingWhatsapp && <span className='absolute'>{whatsappFormated}</span>}
+                                    {!isEditingWhatsapp && <span className='absolute'>{whatsappFormatinho}</span>}
                                 </div>
                                     <div>
                                         <div className="flex">
-                                            {isEditingWhatsapp && <div onClick={handleEditWhatsApp} className="font-semibold text-blue-700">Editar</div>}
+                                            {!isEditingWhatsapp && <div onClick={handleEditWhatsApp} className="font-semibold text-blue-700">Editar</div>}
                                             <div className="flex gap-4">
-                                            {!isEditingWhatsapp && <div onClick={handleCancelUpdateWhatsApp} className='text-red-500 font-semibold'>Cancelar</div>}
-                                            {!isEditingWhatsapp && <div onClick={handleAtualizarWhatsApp} className='font-semibold'>Salvar</div>}
+                                            {isEditingWhatsapp && <div onClick={handleCancelUpdateWhatsApp} className='text-red-500 font-semibold'>Cancelar</div>}
+                                            {isEditingWhatsapp && <div onClick={handleAtualizarWhatsApp} className='font-semibold'>Salvar</div>}
                                         </div>
                                     </div>
 

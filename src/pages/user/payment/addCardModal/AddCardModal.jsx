@@ -1,125 +1,157 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import HolderName from './holderName/HolderName'
+import { motion } from 'framer-motion'
 
-
-
-export default function Teste({setNewPayment, onAddCard, dadosCliente}){
-      const [payment, setPayment] = useState({
+export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
+    const [card, setCard] = useState({
         userId: dadosCliente?.id,
         holderName: '',
-        lastFour: '',
+        cardNumber: '',
         expirationDate: '01/50',
         cvv: 123,
         brand: '',
-        isMain: false
+        isDefault: false
     })
 
-    function handleHolderNameChange(event){
-        const holderName = event.target.value
+    const [isHolderNameTouched, setIsHolderNameTouched] = useState(false)
+    const [isCardNumberTouched, setIsCardNumberTouched] = useState(false)
+    const [isSubmitted, setIsSubmitted] = useState(false)
 
+     
+    // Erros do holdername
+    const isHolderNameEmpty = card.holderName.trim() === ''
+    const isHolderNameLower = card.holderName.trim().length < 3
+    const hasHolderNameError = isHolderNameEmpty || isHolderNameLower
+    const shouldShowHolderNameError = hasHolderNameError && (isHolderNameTouched || isSubmitted)
+
+
+    // Erros do número do cartão
+    const isNumberCardEmpty = card.cardNumber.trim() === ''
+    const isNumberCardLower = card.cardNumber.length < 16
+    const hasNumberCardError = isNumberCardEmpty || isNumberCardLower
+    const shouldShowCardNumberError = hasNumberCardError && (isCardNumberTouched || isSubmitted)
+
+
+    const handleCardNumberBlur = () => {
+        setIsCardNumberTouched(true)
+    }
+    
+    
+    const handleHolderNameBlur = () => {
+        setIsHolderNameTouched(true)
+    }
+
+    // Add holder name
+    function handleHolderNameChange(event){
+        const holderName = event.target.value.replace(/\d/g, '')
 
         if(holderName.length > 40) return
-
-
-
-
-        setPayment(prev => ({...prev, holderName:holderName}))
+        
+    
+               
+        setCard(prev => ({...prev, holderName:holderName}))
     }
 
-    function handleLastFourChange(event) {
-        const lastFour = event.target.value
-        let numeroLimpo = lastFour.replace(/\D/g, '')
+    // Add card number
+    function handleCardNumberChange(event) {
+        let cardNumber = event.target.value.replace(/\D/g, '')     
 
-        
-
-        if (numeroLimpo.length > 16) {
-            numeroLimpo = numeroLimpo.slice(0, 16);
+        if (cardNumber.length > 16) {
+            cardNumber = cardNumber.slice(0, 16);
         }
+
+       
         
-        setPayment(prev => ({...prev, lastFour: numeroLimpo}))
+        setCard(prev => ({...prev, cardNumber: cardNumber}))
     }
 
+    // Add main card
     function handleMainChange(event) {
         const isMain = event.target.checked
-        setPayment(prev => ({...prev, isMain: isMain}))
+        setCard(prev => ({...prev, isDefault: isMain}))
     }
 
+    // Add card payment
     function handleAddPayment(){
-        if(payment.lastFour.length < 16) return
+        setIsSubmitted(true)
+        if(hasHolderNameError) return
+        if(hasNumberCardError) return
 
-        onAddCard(payment)
+        onAddCard(card)
         setNewPayment(false)
+
+        setCard({
+            holderName: '',
+            cardNumber: '',
+            brand: '',
+            isDefault: false
+        })
     }
 
     useEffect(()=> {
         function brand() {
-            if(/^4/.test(payment.lastFour)) {
-                setPayment(prev => ({...prev, brand: 'Visa'}))
-            } else if(/^5[1-5]/.test(payment.lastFour)) {
-                setPayment(prev => ({...prev, brand: 'Mastercard'}))
-            }else if(/^3[4|7]/.test(payment.lastFour)) {
-                setPayment(prev => ({...prev, brand: 'American Express'}))
+            if(/^4/.test(card.cardNumber)) {
+                setCard(prev => ({...prev, brand: 'Visa'}))
+            } else if(/^5[1-5]/.test(card.cardNumber)) {
+                setCard(prev => ({...prev, brand: 'Mastercard'}))
+            }else if(/^3[4|7]/.test(card.cardNumber)) {
+                setCard(prev => ({...prev, brand: 'American Express'}))
             } else {
-                setPayment(prev => ({...prev, brand: ''}))
+                setCard(prev => ({...prev, brand: ''}))
             }
         } 
 
         brand()
 
-    },[payment.lastFour])
+    },[card.cardNumber])
     return(
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.3}} className="absolute flex left-0 top-0 h-full w-full bg-black/30 z-50  items-center justify-center">
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.3}} className='absolute left-0 top-0 flex items-center justify-center h-full w-full bg-black/30 z-50'>
 
-        <div className='border rounded-2xl w-full h-fit lg:w-100  lg:left-40 bg-white p-8 shadow-lg border-gray-200 gap-8 flex flex-col relative'>
-                <div className='flex'>
-                    <h2 className="text-xl font-semibold">Novo cartão</h2>
+            <div className='relative lg:left-40 flex flex-col gap-8 w-full h-fit lg:w-100 border border-gray-200 rounded-2xl shadow-lg bg-white p-8'>
+                {/* Close modal */}
+                <button className="absolute right-8 w-7 h-7 hover:cursor-pointer hover:text-red-400 transition-colors" onClick={()=> setNewPayment(false)}><i class="fa-solid fa-xmark"></i></button> 
 
-                    {/* Close modal */}
-                    <button onClick={()=> setNewPayment(false)} className="absolute right-8 w-7 h-7 hover:cursor-pointer hover:text-red-400 transition-colors" ><i class="fa-solid fa-xmark" ></i></button>
-                </div>
+                <h2 className="text-xl font-semibold">Novo cartão</h2>
 
-            
                 <div className='flex flex-col gap-6 w-full h-fit'>
 
                     {/* INFORMAÇÕES DO CARTÃO */}
-                    <div className='flex flex-col gap-4 relative'>
+                    <div className='flex flex-col gap-4 '>
 
                         {/* NÚMERO DO CARTÃO */}
                         <div className="flex flex-col gap-2">
-                            <label htmlFor='lastFour' className='font-semibold text-xs text-gray-700'>NÚMERO DO CARTÃO</label>
+                            <label htmlFor='cardNumber' className='font-semibold text-xs text-gray-700'>NÚMERO DO CARTÃO</label>
                             <div className='w-full relative'>
-                                <input id='lastFour' onChange={handleLastFourChange}  type="text" value={(payment.lastFour || '').replace(/(\d{4})(?=\d)/g, '$1 ')} placeholder='0000 0000 0000 0000' className={`focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
-                                {payment.brand === 'Visa'? <div className='absolute top-1 right-3 text-blue-800'><i class="fa-brands fa-cc-visa"></i></div>
-                                :payment.brand === 'Mastercard' ?<div className='absolute top-1 right-3 text-red-900 '><i class="fa-brands fa-cc-mastercard"></i></div>
-                                :payment.brand === 'American Express' && <div className='absolute top-1 right-3 text-gray-700'><i class="fa-brands fa-cc-amex"></i></div>}
+                                <input id='cardNumber' type="text" value={(card.cardNumber || '').replace(/(\d{4})(?=\d)/g, '$1 ')} placeholder='0000 0000 0000 0000' className={`${shouldShowCardNumberError && 'ring-1 ring-red-500'} focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`} onChange={handleCardNumberChange} onBlur={handleCardNumberBlur}/>
+                                {card.brand === 'Visa'? <div className='absolute top-1 right-3 text-blue-800'><i class="fa-brands fa-cc-visa"></i></div>
+                                :card.brand === 'Mastercard' ?<div className='absolute top-1 right-3 text-red-900 '><i class="fa-brands fa-cc-mastercard"></i></div>
+                                :card.brand === 'American Express' && <div className='absolute top-1 right-3 text-gray-700'><i class="fa-brands fa-cc-amex"></i></div>}
                             </div>
                         </div>
 
                         {/* NOME NO CARTÃO */}
-                        <div className="flex flex-col gap-2">
-                            <label className='font-semibold text-xs text-gray-700' htmlFor="holderName">NOME NO CARTÃO</label>
-                            <input id='holderName' onChange={handleHolderNameChange}  type="text" value={payment.holderName} placeholder='Como impresso no cartão' className={`focus:outline-none rounded-lg bg-gray-100 px-3 text-xs py-2 uppercase`}/>
-                        </div>
+                        <HolderName holderName={card?.holderName} setCard={setCard} isSubmitted={isSubmitted} />
+                 
 
                         {/* VALIDADE E CVV */}
                         <div className="flex gap-4 w-full">
                             {/* VALIDADE */}
                             <div className='w-full flex flex-col gap-2'>
                                 <label className='font-semibold text-xs text-gray-700' htmlFor="expirationDate">VALIDADE</label>
-                                <input id='expirationDate' type="text" value={payment.expirationDate} disabled placeholder={payment.expirationDate} className={` rounded-lg bg-gray-100 px- text-xs py-2 px-3 w-full`}/>
+                                <input id='expirationDate' type="text" value={card.expirationDate} disabled placeholder={card.expirationDate} className={` rounded-lg bg-gray-100 px- text-xs py-2 px-3 w-full`}/>
                             </div>
                                 
                             {/* CVV */}
                             <div className="flex flex-col gap-2 w-full">
                                 <label htmlFor='cvv' className='font-semibold text-xs text-gray-700'>CVV</label>
-                                <input id='cvv' type="text" disabled placeholder={payment.cvv}  value={payment.cvv} className={` rounded-lg bg-gray-100 px-3 py-2 text-xs w-full`}/>
+                                <input id='cvv' type="text" disabled placeholder={card.cvv}  value={card.cvv} className={` rounded-lg bg-gray-100 px-3 py-2 text-xs w-full`}/>
                             </div>
                         </div>
 
                         {/* PRINCIPAL */}
                         <div className="flex gap-4 h-7">
                             <div className="flex items-center gap-2">
-                                <input id='main' onChange={handleMainChange} type="checkbox" value className={``}/>
+                                <input id='main' onChange={handleMainChange} type="checkbox" className={``}/>
                                 <label htmlFor='main' className='font-semibold text-xs text-gray-700'>Definir como cartão principal</label>
                             </div>
                         </div>

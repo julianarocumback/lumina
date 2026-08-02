@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import { p } from 'framer-motion/client';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -27,7 +28,6 @@ export function AuthProvider({ children }) {
         }
 
         if (error) {
-  // Isso vai te mostrar a mensagem real do banco (ex: "invalid input syntax for type boolean")
   console.error("Erro detalhado do Supabase:", error.message); 
   console.error("Código do erro:", error.code);
 }
@@ -37,7 +37,6 @@ export function AuthProvider({ children }) {
 
     buscarDados();
   }, [user])
-  // console.log(dadosCliente)
     // FAVORITE
 
     // Add favorite
@@ -78,21 +77,55 @@ export function AuthProvider({ children }) {
     // PAYMENT
 
     // Add credit card
-    async function adicionarCartao(produto) {
-      if (user?.id) {
-        const cartaoAtualizado = [...dadosCliente.cartoes, produto]
-        const { data } = await supabase
-          .from('clientes')
-          .update({cartoes: cartaoAtualizado})
-          .eq('id', user.id)
-          .select('*')
-          .single()
+    async function addPayment(payment) {
 
-        if (data) {
-          setDadosCliente(data);
+      if(user?.id) {
+        if(payment.isDefault === true){
+          const { data } = await supabase
+          .from('payment')
+          .update({is_default: false})
+          .eq('user_id', user.id)
+          .select('*')
+  
+          if(data){
+            const cards = dadosCliente?.payment?.map(card => ({...card, is_default: false}))
+            
+            setDadosCliente(prev => ({...prev, payment:cards}))
+          }
         }
       }
+
+     
+        const { data: newCard } = await supabase
+        .from('payment')
+        .insert([{
+          user_id: payment.userId,
+          holder_name: payment.holderName,
+          card_number: payment.cardNumber,
+          expiration_date: payment.expirationDate,
+          cvv: payment.cvv,
+          brand: payment.brand,
+          is_default: payment.isDefault
+        }])
+        .select('*')
+        .single()
+
+        if(newCard){
+          const OldersCards = dadosCliente?.payment?.map(card => ({
+            ...card,
+            is_default: payment.isDefault ? false : card.is_default
+          })) || []
+
+          const allCards = [...OldersCards, newCard]
+
+          setDadosCliente({...dadosCliente, payment: allCards})
+
+        }
+      
     }
+
+    // Default card
+    
 
     // Delete credit card
     async function deleteCard(cardId) {
@@ -157,48 +190,7 @@ export function AuthProvider({ children }) {
       }
     }
 
-    async function addPayment(payment) {
-
-      if(user?.id) {
-        const { data } = await supabase
-        .from('payment')
-        .update({is_main: false})
-        .eq('user_id', user.id)
-
-        if(data){
-          setDadosCliente(data)
-        }
-      }
-
-      if(user?.id){
-        const { data: newCard } = await supabase
-        .from('payment')
-        .insert([{
-          user_id: payment.userId,
-          holder_name: payment.holderName,
-          last_four: payment.lastFour,
-          expiration_date: payment.expirationDate,
-          brand: payment.brand,
-          is_main: payment.isMain
-        }])
-        .select('*')
-        .single()
-
-        if(newCard){
-          const OldersCards = dadosCliente?.payment?.map(card => ({
-            ...card,
-            is_main:false
-          })) || []
-
-          const allCards = [...OldersCards, newCard]
-
-          setDadosCliente({...dadosCliente, payment: allCards})
-
-
-
-        }
-      }
-    }
+    
 
    
 
@@ -339,6 +331,25 @@ export function AuthProvider({ children }) {
     return data;
   };
 
+  // Purge account
+  const purgeAccount = async () => {
+    const {error} = await supabase.rpc('purge_account')
+
+    if(!error){
+      await supabase.auth.signOut()
+      window.location.href = '/'
+    }
+  }
+
+  // Update password
+  const updatePassword = async (password) => {
+    const { error } = await supabase.auth.updateUser({
+        password: password
+      })
+    
+      
+  }
+
     
 
 
@@ -375,7 +386,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, adicionarCartao, submitName, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, addAddress, deleteAddress, addPayment, cadastrar, onDeleteCard: deleteCard, cpfAdd, birthdateAdd}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, submitName, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, addAddress, deleteAddress, addPayment, cadastrar, onDeleteCard: deleteCard, cpfAdd, birthdateAdd, onPurgeAccount: purgeAccount, onUpdatePassword: updatePassword}}>
       {children}
     </AuthContext.Provider>
   );

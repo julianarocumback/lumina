@@ -6,7 +6,6 @@ const CartContext = createContext()
 export function CartProvider({ children }) {
     const [items, setItems] = useLocalStorage('carrinho_compras', [])
 
-
     if(!items){
         return
     }
@@ -41,15 +40,34 @@ export function CartProvider({ children }) {
     }
 
     function quantidades(produto, quantidade) {
-        const quantidadeCerta = quantidade === '' ? 1 : quantidade
         if(quantidade  > 101) return
+        if(quantidade === '00') return
         setItems(prev => prev.map(item => {
             if(item.id === produto.id){
-                return {...item, quantidade: quantidadeCerta}
+                return {...item, quantidade: Number(quantidade)}
             }
             return item
         }))
     }
+
+    
+    const teste = (produto, quantidade) => {
+        if(quantidade === '' || quantidade === '0') {
+            setItems(prev => prev.map(item => {
+                if(item.id === produto.id) {
+                
+                        return {...item, quantidade: 1}
+                    
+                }
+                return item
+            }))
+
+        }
+    
+    
+    }
+        
+           
 
     // Diminuir a quantidade de um produto no carrinho
     function diminuirQuantidade(produto) {
@@ -66,7 +84,7 @@ export function CartProvider({ children }) {
   
 
     return (
-        <CartContext.Provider value={{items, setItems, addToCart, removeToCart, aumentarQuantidade, diminuirQuantidade, quantidades}}>
+        <CartContext.Provider value={{items, setItems, addToCart, removeToCart, aumentarQuantidade, diminuirQuantidade, quantidades, teste}}>
             {children}
         </CartContext.Provider>
     )

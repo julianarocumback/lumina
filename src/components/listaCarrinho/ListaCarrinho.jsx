@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom'
 
 
 export default function ListaCarrinho({isOpen, setCarrinho}){
-    const {items, setItems, aumentarQuantidade, diminuirQuantidade, removeToCart, quantidades} = useCart()
+    const {items, setItems, aumentarQuantidade, diminuirQuantidade, removeToCart, quantidades, teste} = useCart()
     const navigate = useNavigate()
     const {authenticated} = useContext(AuthContext)
 
@@ -65,6 +65,8 @@ export default function ListaCarrinho({isOpen, setCarrinho}){
         aaa()
     }, [authenticated, items?.length])
 
+        
+
 
 
     if(!items) return
@@ -119,9 +121,9 @@ export default function ListaCarrinho({isOpen, setCarrinho}){
                                                 <div className={`text-xs cursor-pointer w-5 ${item.quantidade === 1 && 'text-gray-300'}`} onClick={()=> diminuirQuantidade(item)}><i class="fa-solid fa-minus"></i></div>
 
                                                 {/* Quantidade atual */}
-                                                <div className='relative'>
-                                                <div>{item.quantidade}</div>
-                                                <input onChange={(e) => quantidades(item, e.target.value.replace(/\D/g, ''))} className=' w-5 z-10  top-0 absolute focus:outline-none text-center caret-black  text-transparent ' type="text" value={item.quantidade}/>
+                                                <div className='relative flex items-center w-5 h-5'>
+                                                <div className='h-full w-full flex items-center justify-center'>{item.quantidade}</div>
+                                                <input onChange={(e) => quantidades(item, e.target.value.replace(/\D/g, ''))} className=' border z-10 h-full w-full  top-0 absolute focus:outline-none text-center text-transparent caret-black  ' type="text" value={item.quantidade} onBlur={(e) => teste(item, e.target.value.replace(/\D/g, ''))}/>
 
                                                 </div>
 

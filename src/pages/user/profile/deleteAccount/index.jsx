@@ -1,4 +1,4 @@
-export default function DeleteAccount(){
+export default function DeleteAccount({onPurgeAccount, setIsPurgeAccount}){
     return(
         <div className="bg-white border border-gray-100 rounded-2xl shadow-xs p-6 flex lg:justify-between items-center">
                         <div className="flex gap-8 items-center">
@@ -11,7 +11,7 @@ export default function DeleteAccount(){
 
                         </div>
                         <div>
-                            <button className="bg-blue-500 px-4 py-2 rounded-full font-semibold text-white">Ativar</button>
+                            <button className="bg-blue-500 px-4 py-2 rounded-full font-semibold text-white" onClick={()=> setIsPurgeAccount(true)}>Apagar</button>
                         </div>
                         
                     </div>

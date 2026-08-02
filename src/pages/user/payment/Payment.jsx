@@ -1,10 +1,11 @@
 import { useOutletContext } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import Teste from './addCardModal/AddCardModal'
+import AddCardModal from './addCardModal/AddCardModal'
 import { useState } from 'react';
+import { div } from 'framer-motion/client';
 
 export default function Payment(){
-    const {dadosCliente, addPayment, onDeleteCard} = useOutletContext()
+    const {dadosCliente, addPayment, onDeleteCard, defaultCard} = useOutletContext()
     const [addCard, setAddCard] = useState(false)    
 
 
@@ -27,7 +28,7 @@ export default function Payment(){
                 <h2 className="text-xl lg:text-2xl font-semibold">Cartões Salvos</h2>
                 <AnimatePresence>
 
-                {addCard && <Teste onAddCard={addPayment} dadosCliente={dadosCliente} newPayment={addCard} setNewPayment={setAddCard}/>}
+                {addCard && <AddCardModal onAddCard={addPayment} dadosCliente={dadosCliente} newPayment={addCard} setNewPayment={setAddCard}/>}
                 </AnimatePresence>
 
                 {/* CARTÕES  */}
@@ -35,12 +36,13 @@ export default function Payment(){
                     <div className="grid lg:grid-cols-3 gap-4"> 
                         {dadosCliente?.payment?.map(card => {
 
-                            const maskedCard = card.last_four.replace(/\D/g,'').replace(/^(\d{4})(\d{4})(\d{4})(\d{4})$/, '•••• •••• •••• $4')
+                            const maskedCard = card?.card_number?.replace(/\D/g,'').replace(/^(\d{4})(\d{4})(\d{4})(\d{4})$/, '•••• •••• •••• $4')
 
                             return (
                                 <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} layout  className="h-40 lg:h-45 lg:w-full gap-2 w-full md:w-full justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col relative">
                                     <div className='text-white/70 absolute top-4 right-5 flex gap-2'>
-                                        {/* <div className='hover:text-white transition-all'><i class="fa-solid fa-pencil"></i></div> */}
+                                        <button onClick={defaultCard}>deixar principal</button>
+                                        {card.is_default && <div className='flex justify-center items-center border rounded-full text-xs px-2 bg-green-400/30 border-none'>Principal</div>}
                                         <div className='hover:text-white transition-all' onClick={() => handleDeleteCard(card.id)}>
                                             <i class="fa-solid fa-trash"></i>
                                         </div>
@@ -57,7 +59,7 @@ export default function Payment(){
                                     <div className="flex justify-between text-white">
                                         <div className="">
                                             <span className="text-[8px] font-semibold text-gray-400">Nome</span>
-                                            <p className="text-xs font-semibold capitalize">{card.holder_name}</p>
+                                            <p className="text-xs font-semibold uppercase">{card.holder_name}</p>
                                         </div>
                                         <div>
                                             <span className="text-[8px] font-semibold text-gray-400 text-right">Validade</span>

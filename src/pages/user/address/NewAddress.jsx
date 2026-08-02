@@ -109,24 +109,14 @@ export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
             hasError = true
         }
 
-     
-
-
-
         if(hasError) return
-     
 
 
-
-
-        // if(address.zipCode.length !== 8) {
-        //     setAddressError(prev => ({...prev, zipCode: true}))
-        //     return
-        // } else {
-        //     setAddressError(prev => ({...prev, zipCode: false}))
-
-        // }
+        // enviar dado
         addAddress(address)
+
+
+        // reset
         setNewAddress(false)
         setAddress({
         userId: dadosCliente?.id,
