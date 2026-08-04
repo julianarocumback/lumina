@@ -1,14 +1,14 @@
-import { useCart } from '../../contexts/CartContext/CartContext'
-import { useNavigate } from "react-router-dom"
 import { useState, useContext, useEffect, useRef } from 'react'
+import { useNavigate, Link } from "react-router-dom"
+import { motion, AnimatePresence } from 'framer-motion'
+
 import { AuthContext } from '../../contexts/AuthContext/AuthContext';
-import {currencyFormatter} from '../../utils/formatCurrency'
-import {motion, AnimatePresence} from 'framer-motion'
-import {Link} from 'react-router-dom'
+import { useCart } from '../../contexts/CartContext/CartContext'
+import { currencyFormatter } from '../../utils/formatters'
 
 
 export default function ListaCarrinho({isOpen, setCarrinho}){
-    const {items, setItems, aumentarQuantidade, diminuirQuantidade, removeToCart, quantidades, teste} = useCart()
+    const {items, setItems, increaseQuantity, decreaseQuantity, removeFromCart, updateQuantity, checkQuantity} = useCart()
     const navigate = useNavigate()
     const {authenticated} = useContext(AuthContext)
 
@@ -107,7 +107,7 @@ export default function ListaCarrinho({isOpen, setCarrinho}){
 
                                             </div>
                                         </div>
-                                        <div onClick={()=> removeToCart(item)} className="absolute right-0 hover:text-red-500 cursor-pointer transition-colors">
+                                        <div onClick={()=> removeFromCart(item)} className="absolute right-0 hover:text-red-500 cursor-pointer transition-colors">
                                             <i class="fa-solid fa-trash"></i>
                                         </div>
                                         <div className="flex justify-between">
@@ -118,17 +118,17 @@ export default function ListaCarrinho({isOpen, setCarrinho}){
                                             <div className="flex border border-gray-300 w-20 items-center justify-around bg-white rounded-3xl px-2 select-none">
 
                                                 {/* Diminuir a quantidade */}
-                                                <div className={`text-xs cursor-pointer w-5 ${item.quantidade === 1 && 'text-gray-300'}`} onClick={()=> diminuirQuantidade(item)}><i class="fa-solid fa-minus"></i></div>
+                                                <div className={`text-xs cursor-pointer w-5 ${item.quantidade === 1 && 'text-gray-300'}`} onClick={()=> decreaseQuantity(item)}><i class="fa-solid fa-minus"></i></div>
 
                                                 {/* Quantidade atual */}
                                                 <div className='relative flex items-center w-5 h-5'>
                                                 <div className='h-full w-full flex items-center justify-center'>{item.quantidade}</div>
-                                                <input onChange={(e) => quantidades(item, e.target.value.replace(/\D/g, ''))} className=' border z-10 h-full w-full  top-0 absolute focus:outline-none text-center text-transparent caret-black  ' type="text" value={item.quantidade} onBlur={(e) => teste(item, e.target.value.replace(/\D/g, ''))}/>
+                                                <input onChange={(e) => updateQuantity(item, e.target.value.replace(/\D/g, ''))} className=' border z-10 h-full w-full top-0 absolute focus:outline-none text-center text-transparent caret-black  ' type="text" value={item.quantidade} onBlur={(e) => checkQuantity(item, e.target.value.replace(/\D/g, ''))}/>
 
                                                 </div>
 
                                                 {/* Aumentar a quantidade */}
-                                                <div className="text-xs cursor-pointer w-5" onClick={()=> aumentarQuantidade(item)}><i class="fa-solid fa-plus"></i></div>
+                                                <div className="text-xs cursor-pointer w-5" onClick={()=> increaseQuantity(item)}><i class="fa-solid fa-plus"></i></div>
                                                 
                                             </div>
 

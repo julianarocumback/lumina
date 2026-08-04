@@ -13,7 +13,7 @@ export default function HolderName({holderName, isSubmitted, setCard}){
     }
 
     // Add holder name
-    function handleHolderNameChange(event){
+    const handleHolderNameChange = (event) =>{
         const holderName = event.target.value.replace(/\d/g, '')
 
         if(holderName.length > 40) return

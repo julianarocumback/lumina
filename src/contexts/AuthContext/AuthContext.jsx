@@ -11,29 +11,31 @@ export const AuthContext = createContext({});
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  console.log(user)
+  
   
   const [dadosCliente, setDadosCliente] = useState(null);
-    useEffect(() => {
+  useEffect(() => {
     async function buscarDados() {
       if (user?.id) {
         const { data, error } = await supabase
-          .from('clientes')
-          .select('*, pedidos!cliente_id(*), address(*), payment(*)')
-          .eq('id', user.id)
-          .single();
-
+        .from('clientes')
+        .select('*, pedidos!cliente_id(*), address(*), payment(*)')
+        .eq('id', user.id)
+        .single();
+        
         if (data) {
           setDadosCliente(data);
         }
-
+        
         if (error) {
-  console.error("Erro detalhado do Supabase:", error.message); 
-  console.error("Código do erro:", error.code);
+          console.error("Erro detalhado do Supabase:", error.message); 
+          console.error("Código do erro:", error.code);
 }
       }
     }
-
+    
+    console.log(dadosCliente)
 
     buscarDados();
   }, [user])
@@ -73,6 +75,7 @@ export function AuthProvider({ children }) {
       }
     }
 
+    console.log(dadosCliente)
 
     // PAYMENT
 

@@ -1,19 +1,39 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import QRCode from './qr-code.svg'
+import { motion, AnimatePresence} from 'framer-motion'
 
-export default function Payment({pagamento, setPagamento,cupom, setCupom, payments, addPayment, dadosCliente}) {
+export default function Payment({pagamento, setPagamento,cupom, setCupom, payments, dadosCliente, addPayment, onDeleteCard, defaultCard}) {
     const [cupomAdicionado, setCupomAdicionado] = useState('')
     const [paymentType, setPaymentType] = useState('card')
     const [newPayment, setNewPayment] = useState(false)
-    const [payment, setPayment] = useState({
+    const [card, setCard] = useState({
         userId: dadosCliente?.id,
         holderName: '',
-        lastFour: '',
+        cardNumber: '',
         expirationDate: '01/50',
         cvv: 123,
         brand: '',
-        isMain: false
+        isDefault: false
     })
+
+    const [isHolderNameTouched, setIsHolderNameTouched] = useState(false)
+    const [isCardNumberTouched, setIsCardNumberTouched] = useState(false)
+    const [isSubmitted, setIsSubmitted] = useState(false)
+
+
+     
+    // Erros do holdername
+    const isHolderNameEmpty = card.holderName.trim() === ''
+    const isHolderNameLower = card.holderName.trim().length < 3
+    const hasHolderNameError = isHolderNameEmpty || isHolderNameLower
+    const shouldShowHolderNameError = hasHolderNameError && (isHolderNameTouched || isSubmitted)
+
+
+    // Erros do número do cartão
+    const isNumberCardEmpty = card.cardNumber.trim() === ''
+    const isNumberCardLower = card.cardNumber.length < 16
+    const hasNumberCardError = isNumberCardEmpty || isNumberCardLower
+    const shouldShowCardNumberError = hasNumberCardError && (isCardNumberTouched || isSubmitted)
     
     
     const paymentTypeList = [
@@ -61,53 +81,68 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
     }
 
 
-    function handleHolderNameChange(event){
-        const holderName = event.target.value
+const handleCardNumberBlur = () => {
+        setIsCardNumberTouched(true)
+    }
+    
 
+    const handleHolderNameBlur = () => {
+        setIsHolderNameTouched(true)
+    }
+
+    // Add holder name
+    const handleHolderNameChange = (event) =>{
+        const holderName = event.target.value.replace(/\d/g, '')
 
         if(holderName.length > 40) return
-
-
-        setPayment(prev => ({...prev, holderName:holderName}))
+         
+        setCard(prev => ({...prev, holderName:holderName}))
     }
 
-    function handleLastFourChange(event) {
-        const lastFour = event.target.value
-        let numeroLimpo = lastFour.replace(/\D/g, '')
 
-        if (numeroLimpo.length > 16) {
-            numeroLimpo = numeroLimpo.slice(0, 16);
+    // Add card number
+    function handleCardNumberChange(event) {
+        let cardNumber = event.target.value.replace(/\D/g, '')     
+
+        if (cardNumber.length > 16) {
+            cardNumber = cardNumber.slice(0, 16);
         }
+
+       
         
-        setPayment(prev => ({...prev, lastFour: numeroLimpo}))
+        setCard(prev => ({...prev, cardNumber: cardNumber}))
     }
 
+    // Add main card
     function handleMainChange(event) {
         const isMain = event.target.checked
-        setPayment(prev => ({...prev, isMain: isMain}))
+        setCard(prev => ({...prev, isDefault: isMain}))
     }
 
+    // Add card payment
     function handleAddPayment(){
-        addPayment(payment)
+        setIsSubmitted(true)
+        if(hasHolderNameError) return
+        if(hasNumberCardError) return
+
+        addPayment(card)
         setNewPayment(false)
+
+        setCard({
+            holderName: '',
+            cardNumber: '',
+            brand: '',
+            isDefault: false
+        })
     }
 
-    useEffect(()=> {
-        function brand() {
-            if(/^4/.test(payment.lastFour)) {
-                setPayment(prev => ({...prev, brand: 'Visa'}))
-            } else if(/^5[1-5]/.test(payment.lastFour)) {
-                setPayment(prev => ({...prev, brand: 'Mastercard'}))
-            }else if(/^3[4|7]/.test(payment.lastFour)) {
-                setPayment(prev => ({...prev, brand: 'American Express'}))
-            } else {
-                setPayment(prev => ({...prev, brand: ''}))
-            }
-        } 
+    
+    // Delete card
+    const handleDeleteCard = (cardId) => {
+        onDeleteCard(cardId)
+    }
+    
 
-        brand()
-
-    },[payment.lastFour])
 
     return (
         <div className="w-full h-full lg:rounded-2xl overflow-hidden bg-white shadow-xs flex flex-col gap-8 p-8 mb-50 lg:mb-0">
@@ -138,33 +173,46 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
             
             // CARTÃO DE CRÉDITO
             <div className="flex gap-4 overflow-x-auto no-scrollbar from-95% to-[#0002] py-2">
-                {payments.map(payment => {
-                    const isSelected = pagamento.id === payment.id
+                <AnimatePresence>
 
-                    return (
-                          <div onClick={()=>handleCartaoSelecionado(payment)} className={`${isSelected && ' outline-green-500 bg-green-700 outline-2 text-gray-700'}   h-40 lg:h-40  lg:w-65 gap-2 w-full md:w-70 justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col `}>
+                {payments?.map(card => {
+
+                            const maskedCard = card?.card_number?.replace(/\D/g,'').replace(/^(\d{4})(\d{4})(\d{4})(\d{4})$/, '•••• •••• •••• $4')
+                            const isSelected = pagamento.id === card.id
+
+                            return (
+                                <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} layout  className={`${isSelected ? 'ring-2 ring-green-500': 'ring-none'} flex-none h-40 lg:h-45 lg:w-75 gap-2 w-full md:w-full justify-center rounded-2xl bg bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] shadow-lg p-4 flex flex-col relative`} onClick={() => handleCartaoSelecionado(card)}>
+                                    <div className='text-white/70 absolute top-4 right-5 flex gap-2'>
+                                        <button onClick={defaultCard}>deixar principal</button>
+                                        {card.is_default && <div className='flex justify-center items-center border rounded-full text-xs px-2 bg-green-400/30 border-none'>Principal</div>}
+                                        <div className='hover:text-white transition-all' onClick={() => handleDeleteCard(card.id)}>
+                                            <i class="fa-solid fa-trash"></i>
+                                        </div>
+                                    </div>
+                        
                                     <div className="flex justify-between">
                                         <div className="text-white"><i class="fa-brands fa-cc-visa"></i></div>
-                                        <span className="text-xs font-bold text-gray-400">{payment.brand}</span>
+                                        <span className="text-xs font-bold text-gray-400">{card.brand}</span>
                                     </div>
 
                                     <div className="bg-yellow-500 w-6 rounded-md h-4"></div>
                                     
-                                    <div className="self-center text-white font-semibold -tracking-tighter">{payment.last_four.replace(/\D/g,'').replace(/^(\d{4})(\d{4})(\d{4})(\d{4})$/, '•••• •••• •••• $4')}</div>
+                                    <div className="self-center text-white font-semibold -tracking-tighter">{maskedCard}</div>
                                     <div className="flex justify-between text-white">
                                         <div className="">
                                             <span className="text-[8px] font-semibold text-gray-400">Nome</span>
-                                            <p className="text-xs font-semibold capitalize">{payment.holder_name}</p>
+                                            <p className="text-xs font-semibold uppercase">{card.holder_name}</p>
                                         </div>
                                         <div>
                                             <span className="text-[8px] font-semibold text-gray-400 text-right">Validade</span>
-                                            <p className="text-xs font-semibold">{payment.expiration_date}</p>
+                                            <p className="text-xs font-semibold">{card.expiration_date}</p>
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
+                            )
+                        })}
 
-                    )}
-                )}
+                </AnimatePresence>
                 
             </div>
             :
@@ -209,17 +257,17 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                         <div className="flex flex-col gap-2">
                             <label htmlFor='lastFour' className='font-semibold text-xs text-gray-700'>NÚMERO DO CARTÃO</label>
                             <div className='w-full relative'>
-                                <input id='lastFour' onChange={handleLastFourChange}  type="text" value={(payment.lastFour || '').replace(/(\d{4})(?=\d)/g, '$1 ')} placeholder='0000 0000 0000 0000' className={`focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
-                                {payment.brand === 'Visa'? <div className='absolute top-1 right-3 text-blue-800'><i class="fa-brands fa-cc-visa"></i></div>
-                                :payment.brand === 'Mastercard' ?<div className='absolute top-1 right-3 text-red-900 '><i class="fa-brands fa-cc-mastercard"></i></div>
-                                :payment.brand === 'American Express' && <div className='absolute top-1 right-3 text-gray-700'><i class="fa-brands fa-cc-amex"></i></div>}
+                                <input id='cardNumber' type="text" value={(card.cardNumber || '').replace(/(\d{4})(?=\d)/g, '$1 ')} placeholder='0000 0000 0000 0000' className={`${shouldShowCardNumberError && 'ring-1 ring-red-500'} focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`} onChange={handleCardNumberChange} onBlur={handleCardNumberBlur}/>
+                                {card.brand === 'Visa'? <div className='absolute top-1 right-3 text-blue-800'><i class="fa-brands fa-cc-visa"></i></div>
+                                :card.brand === 'Mastercard' ?<div className='absolute top-1 right-3 text-red-900 '><i class="fa-brands fa-cc-mastercard"></i></div>
+                                :card.brand === 'American Express' && <div className='absolute top-1 right-3 text-gray-700'><i class="fa-brands fa-cc-amex"></i></div>}
                             </div>
                         </div>
 
                         {/* NOME NO CARTÃO */}
                         <div className="flex flex-col gap-2">
-                            <label className='font-semibold text-xs text-gray-700' htmlFor="holderName">NOME NO CARTÃO</label>
-                            <input id='holderName' onChange={handleHolderNameChange}  type="text" value={payment.holderName} placeholder='Como impresso no cartão' className={`focus:outline-none rounded-lg bg-gray-100 px-3 text-xs py-2 uppercase`}/>
+                            <label className={`font-semibold text-xs text-gray-700`} htmlFor="holderName">NOME NO CARTÃO</label>
+                            <input id='holderName' onChange={handleHolderNameChange}  type="text" value={card.holderName} placeholder='Como impresso no cartão' className={`${shouldShowHolderNameError && 'ring-1 ring-red-500'} focus:outline-none rounded-lg bg-gray-100 px-3 text-xs py-2 uppercase`} onBlur={handleHolderNameBlur}/>
                         </div>
 
                         {/* VALIDADE E CVV */}
@@ -227,13 +275,13 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                             {/* VALIDADE */}
                             <div className='w-full flex flex-col gap-2'>
                                 <label className='font-semibold text-xs text-gray-700' htmlFor="expirationDate">VALIDADE</label>
-                                <input id='expirationDate' type="text" value={payment.expirationDate} disabled placeholder={payment.expirationDate} className={` rounded-lg bg-gray-100 px- text-xs py-2 px-3 w-full`}/>
+                                <input id='expirationDate' type="text" value={card.expirationDate} disabled placeholder={card.expirationDate} className={` rounded-lg bg-gray-100 px- text-xs py-2 px-3 w-full`}/>
                             </div>
                                 
                             {/* CVV */}
                             <div className="flex flex-col gap-2 w-full">
                                 <label htmlFor='cvv' className='font-semibold text-xs text-gray-700'>CVV</label>
-                                <input id='cvv' type="text" disabled placeholder={payment.cvv}  value={payment.cvv} className={` rounded-lg bg-gray-100 px-3 py-2 text-xs w-full`}/>
+                                <input id='cvv' type="text" disabled placeholder={card.cvv}  value={card.cvv} className={` rounded-lg bg-gray-100 px-3 py-2 text-xs w-full`}/>
                             </div>
                         </div>
 

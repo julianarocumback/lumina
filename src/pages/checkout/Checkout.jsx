@@ -1,22 +1,20 @@
 import Header from '../../components/header/Header'
 import Stepper from './stepper/Stepper'
 import Cart from './cart/Cart'
-import Footer from '../../components/footer/Footer'
 
 import { useCart } from '../../contexts/CartContext/CartContext'
 import { AuthContext } from '../../contexts/AuthContext/AuthContext'
 import { useState, useEffect, useContext } from 'react'
 
 export default function Checkout() {
-    const {items, setItems, aumentarQuantidade, diminuirQuantidade, removeToCart } = useCart()
-    const {user, adicionarPedido, dadosCliente, addAddress, addPayment, setNewAddress} = useContext(AuthContext)
+    const {items, setItems, increaseQuantity, decreaseQuantity, removeFromCart, addQuantity} = useCart()
+    const {user, adicionarPedido, dadosCliente, addAddress, addPayment, setNewAddress, onAddCard, defaultCard, onDeleteCard} = useContext(AuthContext)
 
     const [endereco, setEndereco] = useState({})
     const [frete, setFrete] = useState({})
     const [pagamento, setPagamento] = useState({})
     const [cupom, setCupom] = useState({})
     const [etapa, setEtapa] = useState(0)
-    console.log('pagamento', pagamento)
 
     const listaOk = items.length > 0
     const enderecoOk = Object.keys(endereco).length > 0 && Object.keys(frete).length > 0
@@ -62,9 +60,9 @@ export default function Checkout() {
                 <div className='lg:pt-60'>
                     <Cart 
                     etapa={etapa} setEtapa={setEtapa}
-                    lista={items} aumentarQuantidade={aumentarQuantidade} diminuirQuantidade={diminuirQuantidade} removerDoCarrinho={removeToCart} 
+                    lista={items} increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} onRemoveFromCart={removeFromCart} addQuantity={addQuantity}
                     endereco={endereco} setEndereco={setEndereco} frete={frete} setFrete={setFrete} addAddress={addAddress}
-                    pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom} addPayment={addPayment}
+                    pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom} addPayment={addPayment} onAddCard={onAddCard} defaultCard={defaultCard} onDeleteCard={onDeleteCard}
                     
                     listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar}
                     addresses={dadosCliente?.address} payments={dadosCliente?.payment} dadosCliente={dadosCliente} setNewAddress={setNewAddress}

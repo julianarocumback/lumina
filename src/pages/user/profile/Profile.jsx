@@ -1,6 +1,6 @@
 import { useOutletContext} from 'react-router-dom'
 import {motion, AnimatePresence} from 'framer-motion'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 
 
 // COMPONENTS
@@ -36,16 +36,25 @@ export default function Profile(){
         setConfirmPassword(confirmPassword)
     }
 
-
+    useEffect(() =>{
+        const modal = ()=> {
+            if(isPurgeAccount || isUpdatePassword) {
+                document.body.classList.add('overflow-y-hidden')
+            } else {
+                document.body.classList.remove('overflow-y-hidden')
+            }
+        }
+        modal()
+    }, [isPurgeAccount, isUpdatePassword])
  
     if(!dadosCliente) return
 
     return(
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className="flex flex-col gap-8 lg:gap-8 pt-7 pb-25 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full relative">
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className="flex flex-col gap-8 lg:gap-8 pt-7 pb-25 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full">
 
              <AnimatePresence>
                     {isPurgeAccount && 
-            <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration: 0.3}} className='bg-black/20 absolute w-full h-full top-0 left-0 flex justify-center items-center'>
+            <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration: 0.3}} className='bg-black/20 absolute w-full h-full top-0 left-0 flex justify-center items-center z-10'>
                          <motion.div  className='flex flex-col border border-gray-100 w-100 h-70 bg-white rounded-3xl gap-8 p-8 shadow justify-center self-center justify-self-center top-100'>
                             <p className='text-2xl text-center'>Tem certeza que deseja apagar a conta?
                                 Essa ação não poderá ser desfeita.
@@ -64,7 +73,7 @@ export default function Profile(){
 
                  <AnimatePresence>
                     {isUpdatePassword && 
-            <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration: 0.3}} className='bg-black/20 absolute w-full h-full top-0 left-0 flex justify-center items-center'>
+            <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration: 0.3}} className='bg-black/20 absolute w-full h-full top-0 left-0 flex justify-center items-center z-10 '>
                          <motion.div  className='flex flex-col border border-gray-100 w-100 h-70 bg-white rounded-3xl gap-8 p-8 shadow justify-center self-center justify-self-center top-100'>
                             <p className='text-2xl text-center'>Adicione a nova senha
                                 <input type="text" className='border' placeholder='Digite a nova senha' onChange={handleAddPassword} value={password}/>

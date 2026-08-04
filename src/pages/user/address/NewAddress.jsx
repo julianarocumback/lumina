@@ -38,9 +38,10 @@ export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
     }
 
     function handleStreetNumberChange(event) {
-        if(event.length > 4) return
+        const streetNumber = event.target.value.replace(/\D/g, "")
+        if(streetNumber.length > 4) return
 
-        setAddress(prev => ({...prev, streetNumber: event}))
+        setAddress(prev => ({...prev, streetNumber: streetNumber}))
         setAddressError(prev => ({...prev, streetNumber: null}))
     }
 
@@ -161,7 +162,7 @@ export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
                         </div>
                         <div className='flex flex-col gap-2 w-1/5 '>
                             <label className='font-semibold text-xs text-gray-700' htmlFor="streetNumber">Número</label>
-                            <input id='streetNumber' onChange={(e) => handleStreetNumberChange(e.target.value.replace(/\D/g, ""))}  type="text" value={address.streetNumber} placeholder='Ex.: 123' className={`${addressError.streetNumber && 'outline outline-red-500'} rounded-lg bg-gray-100 px-2 lg:px-3 text-xs py-2 focus:outline-none`}/>
+                            <input id='streetNumber' onChange={handleStreetNumberChange}  type="text" value={address.streetNumber} placeholder='Ex.: 123' className={`${addressError.streetNumber && 'outline outline-red-500'} rounded-lg bg-gray-100 px-2 lg:px-3 text-xs py-2 focus:outline-none`}/>
                         </div>
                     </div>
 

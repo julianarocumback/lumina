@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { AuthProvider} from './contexts/AuthContext/AuthContext'
+import { AuthProvider } from './contexts/AuthContext/AuthContext'
 import { CartProvider } from './contexts/CartContext/CartContext'
 
 import { RouterProvider } from 'react-router-dom'

@@ -5,7 +5,7 @@ import Payment from './payment/Payment';
 import Confirmation from './confirmation/Confirmation'
 import BackLink from '../backLink/BackLink'
 
-export default function Cart({lista, aumentarQuantidade, diminuirQuantidade, removerDoCarrinho, endereco, setEndereco, frete, setFrete, pagamento, setPagamento, cupom, setCupom, listaOk, enderecoOk, pagamentoOk, verificar, etapa, addresses, payments, addAddress, addPayment, dadosCliente, setNewAddress}){
+export default function Cart({lista, increaseQuantity, decreaseQuantity, onRemoveFromCart, addQuantity, endereco, setEndereco, frete, setFrete, pagamento, setPagamento, cupom, setCupom, listaOk, enderecoOk, pagamentoOk, verificar, etapa, addresses, payments, addAddress, addPayment, dadosCliente, setNewAddress, onAddCard, onDeleteCard, defaultCard}){
 
     return (
         <div className="lg:sh">
@@ -16,7 +16,7 @@ export default function Cart({lista, aumentarQuantidade, diminuirQuantidade, rem
             :etapa === 2 ?
                 <div className="flex flex-col lg:gap-8 lg:py-7 ">
                     <div className="flex flex-col lg:flex-row lg:gap-8">
-                        <Payment pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom} payments={payments} addPayment={addPayment} dadosCliente={dadosCliente}/>
+                        <Payment pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom} payments={payments} addPayment={addPayment} dadosCliente={dadosCliente} onAddCard={onAddCard} onDeleteCard={onDeleteCard} defaultCard={defaultCard}/>
                         <OrderSummary lista={lista} frete={frete} cupom={cupom} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar} etapa={etapa}/>
                     </div>
                     <BackLink/>
@@ -32,7 +32,7 @@ export default function Cart({lista, aumentarQuantidade, diminuirQuantidade, rem
             :
                 <div className="flex flex-col lg:gap-8 lg:py-7 relative">
                     <div className="flex flex-col lg:flex-row lg:gap-8 relative">
-                        <ProductList lista={lista} aumentarQuantidade={aumentarQuantidade} diminuirQuantidade={diminuirQuantidade} removerDoCarrinho={removerDoCarrinho}/>
+                        <ProductList lista={lista} increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} onRemoveFromCart={onRemoveFromCart} addQuantity={addQuantity}/>
                         <OrderSummary lista={lista} frete={frete} cupom={cupom} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar} etapa={etapa}/>
                     </div>
                     <BackLink/>

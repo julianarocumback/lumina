@@ -1,90 +1,76 @@
-import { createContext, useContext, useState } from 'react'
-import useLocalStorage  from '../../hooks/useLocalStorage'
+import { createContext, useContext } from 'react'
+import useLocalStorage from '../../hooks/useLocalStorage'
 
 const CartContext = createContext()
 
 export function CartProvider({ children }) {
     const [items, setItems] = useLocalStorage('carrinho_compras', [])
 
-    if(!items){
-        return
-    }
+    if(!items) return
 
-    // Adicionar o produto ao carrinho
-    function addToCart(produto) {
-        // verificar se o produto já está no carrinho
-        if(items.find(item => item.id === produto.id)){
-            return
-        }
-        const p = ({...produto, quantidade : 1})
+    // Add product to cart
+    function addToCart(book) {
+        // Check if product is already in cart
+        if(items.find(item => item.id === book.id)) return
+
+        const p = ({...book, quantidade : 1})
         setItems(prev => [...prev, p])
     }
 
-
-
-
-    // Remover o produto do carrinho
-    function removeToCart(produto) {
-        const produtos = items.filter(item => item?.id !== produto?.id)
-        setItems([...produtos])
+    // Remove product from cart
+    function removeFromCart(book) {
+        const books = items.filter(item => item?.id !== book?.id)
+        setItems([...books])
     }
 
-    // Aumentar a quantidade de um produto no carrinho
-    function aumentarQuantidade(produto) {
+    // Increase product quantity in cart
+    function increaseQuantity(book) {
         setItems(prev => prev.map(item => {
-            if(item.id === produto.id){
+            if(item.id === book.id){
                 return {...item, quantidade: item.quantidade + 1}
             }
             return item
         }))
     }
 
-    function quantidades(produto, quantidade) {
-        if(quantidade  > 101) return
-        if(quantidade === '00') return
+    // Update product quantity
+    function updateQuantity(book, quantity) {
+        if(quantity  > 101) return
+        if(quantity === '00') return
         setItems(prev => prev.map(item => {
-            if(item.id === produto.id){
-                return {...item, quantidade: Number(quantidade)}
+            if(item.id === book.id){
+                return {...item, quantidade: Number(quantity)}
             }
             return item
         }))
     }
 
-    
-    const teste = (produto, quantidade) => {
-        if(quantidade === '' || quantidade === '0') {
+    // Check product quantity
+    const checkQuantity = (book, quantity) => {
+        if(quantity === '' || quantity === '0') {
             setItems(prev => prev.map(item => {
-                if(item.id === produto.id) {
-                
-                        return {...item, quantidade: 1}
-                    
+                if(item.id === book.id) {
+                    return {...item, quantidade: 1}
                 }
                 return item
             }))
+        }    
+    }   
 
-        }
-    
-    
-    }
-        
-           
-
-    // Diminuir a quantidade de um produto no carrinho
-    function diminuirQuantidade(produto) {
-        if(produto.quantidade === 1) return
+    // Decrease product quantity in cart
+    function decreaseQuantity(book) {
+        if(book.quantidade === 1) return
 
         setItems(prev => prev.map(item => {
-            if(item.id === produto.id) {
+            if(item.id === book.id) {
                 return {...item, quantidade: item.quantidade - 1}
             }
             return item
         }))
     }
 
-  
-
     return (
-        <CartContext.Provider value={{items, setItems, addToCart, removeToCart, aumentarQuantidade, diminuirQuantidade, quantidades, teste}}>
+        <CartContext.Provider value={{items, setItems, addToCart, removeFromCart, increaseQuantity, decreaseQuantity, updateQuantity, checkQuantity}}>
             {children}
         </CartContext.Provider>
     )

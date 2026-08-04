@@ -14,6 +14,8 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
         type: '',
         isMain: false
     })
+    const [addressError, setAddressError] = useState({zipCode: null, street: null, streetNumber: null, neighborhood: null, city: null, state: null, isMain:null, type: null})
+
 
     function handleZipCodeChange(event) {
         const zipCode = event.target.value
@@ -57,22 +59,66 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
     }
 
     function handleAddAddress(){
-        setAdicionarNovoEndereco(false)
+        let hasError = false
+        
+        if(address.city === ''){
+            setAddressError(prev => ({...prev, city: true}))
+            hasError = true
+        } 
+        
+        if(address.zipCode.length !== 8){
+            setAddressError(prev => ({...prev, zipCode: true}))    
+            hasError = true
+        }
+
+        if(address.street === ''){
+            setAddressError(prev => ({...prev, street: true}))    
+            hasError = true
+        }
+
+        if(address.streetNumber === ''){
+            setAddressError(prev => ({...prev, streetNumber: true}))    
+            hasError = true
+        }
+
+        if(address.complement === ''){
+            setAddressError(prev => ({...prev, complement: true}))    
+            hasError = true
+        }
+
+        if(address.neighborhood === ''){
+            setAddressError(prev => ({...prev, neighborhood: true}))    
+            hasError = true
+        }
+
+        if(address.type === ''){
+            setAddressError(prev => ({...prev, type: true}))    
+            hasError = true
+        }
+
+        if(hasError) return
+
+
+        // enviar dado
         addAddress(address)
-        setNewAddress(false)
+
+
+        // reset
+        setAdicionarNovoEndereco(false)
         setAddress({
-            userId: dadosCliente?.id,
-            zipCode: '',
-            street: '',
-            streetNumber: '',
-            complement: '',
-            neighborhood: '',
-            city: '',
-            state: '',
-            type: '',
-            isMain: false
-        })
+        userId: dadosCliente?.id,
+        zipCode: '',
+        street: '',
+        streetNumber: '',
+        complement: '',
+        neighborhood: '',
+        city: '',
+        state: '',
+        type: '',
+        isMain: false
+    })
     }
+
 
     function handleMainChange(event) {
         const main = event.target.checked
@@ -163,23 +209,24 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
 
                  
                 </div>
-                {!adicionarNovoEndereco && <button onClick={handleAdicionarNovoEndereco} className="hover:cursor-pointer font-semibold text-sm text-blue-800 w-50">+ Adicionar novo endereço</button>}
+                {!adicionarNovoEndereco && addresses.length < 3 &&    <button onClick={handleAdicionarNovoEndereco} className="hover:cursor-pointer font-semibold text-sm text-blue-800 w-50">+ Adicionar novo endereço</button>}
+                {addresses.length >= 3 && <p>Não é possível adicionar mais endereços</p>}
             </div>
 
             
             {/* MOSTRAR SE HOUVER UM CLIQUE PARA ADICIONAR UM NOVO ENDEREÇO*/}
-            {adicionarNovoEndereco && <div className="flex flex-col gap-8 ">
+            {adicionarNovoEndereco && addresses.length < 3 && <div className="flex flex-col gap-8 ">
                 <div className='flex flex-col gap-4'>
 
                     {/* RUA E NÚMERO */}
                     <div className='flex gap-4'>
                         <div className="flex flex-col gap-2 w-4/5">
                             <label className='font-semibold text-xs text-gray-700' htmlFor='street'>Rua</label>
-                            <input id='street' onChange={handleStreetChange} type="text" value={address.street} placeholder='Nome do logradouro' className={` rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
+                            <input id='street' onChange={handleStreetChange} type="text" value={address.street} placeholder='Nome do logradouro' className={`${addressError.street && 'outline outline-red-500 focus:outline-1 focus:outline-red-500 '} rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
                         </div>
                         <div className='flex flex-col gap-2 w-1/5 '>
                             <label className='font-semibold text-xs text-gray-700' htmlFor="streetNumber">Número</label>
-                            <input id='streetNumber' onChange={handleStreetNumberChange}  type="text" value={address.streetNumber} placeholder='Ex.: 123' className={`rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
+                            <input id='streetNumber' onChange={handleStreetNumberChange}  type="text" value={address.streetNumber} placeholder='Ex.: 123' className={`${addressError.streetNumber && 'outline outline-red-500 focus:outline-1 focus:outline-red-500 '} rounded-lg bg-gray-100 px-3 text-xs py-2`}/>
                         </div>
                     </div>
 
@@ -187,11 +234,11 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
                     <div className='flex gap-4'>
                         <div className="flex flex-col gap-2 w-full">
                             <label htmlFor='complement' className='font-semibold text-xs text-gray-700'>Complemento</label>
-                            <input id='complement' onChange={handleComplementChange} type="text" value={address.complement} placeholder='Ex.: Bloco A, Apto 10' className={` rounded-lg bg-gray-100 px-4 text-xs h-full py-2 w-full`}/>
+                            <input id='complement' onChange={handleComplementChange} type="text" value={address.complement} placeholder='Ex.: Bloco A, Apto 10' className={`${addressError.complement && 'outline outline-red-500 focus:outline-1 focus:outline-red-500 '} rounded-lg bg-gray-100 px-4 text-xs h-full py-2 w-full`}/>
                         </div>
                         <div className="flex flex-col gap-2 w-full">
                             <label htmlFor="neighborhood" className='font-semibold text-xs text-gray-700'>Bairro</label>
-                            <input id='neighborhood' onChange={handleNeighborhoodChange} type="text" value={address.neighborhood} placeholder='Seu bairro' className={` rounded-lg bg-gray-100 px-4 py-2 text-xs h-full`}/>
+                            <input id='neighborhood' onChange={handleNeighborhoodChange} type="text" value={address.neighborhood} placeholder='Seu bairro' className={`${addressError.neighborhood && 'outline outline-red-500 focus:outline-1 focus:outline-red-500 '} rounded-lg bg-gray-100 px-4 py-2 text-xs h-full`}/>
                         </div>
                     </div>
 
@@ -200,12 +247,12 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
                         {/* CIDADE */}
                         <div className="flex flex-col gap-2 w-2/5">
                             <label className='font-semibold text-xs text-gray-700' htmlFor='city'>Cidade</label>
-                            <input id='city' onChange={handleCityChange} type="text" value={address.city} placeholder='Seu bairro' className={` rounded-lg bg-gray-100 px-4 text-xs py-2`}/>
+                            <input id='city' onChange={handleCityChange} type="text" value={address.city} placeholder='Seu bairro' className={`${addressError.city && 'outline outline-red-500 focus:outline-1 focus:outline-red-500 '} rounded-lg bg-gray-100 px-4 text-xs py-2`}/>
                         </div>
                         {/* ESTADO */}
                         <div className="flex flex-col gap-2 w-2/5">
                             <label htmlFor="state" className='font-semibold text-xs text-gray-700' >Estado</label>
-                            <select id="state" onChange={handleStateChange} className='bg-gray-100 h-full rounded-lg px-2 w-full text-xs'>
+                            <select id="state" onChange={handleStateChange} className={`${addressError.state && 'outline outline-red-500 focus:outline-1 focus:outline-red-500 '} bg-gray-100 h-full rounded-lg px-2 w-full text-xs`}>
                                 <option value='' selected disabled>Selecione</option>
                                 <option value='AC'>Acre</option>
                                 <option value='AL'>Alagoas</option>
@@ -240,7 +287,7 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
                         {/* CEP */}
                         <div className="flex flex-col gap-2 w-1/5">
                             <label className='font-semibold text-xs text-gray-700' htmlFor="zipCode">CEP</label>
-                            <input id='zipCode' onChange={handleZipCodeChange}  type="text" value={address.zipCode} placeholder='00000-00' className={` rounded-lg bg-gray-100 px-4 text-xs py-2`}/>      
+                            <input id='zipCode' onChange={handleZipCodeChange}  type="text" value={address.zipCode} placeholder='00000-00' className={`${addressError.zipCode && 'outline outline-red-500 focus:outline-1 focus:outline-red-500 '} rounded-lg bg-gray-100 px-4 text-xs py-2`}/>      
                         </div>
 
                     </div>
@@ -248,7 +295,7 @@ export default function Delivery({endereco, setEndereco, frete, setFrete, addres
                     {/* PRINCIPAL E TIPO  */}
                     <div className='flex gap-4 justify-between'>                     
                         <div className="flex items-center gap-2">
-                            <input id='main' onChange={handleMainChange} type="checkbox" value={address.complement} className={` rounded-lg bg-gray-100 px-4 text-xs h-full`}/>
+                            <input id='main' onChange={handleMainChange} type="checkbox" value={address.isMain} className={`${addressError.isMain && 'outline outline-red-500 focus:outline-1 focus:outline-red-500 '} rounded-lg bg-gray-100 px-4 text-xs h-full`}/>
                             <label htmlFor='main' className='font-semibold text-xs text-gray-700'>Definir como endereço principal</label>
                         </div>
                         <div className='flex gap-2'>

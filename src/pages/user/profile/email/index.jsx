@@ -37,7 +37,7 @@ export default function Email({dadosCliente, atualizarEmail}){
                             disabled={ativarBotaoEmail}
                             value={email} type="email"
                             placeholder={dadosCliente?.email}
-                            className={`${!ativarBotaoEmail && 'border'}  text-gray-black font-semibold px-2 -left-2 relative`}
+                            className={`${!ativarBotaoEmail && 'border'} w-full text-gray-black font-semibold px-2 -left-2 relative`}
                             onChange={handleAddEmail}
                         />
                     </div>

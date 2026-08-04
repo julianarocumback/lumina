@@ -1,4 +1,4 @@
-export default function ProductList({lista, aumentarQuantidade, diminuirQuantidade, removerDoCarrinho}){
+export default function ProductList({lista, increaseQuantity, decreaseQuantity, onRemoveFromCart, addQuantity}){
 
     if(!lista) return
     return(
@@ -28,19 +28,19 @@ export default function ProductList({lista, aumentarQuantidade, diminuirQuantida
                                 <td>
                                     <div className="place-self-center flex border border-gray-300 w-20 items-center justify-around bg-white rounded-3xl  select-none relative indent-0 px-2">
                                             {/* Diminuir a quantidade */}
-                                            <div className={`  w-4 text-xs cursor-pointer ${produto.quantidade === 1 && 'text-gray-300 '}`} onClick={()=> diminuirQuantidade(produto)}><i class="fa-solid fa-minus"></i></div>
+                                            <div className={`  w-4 text-xs cursor-pointer ${produto.quantidade === 1 && 'text-gray-300 '}`} onClick={()=> decreaseQuantity(produto)}><i class="fa-solid fa-minus"></i></div>
 
                                             {/* Quantidade atual */}
                                             <div>{produto.quantidade}</div>
 
                                             {/* Aumentar a quantidade */}
-                                            <div className="text-xs cursor-pointer " onClick={()=> aumentarQuantidade(produto)}><i class="fa-solid fa-plus"></i></div>
+                                            <div className="text-xs cursor-pointer " onClick={()=> increaseQuantity(produto)}><i class="fa-solid fa-plus"></i></div>
                                                 
                                         </div>
                                 </td>
                                 <td>{(produto.valor*produto.quantidade).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
                                 <td>
-                                    <div onClick={()=> removerDoCarrinho(produto)} className=" text-center hover:text-red-500 cursor-pointer transition-colors">
+                                    <div onClick={()=> onRemoveFromCart(produto)} className=" text-center hover:text-red-500 cursor-pointer transition-colors">
                                             <i class="fa-solid fa-trash"></i>
                                         </div>
                                 </td>
