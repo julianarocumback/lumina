@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+}
+
 @theme {
   --animate-glow: glow 15s ease-in-out infinite alternate;
   --animate-shimmer: shimmer 1.5s infinite;
