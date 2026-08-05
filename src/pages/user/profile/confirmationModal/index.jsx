@@ -29,7 +29,6 @@ export default function ConfirmationModal({isPurgeAccount, isUpdatePassword, des
                             <input type="text" className='border p-2 rounded-xl border-gray-200 focus:outline-gray-300 shadow-xs' placeholder='Digite a nova senha' onChange={onHandleAddPassword} value={password}/>
                             <input type="text" className='border p-2 rounded-xl border-gray-200 shadow-xs focus:outline-gray-300' placeholder='Confirme a nova senha' onChange={onHandleAddConfirmPassword} value={confirmPassword}/>
                         </div>
-                    
                     }
                     <div className='flex justify-between gap-8 '>
                         <button className='w-full p-2 rounded-2xl bg-red-500 text-white font-semibold cursor-pointer' onClick={onConfirm}>Confirmar</button>
