@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { motion, AnimatePresence} from 'framer-motion'
 
-export default function ConfirmationModal({isPurgeAccount, isUpdatePassword, description, onCancel, onConfirm, onHandleAddPassword, onHandleAddConfirmPassword, password, confirmPassword}){
+export default function ConfirmationModal({isPurgeAccount, isUpdatePassword, description, onCancel, onConfirm, onHandleAddPassword, onHandleAddConfirmPassword, password, confirmPassword, hasPassword}){
     const cancelButtonRef = useRef(null)
     useEffect(() =>{
 
@@ -34,6 +34,7 @@ export default function ConfirmationModal({isPurgeAccount, isUpdatePassword, des
                         <button className='w-full p-2 rounded-2xl bg-red-500 text-white font-semibold cursor-pointer' onClick={onConfirm}>Confirmar</button>
                         <button className='w-full p-2 rounded-2xl bg-gray-300 text-white font-semibold cursor-pointer focus:border' ref={cancelButtonRef} onClick={onCancel}>Cancelar</button>
                     </div>
+                    {!hasPassword && <p>Insira a senha</p>}
                 </motion.div>
             </motion.div>
             }

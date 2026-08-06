@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import HolderName from './holderName/HolderName'
 import { motion } from 'framer-motion'
+import ReactDOM from 'react-dom'
 
 export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
     const [card, setCard] = useState({
@@ -104,10 +105,10 @@ export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
         brand()
 
     },[card.cardNumber])
-    return(
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.3}} className='absolute left-0 top-0 flex items-center justify-center h-full w-full bg-black/30 z-50'>
+    return ReactDOM.createPortal(
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.3}} className='fixed inset-0 flex items-center justify-center h-full w-full bg-black/30 z-50'>
 
-            <div className='relative lg:left-40 flex flex-col gap-8 w-full h-fit lg:w-100 border border-gray-200 rounded-2xl shadow-lg bg-white p-8'>
+            <div className='relative flex flex-col gap-8 w-full h-fit lg:w-100 border border-gray-200 rounded-2xl shadow-lg bg-white p-8'>
                 {/* Close modal */}
                 <button className="absolute right-8 w-7 h-7 hover:cursor-pointer hover:text-red-400 transition-colors" onClick={()=> setNewPayment(false)}><i class="fa-solid fa-xmark"></i></button> 
 
@@ -116,7 +117,7 @@ export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
                 <div className='flex flex-col gap-6 w-full h-fit'>
 
                     {/* INFORMAÇÕES DO CARTÃO */}
-                    <div className='flex flex-col gap-4 '>
+                    <div className='flex flex-col gap-4'>
 
                         {/* NÚMERO DO CARTÃO */}
                         <div className="flex flex-col gap-2">
@@ -163,6 +164,7 @@ export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
                 </div>
 
             </div>
-        </motion.div>
+        </motion.div>,
+        document.body
     )
 }

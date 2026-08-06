@@ -1,9 +1,14 @@
 import { useOutletContext } from 'react-router-dom'
 import {motion, AnimatePresence} from 'framer-motion'
+import { useState } from 'react'
+import NewAddress from './NewAddress'
 
 export default function Address(){
-    const {dadosCliente, deleteAddress, setNewAddress} = useOutletContext()
+    const {dadosCliente, deleteAddress, addAddress} = useOutletContext()
+    const [newAddress, setNewAddress] = useState(false)
     if(!dadosCliente) return null
+    
+
     
     const isMaxAddress = dadosCliente?.address?.length === 3
 
@@ -19,8 +24,8 @@ export default function Address(){
         
                     return (
 
-                        <motion.div initial={{opacity:0}} layout animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}}  key={address.id} className="bg-white lg:w-full border p-6 rounded-2xl gap-7 flex flex-col h-40 lg:h-45 shadow border-gray-100 justify-center">
-                            <div className="flex gap-4 justify-between items-center  ">
+                        <motion.div initial={{opacity:0}} layout animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}}  key={address.id} className="bg-white lg:w-full border p-6 rounded-2xl gap-7 flex flex-col h-40 lg:h-45 shadow border-gray-100 justify-center overflow-hidden">
+                            <div className="flex gap-4 justify-between items-center ">
                                 <div className='flex gap-4 items-center  '>
                                     {address.type === 'Casa'?
                                     <div className={`py-3 px-4 rounded-xl bg-green-200 text-green-800`}><i class="fa-solid fa-house"></i></div>
@@ -40,7 +45,7 @@ export default function Address(){
                              
                             </div>
 
-                            <div className=''>
+                            <div className='text-wrap break-all'>
                                 <p className='text-gray-500 font-semibold'>{address.street}, {address.street_number} - {address.neighborhood}, {address.city} - {address.state}, {address.zip_code}</p>
                             </div>
                         </motion.div>
@@ -57,6 +62,12 @@ export default function Address(){
 
 
             </div>
+                </AnimatePresence>
+                
+                <AnimatePresence>
+
+                {newAddress && <NewAddress dadosCliente={dadosCliente} setNewAddress={setNewAddress} addAddress={addAddress}/>}
+
                 </AnimatePresence>
 
             

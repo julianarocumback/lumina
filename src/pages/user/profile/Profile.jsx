@@ -12,6 +12,7 @@ import Whatsapp from './whatsapp'
 import Birthdate from './birthdate'
 import Password from './password'
 import DeleteAccount from './deleteAccount'
+import { tr } from 'framer-motion/client';
 
 export default function Profile(){
     const {dadosCliente, submitName, atualizarEmail, atualizarWhatsApp, cpfAdd, birthdateAdd, purgeAccount, updatePassword} = useOutletContext()
@@ -21,9 +22,16 @@ export default function Profile(){
     const [confirmPassword, setConfirmPassword] = useState('')
     const [isUpdatePassword, setIsUpdatePassword] = useState(false)
 
-    function handleUpdatePassword(){
+    const hasPassword = true
+
+    async function handleUpdatePassword(){
         if(password !== confirmPassword) return
-        onUpdatePassword(password)
+        console.log('ok')
+            // await updatePassword(password)
+            setIsUpdatePassword(false)
+            setPassword('')
+            setConfirmPassword('')
+       
 
     }
 
@@ -70,12 +78,14 @@ export default function Profile(){
                 isUpdatePassword={isUpdatePassword}
                 onPurgeAccount={purgeAccount}
                 description={'Digite sua senha'}
-                onConfirm={updatePassword}
+                onConfirm={handleUpdatePassword}
                 onCancel={() => setIsUpdatePassword(false)}
                 onHandleAddPassword = {handleAddPassword}
                 onHandleAddConfirmPassword = {handleAddConfirmPassword}
+                
                 password = {password}
                 confirmPassword = {confirmPassword}
+                hasPassword={hasPassword}
 
 
             />

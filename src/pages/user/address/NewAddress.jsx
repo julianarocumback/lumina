@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import ReactDOM from 'react-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
     const [address, setAddress] = useState({
@@ -145,9 +147,9 @@ export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
         setAddress(prev => ({...prev, type:type}))
     }
 
-    return (
-        <div className="absolute flex justify-center items-center top-0 h-screen w-full transition-colors bg-black/30">
-            <div className='border lg:rounded-2xl w-full h-full  lg:w-150 lg:h-fit lg:left-40 bg-white p-8 shadow-lg border-gray-200 gap-6 flex flex-col relative'>
+    return ReactDOM.createPortal (
+        <motion.div className="fixed flex justify-center items-center top-0 h-screen w-full transition-colors bg-black/30" initial={{opacity:0 }} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.3}}>
+            <div className='border lg:rounded-2xl w-full h-full  lg:w-150 lg:h-fit bg-white p-8 shadow-lg border-gray-200 gap-6 flex flex-col relative'>
                 <h2 className="text-xl font-semibold">Novo endereço</h2>
                 <button onClick={()=> setNewAddress(false)} className="absolute right-8 w-7 h-7 hover:text-red-500 transition-all" ><i class="fa-solid fa-xmark" ></i></button>
             
@@ -251,6 +253,7 @@ export default function NewAddress({setNewAddress, addAddress, dadosCliente}){
                 </div>
                 <button onClick={handleAddAddress} className="text-center w-full bg-gradient-to-r from-[#0288D1] to-[#E91E63] py-2 rounded-xl text-white font-semibold hover:cursor-pointer">Adicionar</button>
             </div>
-        </div>
+        </motion.div>,
+        document.body
     )
 }
