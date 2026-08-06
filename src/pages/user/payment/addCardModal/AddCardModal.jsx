@@ -122,11 +122,14 @@ export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
                         {/* NÚMERO DO CARTÃO */}
                         <div className="flex flex-col gap-2">
                             <label htmlFor='cardNumber' className='font-semibold text-xs text-gray-700'>NÚMERO DO CARTÃO</label>
-                            <div className='w-full relative'>
-                                <input id='cardNumber' type="text" value={(card.cardNumber || '').replace(/(\d{4})(?=\d)/g, '$1 ')} placeholder='0000 0000 0000 0000' className={`${shouldShowCardNumberError && 'ring-1 ring-red-500'} focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`} onChange={handleCardNumberChange} onBlur={handleCardNumberBlur}/>
+                            <div className='w-full relative flex flex-col gap-2'>
+                                <input id='cardNumber' type="text" value={(card.cardNumber || '').replace(/(\d{4})(?=\d)/g, '$1 ')} placeholder='0000 0000 0000 0000' className={`${shouldShowCardNumberError && 'ring-1 ring-red-400 shadow-xs shadow-red-300'} focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`} onChange={handleCardNumberChange} onBlur={handleCardNumberBlur}/>
                                 {card.brand === 'Visa'? <div className='absolute top-1 right-3 text-blue-800'><i class="fa-brands fa-cc-visa"></i></div>
                                 :card.brand === 'Mastercard' ?<div className='absolute top-1 right-3 text-red-900 '><i class="fa-brands fa-cc-mastercard"></i></div>
                                 :card.brand === 'American Express' && <div className='absolute top-1 right-3 text-gray-700'><i class="fa-brands fa-cc-amex"></i></div>}
+                                {/* {shouldShowCardNumberError && <p>Esse campo é obrigatório</p>} */}
+                                {isNumberCardEmpty && (isCardNumberTouched || isSubmitted) && <p className='text-red-500 text-xs'>O número do cartão é obrigatório.</p>}
+                                {!isNumberCardEmpty && isNumberCardLower && isCardNumberTouched && <p className='text-red-500 text-xs'>O número do cartão deve conter 16 caracteres</p>}
                             </div>
                         </div>
 
