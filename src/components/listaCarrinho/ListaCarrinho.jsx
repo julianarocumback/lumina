@@ -8,11 +8,33 @@ import { currencyFormatter } from '../../utils/formatters'
 
 
 export default function ListaCarrinho({isOpen, setCarrinho}){
+    // CONTEXTS
     const {items, setItems, increaseQuantity, decreaseQuantity, removeFromCart, updateQuantity, checkQuantity} = useCart()
-    const navigate = useNavigate()
     const {authenticated} = useContext(AuthContext)
+    
+    const navigate = useNavigate()
 
-    const [caution, setCaution] = useState('')
+
+    // STATE
+    const [hasInteracted, setHasInteracted] = useState(false)
+    
+
+    // VARIABLES
+
+    // 
+    const hasContent = items.length > 0
+    const isAuthenticated = authenticated
+    
+    const hasCart = hasContent && isAuthenticated
+    const hasContentError = hasInteracted && !hasContent && isAuthenticated
+    const hasAuthenticatedError = hasInteracted && !isAuthenticated && hasContent
+    const hasCartError = hasInteracted && !hasContent && !isAuthenticated
+    
+    
+    const subtotal = items?.map(item => item?.valor * item?.quantidade).reduce((a,b) => a + b, 0)
+    
+  
+
     const cartRef = useRef(null)
 
     useEffect(() => {
@@ -40,37 +62,12 @@ export default function ListaCarrinho({isOpen, setCarrinho}){
 
     
 
-    function vericacao(){
-        if(items?.length === 0 && !authenticated){
-            setCaution('tudo')
-            return
-        } else if (items?.length === 0 && authenticated) {
-            setCaution('carrinho')
-            return
-        } else if (items?.length > 0 && !authenticated) {
-            setCaution('logar')
-            return
-            
-        } 
+    function handleNavigateToCheckout(){
+        setHasInteracted(true)
+        if(!hasCart) return
+       
         navigate('/checkout')
     }
-
-    useEffect(()=> {
-        function aaa (){
-            if(authenticated ||items?.length > 0 ){
-                setCaution('')
-            }
-        }
-
-        aaa()
-    }, [authenticated, items?.length])
-
-        
-
-
-
-    if(!items) return
-    const subtotal = items?.map(item => item?.valor * item?.quantidade).reduce((a,b) => a + b, 0)
 
     return (
         <motion.div initial={{ x: "100%", opacity: 0 }}
@@ -148,14 +145,12 @@ export default function ListaCarrinho({isOpen, setCarrinho}){
                     <span className="text-xl font-semibold">{currencyFormatter(subtotal)}</span>
                     
                 </div>
-                <button onClick={vericacao} className="cursor-pointer rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
-                <div className='text-red-500 text-xs lg:text-base'>
-                    {caution === 'tudo'?
-                    <p>Faça login e adicione itens ao carrinho!</p>
-                    :caution === 'carrinho'? <p>Adicione itens ao carrinho!</p>
-                    :caution === 'logar' &&<p>Faça login!</p>
-                    }
+                <button onClick={handleNavigateToCheckout} className="cursor-pointer rounded-3xl p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg">Finalizar compra</button>
 
+                <div className='text-red-500 text-xs lg:text-base'>
+                    {hasCartError && <p>Faça login e adicione itens ao carrinho!</p>}
+                    {hasContentError && <p>Adicione itens ao carrinho!</p>}
+                    {hasAuthenticatedError && <p>Faça login!</p>}
                 </div>
                 </div>
         </motion.div>

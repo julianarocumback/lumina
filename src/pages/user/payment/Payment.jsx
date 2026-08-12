@@ -2,12 +2,12 @@ import { useOutletContext } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import AddCardModal from './addCardModal/AddCardModal'
 import { useState } from 'react';
-import { div } from 'framer-motion/client';
 
 export default function Payment(){
     const {dadosCliente, addPayment, onDeleteCard, defaultCard} = useOutletContext()
     const [addCard, setAddCard] = useState(false)    
 
+    const hasMaxCard = dadosCliente?.payment?.length === 3
 
     // Delete card
     const handleDeleteCard = (cardId) => {
@@ -70,10 +70,10 @@ export default function Payment(){
                             )
                         })}
                     
-                    <motion.button initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} layout onClick={()=>setAddCard(true)} className="h-40 flex-none lg:h-45 lg:w-full  w-full md:w-full justify-center items-center gap-2 rounded-2xl p-4 flex flex-col border-dashed hover:border-blue-500 border border-gray-300 hover:bg-blue-500/10 transition-colors hover:text-blue-500 hover:cursor-pointer group [*_>_p]:text-blue-500">  
-                        <div className="flex justify-center items-center rounded-full bg-gray-200 w-10 h-10 text-gray-500 group-hover:bg-blue-500/90 text-white transition-all"><i class="fa-solid fa-plus "></i></div>
+                    <motion.button initial={{opacity:0}} disabled={hasMaxCard} animate={{opacity:1}} exit={{opacity:0}} layout onClick={()=>setAddCard(true)} className={` ${!hasMaxCard && 'hover:border-blue-500 hover:text-blue-500 hover:cursor-pointer group [*_>_p]:text-blue-500 hover:bg-blue-500/10'} border border-gray-300 h-40 flex-none lg:h-45 lg:w-full  w-full md:w-full justify-center items-center gap-2 rounded-2xl p-4 flex flex-col border-dashed    transition-colors  `}>  
+                        <div className={`${!hasMaxCard && 'group-hover:bg-blue-500/90'} flex justify-center items-center rounded-full bg-gray-200 w-10 h-10 text-gray-500  text-white transition-all`}><i class="fa-solid fa-plus "></i></div>
                         
-                        <p className="text-[12px] font-semibold text-gray-700 group-hover:text-blue-500/90 transition-all">Novo cartão de crédito</p>
+                        {hasMaxCard ? <p className="text-[12px] font-semibold text-gray-700 transition-all">Não é possível adicionar mais cartões</p>: <p className="text-[12px] font-semibold text-gray-700 group-hover:text-blue-500/90 transition-all">Novo cartão de crédito</p>}
                         </motion.button>
                     </div>
                 </AnimatePresence>

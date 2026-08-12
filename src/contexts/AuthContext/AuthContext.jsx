@@ -11,7 +11,6 @@ export const AuthContext = createContext({});
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  console.log(user)
   
   
   const [dadosCliente, setDadosCliente] = useState(null);
@@ -35,7 +34,6 @@ export function AuthProvider({ children }) {
       }
     }
     
-    console.log(dadosCliente)
 
     buscarDados();
   }, [user])
@@ -75,7 +73,6 @@ export function AuthProvider({ children }) {
       }
     }
 
-    console.log(dadosCliente)
 
     // PAYMENT
 
@@ -152,6 +149,19 @@ export function AuthProvider({ children }) {
     // Add Address
     async function addAddress(address) {
       if (user?.id) {
+        if(address.isDefault === true) {
+          const { data } = await supabase
+          .from('address')
+          .update({is_default: false})
+          .eq('user_id', user.id)
+          .select('*')
+
+          if(data){
+            const address = dadosCliente?.address?.map(address => ({...address, is_default: false}))
+
+            setDadosCliente(prev => ({...prev, address: address}))
+          }
+        }
         const { data } = await supabase
           .from('address')
           .insert([{
@@ -164,7 +174,7 @@ export function AuthProvider({ children }) {
               city: address.city,
               state: address.state,
               type: address.type,
-              is_main: address.isMain
+              is_default: address.isDefault
           }])
           .select('*')
           .single() 

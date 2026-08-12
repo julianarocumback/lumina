@@ -45,12 +45,12 @@ export default function Favorites(){
                                         <p className="text-xl lg:text-base font-bold text-blue-500">{favorito?.valor?.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
                                     </div>
                                     <div className="flex gap-4 lg:flex-col">
-                                        <button onClick={()=> handleAdicionarCarrinho(favorito)} className="flex items-center lg:justify-center lg:py-3 gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-red-500 text-white "> 
+                                        <button onClick={()=> handleAdicionarCarrinho(favorito)} className="flex items-center lg:justify-center lg:py-3 gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-red-500 text-white cursor-pointer"> 
                                             
                                             
                                             <div className="text-xs font-semibold">{items?.some(item => item.id === favorito.id)? 'ADICIONADO': <div className="flex items-center"><div className="text-xs"><i class="fa-solid fa-plus"></i></div>CARRINHO</div>}</div>
                                         </button>
-                                        <button className="text-red-500 lg:hidden "><i class="fa-solid fa-trash"></i></button>
+                                        <button onClick={()=> removerFavorito(favorito)} className="text-red-500 lg:hidden cursor-pointer "><i class="fa-solid fa-trash"></i></button>
 
                                     </div>
                                 </div>

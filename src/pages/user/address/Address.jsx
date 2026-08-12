@@ -4,13 +4,12 @@ import { useState } from 'react'
 import NewAddress from './NewAddress'
 
 export default function Address(){
-    const {dadosCliente, deleteAddress, addAddress} = useOutletContext()
+    const {dadosCliente, deleteAddress, onAddAddress} = useOutletContext()
     const [newAddress, setNewAddress] = useState(false)
     if(!dadosCliente) return null
     
-
     
-    const isMaxAddress = dadosCliente?.address?.length === 3
+    const hasMaxAddress = dadosCliente?.address?.length === 3
 
     return (
         <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`flex flex-col gap-8 pt-7 lg:py-30 pl-20 w-screen pr-5 lg:pl-150 lg:pr-70`}>
@@ -38,7 +37,7 @@ export default function Address(){
                                     
                                     <div className='flex flex-col' >
                                         <p className='font-semibold text-lg'>{address?.type}</p>
-                                        {address?.is_main&& <p className='font-semibold text-xs rounded-2xl bg-amber-300 px-2  text-amber-900'>Principal</p>}
+                                        {address?.is_default&& <p className='font-semibold text-xs rounded-2xl bg-amber-300 px-2  text-amber-900'>Principal</p>}
                                     </div>
                                 </div>
                                     <div onClick={() => deleteAddress(address.id)}><i class="fa-solid fa-trash"></i></div>
@@ -55,9 +54,9 @@ export default function Address(){
                 
             
 
-                <motion.button initial={{opacity:0}} layout animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}}  onClick={()=>setNewAddress(true)} disabled={isMaxAddress} className={`${!isMaxAddress&& ' hover:bg-blue-500/10 hover:border-blue-500 hover:text-blue-500 group [*_>_p]:text-blue-500 '}h-40 flex-none border lg:h-45 lg:w-full  w-full md:w-70 justify-center items-center gap-2 rounded-2xl p-4 flex flex-col border-dashed  border-gray-300  transition-colors  hover:cursor-pointer `}>               
-                    <div className={`${!isMaxAddress && 'group-hover:bg-blue-500/90'} flex justify-center items-center rounded-full bg-gray-200 w-10 h-10 text-gray-500  text-white transition-all`}><i class="fa-solid fa-plus "></i></div>             
-                    <p className="text-[12px] font-semibold text-gray-700 group-hover:text-blue-500/90 transition-all">{!isMaxAddress ? 'Novo endereço': 'Não é possível adicionar mais endereços'}</p>
+                <motion.button initial={{opacity:0}} layout animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}}  onClick={()=>setNewAddress(true)} disabled={hasMaxAddress} className={`${!hasMaxAddress&& ' hover:bg-blue-500/10 hover:border-blue-500 hover:text-blue-500 group [*_>_p]:text-blue-500 '}h-40 flex-none border lg:h-45 lg:w-full  w-full md:w-70 justify-center items-center gap-2 rounded-2xl p-4 flex flex-col border-dashed  border-gray-300  transition-colors  hover:cursor-pointer `}>               
+                    <div className={`${!hasMaxAddress && 'group-hover:bg-blue-500/90'} flex justify-center items-center rounded-full bg-gray-200 w-10 h-10 text-gray-500  text-white transition-all`}><i class="fa-solid fa-plus "></i></div>             
+                    <p className="text-[12px] font-semibold text-gray-700 group-hover:text-blue-500/90 transition-all">{!hasMaxAddress ? 'Novo endereço': 'Não é possível adicionar mais endereços'}</p>
                 </motion.button>
 
 
@@ -66,7 +65,7 @@ export default function Address(){
                 
                 <AnimatePresence>
 
-                {newAddress && <NewAddress dadosCliente={dadosCliente} setNewAddress={setNewAddress} addAddress={addAddress}/>}
+                {newAddress && <NewAddress dadosCliente={dadosCliente} setNewAddress={setNewAddress} onAddAddress={onAddAddress}/>}
 
                 </AnimatePresence>
 
