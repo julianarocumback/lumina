@@ -17,7 +17,6 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
         isDefault: false
     })
 
-    console.log(address)
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [hasZipCodeInteracted, setHasZipCodeInteracted] = useState(false)
     const [hasStreetInteracted, setHasStreetInteracted] = useState(false)
@@ -176,8 +175,13 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
     // 
     function handleTypeChange(event) {
         const type = event.target.value
+        if(type == 'Casa'){
+            setHasTypeInteracted(false)
+            setIsSubmitted(false)
+        }
         setAddress(prev => ({...prev, type:type}))
     }
+    console.log(address.type)
 
 
     // SUBMIT ADDRESS
@@ -226,13 +230,20 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
                     <div className='flex gap-4'>
                         <div className="flex flex-col gap-2 w-4/5">
                             <label className='font-semibold text-xs text-gray-700' htmlFor='street'>Rua</label>
-                            <input id='street' onChange={handleStreetChange} type="text" value={address.street} placeholder='Nome do logradouro' className={`${shouldShowStreetContentError && 'outline outline-red-500 focus:outline-1 focus:outline-red-500'} ${shouldShowStreetSuccess ? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'} rounded-lg bg-gray-100 px-2 lg:px-3 text-xs py-2`} onBlur={handleStreetVerification}/>
+                            <input
+                                type="text" value={address.street}
+                                placeholder='Nome do logradouro'
+                                id='street'
+                                className={`${shouldShowStreetContentError && 'outline outline-red-500 focus:outline-1 focus:outline-red-500'} ${shouldShowStreetSuccess ? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'}  rounded-lg bg-gray-100 px-4 h-8 lg:px-3 text-xs`}
+                                onBlur={handleStreetVerification}
+                                onChange={handleStreetChange}
+                            />
                             {shouldShowStreetContentError && <p className='text-xs text-red-500'>A rua é obrigatória</p>}
 
                         </div>
                         <div className='flex flex-col gap-2 w-1/5 '>
                             <label className='font-semibold text-xs text-gray-700' htmlFor="streetNumber">Número</label>
-                            <input id='streetNumber' onChange={handleStreetNumberChange}  type="text" value={address.streetNumber} placeholder='Ex.: 123' className={`${shouldShowStreetNumberContentError && 'outline outline-red-500'} ${shouldShowStreetNumberSuccess ? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'} rounded-lg bg-gray-100 px-2 lg:px-3 text-xs py-2`} onBlur={handleStreetNumberVerification}/>
+                            <input id='streetNumber' onChange={handleStreetNumberChange}  type="text" value={address.streetNumber} placeholder='Ex.: 123' className={`${shouldShowStreetNumberContentError && 'outline outline-red-500'} ${shouldShowStreetNumberSuccess ? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'} rounded-lg bg-gray-100 px-4 h-8 lg:px-3 text-xs`} onBlur={handleStreetNumberVerification}/>
                             {shouldShowStreetNumberContentError && <p className='text-xs text-red-500'>Número obrigatório</p>}
 
                         </div>
@@ -242,12 +253,12 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
                     <div className='flex flex-col lg:flex-row gap-4'>
                         <div className="flex flex-col gap-2 w-full">
                             <label htmlFor='complement' className='font-semibold text-xs text-gray-700'>Complemento (opcional)</label>
-                            <input id='complement' onChange={handleComplementChange} type="text" value={address.complement} placeholder='Ex.: Bloco A, Apto 10' className={` rounded-lg bg-gray-100 px-4 text-xs h-full py-2 w-full focus:outline-none`}/>
+                            <input id='complement' onChange={handleComplementChange} type="text" value={address.complement} placeholder='Ex.: Bloco A, Apto 10' className={` rounded-lg bg-gray-100 text-xs px-4 py-2 max-h-10 w-full focus:outline-none`}/>
 
                         </div>
                         <div className="flex flex-col gap-2 w-full">
                             <label htmlFor="neighborhood" className='font-semibold text-xs text-gray-700'>Bairro</label>
-                            <input id='neighborhood' onChange={handleNeighborhoodChange} type="text" value={address.neighborhood} placeholder='Seu bairro' className={`${shouldShowNeighborhoodContentError && 'outline outline-red-500'} ${shouldShowNeighborhoodSuccess ? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'} rounded-lg bg-gray-100 px-4 py-2 text-xs h-full`} onBlur={handleNeighborhoodVerification}/>
+                            <input id='neighborhood' onChange={handleNeighborhoodChange} type="text" value={address.neighborhood} placeholder='Seu bairro' className={`${shouldShowNeighborhoodContentError && 'outline outline-red-500'} ${shouldShowNeighborhoodSuccess ? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'} rounded-lg bg-gray-100 px-4 h-8 text-xs `} onBlur={handleNeighborhoodVerification}/>
                             {shouldShowNeighborhoodContentError && <p className='text-xs text-red-500'>O bairro é obrigatório</p>}
 
                         </div>
@@ -260,14 +271,14 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
 
                         <div className="flex flex-col gap-2 w-3/5 lg:w-3/4">
                             <label className={'font-semibold text-xs text-gray-700'} htmlFor='city'>Cidade</label>
-                            <input id='city' onChange={handleCityChange} type="text" value={address.city} placeholder='Sua cidade' className={`${shouldShowCityContentError && 'outline outline-red-500'} ${shouldShowCitySuccess ? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'} rounded-lg bg-gray-100 px-4 text-xs py-2 `} onBlur={handleCityVerification}/>
+                            <input id='city' onChange={handleCityChange} type="text" value={address.city} placeholder='Sua cidade' className={`${shouldShowCityContentError && 'outline outline-red-500'} ${shouldShowCitySuccess ? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'} rounded-lg bg-gray-100 px-4 h-8 text-xs`} onBlur={handleCityVerification}/>
                             {shouldShowCityContentError && <p className='text-xs text-red-500'>A cidade é obrigatória</p>}
 
                         </div>
                         {/* ESTADO */}
                         <div className="flex flex-col gap-2 w-2/5 lg:w-1/4">
                             <label htmlFor="state" className='font-semibold text-xs text-gray-700' >Estado</label>
-                            <select id="state" onChange={handleStateChange} className={`${shouldShowStateError && 'outline outline-red-500'} ${shouldShowStateSuccess && 'outline outline-green-500'} bg-gray-100 h-full rounded-lg px-2 w-full text-xs`} onBlur={handleStateVerification}>
+                            <select id="state" onChange={handleStateChange} className={`${shouldShowStateError && 'outline outline-red-500'} ${shouldShowStateSuccess && 'outline outline-green-500'} bg-gray-100  rounded-lg px-4 h-8 text-xs`} onBlur={handleStateVerification}>
                                 <option value='' selected disabled>Selecione</option>
                                 <option value='AC'>Acre</option>
                                 <option value='AL'>Alagoas</option>
@@ -305,7 +316,7 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
                         {/* CEP */}
                         <div className="flex flex-col gap-2 w-full lg:w-1/4">
                             <label className='font-semibold text-xs text-gray-700' htmlFor="zipCode">CEP</label>
-                            <input id='zipCode' onChange={(e) => handleZipCodeChange(e.target.value.replace(/\D/g, ""))}  type="text" value={address.zipCode.replace(/^(\d{5})(\d)/, "$1-$2")} placeholder='00000-000' className={`${shouldShowZipCodeLengthError && 'outline outline-red-500'} ${shouldShowZipCodeSuccess ? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'}  rounded-lg bg-gray-100 px-4 text-xs py-2`} onBlur={handleZipCodeVerification}/>
+                            <input id='zipCode' onChange={(e) => handleZipCodeChange(e.target.value.replace(/\D/g, ""))}  type="text" value={address.zipCode.replace(/^(\d{5})(\d)/, "$1-$2")} placeholder='00000-000' className={`${shouldShowZipCodeLengthError && 'outline outline-red-500'} ${shouldShowZipCodeSuccess ? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'}  rounded-lg bg-gray-100 text-xs px-4 h-8`} onBlur={handleZipCodeVerification}/>
                             {shouldShowZipCodeLengthError && <p className='text-xs text-red-500'>Insira um CEP válido</p>}
                         </div>
 
@@ -320,12 +331,12 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
                         <div className='flex gap-2'>
                             <label htmlFor='type' className='font-semibold text-xs text-gray-700'>Tipo:</label>
                             <select id='type' onChange={handleTypeChange} className={`${shouldShowTypeContentError && 'outline outline-red-500'} ${shouldShowTypeSuccess? 'outline outline-green-500' : 'focus:outline focus:outline-amber-300'} text-xs `} onBlur={handleTypeVerification}>
-                                <option value="" selected disabled>Selecione</option>
+                                <option value='' selected disabled>Selecione</option>
                                 <option value="Casa">Casa</option>
                                 <option value="Trabalho">Trabalho</option>
                                 <option value="Personalizado">Personalizado</option>
                             </select>
-                                {address.type === 'Personalizado' && <div><input onChange={handleTypeChange} type="text" className="border" /></div>}
+                                {(address.type != "" && address.type != "Casa" && address.type != 'Trabalho') && <div><input onChange={handleTypeChange} type="text" className="border" /></div>}
                                 {shouldShowTypeContentError && <p className='text-xs text-red-500'>O tipo é obrigatório</p>}
 
                         </div>

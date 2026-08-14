@@ -34,7 +34,6 @@ export default function ConfirmationModal({isPurgeAccount, isUpdatePassword, des
                         <button className='w-full p-2 rounded-2xl bg-red-500 text-white font-semibold cursor-pointer' onClick={onConfirm}>Confirmar</button>
                         <button className='w-full p-2 rounded-2xl bg-gray-300 text-white font-semibold cursor-pointer focus:border' ref={cancelButtonRef} onClick={onCancel}>Cancelar</button>
                     </div>
-                    {!hasPassword && <p>Insira a senha</p>}
                 </motion.div>
             </motion.div>
             }

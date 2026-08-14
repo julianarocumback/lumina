@@ -1,11 +1,16 @@
 import {useState, useMemo} from 'react'
 
 export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
-    const [novoWhatsApp, setNovoWhatsApp] = useState('')
-
-
     const [whatsapp, setWhatsapp] = useState('')
     const [isEditingWhatsapp, setIsEditingWhatsap] = useState(false)
+    const [hasInteracted, setHasInteracted] = useState(false)
+    const [isSubmitted, setIsSubmitted] = useState(false)
+
+    const hasContent = whatsapp !== ''
+    const shouldShowContentError = !hasContent && (hasInteracted || isSubmitted)
+
+    const hasExactLength = whatsapp.length === 11
+    const shouldShowExactLengthError = hasContent && !hasExactLength && (hasInteracted || isSubmitted)
 
     const whatsappFormatinho = useMemo(()=>{
         if(!dadosCliente.whatsapp) return ''
@@ -41,8 +46,14 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
 
         return whatsappEdited
     }, [whatsapp])
+
+    // aaaaaa
+
+    const handleWhatsappVerification = () => {
+        
+        setHasInteracted(true)
+    }
     
-    console.log(dadosCliente.whatsapp)
 
     // ATIVAR EDIÇÃO DO WHATSAPP
     function handleEditWhatsApp(){
@@ -61,16 +72,22 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
     // Cancel edition
     function handleCancelUpdateWhatsApp(){
         setIsEditingWhatsap(false)
-        setNovoWhatsApp('')
         setWhatsapp('')
+        setHasInteracted(false)
+        setIsSubmitted(false)
+
        
     }
     
     // Save whatsapp
     function handleAtualizarWhatsApp(){
+        setIsSubmitted(true)
+        if(whatsapp.length < 11) return
         onSaveWhatsApp(whatsapp)
         setIsEditingWhatsap(false)
         setWhatsapp('')
+        setHasInteracted(false)
+        setIsSubmitted(false)
     }
 
     const whatsappFormatado = (whatsapp) => {
@@ -86,31 +103,33 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
     
 
     return(
-        <div className="flex justify-between items-center flex-col lg:flex-row">
-                            <div className='flex flex-col gap-1 w-full'>
-                                <h3 className="font-semibold text-[11px] text-gray-500">WHATSAPP</h3>
+        <div className="flex justify-between flex-col w-full ">
+                            <h3 className="font-semibold text-[11px] text-gray-500">WHATSAPP</h3>
+                        
+                            <div className='flex w-full justify-between flex-col lg:flex-row'>
                                 <div className="flex justify-between w-full">
                                     <input
-                                    type="text"
-                                    disabled={!isEditingWhatsapp}
-                                    value={whatsappValue}
-                                    className={`${!isEditingWhatsapp && 'border left-0'} text-gray-black font-semibold px-2 -left-2 relative tracking-wider text-transparent caret-black z-10`}
-                                    onChange={handleEditingWhatsapp}
+                                        type="text"
+                                        disabled={!isEditingWhatsapp}
+                                        value={whatsappValue}
+                                        className={`${!isEditingWhatsapp && 'border left-0'} text-gray-black px-2 -left-2 relative tracking-wider text-transparent caret-black z-10`}
+                                        onChange={handleEditingWhatsapp}
+                                        onBlur={handleWhatsappVerification}
                                     />
-                                    {isEditingWhatsapp && <span className='absolute'>{whatsappFormated}</span>}
-                                    {!isEditingWhatsapp && <span className='absolute'>{whatsappFormatinho}</span>}
+                                    {isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormated}</span>}
+                                    {!isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormatinho}</span>}
                                 </div>
-                                    <div>
-                                        <div className="flex">
-                                            {!isEditingWhatsapp && <div onClick={handleEditWhatsApp} className="font-semibold text-blue-700">Editar</div>}
-                                            <div className="flex gap-4">
-                                            {isEditingWhatsapp && <div onClick={handleCancelUpdateWhatsApp} className='text-red-500 font-semibold'>Cancelar</div>}
-                                            {isEditingWhatsapp && <div onClick={handleAtualizarWhatsApp} className='font-semibold'>Salvar</div>}
-                                        </div>
+                                    <div className="flex">
+                                        {!isEditingWhatsapp && <div onClick={handleEditWhatsApp} className="font-semibold text-blue-700">Editar</div>}
+                                        <div className="flex gap-4">
+                                        {isEditingWhatsapp && <div onClick={handleCancelUpdateWhatsApp} className='text-red-500 font-semibold'>Cancelar</div>}
+                                        {isEditingWhatsapp && <div onClick={handleAtualizarWhatsApp} className='font-semibold'>Salvar</div>}
                                     </div>
+                                </div>
 
-                                    </div>
                             </div>
+                            {shouldShowContentError && <p className='text-xs text-red-500'>Obrigatório</p>}
+                            {shouldShowExactLengthError && <p className='text-xs text-red-500'>Deve conter 11 dígitos</p>}
                             
                         </div>
     )

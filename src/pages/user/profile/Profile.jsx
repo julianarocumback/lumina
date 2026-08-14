@@ -12,10 +12,9 @@ import Whatsapp from './whatsapp'
 import Birthdate from './birthdate'
 import Password from './password'
 import DeleteAccount from './deleteAccount'
-import { tr } from 'framer-motion/client';
 
 export default function Profile(){
-    const {dadosCliente, submitName, atualizarEmail, atualizarWhatsApp, cpfAdd, birthdateAdd, purgeAccount, updatePassword} = useOutletContext()
+    const {dadosCliente, submitName, atualizarEmail, atualizarWhatsApp, cpfAdd, birthdateAdd, purgeAccount} = useOutletContext()
 
     const [isPurgeAccount, setIsPurgeAccount] = useState(false)
     const [password, setPassword] = useState('')
@@ -26,8 +25,6 @@ export default function Profile(){
 
     async function handleUpdatePassword(){
         if(password !== confirmPassword) return
-        console.log('ok')
-            // await updatePassword(password)
             setIsUpdatePassword(false)
             setPassword('')
             setConfirmPassword('')
@@ -69,7 +66,6 @@ export default function Profile(){
                 description={'Tem certeza que deseja apagar a conta? Essa ação não poderá ser desfeita.'}
                 onConfirm={purgeAccount}
                 onCancel={() => setIsPurgeAccount(false)}
-
             />
 
             <ConfirmationModal
@@ -77,7 +73,7 @@ export default function Profile(){
                 setIsPurgeAccount={setIsUpdatePassword}
                 isUpdatePassword={isUpdatePassword}
                 onPurgeAccount={purgeAccount}
-                description={'Digite sua senha'}
+                description={'Alterar senha'}
                 onConfirm={handleUpdatePassword}
                 onCancel={() => setIsUpdatePassword(false)}
                 onHandleAddPassword = {handleAddPassword}
@@ -86,14 +82,7 @@ export default function Profile(){
                 password = {password}
                 confirmPassword = {confirmPassword}
                 hasPassword={hasPassword}
-
-
             />
-
-
-            
-            
-           
              
             <h1 className="text-2xl font-semibold">Configurações</h1>
 
