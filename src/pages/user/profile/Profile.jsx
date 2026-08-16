@@ -14,7 +14,7 @@ import Password from './password'
 import DeleteAccount from './deleteAccount'
 
 export default function Profile(){
-    const {dadosCliente, submitName, atualizarEmail, atualizarWhatsApp, cpfAdd, birthdateAdd, purgeAccount} = useOutletContext()
+    const {dadosCliente, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, cpfAdd, birthdateAdd, purgeAccount, user} = useOutletContext()
 
     const [isPurgeAccount, setIsPurgeAccount] = useState(false)
     const [password, setPassword] = useState('')
@@ -100,7 +100,7 @@ export default function Profile(){
                     <Cpf dadosCliente={dadosCliente} onSaveCpf={cpfAdd}/>
 
                     {/* E-MAIL */}
-                    <Email dadosCliente={dadosCliente} atualizarEmail={atualizarEmail}/>
+                    <Email dadosCliente={dadosCliente} atualizarEmail={atualizarEmail} userEmail={user.email} userNewEmail={user.new_email} cancelEmailUpdate={cancelEmailUpdate}/>
 
                     {/* WHATSAPP */}
                     <Whatsapp dadosCliente={dadosCliente} onSaveWhatsApp={atualizarWhatsApp}/>

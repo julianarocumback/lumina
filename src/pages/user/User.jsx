@@ -10,7 +10,7 @@ import Sidebar from './sidebar/Sidebar'
 // --------------------------------------------
 
 export default function User() {
-    const {dadosCliente, removerFavorito, submitName, atualizarEmail, atualizarWhatsApp, addAddress, deleteAddress, addPayment, onDeleteCard, cpfAdd, birthdateAdd, defaultCard, onPurgeAccount, onUpdatePassword} = useContext(AuthContext)
+    const {dadosCliente, removerFavorito, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, addAddress, deleteAddress, addPayment, onDeleteCard, cpfAdd, birthdateAdd, defaultCard, onPurgeAccount, onUpdatePassword, user} = useContext(AuthContext)
     const {addToCart, items} = useCart()
 
  
@@ -20,7 +20,7 @@ export default function User() {
             <Header/>
             <Sidebar/>
             <AnimatePresence>
-                <Outlet context={{dadosCliente , addToCart, removerFavorito, items, submitName, atualizarEmail, atualizarWhatsApp, onAddAddress: addAddress, deleteAddress, onDeleteCard, cpfAdd, birthdateAdd, addPayment, defaultCard, onPurgeAccount, onUpdatePassword}}/>
+                <Outlet context={{dadosCliente , addToCart, removerFavorito, items, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, onAddAddress: addAddress, deleteAddress, onDeleteCard, cpfAdd, birthdateAdd, addPayment, defaultCard, onPurgeAccount, onUpdatePassword, user}}/>
             </AnimatePresence>
         </div>
     )

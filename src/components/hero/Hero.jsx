@@ -1,6 +1,7 @@
-import { motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 import HeroContent from "./heroContent/HeroCotent";
 import Book from './book/Book'
+import { Link } from 'react-router-dom'
 
 export default function Hero() {
 
@@ -28,22 +29,24 @@ export default function Hero() {
         
     <Book />
 
+          <Link to='/produto/21'>
+            <motion.button 
+                  className="flex justify-center items-center gap-4 relative overflow-hidden rounded-full p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg lg:hidden cursor-pointer"
+                  whileHover={{ scale: 1.02 }}
+                  >
+                  <span class="material-icons-outlined">auto_awesome</span>
+                  <span>Adquira já o seu!</span>
+                  
 
-          <motion.button 
-                className="flex justify-center items-center gap-4 relative overflow-hidden rounded-full p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg lg:hidden "
-                whileHover={{ scale: 1.02 }}
-                >
-                <span class="material-icons-outlined">auto_awesome</span>
-                <span>Adquira já o seu!</span>
-                
-
-                <motion.div
-                    initial={{ left: "-100%" }}
-                    animate={{ left: "100%" }}
-                    transition={{ repeat: Infinity, duration: 2, repeatDelay: 3, ease: "linear" }}
-                    className="absolute top-0 w-1/2 h-full bg-white/20 skew-x-12 blur-sm"
-                />
-                </motion.button>
+                  <motion.div
+                      initial={{ left: "-100%" }}
+                      animate={{ left: "100%" }}
+                      transition={{ repeat: Infinity, duration: 2, repeatDelay: 3, ease: "linear" }}
+                      className="absolute top-0 w-1/2 h-full bg-white/20 skew-x-12 blur-sm"
+                  />
+              </motion.button>
+          
+          </Link>
           
         </div>
 

@@ -279,13 +279,36 @@ export function AuthProvider({ children }) {
 
       if(error) {
         console.error("Erro ao atualizar o email", error.message)
+        return
       }
 
       console.log('E-mail atualizada com sucesso!', data)
+if (data?.user) {
+    setUser(data.user)
+  }
+    }
+
+    // Cancel email update
+    const cancelEmailUpdate = async () => {
+      if(!user?.email) return
+      const { data, error } = await supabase.auth.updateUser({
+        email: user.email
+      })
+
+      if(error) {
+        console.error("Erro ao cancelar o email", error.message)
+        return
+      }
+
+      console.log('Cancelado!', data)
+      if (data?.user) {
+    setUser(data.user);
+  }
 
     }
 
-    // Atualizar email
+
+    // Atualizar senha
     async function atualizarSenha(novoSenha){
       const { data, error } = await supabase.auth.updateUser({
           password: novoSenha
@@ -399,7 +422,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, submitName, atualizarEmail, atualizarWhatsApp, atualizarSenha, adicionarPedido, addAddress, deleteAddress, addPayment, cadastrar, onDeleteCard: deleteCard, cpfAdd, birthdateAdd, purgeAccount, updatePassword}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, atualizarSenha, adicionarPedido, addAddress, deleteAddress, addPayment, cadastrar, onDeleteCard: deleteCard, cpfAdd, birthdateAdd, purgeAccount, updatePassword}}>
       {children}
     </AuthContext.Provider>
   );
