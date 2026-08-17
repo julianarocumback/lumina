@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QRCode from './qr-code.svg'
 import { motion, AnimatePresence} from 'framer-motion'
 import { currencyFormatter } from '../../../../utils/formatters'
@@ -16,6 +16,7 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
         brand: '',
         isDefault: false
     })
+    
 
     const [hasHolderNameInteracted, setHasHolderNameInteracted] = useState(false)
     const [hasCardNumberInteracted, setHasCardNumberInteracted] = useState(false)
@@ -187,6 +188,25 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
     const handleDeleteCard = (cardId) => {
         onDeleteCard(cardId)
     }
+
+    // 30 minutos em segundos (30 * 60 = 1800)
+    const [timeLeft, setTimeLeft] = useState(30 * 60);
+
+    useEffect(() => {
+        if (timeLeft <= 0) return;
+
+        const timer = setInterval(() => {
+            setTimeLeft(prev => prev - 1);
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [timeLeft]);
+
+    // Formatação em minutos e segundos com 2 dígitos
+    const formattedMinutes = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+    const formattedSeconds = String(timeLeft % 60).padStart(2, '0');
+
+    // ... restante dos seus states e funções
     
 
 
@@ -278,7 +298,7 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                         </div>
                             <div className="flex gap-2 text-gray-700 items-center justify-center text-[12px] lg:text-base">
                                 <div><i class="fa-regular fa-clock"></i></div>
-                                <div className="">Este código expira em <span className="text-pink-600 font-semibold">30:00</span> minutos</div>
+                                <div className="">Este código expira em <span className="text-pink-600 font-semibold">{formattedMinutes}:{formattedSeconds}</span> minutos</div>
                             </div>
 
                     </div>
@@ -289,8 +309,8 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
             
       
             </div>
-            {!newPayment && payments.length <3 && <div onClick={()=> setNewPayment(true)} className="hover:cursor-pointer font-semibold text-sm text-blue-800">Adicionar cartão</div>}
-            {payments.length >= 3 && <p>Não pode mais porque eu nao deixo</p>}
+            {!newPayment && payments.length <3 && paymentType === 'card' &&  <div onClick={()=> setNewPayment(true)} className="hover:cursor-pointer font-semibold text-sm text-blue-800">Adicionar cartão</div>}
+            {payments.length >= 3 && paymentType === 'card' && <p>Não pode mais porque eu nao deixo</p>}
           
 
             {/* INFORMAÇÕES DO CARTÃO */}
@@ -357,7 +377,7 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                 </div>}
 
             {/* INFORMAÇÕES DO CARTÃO */}
-                {!newPayment && <div className="flex flex-col gap-2">
+                {!newPayment && paymentType === 'card' && <div className="flex flex-col gap-2">
                     <label htmlFor="parcelamento">Opções de parcelamento:</label>
                     <select name="" id="parcelamento" className="border p-2 rounded-lg">
                         <option value="">1x de {currencyFormatter(isPayInFull)} sem juros</option>
