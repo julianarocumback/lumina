@@ -1,8 +1,9 @@
 import { useState } from "react";
 import QRCode from './qr-code.svg'
 import { motion, AnimatePresence} from 'framer-motion'
+import { currencyFormatter } from '../../../../utils/formatters'
 
-export default function Payment({pagamento, setPagamento,cupom, setCupom, payments, dadosCliente, onAddCard, onDeleteCard, defaultCard, lista}) {
+export default function Payment({pagamento, setPagamento,cupom, setCupom, payments, dadosCliente, onAddCard, onDeleteCard, defaultCard, lista, frete}) {
     const [cupomAdicionado, setCupomAdicionado] = useState('')
     const [paymentType, setPaymentType] = useState('card')
     const [newPayment, setNewPayment] = useState(false)
@@ -52,7 +53,13 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
 
     // PRICE
     const price = lista.map(item => item.valor).reduce((a, b) => a + b, 0)
-    console.log(price)
+    const valorFrete = frete?.price || 0;
+    const valorCupom = cupom?.valor || 0;
+    const desconto = (price + valorFrete) * valorCupom;
+    const total = price + (valorFrete > 0 ? valorFrete : 0) - (desconto > 0 ? desconto : 0);
+    const isPayInFull = total 
+    const twoInstallments = total / 2
+    const threeInstallments = total / 3
 
 
     // HOLDER NAME FUNCTIONS
@@ -195,7 +202,7 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                 <div className="flex w-fit text-nowrap gap-4">
                     {paymentTypeList.map(payment => {
                         return (
-                            <div onClick={()=>handlePaymentType(payment.id)} className={`w-full ${paymentType === payment.id && ' outline-green-300 bg-green-400 border-none text-white'} border border-gray-300 rounded-2xl px py-3 font-semibold px-4 flex text-gray-700 gap-4 `} >
+                            <div onClick={()=>handlePaymentType(payment.id)} className={`w-full ${paymentType === payment.id && ' outline-green-300 bg-green-400 border-none text-white'} border border-gray-300 rounded-2xl px py-3 font-semibold px-4 flex text-gray-700 gap-4 cursor-pointer`} >
                                 <div>
                                     <i class="fa-solid fa-credit-card"></i>
                                 </div>
@@ -353,9 +360,9 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
                 {!newPayment && <div className="flex flex-col gap-2">
                     <label htmlFor="parcelamento">Opções de parcelamento:</label>
                     <select name="" id="parcelamento" className="border p-2 rounded-lg">
-                        <option value="">1x de R$ 500,00 sem juros</option>
-                        <option value="">2x de R$ 250,00 sem juros</option>
-                        <option value="">3x de R$ 167,00 sem juros</option>
+                        <option value="">1x de {currencyFormatter(isPayInFull)} sem juros</option>
+                        <option value="">2x de {currencyFormatter(twoInstallments)} sem juros</option>
+                        <option value="">3x de {currencyFormatter(threeInstallments)} sem juros</option>
                     </select>
                 </div>}
             {pagamento.metodo === 'Pix' && 

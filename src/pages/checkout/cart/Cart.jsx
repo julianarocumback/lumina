@@ -16,7 +16,7 @@ export default function Cart({lista, increaseQuantity, decreaseQuantity, onRemov
             :etapa === 2 ?
                 <div className="flex flex-col lg:gap-8 lg:py-7 ">
                     <div className="flex flex-col lg:flex-row lg:gap-8">
-                        <Payment pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom} payments={payments} onAddCard={addPayment} dadosCliente={dadosCliente}  onDeleteCard={onDeleteCard} defaultCard={defaultCard} lista={lista}/>
+                        <Payment pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom} payments={payments} onAddCard={addPayment} dadosCliente={dadosCliente}  onDeleteCard={onDeleteCard} defaultCard={defaultCard} lista={lista} frete={frete}/>
                         <OrderSummary lista={lista} frete={frete} cupom={cupom} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar} etapa={etapa}/>
                     </div>
                     <BackLink/>
