@@ -30,13 +30,15 @@ export default function OrderPreview({orders}){
                 
                 <div className="flex flex-col gap-4">
                       
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 overflow-x-auto no-scrollbar">
                         {latestOrder?.produtos?.map(produto => {
                             return(
-                                <div key={produto.id} className="border border-gray-200 w-35 rounded-xl overflow-hidden flex">
-                                    <img src={produto.img_url} alt="" />
+                                <Link to={`/produto/${produto.id}`}>
+                                <div key={produto.id} className="border border-gray-200 w-25 h-35 rounded-xl overflow-hidden flex-none">
+                                    <img className=' w-full h-full' src={produto.img_url} alt="" />
 
                                 </div>
+                                </Link>
                             )
                         })
                         }
@@ -47,7 +49,7 @@ export default function OrderPreview({orders}){
                     <div className="lg:flex justify-between hidden ">
                         <div className="text-right flex gap-4 items-center">
                             <p className="text-lg text-[rgba(71,71,71,0.7)]">ENTREGA ESTIMADA</p>
-                            <p className="font-semibold">25 de maio,2026</p>
+                            <p className="font-semibold">3 dias a partir da data da compra</p>
                         </div>
                     </div>
 

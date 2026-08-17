@@ -13,23 +13,18 @@ export default function Orders(){
     const categorias = [
         {
             status: 'Todos',
-            ativo: true
         },
         {
             status: 'Processando',
-            ativo: false
         },
         {
             status: 'Em transporte',
-            ativo: false
         },
         {
             status: 'Entregue',
-            ativo: false
         },
         {
             status: 'Cancelado',
-            ativo: false
         }
     ]
 
@@ -37,6 +32,12 @@ export default function Orders(){
         const search = e.target.value
         setSearch(search)
     }
+
+    // const handleToggleCategory = (categoria) => {
+    //     setStatus(categoria)
+
+    //     if(categoria === T)
+    // }
 
    
     
@@ -59,7 +60,7 @@ export default function Orders(){
                     <div className="text-nowrap flex gap-4 overflow-x-auto no-scrollbar ">
                         {categorias.map(categoria => {
                             return (
-                                <button onClick={()=> setStatus(categoria.status)} className={`border border-gray-100 py-2 px-4 font-semibold rounded-full cursor-pointer ${categoria.ativo? 'bg-blue-400 text-white ':'bg-white'}`}>{categoria.status}</button>
+                                <button onClick={()=> setStatus(categoria.status)} className={`border border-gray-100 py-2 px-4 font-semibold rounded-full cursor-pointer ${categoria.status === status? 'bg-blue-400 text-white ':'bg-white'}`}>{categoria.status}</button>
                             )
                         })}
                         {orders.map(item => <div>{item?.nome}</div>)} 
@@ -85,7 +86,7 @@ export default function Orders(){
   animate={{ opacity: 1, scale: 1 }} className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col w-full">
 
                                 <div className="flex justify-between items-end">
-                                    <div className="flex flex-col gap-4 w-full">
+                                    <div className="flex flex-col gap-4 w-3/4">
                                         <div className="flex gap-4 lg:justify-start">
                                             <p className="text-gray-500 font-semibold">#{[...item.id].map((letra, index)=> {
                                                 if(index > 7) return 
@@ -139,8 +140,8 @@ export default function Orders(){
                         return (
                             <div className="rounded-3xl p-8 bg-white border border-gray-100 shadow-xs gap-4 flex flex-col w-full">
 
-                                <div className="flex justify-between items-end">
-                                    <div className="flex flex-col gap-4 w-full">
+                                <div className="flex justify-between items-end w-full gap-8">
+                                    <div className="flex flex-col gap-4 w-3/4">
                                         <div className="flex gap-4 lg:justify-start">
                                             <p className="text-gray-500 font-semibold">#{[...pedido.id].map((letra, index)=> {
                                                 if(index > 7) return 
@@ -167,7 +168,7 @@ export default function Orders(){
                                          
                                     </div>
                                     
-                                    <div className="lg:flex flex-col gap-4 hidden">
+                                    <div className="lg:flex flex-col gap-4  hidden">
                                         <button className="bg-gray-200 font-semibold  rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4">Rastrear pedido</button>
                                         <button className="bg-blue-900 font-semibold text-white rounded-3xl text-xs py-2 px-4 lg:text-base lg:py-2 lg:px-4">
                                             Comprar novamente

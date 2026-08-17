@@ -5,7 +5,7 @@ export default function Favorites(){
 
     const {dadosCliente, addToCart, removerFavorito, items} = useOutletContext()
     const favorites = dadosCliente?.favoritos || []
-    console.log(dadosCliente)
+    if(!favorites) return
 
     function handleAdicionarCarrinho(favorito){
         addToCart(favorito)

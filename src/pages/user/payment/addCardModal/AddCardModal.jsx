@@ -101,12 +101,13 @@ export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
         onAddCard(card)
         setNewPayment(false)
 
-        setCard({
+        setCard(prev => ({
+            ...prev,
             holderName: '',
             cardNumber: '',
             brand: '',
             isDefault: false
-        })
+        }))
 
         setHasHolderNameInteracted(false)
         setHasCardNumberInteracted(false)

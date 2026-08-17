@@ -61,23 +61,23 @@ export default function Cpf({dadosCliente, onSaveCpf}){
     return (
         <div className="flex flex-col gap-1">
             <h3 className="font-semibold text-[11px] text-gray-500">CPF</h3>
-            <div className='relative'>
+            <div className='flex flex-col lg:flex-row justify-between relative'>
                 {!isEditingCPF && <span>{!dadosCliente?.cpf?cpfFormated:cpfparaplaceholder }</span>}
-                {isEditingCPF && <div> <input disabled={!isEditingCPF} onChange={(e) => handleAddCPF(e.target.value.replace(/\D/g, ''))}  type="text" className={`${isEditingCPF && 'enabled:outline'} absolute text-transparent bg-transparent caret-black   cursor z-10`} value={cpfFormatedValue()}/>
+                {isEditingCPF && <div> <input disabled={!isEditingCPF} onChange={(e) => handleAddCPF(e.target.value.replace(/\D/g, ''))}  type="text" className={` absolute active:outline-none text-transparent bg-transparent caret-black  z-10`} value={cpfFormatedValue()}/>
                 {/*  */}
                 {/*  */}
                 {/*  */}
                 <span className='select-none pointer-events-none relative -left-[0.2px] tracking-tight font-arial font-sans'>{cpfFormated}</span></div>}
-           </div>
             <div className='flex flex-col lg:flex-row lg:justify-between'>
                 {!isEditingCPF && !dadosCliente?.cpf && <button onClick={handleEditingCPF} className='font-semibold text-blue-700 w-fit'>Adicionar</button>}
             </div>
             {isEditingCPF &&
                 <div className='flex gap-4'>
-                    <button onClick={handleCancelAddCpf}>Cancelar</button>
-                    <button onClick={() => setIsConfirming(true)}>Adicionar</button>
+                    <button className='text-red-500 font-semibold' onClick={handleCancelAddCpf}>Cancelar</button>
+                    <button className='font-semibold' onClick={() => setIsConfirming(true)}>Adicionar</button>
                 </div>
             }
+           </div>
             {isConfirming &&
                 <div className='border '>
                     <p>Só é possível adicionar uma vez, após isso não será possível alterá-lo. Deseja continuar</p>

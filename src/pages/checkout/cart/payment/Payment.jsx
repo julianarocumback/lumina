@@ -2,7 +2,7 @@ import { useState } from "react";
 import QRCode from './qr-code.svg'
 import { motion, AnimatePresence} from 'framer-motion'
 
-export default function Payment({pagamento, setPagamento,cupom, setCupom, payments, dadosCliente, addPayment, onDeleteCard, defaultCard}) {
+export default function Payment({pagamento, setPagamento,cupom, setCupom, payments, dadosCliente, onAddCard, onDeleteCard, defaultCard, lista}) {
     const [cupomAdicionado, setCupomAdicionado] = useState('')
     const [paymentType, setPaymentType] = useState('card')
     const [newPayment, setNewPayment] = useState(false)
@@ -16,26 +16,120 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
         isDefault: false
     })
 
-    const [isHolderNameTouched, setIsHolderNameTouched] = useState(false)
-    const [isCardNumberTouched, setIsCardNumberTouched] = useState(false)
+    const [hasHolderNameInteracted, setHasHolderNameInteracted] = useState(false)
+    const [hasCardNumberInteracted, setHasCardNumberInteracted] = useState(false)
     const [isSubmitted, setIsSubmitted] = useState(false)
 
-
-     
-    // Erros do holdername
-    const isHolderNameEmpty = card.holderName.trim() === ''
-    const isHolderNameLower = card.holderName.trim().length < 3
-    const hasHolderNameError = isHolderNameEmpty || isHolderNameLower
-    const shouldShowHolderNameError = hasHolderNameError && (isHolderNameTouched || isSubmitted)
-
-
-    // Erros do número do cartão
-    const isNumberCardEmpty = card.cardNumber.trim() === ''
-    const isNumberCardLower = card.cardNumber.length < 16
-    const hasNumberCardError = isNumberCardEmpty || isNumberCardLower
-    const shouldShowCardNumberError = hasNumberCardError && (isCardNumberTouched || isSubmitted)
     
+    // HOLDER NAME VARIABLES
+    const hasHolderNameContent = card.holderName !== ''
+    const hasHolderNameMinLength = card.holderName.length >= 3
+    const hasHolderNameMaxLength = card.holderName.length < 40
+    const hasHolderNameError = !hasHolderNameContent || !hasHolderNameMinLength || !hasHolderNameMaxLength
     
+    const hasHolderNameContentError = !hasHolderNameContent && (hasHolderNameInteracted || isSubmitted)
+    const hasHolderNameContentLengthError = !hasHolderNameMinLength && hasHolderNameContent && (hasHolderNameInteracted || isSubmitted)
+
+    const shouldShowHolderNameError = hasHolderNameError && (hasHolderNameInteracted || isSubmitted)
+    const shouldShowHolderNameSuccess = !hasHolderNameError && (hasHolderNameInteracted || isSubmitted)
+
+
+    // NUMBER CARD VARIABLES
+    const hasCardNumberContent = card.cardNumber !== ''
+    const hasCardNumberExactLength = card.cardNumber.length === 16
+    const hasCardNumberError = !hasCardNumberContent || !hasCardNumberExactLength
+    
+    const hasCardNumberLengthError = !hasCardNumberExactLength && hasCardNumberContent && (hasCardNumberInteracted || isSubmitted)
+    const hasCardNumberContentError = !hasCardNumberContent && (hasCardNumberInteracted || isSubmitted)
+    
+    const shouldShowCardNumberError = hasCardNumberError && (hasCardNumberInteracted || isSubmitted)
+    const shouldShowCardNumberSuccess = !hasCardNumberError && (hasCardNumberInteracted || isSubmitted)
+
+
+    // CARD
+    const hasCard = !hasHolderNameError || !hasCardNumberError
+    const hasMaxCard = dadosCliente?.payments?.length > 3
+
+    // PRICE
+    const price = lista.map(item => item.valor).reduce((a, b) => a + b, 0)
+    console.log(price)
+
+
+    // HOLDER NAME FUNCTIONS
+
+    // Add holder name
+    function handleHolderNameChange(event){
+        const holderName = event.target.value.replace(/\d/g, '')
+
+        if(holderName.length > 40) return  
+        setCard(prev => ({...prev, holderName:holderName}))
+    }
+    
+    // Set holder name field interacted state on blur
+    const handleHolderNameBlur = () => {
+        setHasHolderNameInteracted(true)
+    }
+
+
+    // NUMBER CARD FUNCTIONS
+
+    // Add card number
+    function handleCardNumberChange(event) {
+        let cardNumber = event.target.value.replace(/\D/g, '')     
+
+        if (cardNumber.length > 16) {
+            cardNumber = cardNumber.slice(0, 16);
+        }
+
+        setCard(prev => ({...prev, cardNumber: cardNumber}))
+    }
+
+    // Set card number field interacted state on blur
+    const handleCardNumberBlur = () => {
+        setHasCardNumberInteracted(true)
+    }
+
+
+    // ADD DEFAULT CARD
+    function handleDefaultCardChange(event) {
+        const isDefault = event.target.checked
+        setCard(prev => ({...prev, isDefault: isDefault}))
+    }
+
+
+    // ADD CARD PAYMENT
+    function handleAddCardPayment(event){
+        event.preventDefault()
+        setIsSubmitted(true)
+
+        if(!hasCard || hasMaxCard) return
+
+        onAddCard(card)
+        setNewPayment(false)
+
+        setCard(prev => ({
+            ...prev,
+            holderName: '',
+            cardNumber: '',
+            brand: '',
+            isDefault: false
+        }))
+
+        setHasHolderNameInteracted(false)
+        setHasCardNumberInteracted(false)
+        setIsSubmitted(false)
+    }
+
+
+
+
+
+
+
+
+
+
+
     const paymentTypeList = [
         {
             id: 'card',
@@ -81,61 +175,6 @@ export default function Payment({pagamento, setPagamento,cupom, setCupom, paymen
     }
 
 
-const handleCardNumberBlur = () => {
-        setIsCardNumberTouched(true)
-    }
-    
-
-    const handleHolderNameBlur = () => {
-        setIsHolderNameTouched(true)
-    }
-
-    // Add holder name
-    const handleHolderNameChange = (event) =>{
-        const holderName = event.target.value.replace(/\d/g, '')
-
-        if(holderName.length > 40) return
-         
-        setCard(prev => ({...prev, holderName:holderName}))
-    }
-
-
-    // Add card number
-    function handleCardNumberChange(event) {
-        let cardNumber = event.target.value.replace(/\D/g, '')     
-
-        if (cardNumber.length > 16) {
-            cardNumber = cardNumber.slice(0, 16);
-        }
-
-       
-        
-        setCard(prev => ({...prev, cardNumber: cardNumber}))
-    }
-
-    // Add main card
-    function handleMainChange(event) {
-        const isMain = event.target.checked
-        setCard(prev => ({...prev, isDefault: isMain}))
-    }
-
-    // Add card payment
-    function handleAddPayment(){
-        setIsSubmitted(true)
-        if(hasHolderNameError) return
-        if(hasNumberCardError) return
-
-        addPayment(card)
-        setNewPayment(false)
-
-        setCard({
-            holderName: '',
-            cardNumber: '',
-            brand: '',
-            isDefault: false
-        })
-    }
-
     
     // Delete card
     const handleDeleteCard = (cardId) => {
@@ -156,7 +195,7 @@ const handleCardNumberBlur = () => {
                 <div className="flex w-fit text-nowrap gap-4">
                     {paymentTypeList.map(payment => {
                         return (
-                            <div onClick={()=>handlePaymentType(payment.id)} className={`w-full ${paymentType === payment.id && ' outline-green-300 bg-green-400 border-none text-white'} border border-gray-300 rounded-2xl px py-3 font-semibold px-4 flex text-gray-700 gap-4`} >
+                            <div onClick={()=>handlePaymentType(payment.id)} className={`w-full ${paymentType === payment.id && ' outline-green-300 bg-green-400 border-none text-white'} border border-gray-300 rounded-2xl px py-3 font-semibold px-4 flex text-gray-700 gap-4 `} >
                                 <div>
                                     <i class="fa-solid fa-credit-card"></i>
                                 </div>
@@ -243,31 +282,35 @@ const handleCardNumberBlur = () => {
             
       
             </div>
-            {!newPayment && <div onClick={()=> setNewPayment(true)} className="hover:cursor-pointer font-semibold text-sm text-blue-800">Adicionar cartão</div>}
-
+            {!newPayment && payments.length <3 && <div onClick={()=> setNewPayment(true)} className="hover:cursor-pointer font-semibold text-sm text-blue-800">Adicionar cartão</div>}
+            {payments.length >= 3 && <p>Não pode mais porque eu nao deixo</p>}
           
 
             {/* INFORMAÇÕES DO CARTÃO */}
             {newPayment && <div className='flex flex-col gap-6 w-full h-fit'>
 
                     {/* INFORMAÇÕES DO CARTÃO */}
-                    <div className='flex flex-col gap-4 relative'>
+                    <form onSubmit={handleAddCardPayment} className='flex flex-col gap-4 relative'>
 
                         {/* NÚMERO DO CARTÃO */}
                         <div className="flex flex-col gap-2">
                             <label htmlFor='lastFour' className='font-semibold text-xs text-gray-700'>NÚMERO DO CARTÃO</label>
                             <div className='w-full relative'>
-                                <input id='cardNumber' type="text" value={(card.cardNumber || '').replace(/(\d{4})(?=\d)/g, '$1 ')} placeholder='0000 0000 0000 0000' className={`${shouldShowCardNumberError && 'ring-1 ring-red-500'} focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`} onChange={handleCardNumberChange} onBlur={handleCardNumberBlur}/>
+                                <input id='cardNumber' type="text" value={(card.cardNumber || '').replace(/(\d{4})(?=\d)/g, '$1 ')} placeholder='0000 0000 0000 0000' className={` ${shouldShowCardNumberSuccess ? 'ring ring-green-400 shadow-xs shadow-red-300': 'focus:ring focus:ring-amber-300'} ${shouldShowCardNumberError && 'ring ring-red-500'} focus:outline-none w-full rounded-lg bg-gray-100 px-3 text-xs py-2`} onChange={handleCardNumberChange} onBlur={handleCardNumberBlur}/>
                                 {card.brand === 'Visa'? <div className='absolute top-1 right-3 text-blue-800'><i class="fa-brands fa-cc-visa"></i></div>
                                 :card.brand === 'Mastercard' ?<div className='absolute top-1 right-3 text-red-900 '><i class="fa-brands fa-cc-mastercard"></i></div>
                                 :card.brand === 'American Express' && <div className='absolute top-1 right-3 text-gray-700'><i class="fa-brands fa-cc-amex"></i></div>}
+                                {hasCardNumberContentError && <p className='text-red-500 text-xs'>O número do cartão é obrigatório.</p>}
+                                {hasCardNumberLengthError && <p className='text-red-500 text-xs'>O número do cartão deve conter 16 caracteres</p>}
                             </div>
                         </div>
 
                         {/* NOME NO CARTÃO */}
                         <div className="flex flex-col gap-2">
                             <label className={`font-semibold text-xs text-gray-700`} htmlFor="holderName">NOME NO CARTÃO</label>
-                            <input id='holderName' onChange={handleHolderNameChange}  type="text" value={card.holderName} placeholder='Como impresso no cartão' className={`${shouldShowHolderNameError && 'ring-1 ring-red-500'} focus:outline-none rounded-lg bg-gray-100 px-3 text-xs py-2 uppercase`} onBlur={handleHolderNameBlur}/>
+                            <input id='holderName' onChange={handleHolderNameChange}  type="text" value={card.holderName} placeholder='Como impresso no cartão' className={` ${shouldShowHolderNameSuccess ? 'ring ring-green-400 shadow-xs shadow-red-300': 'focus:ring focus:ring-amber-300'} ${shouldShowHolderNameError && 'ring ring-red-500'} focus:outline-none rounded-lg bg-gray-100 px-3 text-xs py-2 uppercase`} onBlur={handleHolderNameBlur}/>
+                            {hasHolderNameContentError && <p className='text-red-500 text-xs'>O nome no cartão é obrigatório.</p>}
+                            {hasHolderNameContentLengthError && hasHolderNameContent && <p className='text-red-500 text-xs'>O nome deve ter pelo menos 3 caracteres.</p>}
                         </div>
 
                         {/* VALIDADE E CVV */}
@@ -288,18 +331,21 @@ const handleCardNumberBlur = () => {
                         {/* PRINCIPAL */}
                         <div className="flex gap-4 h-7">
                             <div className="flex items-center gap-2">
-                                <input id='main' onChange={handleMainChange} type="checkbox" value className={``}/>
+                                  <input id='main' onChange={handleDefaultCardChange} type="checkbox"/>
                                 <label htmlFor='main' className='font-semibold text-xs text-gray-700'>Definir como cartão principal</label>
                             </div>
                         </div>
-                    </div>
+
 
                     {/* SALVAR CARTÃO */}
                     <div className="flex gap-4">
-                        <button onClick={handleAddPayment} className="text-center w-full bg-gradient-to-r from-[#0288D1] to-[#E91E63] py-2 rounded-xl text-white font-semibold hover:cursor-pointer">Salvar cartão</button>
+                        <button type='submit' className={`text-center w-full bg-gradient-to-r from-[#0288D1] to-[#E91E63] py-2 rounded-xl text-white font-semibold hover:cursor-pointer`}>Salvar cartão</button>
                         <button onClick={()=> setNewPayment(false)} className="text-center w-full bg-gray-400 py-2 rounded-xl text-white font-semibold hover:cursor-pointer">Cancelar</button>
 
                     </div>
+
+                    </form>
+
              
                 </div>}
 
