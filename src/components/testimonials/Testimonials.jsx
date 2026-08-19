@@ -3,11 +3,11 @@ import { Carrossel, Cards } from "./content/Content"
 import { AnimatePresence } from 'framer-motion'
 
 
-export default function Testemunhos(){
+const Testimonials = () => {
     const [isMobile, setIsMobile] = useState(false)
 
-    useEffect(()=>{
-        const checkSize = ()=>{
+    useEffect(() => {
+        const checkSize = () => {
             setIsMobile(window.innerWidth < 1200)
         }
         checkSize()
@@ -24,3 +24,5 @@ export default function Testemunhos(){
         </section>
     )
 }
+
+export default Testimonials

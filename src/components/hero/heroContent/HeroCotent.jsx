@@ -1,5 +1,5 @@
 import {motion} from 'framer-motion'
-import Badge from '../badge/Badge'
+import Badge from '../../ui/Badge'
 import { Link } from 'react-router-dom'
 
 export default function HeroContent() {

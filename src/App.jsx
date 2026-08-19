@@ -1,6 +1,6 @@
 import Header from './components/header/Header';
 import Hero from './components/hero/Hero';
-import Testemunhos from './components/testemunhos/Testemunhos';
+import Testimonials from './components/testimonials/Testimonials';
 import Footer from './components/footer/Footer';
 import NewsLetter from './components/newsLetter/NewsLetter';
 import Explorar from './components/explorar/Explorar';
@@ -13,7 +13,7 @@ export default function App(){
             <Hero/>
             <Catalogo/>
             <Explorar/>
-            <Testemunhos/>
+            <Testimonials/>
             <NewsLetter/>
             <Footer/>
         </>

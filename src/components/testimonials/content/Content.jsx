@@ -1,37 +1,35 @@
 import { motion } from 'framer-motion'
 import Card from './card/Card'
 
-
-
-const lista = [
+const testimonials = [
     {
         id:1,
         img: <span className="material-icons">face_2</span>,
-        nome:'Ana Clara Mendes',
-        testemunho: 'A curadoria do Lumina é impecável. Cada livro que compro aqui parece ter sido escolhido especificamente para o meu momento de vida.',
+        name:'Ana Clara Mendes',
+        testimonial: 'A curadoria do Lumina é impecável. Cada livro que compro aqui parece ter sido escolhido especificamente para o meu momento de vida.',
         label: 'LEITORA ASSÍDUA'
     },
 
     {
         id:2,
         img: <span className="material-icons">face_6</span>,
-        nome:'Marcos Oliveira',
-        testemunho: 'O cuidado com o design e a estética do site torna a experiência de compra um momento de meditação. Simplesmente maravilhoso.',
+        name:'Marcos Oliveira',
+        testimonial: 'O cuidado com o design e a estética do site torna a experiência de compra um momento de meditação. Simplesmente maravilhoso.',
         label: 'COLECIONADOR'
     },
 
     {
         id:3,
         img: <span className="material-icons">face_3</span>,
-        nome:'Helena Santos',
-        testemunho: 'Presentear alguém com um livro do Lumina é entregar uma obra de arte. A embalagem e o carinho transparecem em tudo.',
+        name:'Helena Santos',
+        testimonial: 'Presentear alguém com um livro do Lumina é entregar uma obra de arte. A embalagem e o carinho transparecem em tudo.',
         label: 'CLIENTE'
     }
 ]
 
 const containerVariants = {
-  escondido: { opacity: 0 },
-  visivel: {
+  hidden: { opacity: 0 },
+  visible: {
     opacity: 1,
     transition: {
       staggerChildren: 0.15, 
@@ -40,11 +38,11 @@ const containerVariants = {
 };
 
 const cardVariants = {
-  escondido: { 
+  hidden: { 
     opacity: 0, 
     y: 30 
   },
-  visivel: { 
+  visible: { 
     opacity: 1, 
     y: 0,
     transition: {
@@ -57,27 +55,23 @@ const cardVariants = {
 
 
 export const Carrossel = () => {
-    return(
-        <section className=" w-full bg-[#f3f3f5]">
+    return (
+        <section className="w-full bg-[#f3f3f5]">
             <div className="flex flex-col gap-4 p-8">
                 <h3 className="text-xl">Testemunhos</h3>
                 <motion.div variants={containerVariants} 
-                    initial="escondido"
-                    whileInView="visivel" className="flex overflow-x-scroll gap-8 snap-mandatory snap-x no-scrollbar">
-                    <Card lista={lista} cardVariants={cardVariants}/>
-                    
-                   
-
+                    initial="hidden"
+                    whileInView="visible" className="flex overflow-x-scroll gap-8 snap-mandatory snap-x no-scrollbar">
+                    <Card testimonials={testimonials} cardVariants={cardVariants}/>
                 </motion.div>
             </div>
         </section>
-
     )
 }
 
-export const Cards = ()=> {
+export const Cards = () => {
 
-    return(
+    return (
         <section className="w-full flex flex-col px-8 py-32 bg-[radial-gradient(at_0%_0%,rgba(255,107,107,0.3),transparent_50%),radial-gradient(at_50%_0%,rgba(255,159,67,0.3),transparent_50%),radial-gradient(at_100%_0%,rgba(254,202,87,0.3),transparent_50%),radial-gradient(at_100%_50%,rgba(72,219,251,0.3),transparent_50%),radial-gradient(at_100%_100%,rgba(84,160,255,0.3),transparent_50%),radial-gradient(at_50%_100%,rgba(155,89,182,0.3),transparent_50%),radial-gradient(at_0%_100%,rgba(231,76,60,0.3),transparent_50%),radial-gradient(at_0%_50%,rgba(46,204,133,0.5),transparent_50%)]">
             <div className="text-center flex flex-col gap-20 max-w-8xl">
                 <div>
@@ -86,14 +80,11 @@ export const Cards = ()=> {
                     <p className="text-base text-[#474747]">Experiências transformadoras de quem caminha conosco na luz da palavra.</p>
                 </div>
                 <motion.div variants={containerVariants} 
-                    initial="escondido"
-                    whileInView="visivel" className="flex gap-10 justify-center">
-                    <Card lista={lista} cardVariants={cardVariants}/>
+                    initial="hidden"
+                    whileInView="visible" className="flex justify-center gap-10 ">
+                    <Card testimonials={testimonials} cardVariants={cardVariants}/>
                 </motion.div>
-
             </div>
-
         </section>
-
     )
 }

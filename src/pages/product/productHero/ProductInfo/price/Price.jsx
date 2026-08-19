@@ -1,4 +1,4 @@
-import {currencyFormatter} from '../../../../../utils/formatCurrency'
+import {currencyFormatter} from '../../../../../utils/formatters'
 export default function Price({produto}){
     return (
         <div>

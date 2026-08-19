@@ -2,21 +2,8 @@ import { useState, useEffect } from "react";
 import QRCode from './qr-code.svg';
 import { motion, AnimatePresence } from 'framer-motion';
 import { currencyFormatter } from '../../../../utils/formatters';
-import { supabase } from '../../../../supabaseClient';
 
-export default function Payment({
-  pagamento,
-  setPagamento,
-  cupom,
-  setCupom,
-  payments,
-  dadosCliente,
-  onAddCard,
-  onDeleteCard,
-  defaultCard,
-  lista,
-  frete
-}) {
+export default function Payment({pagamento, setPagamento, cupom, setCupom, payments, dadosCliente, onAddCard, onDeleteCard, defaultCard, lista, frete}) {
   const [cupomAdicionado, setCupomAdicionado] = useState('');
   const [paymentType, setPaymentType] = useState('card');
   const [newPayment, setNewPayment] = useState(false);
@@ -29,24 +16,6 @@ export default function Payment({
     brand: '',
     isDefault: false
   });
-
-  const [liberado, setLiberado] = useState(false);
-
-  // Escuta o canal do Supabase em tempo real
-  useEffect(() => {
-    const canal = supabase.channel('canal-desbloqueio');
-
-    canal
-      .on('broadcast', { event: 'liberar-tela' }, () => {
-        setLiberado(true);
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(canal);
-    };
-  }, []);
-
   const [hasHolderNameInteracted, setHasHolderNameInteracted] = useState(false);
   const [hasCardNumberInteracted, setHasCardNumberInteracted] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -225,11 +194,7 @@ export default function Payment({
               <p>{payment.title}</p>
             </div>
           ))}
-          {liberado && (
-            <p className="bg-green-100 text-green-700 px-4 py-3 rounded-2xl font-bold">
-              🎉 QR Code lido com sucesso!
-            </p>
-          )}
+      
         </div>
 
         {/* OPÇÕES DE PAGAMENTO */}

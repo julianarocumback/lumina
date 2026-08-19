@@ -25,10 +25,6 @@ export const router = createBrowserRouter([
         element: <App/>
     },
     {
-        path: '/liberar',
-        element:<LiberarAcesso />
-    },
-    {
         path:'/produto/:id',
         element: <Produto/>
     },
