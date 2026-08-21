@@ -4,7 +4,7 @@ import ModalLogin from './modalLogin/ModalLogin'
 import Info from './info/Info'
 
 
-export default function Login({authenticated, dadosCliente, login, logout, cadastrar}) {
+export default function Login({authenticated, dadosCliente, login, logout, onSignUp}) {
     const [open, setOpen] = useState(false)
 
     function handleOpen(){
@@ -46,7 +46,7 @@ export default function Login({authenticated, dadosCliente, login, logout, cadas
                         {authenticated?
                         <div><Info authenticated={authenticated} logout={logout}/></div>
                         :
-                        <ModalLogin authenticated={authenticated} login={login} cadastrar={cadastrar} setOpen={setOpen} />} 
+                        <ModalLogin authenticated={authenticated} login={login} onSignUp={onSignUp} setOpen={setOpen} />} 
                     </div>
                 </motion.div>
                     }

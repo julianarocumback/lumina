@@ -386,7 +386,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   // Sign up
-  const cadastrar = async (email, password) => {
+  const signUp = async (email, password) => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -412,7 +412,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, adicionarPedido, addAddress, deleteAddress, addPayment, cadastrar, onDeleteCard: deleteCard, cpfAdd, birthdateAdd, purgeAccount, updatePassword}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, adicionarPedido, addAddress, deleteAddress, addPayment, signUp, onDeleteCard: deleteCard, cpfAdd, birthdateAdd, purgeAccount, updatePassword}}>
       {children}
     </AuthContext.Provider>
   );

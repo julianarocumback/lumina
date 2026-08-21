@@ -1,7 +1,7 @@
 import { useState,  } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-export default function ModalLogin({login, setOpen, cadastrar}){
+export default function ModalLogin({login, setOpen, onSignUp}){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
@@ -32,7 +32,7 @@ export default function ModalLogin({login, setOpen, cadastrar}){
 
     try {
       // Chama a função do contexto passando os dados recolhidos pelo formulário
-      await cadastrar(newEmail, newPassword);
+      await onSignUp(newEmail, newPassword);
       
       alert('Usuário cadastrado com sucesso! Verifique seu e-mail.');
       setEmail('');
