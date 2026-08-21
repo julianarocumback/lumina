@@ -1,7 +1,9 @@
 export default function Explorar(){
-    return(
-        <div>
-            <i class="fa-solid fa-palette"></i>
-        </div>
+    return (
+        <a href="#exploreByColors">
+            <div>
+                <i className="fa-solid fa-palette"></i>
+            </div>
+        </a>
     )
 }

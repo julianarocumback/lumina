@@ -16,7 +16,7 @@ export default function Explorar(){
 
     },[])
     return (
-        <section className="w-full px-8 py-12 lg:py-24 lg:px-86">
+        <section id="exploreByColors" className="w-full px-8 py-12 lg:py-24 lg:px-86">
             <AnimatePresence>{isMobile? (<Carrossel/>): (<BentoGrid/>)}</AnimatePresence>
         </section>
     )

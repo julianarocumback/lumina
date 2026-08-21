@@ -22,13 +22,12 @@ export default function Header() {
                 <AnimatePresence>
                     {isCartOpen && (<SlideOverCart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen}/>)}
                 </AnimatePresence>
-            </div> 
+            </div>
             <div className="hidden px-8 lg:flex justify-between gap-4 w-full items-center">
                 <Logo/>
                 <div className="flex gap-4">
                     <AnimatePresence>
-                    <Login authenticated={authenticated} dadosCliente={dadosCliente} login={login} logout={logout} cadastrar={cadastrar}/>
-
+                        <Login authenticated={authenticated} dadosCliente={dadosCliente} login={login} logout={logout} cadastrar={cadastrar}/>
                     </AnimatePresence>
                     <CartIcon setIsCartOpen={setIsCartOpen} />
                     <AnimatePresence>{isCartOpen && <SlideOverCart/>}</AnimatePresence>
