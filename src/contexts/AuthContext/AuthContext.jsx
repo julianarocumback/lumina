@@ -412,7 +412,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, dadosCliente, adicionarFavorito, removerFavorito, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, adicionarPedido, addAddress, deleteAddress, addPayment, signUp, onDeleteCard: deleteCard, cpfAdd, birthdateAdd, purgeAccount, updatePassword}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, login, logout, signUp, dadosCliente, adicionarFavorito, removerFavorito, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, adicionarPedido, addAddress, deleteAddress, addPayment, onDeleteCard: deleteCard, cpfAdd, birthdateAdd, purgeAccount, updatePassword}}>
       {children}
     </AuthContext.Provider>
   );
