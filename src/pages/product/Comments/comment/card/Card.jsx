@@ -41,7 +41,7 @@ export default function Card(){
                 </div>
             </div>
 
-            <div className='absolute top-9  right-5'>
+            <div className='absolute top-9 right-5'>
                 <div className='text-xs text-[rgb(112,93,0)] lg:gap-2 lg:text-base lg:flex '>
                     <i className='fa-solid fa-star'></i><i className='fa-solid fa-star'></i><i className='fa-solid fa-star'></i><i className='fa-solid fa-star'></i><i className='fa-solid fa-star'></i>
                 </div>

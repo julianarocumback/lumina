@@ -1,7 +1,7 @@
 export default function Resume(){
     return (
         <div className='flex flex-col gap-8 w-80 p-8 bg-white border border-gray-100 rounded-2xl shadow-sm'>
-            <h3 className='text-2xl font-bold'>Resumo das Avaliações</h3>
+            <h3 className='text-xl lg:text-2xl font-bold'>Resumo das Avaliações</h3>
             
             {/* Reviews */}
             <div className='flex items-center gap-8'>
