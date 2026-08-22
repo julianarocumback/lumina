@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
-export default function Info({authenticated, logout}){
+export default function UserMenu({authenticated, onSignOut}){
     const navigate = useNavigate()
-   
-    // Redirecionar o usuário para a página 'user'
+
+    // Redirects to the user page
     const handleSubmit =() => {
         if(authenticated){
             navigate('/user')
@@ -20,7 +20,7 @@ export default function Info({authenticated, logout}){
 
                <div className="h-0.5 border border-gray-300"></div>
             
-                <button onClick={logout} className=" font-semibold flex gap-4 text-red-800 items-center cursor-pointer">
+                <button onClick={onSignOut} className=" font-semibold flex gap-4 text-red-800 items-center cursor-pointer">
                     <div className=""><i className="fa-solid fa-arrow-right-from-bracket"></i></div>
                     <span className="">Sair da conta</span>
                 </button>
