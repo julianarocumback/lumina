@@ -32,7 +32,9 @@ export default function SlideOverCart({isCartOpen, setIsCartOpen}){
     const cartRef = useRef(null)
 
 
-    // FUNCTION
+    // FUNCTIONS
+
+    // Tracks user interaction and redirects to checkout if the cart has items e the user is sign in.
     function handleNavigateToCheckout(){
         setHasInteracted(true)
         if(!hasCart) return
@@ -40,8 +42,20 @@ export default function SlideOverCart({isCartOpen, setIsCartOpen}){
         navigate('/checkout')
     }
 
+    // Strips non-numeric characters from input and updates item quantity
+    const handleUpdateQuantity = (item, e) => {
+        const itemQuantity = e.target.value.replace(/\D/g, '')
+        updateQuantity(item, itemQuantity)
+    }
 
-    // 
+    // Strips non-numeric characters from input and runs quantity checks
+    const handleCheckQuantity = (item, e) => {
+        const itemQuantity = e.target.value.replace(/\D/g, '')
+        checkQuantity(item, itemQuantity)
+    }
+
+
+    // Closes the cart overlay when clicking outside its bounds
     useEffect(() => {
         function handleClickOutside(event) {
             if (!cartRef.current) return;
@@ -94,34 +108,34 @@ export default function SlideOverCart({isCartOpen, setIsCartOpen}){
                                 <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} exit={{ opacity: 0, y: -30, transition: { duration: 0.20 } }} key={item.id}  layout className="flex h-35 lg:h-35 w-full border border-gray-200 gap-4 overflow-hidden rounded-2xl shrink-0 shadow-xs p-4">
                                     <div className="h-full w-20 lg:w-1/4 ">
                                         <Link to={`/produto/${item.id}`}>
-                                            <img className="h-full w-full rounded-2xl shadow-xs border border-gray-100" src={item.img_url} alt="" />
+                                            <img className="h-full w-full border border-gray-100 rounded-2xl shadow-xs" src={item.img_url} alt="" />
                                         </Link>
                                     </div>
-                                    <div className="flex flex-col gap-4 py-2 justify-between overflow-hidden w-3/4 relative">
+                                    <div className="relative flex flex-col justify-between gap-4 py-2 w-3/4 overflow-hidden">
                                         <div className="flex justify-between">
                                             <div className="w-[85%]">
-                                                <h4 className="lg:text-lg font-semibold text-[#1a1c1d] truncate">{item.nome}</h4>
+                                                <h4 className="font-semibold text-[#1a1c1d] truncate lg:text-lg">{item.nome}</h4>
                                                 <p className='truncate'>{item.description}</p>
                                             </div>
                                         </div>
-                                        <div onClick={()=> removeFromCart(item)} className="absolute right-0 hover:text-red-500 cursor-pointer transition-colors"><i className="fa-solid fa-trash"></i></div>
+                                        <div onClick={()=> removeFromCart(item)} className="absolute right-0 hover:text-red-500 transition-colors cursor-pointer"><i className="fa-solid fa-trash"></i></div>
                                         <div className="flex justify-between">
-                                            {item && <span className="text- font-semibold">{currencyFormatter(item.valor)}</span>}
+                                            {item && <span className="font-semibold">{currencyFormatter(item.valor)}</span>}
                                             
                                             
-                                            {/* QUANTIDADE DE PRODUTOS */}
-                                            <div className="flex border items-center justify-around px-2 bg-white rounded-3xl border-gray-300 w-20 select-none">
+                                            {/* Product quantity */}
+                                            <div className="flex items-center justify-around w-20 px-2 bg-white border border-gray-300 rounded-3xl select-none">
 
-                                                {/* Diminuir a quantidade */}
+                                                {/* Decrease quantity */}
                                                 <div className={`w-5 text-xs ${hasExactLength && 'text-gray-300'} cursor-pointer`} onClick={()=> decreaseQuantity(item)}><i className="fa-solid fa-minus"></i></div>
 
-                                                {/* Quantidade atual */}
+                                                {/* Current quantity */}
                                                 <div className='relative flex items-center w-5 h-5'>
                                                     <div className='flex items-center justify-center h-full w-full '>{item.quantidade}</div>
-                                                    <input onChange={(e) => updateQuantity(item, e.target.value.replace(/\D/g, ''))} className='z-10 absolute top-0 h-full w-full text-center text-transparent border caret-black focus:outline-none' type="text" value={item.quantidade} onBlur={(e) => checkQuantity(item, e.target.value.replace(/\D/g, ''))}/>
+                                                    <input onChange={(e) => handleUpdateQuantity(item, e)} className='z-10 absolute top-0 h-full w-full text-center text-transparent border caret-black focus:outline-none' type="text" value={item.quantidade} onBlur={(e) => handleCheckQuantity(item, e)}/>
                                                 </div>
 
-                                                {/* Aumentar a quantidade */}
+                                                {/* Increase quantity */}
                                                 <div className="w-5 text-xs cursor-pointer " onClick={()=> increaseQuantity(item)}><i className="fa-solid fa-plus"></i></div>
                                                 
                                             </div>
@@ -136,14 +150,16 @@ export default function SlideOverCart({isCartOpen, setIsCartOpen}){
 
 
             </div>
-            <div className="bg-gray-50 h-1/5 lg:h-1/4 px-7 lg:px-7 lg:py-3 flex flex-col gap-3 lg:gap-3 text-center">
+            <div className="flex flex-col gap-3 h-1/5 text-center bg-gray-50 lg:gap-3 lg:h-1/4 px-7 lg:px-7 lg:py-3">
+                {/* Subtotal */}
                 <div className="flex justify-between py-2">
                     <span className="text-lg text-[#474747]">Subtotal</span>
                     <span className="text-xl font-semibold">{currencyFormatter(subtotal)}</span>
                 </div>
-                <button className="cursor-pointer rounded-3xl p-2 w-full bg-linear-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg" onClick={handleNavigateToCheckout}>Finalizar compra</button>
-
-                <div className='text-red-500 text-xs lg:text-base'>
+                <button className="w-full p-2 py-3 text-lg font-semibold  text-white bg-linear-to-r from-[#00639a] to-[#bc004b] rounded-3xl cursor-pointer" onClick={handleNavigateToCheckout}>Finalizar compra</button>
+                
+                {/* Errors */}
+                <div className='text-xs text-red-500 lg:text-base'>
                     {hasCartError && <p>Faça login e adicione itens ao carrinho!</p>}
                     {hasContentError && <p>Adicione itens ao carrinho!</p>}
                     {hasAuthenticatedError && <p>Faça login!</p>}
