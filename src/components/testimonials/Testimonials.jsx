@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react"
-import { Carrossel, Cards } from "./content/Content"
+import { useState, useEffect } from 'react'
+import { Carrossel, Cards } from './content/Content'
 import { AnimatePresence } from 'framer-motion'
 
 

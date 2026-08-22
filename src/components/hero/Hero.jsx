@@ -1,55 +1,44 @@
 import { motion } from 'framer-motion'
-import HeroContent from "./heroContent/HeroCotent";
+
+import HeroContent from './heroContent/HeroCotent';
 import Book from './book/Book'
-import { Link } from 'react-router-dom'
+import Button from '../ui/Button'
 
 export default function Hero() {
 
   return (
-    <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className="w-full h-screen relative overflow-hidden flex flex-col bg-[#f0f2f5] font-sans antialiased text-slate-900">
+    <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className='relative flex flex-col overflow-hidden w-full h-screen font-sans antialiased text-slate-900 bg-[#f0f2f5]'>
       
-      {/* Background Activo */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="prisma-light-mesh absolute inset-0" />
-        <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+      {/* Active background */}
+      <div className='z-0 inset-0 absolute pointer-events-none'>
+        <div className='absolute inset-0 prisma-light-mesh'/>
+        <div className='absolute inset-0 opacity-[0.02] pointer-events-none' style={{ backgroundImage: `url('data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E')` }} />
       </div>
 
-      {/* Conteúdo da Hero */}
-      <main className="flex-1 h-full flex flex-col justify-between px-10 md:p-12 z-10 relative lg:mx-auto lg:mt-40  lg:overflow-y-visible select-none">
-  
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-10 lg:pt-0 items-center w-full max-w-7xl">
+      {/* Hero */}
+      <main className='z-10 relative flex flex-col flex-1 justify-between h-full px-10 select-none md:p-12 lg:overflow-y-visible lg:mx-auto lg:mt-40'>
+        <div className='grid grid-cols-1 items-center gap-8 w-full max-w-7xl pt-10 lg:grid-cols-12 lg:gap-12 lg:pt-0'>
           
-          {/* CONTEÚDO (TEXTO) */}
-          <div className="lg:col-start-1 lg:col-span-7 col-span-1 pointer-events-auto">
-            <HeroContent />
+          {/* Hero Content*/}
+          <div className='col-span-1 pointer-events-auto lg:col-start-1 lg:col-span-7'>
+            <HeroContent/>
           </div>
+          {/* 3D Interactive Book */}
+          <Book />
 
-          {/* LIVRO 3D INTERATIVO */}
-        
-        
-    <Book />
-
-          <Link to='/produto/21'>
-            <motion.button 
-                  className="flex justify-center items-center gap-4 relative overflow-hidden rounded-full p-2 w-full bg-gradient-to-r from-[#00639a] to-[#bc004b] py-3 text-white font-semibold text-lg lg:hidden cursor-pointer"
-                  whileHover={{ scale: 1.02 }}
-                  >
-                  <span class="material-icons-outlined">auto_awesome</span>
-                  <span>Adquira já o seu!</span>
-                  
-
-                  <motion.div
-                      initial={{ left: "-100%" }}
-                      animate={{ left: "100%" }}
-                      transition={{ repeat: Infinity, duration: 2, repeatDelay: 3, ease: "linear" }}
-                      className="absolute top-0 w-1/2 h-full bg-white/20 skew-x-12 blur-sm"
-                  />
-              </motion.button>
-          
-          </Link>
-          
+          {/* Redirect to product */}
+          <Button
+            texto={'Adquira já o seu!'}
+            icone={<span className='material-icons-outlined'>auto_awesome</span>}
+            style={'lg:hidden'}
+            link={'/produto/21'}
+            initial={{ left: '-100%' }}
+            animate={{ left: '100%' }}
+            transition={{ repeat: Infinity, duration: 2, repeatDelay: 3, ease: 'linear'}}
+            animationStyle={'absolute top-0 w-1/2 h-full bg-white/20 skew-x-12 blur-sm'}
+            whileHover={{ scale: 1.02 }}
+          />
         </div>
-
       </main>
     </motion.div>
   );

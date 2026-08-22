@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-import Heroc from './teste.jpeg';
+
+import Bible from './bible.jpeg';
 
 export default function Book() {
   const defaultRotX = -12;
@@ -48,26 +49,26 @@ export default function Book() {
   };
 
   return (
-    <div className="lg:col-span-5 flex justify-center items-center py-6 book-3d-wrapper col-span-1 pointer-events-auto">
+    <div className='lg:col-span-5 flex justify-center items-center py-6 book-3d-wrapper col-span-1 pointer-events-auto'>
       <div 
         ref={tiltBookRef}
-        className="w-[200px] lg:w-[350px] aspect-[1/1.48] relative cursor-grab active:cursor-grabbing book-3d-entity"
+        className='w-50 lg:w-87.5 aspect-[1/1.48] relative cursor-grab active:cursor-grabbing book-3d-entity'
         style={{ transform: `rotateX(${defaultRotX}deg) rotateY(${defaultRotY}deg)` }}
         onMouseMove={(e) => handleBookMove(e.clientX, e.clientY)}
         onMouseLeave={handleMouseLeave}
       >
-        <div ref={bookShadowRef} className="book-shadow-plane" />
-        <div className="book-back-cover" />
-        <div className="book-spine-left flex items-center justify-center overflow-hidden">
-  <span className="text-yellow-600 font-bold text-xs lg:text-sm rotate-180 whitespace-nowrap" style={{ writingMode: 'vertical-rl' }}>
+        <div ref={bookShadowRef} className='book-shadow-plane' />
+        <div className='book-back-cover' />
+        <div className='book-spine-left flex items-center justify-center overflow-hidden'>
+  <span className='text-yellow-600 font-bold text-xs lg:text-sm rotate-180 whitespace-nowrap' style={{ writingMode: 'vertical-rl' }}>
     BÍBLIA SAGRADA
   </span>
 </div>
-        <div className="book-pages-right" />
-        <div className="book-pages-top" />
-        <div className="book-pages-bottom" />
-        <div className="book-front-cover">
-          <img src={Heroc} alt="Capa" className="w-full h-full object-cover" />
+        <div className='book-pages-right' />
+        <div className='book-pages-top' />
+        <div className='book-pages-bottom' />
+        <div className='book-front-cover'>
+          <img src={Bible} alt='Bíblia' className='w-full h-full object-cover' />
         </div>
       </div>
     </div>

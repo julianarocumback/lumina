@@ -27,8 +27,8 @@ export function AuthProvider({ children }) {
         }
         
         if (error) {
-          console.error("Erro detalhado do Supabase:", error.message); 
-          console.error("Código do erro:", error.code);
+          console.error('Erro detalhado do Supabase:', error.message); 
+          console.error('Código do erro:', error.code);
         }
 
       }
@@ -46,7 +46,7 @@ export function AuthProvider({ children }) {
       .select('*');
 
     if (error) {
-      console.error("Erro exato do Supabase:", error.message, error.details, error.hint);
+      console.error('Erro exato do Supabase:', error.message, error.details, error.hint);
       return;
     }
 
@@ -111,7 +111,7 @@ export function AuthProvider({ children }) {
     })
 
     if(error) {
-      console.error("Erro ao atualizar o email", error.message)
+      console.error('Erro ao atualizar o email', error.message)
       return
     }
 
@@ -129,7 +129,7 @@ export function AuthProvider({ children }) {
     })
 
     if(error) {
-      console.error("Erro ao cancelar o email", error.message)
+      console.error('Erro ao cancelar o email', error.message)
       return
     }
 

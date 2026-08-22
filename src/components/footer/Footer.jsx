@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import {MobileAbout, DesktopAbout} from "./about/About"
-import Navegation from "./navegation/Navegation"
-import Support from "./support/Support"
-import Localization from "./localization/Localization"
+import { useEffect, useState } from 'react'
+import {MobileAbout, DesktopAbout} from './about/About'
+import Navigation from './navigation/Navigation'
+import Support from './support/Support'
+import Localization from './localization/Localization'
 
 
 export default function Footer() {
@@ -20,15 +20,15 @@ export default function Footer() {
     },[])
 
     return(
-        <div className="bg-[#f8fafc] mb-14 lg:mb-0">
+        <div className='bg-[#f8fafc] mb-14 lg:mb-0'>
             {isMobile? (
-                <footer className=" w-full h-full ">
+                <footer className='w-full h-full'>
                     <MobileAbout/>
                 </footer>
             ): (
-                <footer className="w-full h-full grid grid-cols-4 gap-4 px-16">
+                <footer className='grid grid-cols-4 gap-4 w-full h-full px-16'>
                 <DesktopAbout/>
-                <Navegation/>
+                <Navigation/>
                 <Support/>
                 <Localization/>
             </footer>
