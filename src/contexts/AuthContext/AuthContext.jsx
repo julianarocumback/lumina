@@ -332,7 +332,7 @@ export function AuthProvider({ children }) {
   // ---------- FAVORITES ----------
 
     // Add favorite
-    async function adicionarFavorito(produto) {
+    async function addToFavorites(produto) {
       if (user?.id) {
         const favoritoAtualizado = [...dadosCliente.favoritos, produto]
         const { data } = await supabase
@@ -349,7 +349,7 @@ export function AuthProvider({ children }) {
     }
 
     // Delete favorite
-    async function removerFavorito(produto) {
+    async function removeFromFavorites(produto) {
       if (user?.id) {
         const favoritoAtualizado = dadosCliente?.favoritos.filter(item => item.id !== produto.id)
         const { data } = await supabase
@@ -412,7 +412,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, signIn, signOut, signUp, dadosCliente, adicionarFavorito, removerFavorito, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, adicionarPedido, addAddress, deleteAddress, addPayment, onDeleteCard: deleteCard, cpfAdd, birthdateAdd, purgeAccount, updatePassword}}>
+    <AuthContext.Provider value={{ authenticated: !!user, user, loading, signIn, signOut, signUp, dadosCliente, addToFavorites, removeFromFavorites, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, adicionarPedido, addAddress, deleteAddress, addPayment, onDeleteCard: deleteCard, cpfAdd, birthdateAdd, purgeAccount, updatePassword}}>
       {children}
     </AuthContext.Provider>
   );

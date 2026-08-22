@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Products({produtos, carregar, setQuantidade, tamanho, categoria, listaFiltrada}){
     const {addToCart, items} = useCart()
-    const {authenticated, dadosCliente,adicionarFavorito, removerFavorito} = useContext(AuthContext)
+    const {authenticated, dadosCliente,addToFavorites, removeFromFavorites} = useContext(AuthContext)
 
     
     function alterarQuantidade(valor){
@@ -16,9 +16,9 @@ export default function Products({produtos, carregar, setQuantidade, tamanho, ca
     
     function handreFavoritar(produto){
         if(dadosCliente?.favoritos?.some(item => Number(item?.id) === produto?.id)){
-            removerFavorito(produto)
+            removeFromFavorites(produto)
         }else {
-            adicionarFavorito(produto)
+            addToFavorites(produto)
         }
         
     }

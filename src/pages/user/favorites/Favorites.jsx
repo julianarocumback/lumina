@@ -3,7 +3,7 @@ import {motion, AnimatePresence} from 'framer-motion'
 
 export default function Favorites(){
 
-    const {dadosCliente, addToCart, removerFavorito, items} = useOutletContext()
+    const {dadosCliente, addToCart, removeFromFavorites, items} = useOutletContext()
     const favorites = dadosCliente?.favoritos || []
     if(!favorites) return
 
@@ -12,7 +12,7 @@ export default function Favorites(){
     }
 
     function handleRemoverFavorito(favorito){
-        removerFavorito(favorito)
+        removeFromFavorites(favorito)
     }
 
    
@@ -35,7 +35,7 @@ export default function Favorites(){
                     favorites.map(favorito => {
                         return ( 
                             <motion.div initial={{opacity:0, y:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}} layout key={favorito.id} className="flex flex-rol lg:flex-col lg:h-fit gap-4 lg:gap-4 h-40 p-4 rounded-2xl bg-white shadow-xs lg:justify-between relative ">
-                                <button onClick={()=> removerFavorito(favorito)} className="hover:text-red-500 text-black/50 transition-all cursor-pointer hidden lg:block  absolute top-5 right-7"><i class="fa-solid fa-trash"></i></button>
+                                <button onClick={()=> removeFromFavorites(favorito)} className="hover:text-red-500 text-black/50 transition-all cursor-pointer hidden lg:block  absolute top-5 right-7"><i class="fa-solid fa-trash"></i></button>
                                 <div className="w-20 flex-none  lg:w-full lg:h-80 rounded-xl bg-gray-200 overflow-hidden">
                                     <img className='w-full h-full object-cover' src={favorito.img_url} alt="" />
                                 </div>
@@ -50,7 +50,7 @@ export default function Favorites(){
                                             
                                             <div className="text-xs font-semibold">{items?.some(item => item.id === favorito.id)? 'ADICIONADO': <div className="flex items-center"><div className="text-xs"><i class="fa-solid fa-plus"></i></div>CARRINHO</div>}</div>
                                         </button>
-                                        <button onClick={()=> removerFavorito(favorito)} className="text-red-500 lg:hidden cursor-pointer "><i class="fa-solid fa-trash"></i></button>
+                                        <button onClick={()=> removeFromFavorites(favorito)} className="text-red-500 lg:hidden cursor-pointer "><i class="fa-solid fa-trash"></i></button>
 
                                     </div>
                                 </div>

@@ -1,24 +1,28 @@
-import Gallery from "./gallery/Gallery"
-import Photo from "./photo/Photo"
+import {motion} from 'framer-motion'
 
-export default function ProductGallery({foto, gallery, setIdFoto}){
+export default function ProductGallery({photo, gallery, setPhotoId}) {
 
-    function alterarImagem(id){
-        setIdFoto(id)
+    function handleSelectPhoto(id){
+        setPhotoId(id)
     }
 
-    const galeria = gallery.map(item => {
-        return(
-            <div className="border border-gray-200 cursor-pointer rounded-2xl overflow-hidden" key={item?.id} onClick={()=> alterarImagem(item?.id)}>
-                <img className="object-cover h-full w-full" src={item?.url} alt="" />
-            </div>
-        )
-    })
-
     return (
-        <div className="lg:w-240 h-full flex flex-col gap-4 relative">
-            <Photo foto={foto}/>
-            <Gallery galeria={galeria}/>
+        <div className='relative flex flex-col gap-4 h-full lg:w-240'>
+            {/* Photo */}
+            <motion.div  className='overflow-hidden h-120 border border-gray-200 rounded-4xl lg:h-150'>
+                <img src={photo?.url} alt='Capa do livro' className='h-full w-full object-cover'/>
+            </motion.div>
+
+            {/* Gallery */}
+            <div className='relative grid grid-cols-4 grid-rows-1 gap-4 h-full'> 
+                {gallery.map(item => {
+                    return (
+                        <div className='overflow-hidden border border-gray-200 rounded-2xl cursor-pointer' key={item?.id} onClick={() => handleSelectPhoto(item?.id)}>
+                            <img src={item?.url} alt='Capa do livro' className='h-full w-full object-cover'/>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     )
 }
