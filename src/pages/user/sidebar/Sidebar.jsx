@@ -21,7 +21,6 @@ export default function Sidebar() {
         },
         {
             path: '/user/address',
-    
             icon: <i className='fa-solid fa-location-dot'></i>,
             name: 'Endereço'
         },
