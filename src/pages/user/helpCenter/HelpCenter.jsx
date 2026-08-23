@@ -19,7 +19,7 @@ export default function HelpCenter(){
                 <div className='flex flex-col items-center gap-8 py-8 lg:flex-row lg:justify-between'>
                     <h2 className='text-xl font-semibold'>Histórico de atendimento</h2>
                     {/* Filter tabs */}
-                    <div className='flex justify-between gap-4 p-1 bg-gray-200 rounded-2xl lg:w-100'>
+                    <div className='flex justify-between gap-4 w-full p-1 bg-gray-200 rounded-2xl lg:w-100 '>
                         <button className='w-full p-2 text-blue-700 font-semibold bg-white rounded-xl'>Em aberto</button>
                         <button className='w-full font-semibold text-gray-500 rounded-xl'>Concluído</button>
                     </div>
