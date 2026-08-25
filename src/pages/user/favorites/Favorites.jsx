@@ -1,74 +1,66 @@
 import { useOutletContext } from 'react-router-dom'
 import {motion, AnimatePresence} from 'framer-motion'
 
-export default function Favorites(){
+import {currencyFormatter} from '../../../utils/formatters'
 
-    const {dadosCliente, addToCart, removeFromFavorites, items} = useOutletContext()
+export default function Favorites(){
+    const {dadosCliente, addToCart, onRemoveFromFavorites, items} = useOutletContext()
     const favorites = dadosCliente?.favoritos || []
+
+    const hasMaxLength = favorites.length < 2
+
     if(!favorites) return
 
     function handleAdicionarCarrinho(favorito){
         addToCart(favorito)
     }
 
-    function handleRemoverFavorito(favorito){
-        removeFromFavorites(favorito)
+    function handleRemoveFromFavorites(favorite){
+        onRemoveFromFavorites(favorite)
     }
 
-   
-
-
-    return(
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`${favorites.length <= 2 ? 'h-screen': 'h-full'} flex flex-col gap-8 lg:gap-8 pt-7 pb-25 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70`}>
-
-                <div className="flex flex-col gap-2">
-                    <h2 className="text-2xl font-semibold lg:text-2xl"> Lista de Desejos</h2>
-                    <p className="lg:text-lg">Guarde aqui os tesouros que você deseja iluminar sua biblioteca em breve. </p>
-                </div>
-
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 overflow-hidden">
-                    <AnimatePresence>
-
-
-                    {favorites.length > 0 ? 
-                    favorites.map(favorito => {
-                        return ( 
-                            <motion.div initial={{opacity:0, y:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}} layout key={favorito.id} className="flex flex-rol lg:flex-col lg:h-fit gap-4 lg:gap-4 h-40 p-4 rounded-2xl bg-white shadow-xs lg:justify-between relative ">
-                                <button onClick={()=> removeFromFavorites(favorito)} className="hover:text-red-500 text-black/50 transition-all cursor-pointer hidden lg:block  absolute top-5 right-7"><i class="fa-solid fa-trash"></i></button>
-                                <div className="w-20 flex-none  lg:w-full lg:h-80 rounded-xl bg-gray-200 overflow-hidden">
-                                    <img className='w-full h-full object-cover' src={favorito.img_url} alt="" />
-                                </div>
-                                <div className="w-full flex flex-col justify-between lg:gap-2 truncate">
+    return (
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`flex flex-col gap-8 ${hasMaxLength ? 'h-screen': 'h-full'} pt-7 pb-25 pl-20 pr-5 lg:py-30 lg:pl-150 lg:pr-70 lg:gap-8`}>
+            <div className='flex flex-col gap-2'>
+                <h2 className='text-2xl font-semibold lg:text-2xl'> Lista de Desejos</h2>
+                <p className='lg:text-lg'>Guarde aqui os tesouros que você deseja iluminar sua biblioteca em breve. </p>
+            </div>
+            <div className='grid grid-cols-1 overflow-hidden gap-8 py-2 md:grid-cols-2 lg:grid-cols-[repeat(4,minmax(200px,1fr))]'>
+                <AnimatePresence>
+                {favorites.length > 0 ? 
+                favorites.map(favorite => {
+                    return ( 
+                        <motion.div initial={{opacity:0, y:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}} layout key={favorite.id} className='relative flex flex-rol gap-4 h-40 p-4 bg-white rounded-2xl shadow lg:flex-col lg:justify-between lg:gap-4 lg:h-fit '>
+                            <button className='absolute hidden top-7 right-7 w-8 h-8 text-black/50 bg-white/90 rounded-2xl transition-all shadow cursor-pointer lg:block hover:text-red-600 hover:bg-red-200 hover:scale-110' onClick={() => handleRemoveFromFavorites(favorite)}><i className="fa-solid fa-heart-crack"></i></button>
+                            <div className='flex-none overflow-hidden w-20 bg-gray-200 rounded-xl lg:w-fit lg:h-75'>
+                                <img className='w-full h-full' src={favorite.img_url} alt='Capa do livro' />
+                            </div>
+                            <div className='flex flex-col justify-between w-full truncate lg:gap-2'>
+                                <div className='flex flex-col gap-3'>
                                     <div>
-                                        <p className="text-lg/6 font-semibold truncate">{favorito.nome}</p>
-                                        <p className="text-xl lg:text-base font-bold text-blue-500">{favorito?.valor?.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
+                                        <p className='text-lg/6 font-semibold truncate'>{favorite.nome}</p>
+                                        <p className='text-base text-gray-500 truncate'>{favorite.description}</p>
                                     </div>
-                                    <div className="flex gap-4 lg:flex-col">
-                                        <button onClick={()=> handleAdicionarCarrinho(favorito)} className="flex items-center lg:justify-center lg:py-3 gap-1 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500 to-red-500 text-white cursor-pointer"> 
-                                            
-                                            
-                                            <div className="text-xs font-semibold">{items?.some(item => item.id === favorito.id)? 'ADICIONADO': <div className="flex items-center"><div className="text-xs"><i class="fa-solid fa-plus"></i></div>CARRINHO</div>}</div>
-                                        </button>
-                                        <button onClick={()=> removeFromFavorites(favorito)} className="text-red-500 lg:hidden cursor-pointer "><i class="fa-solid fa-trash"></i></button>
-
-                                    </div>
+                                    <p className='text-xl font-bold text-blue-900 lg:text-lg lg:hidden'>{currencyFormatter(favorite.valor)}</p>
                                 </div>
-                            </motion.div>
-                                
-                        )
-                    })
-                    : 
-                    <div className='h-full text-3xl font-semibold py-50 flex justify-center col-span-full'>
-                        adicione favoritos a sua lista!
-                    </div>
-                    }
-                    </AnimatePresence>
-                    
-                    
+                                <div className='flex gap-4 py-1 overflow-visible'>
+                                    <p className='text-xl font-bold text-blue-900 lg:text-lg hidden lg:block'>{currencyFormatter(favorite.valor)}</p>
+                                    <button onClick={()=> handleAdicionarCarrinho(favorite)} className='flex items-center justify-center gap-1 w-full px-4 lg:px-2 py-1.5 text-white bg-linear-to-r from-blue-500 to-red-500 rounded-full cursor-pointer lg:py-1'> 
+                                        <div className='text-xs font-semibold'>{items?.some(item => item.id === favorite.id)? 'ADICIONADO': <div className='flex items-center'><div className='text-xs'><i className='fa-solid fa-plus'></i></div>CARRINHO</div>}</div>
+                                    </button>
+                                    <button className='flex justify-center items-center w-10 h-7 text-xs text-black/50 bg-white/90 border border-gray-100 rounded-2xl transition-transform shadow cursor-pointer lg:block hover:text-red-600 hover:bg-red-200 hover:scale-110 lg:hidden' onClick={() => handleRemoveFromFavorites(favorite)}><i className="fa-solid fa-heart-crack"></i></button>
+                                </div>
+                            </div>
+                        </motion.div> 
+                    )
+                })
+                : 
+                <div className='flex justify-center col-span-full h-full py-50 text-3xl font-semibold'>
+                    adicione favoritos a sua lista!
                 </div>
-
-        
+                }
+                </AnimatePresence>
+            </div>
         </motion.div>
     )
 }
