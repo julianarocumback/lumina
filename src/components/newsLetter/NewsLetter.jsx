@@ -13,7 +13,7 @@ export default function NewsLetter(){
                     {/* Email input */}
                     <input type='email' placeholder='Seu melhor e-mail' className='w-full py-4 px-6 bg-white border border-[#e2e8f0] rounded-4xl'/>
                     {/* Subscribe button */}
-                    <Button whileHover={{ scale: 1.05, y: -2 }} texto='Inscrever-se' style='w-full py-4 px-6 font-medium text-white bg-[#00639a] bg-gradient-to-r from-[#00639a] to-[#bc004b] rounded-4xl cursor-pointer lg:w-40'/>
+                    <Button whileHover={{ scale: 1.05, y: -2 }} texto='Inscrever-se' style='text-center w-full py-4 font-medium text-white bg-[#00639a] bg-gradient-to-r from-[#00639a] to-[#bc004b] rounded-4xl cursor-pointer lg:w-40'/>
                 </div>        
             </div>
         </motion.div>

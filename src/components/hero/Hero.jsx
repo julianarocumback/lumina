@@ -30,7 +30,7 @@ export default function Hero() {
           <Button
             texto={'Adquira já o seu!'}
             icone={<span className='material-icons-outlined'>auto_awesome</span>}
-            style={'lg:hidden'}
+            style={'lg:hidden gap-4'}
             link={'/produto/21'}
             initial={{ left: '-100%' }}
             animate={{ left: '100%' }}

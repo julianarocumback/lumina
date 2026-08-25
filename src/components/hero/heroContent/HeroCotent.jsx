@@ -16,7 +16,7 @@ export default function HeroContent() {
             <Button
                 texto={'Adquira já o seu!'}
                 icone={<span className='material-icons-outlined'>auto_awesome</span>}
-                style={'hidden lg:flex'}
+                style={'hidden lg:flex gap-4'}
                 link={'/produto/21'}
                 initial={{ left: '-100%' }}
                 animate={{ left: '100%' }}
