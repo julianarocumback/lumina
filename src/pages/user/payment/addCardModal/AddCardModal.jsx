@@ -122,7 +122,7 @@ export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
     return ReactDOM.createPortal(
         <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.3}} className='fixed inset-0 flex items-center justify-center h-full w-full bg-black/30 z-50'>
 
-            <div className='relative flex flex-col gap-8 w-full h-fit p-8 bg-white border border-gray-200 rounded-2xl shadow-lg lg:w-100'>
+            <div className='relative flex flex-col gap-8 w-full h-full lg:h-fit p-8 bg-white border border-gray-200 lg:rounded-2xl shadow-lg lg:w-100'>
                 {/* Close modal */}
                 <button type='button' className="absolute right-8 w-7 h-7 transition-colors hover:text-red-400 hover:cursor-pointer" onClick={()=> setNewPayment(false)}><i className="fa-solid fa-xmark"></i></button> 
 
@@ -189,7 +189,7 @@ export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
                         <div className="flex gap-4 h-7">
                             <div className="flex items-center gap-2">
                                 <input id='main' onChange={handleDefaultCardChange} type="checkbox"/>
-                                <label htmlFor='main' className='font-semibold text-xs text-gray-700'>Definir como cartão principal</label>
+                                <label htmlFor='main' className='font-semibold text-xs text-gray-700'><span className='hidden md:inline'>Definir como </span><span className='capitalize md:lowercase'>principal</span></label>
                             </div>
                         </div>
                     </div>
