@@ -182,8 +182,6 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
         }
         setAddress(prev => ({...prev, type:type}))
     }
-    console.log(address.type)
-
 
     // SUBMIT ADDRESS
     function handleAddAddress(){
@@ -289,9 +287,7 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
                     {/* CIDADE, ESTADO E CEP */}
                     <div className='flex flex-col lg:flex-row gap-4'>
                         {/* CIDADE */}
-                        <div className='flex gap-4 w-full lg:w-3/4'>
-
-                        <div className='flex flex-col gap-2 w-3/5 lg:w-3/4'>
+                        <div className='flex flex-col gap-2 w-full lg:w-3/4'>
                             <label className={'font-semibold text-xs text-gray-700'} htmlFor='city'>Cidade</label>
                             <input
                                 type='text' 
@@ -303,10 +299,9 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
                                 onBlur={handleCityVerification}
                             />
                             {shouldShowCityContentError && <p className='text-xs text-red-500'>A cidade é obrigatória</p>}
-
                         </div>
                         {/* ESTADO */}
-                        <div className='flex flex-col gap-2 w-2/5 lg:w-1/4'>
+                        <div className='flex flex-col gap-2 w-full lg:w-1/4'>                     
                             <label htmlFor='state' className='font-semibold text-xs text-gray-700' >Estado</label>
                             <select
                                 id='state'
@@ -344,8 +339,6 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
                                 <option value='TO'>Tocantins</option>
                             </select>
                             {shouldShowStateError && <p className='text-xs text-red-500'>O estado é obrigatório</p>}
-
-                        </div>
                         </div>
 
                         {/* CEP */}
@@ -377,7 +370,7 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
                             />
                             <label htmlFor='default' className={`$ font-semibold text-xs text-gray-700`}>Definir como principal</label>
                         </div>
-                        <div className='flex gap-2'>
+                        <div className='flex items-center gap-2'>
                             <label htmlFor='type' className='font-semibold text-xs text-gray-700'>Tipo:</label>
                             <select
                                 id='type'

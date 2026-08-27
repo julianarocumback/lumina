@@ -1,6 +1,7 @@
-import { useOutletContext } from 'react-router-dom'
-import {motion, AnimatePresence} from 'framer-motion'
 import { useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
+
 import NewAddress from './NewAddress'
 
 export default function Address(){
