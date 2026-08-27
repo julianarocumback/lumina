@@ -368,7 +368,7 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
                                 className={`rounded-lg bg-gray-100 px-4 text-xs h-full focus:outline-none`}
                                 onChange={handleMainChange}
                             />
-                            <label htmlFor='default' className={`$ font-semibold text-xs text-gray-700`}>Definir como principal</label>
+                            <label htmlFor='default' className={`$ font-semibold text-xs text-gray-700`}><span className='hidden md:inline'>Definir como </span><span className='capitalize md:lowercase'>principal</span></label>
                         </div>
                         <div className='flex items-center gap-2'>
                             <label htmlFor='type' className='font-semibold text-xs text-gray-700'>Tipo:</label>
