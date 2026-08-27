@@ -189,7 +189,7 @@ export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
                         <div className="flex gap-4 h-7">
                             <div className="flex items-center gap-2">
                                 <input id='main' onChange={handleDefaultCardChange} type="checkbox"/>
-                                <label htmlFor='main' className='font-semibold text-xs text-gray-700'><span className='hidden md:inline'>Definir como </span><span className='capitalize md:lowercase'>principal</span></label>
+                                <label htmlFor='main' className='font-semibold text-xs text-gray-700'>Definir como principal</label>
                             </div>
                         </div>
                     </div>
