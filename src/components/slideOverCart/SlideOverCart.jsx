@@ -93,7 +93,7 @@ export default function SlideOverCart({isCartOpen, setIsCartOpen}){
                 <div className='flex justify-between items-center'>
                     <div className='text-lg font-semibold lg:text-xl'>Carrinho</div>
                     <AnimatePresence>
-                        {items.length > 0 && <motion.button initial={{ opacity: 0}} animate={{ opacity: 1}}  transition={{ duration: 0.5 }}  exit={{ opacity: 0, transition: { duration: 0.20 } }}  className='hover:text-red-500 transition-all' onClick={() => setItems([])}>Limpar</motion.button>}
+                        {items.length > 0 && <motion.button initial={{ opacity: 0}} animate={{ opacity: 1}}  transition={{ duration: 0.5 }}  exit={{ opacity: 0, transition: { duration: 0.20 } }}  className='transition-all hover:text-red-500 hover:cursor-pointer' onClick={() => setItems([])}>Limpar</motion.button>}
                     </AnimatePresence>
                 </div>  
 

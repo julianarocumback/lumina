@@ -5,6 +5,7 @@ export default function ProductInfo({product, onAddToFavorites, onRemoveFromFavo
     const {addToCart,items} = useCart()
 
     const isAlreadyFavorite = dadosCliente?.favoritos.some(item => item.id === product.id)
+    const isAlreadyInCart = items?.some(item => item.id === product.id)
 
     function handleAddFavorite() {
         if(isAlreadyFavorite){
@@ -38,10 +39,10 @@ export default function ProductInfo({product, onAddToFavorites, onRemoveFromFavo
             {/* Call to action buttons */}
             <div className='flex flex-col gap-4 py-10'>
                 {/* Add to Cart */}
-                <button onClick={() => addToCart(product.product)} className='flex justify-center items-center gap-3 w-full py-3 text-xl font-semibold text-white bg-linear-to-r from-[#00639a] to-[#bc004b] rounded-4xl cursor-pointer lg:py-4'><span className='material-icons '>shopping_cart</span>{!items?.some(item => item.id === product.id)? 'Adicionar ao carrinho': 'product adicionado'}</button>
+                <button onClick={() => addToCart(product)} className='flex justify-center items-center gap-3 w-full py-3 text-xl font-semibold text-white bg-linear-to-r from-[#00639a] to-[#bc004b] rounded-4xl cursor-pointer lg:py-4'><span className='material-icons'>shopping_cart</span>{isAlreadyInCart? 'Produto adicionado': 'Adicionar ao carrinho'}</button>
 
                 {/* Add or remove from Favorites */}
-                {authenticated && <button onClick={handleAddFavorite}  className={`flex justify-center items-center gap-3 py-3 text-xl font-semibold ${isAlreadyFavorite ? 'text-red-500' : 'text-black'} bg-gray-200 w-full rounded-4xl cursor-pointer lg:py-4`}>{isAlreadyFavorite? <span><i className='fa-solid fa-heart'></i>  Remover dos favoritos</span> : <span><i className='fa-solid fa-heart'></i> Adicionar  aos favoritos</span>}</button>}
+                {authenticated && <button onClick={handleAddFavorite}  className={`flex justify-center items-center gap-3 py-3 text-xl font-semibold ${isAlreadyFavorite ? 'text-red-500' : 'text-black'} bg-gray-200 w-full rounded-4xl cursor-pointer lg:py-4`}><i className='fa-solid fa-heart'></i>{isAlreadyFavorite? <span>Remover dos favoritos</span> : <span>Adicionar aos favoritos</span>}</button>}
             </div>
 
             {/* Product highlights */}

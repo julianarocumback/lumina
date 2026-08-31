@@ -1,8 +1,9 @@
+import { p } from 'framer-motion/client';
 import {useState} from 'react'
 
 export default function Email({dadosCliente, atualizarEmail, cancelEmailUpdate, userEmail, userNewEmail}){
     const [email, setEmail] = useState('')
-    const [ativarBotaoEmail, setAtivarBotaoEmail] = useState(false)
+    const [isEditingEmail, setIsEditingEmail] = useState(false)
     const [confirmEmail, SetConfirmEmail] = useState(false)
 
     
@@ -16,24 +17,26 @@ export default function Email({dadosCliente, atualizarEmail, cancelEmailUpdate, 
 
 
      function handleAtivarBotaoEmail(){
-        setAtivarBotaoEmail(true)
+        setIsEditingEmail(true)
     }
 
     function handleCancelarAtualizacaoEmail(){
-        setAtivarBotaoEmail(false)
+        setIsEditingEmail(false)
         setEmail('')
        
     }
     
     function handleAtualizarEmail(){
         atualizarEmail(email)
-        setAtivarBotaoEmail(true)
+        setIsEditingEmail(false)
         SetConfirmEmail(true)
     }
 
     function handleCancelEmailUpdate(){
         cancelEmailUpdate()
     }
+
+    console.log(userNewEmail)
 
     return(
         <div className="flex justify-between items-center flex-col lg:flex-row">
@@ -42,24 +45,39 @@ export default function Email({dadosCliente, atualizarEmail, cancelEmailUpdate, 
                 <div className='flex flex-col lg:flex-row'>
                     <div className="flex  h-7 w-full items-center relative gap-4">
                         <input
-                            disabled={!ativarBotaoEmail}
+                            disabled={!isEditingEmail}
                             value={email} type="email"
-                            className={`${ativarBotaoEmail && 'border'} absolute  truncate text-gray-black font-semibold px-2 -left-2   tracking-wider  w-70 z-50 `}
+                            className={`${isEditingEmail && 'border'} absolute  truncate text-gray-black font-semibold px-2 -left-2   tracking-wider  w-70 z-50 `}
                             onChange={handleAddEmail}
                         />
 
-                        {!ativarBotaoEmail && (userNewEmail === null ? <span className=' tracking-wider'>{userEmail}</span> :  <span className=' tracking-wider'>{userNewEmail}</span>)}
+
+                        {userNewEmail}
+                        {!isEditingEmail && userNewEmail === null ? <span className=' tracking-wider'>{userEmail}</span> :  <span className=' tracking-wider'>{userNewEmail}</span>}
                         
-                        {userNewEmail && !ativarBotaoEmail && <div className='text-orange-400 text-xs border px-2 rounded-2xl py-0.5'>Pendente</div>}
+
+
+
+                        
+
+
+                        {userNewEmail && !isEditingEmail && <div className='text-orange-400 text-xs border px-2 rounded-2xl py-0.5'>Pendente</div>}
                     </div>
                     <div>
-                        <div className="flex">
-                            {userNewEmail && <div onClick={handleCancelEmailUpdate}>Cancelar auteração</div>}
-                            {!ativarBotaoEmail && <div onClick={handleAtivarBotaoEmail} className="font-semibold text-blue-700">Editar</div>}
-                            <div className="flex gap-4">
-                                {ativarBotaoEmail && <div onClick={handleCancelarAtualizacaoEmail} className='text-red-500 font-semibold'>Cancelar</div>}
-                                {ativarBotaoEmail && <div onClick={handleAtualizarEmail} className='font-semibold'>Salvar</div>}
-                            </div>
+                        <div className="flex border w-fit">
+                            {userNewEmail && <div className='text-xs font-semibold text-red-600 cursor-pointer border w-full' onClick={handleCancelEmailUpdate}>Cancelar alteração</div>}
+                            
+                            
+                            
+                            {!isEditingEmail &&  <div onClick={handleAtivarBotaoEmail} className="font-semibold text-blue-700">Editar</div>}
+                            
+                            {isEditingEmail &&
+                                <div className="flex gap-4">
+                                    <div onClick={handleCancelarAtualizacaoEmail} className='text-red-500 font-semibold'>Cancelar</div>
+                                    <div onClick={handleAtualizarEmail} className='font-semibold'>Salvar</div>
+                                </div>
+                            }
+                            
                         </div>
                     </div>
                 </div>

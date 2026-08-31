@@ -104,41 +104,51 @@ export function AuthProvider({ children }) {
 
   }
 
-  // update user email
-  async function atualizarEmail(novoEmail){
-    const { data, error } = await supabase.auth.updateUser({
-        email: novoEmail
-    })
+// update user email
+async function atualizarEmail(novoEmail) {
+  if (!novoEmail) return;
 
-    if(error) {
-      console.error('Erro ao atualizar o email', error.message)
-      return
-    }
+  const { data, error } = await supabase.auth.updateUser({
+    email: novoEmail
+  });
 
-    console.log('E-mail atualizada com sucesso!', data)
-      if (data?.user) {
-    setUser(data.user)
-    }
+  if (error) {
+    console.error('Erro ao atualizar o email:', error.message);
+    alert(`Erro no Auth: ${error.message}`);
+    return;
   }
 
-  // Cancel email update
-  const cancelEmailUpdate = async () => {
-    if(!user?.email) return
-    const { data, error } = await supabase.auth.updateUser({
-      email: user.email
-    })
-
-    if(error) {
-      console.error('Erro ao cancelar o email', error.message)
-      return
-    }
-
-    console.log('Cancelado!', data)
-    if (data?.user) {
+  if (data?.user) {
     setUser(data.user);
+
+    // Grava o e-mail pendente na tabela clientes
+    const { error: errorClientes } = await supabase
+      .from('clientes')
+      .update({ pending_email: novoEmail })
+      .eq('id', user.id);
+
+    if (errorClientes) {
+      console.error('Erro ao salvar na tabela clientes:', errorClientes.message);
+    }
+  }
+}
+
+// Cancel email update
+const cancelEmailUpdate = async () => {
+  if (!user?.id) return;
+
+  const { error } = await supabase
+    .from('clientes')
+    .update({ pending_email: null })
+    .eq('id', user.id);
+
+  if (error) {
+    console.error('Erro ao cancelar o email:', error.message);
+    return;
   }
 
-  }
+  
+};
 
   // Update user whatsapp
   async function atualizarWhatsApp(whatsapp) {

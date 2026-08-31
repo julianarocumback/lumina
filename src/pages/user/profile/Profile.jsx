@@ -1,5 +1,5 @@
 import { useOutletContext} from 'react-router-dom'
-import {motion, AnimatePresence} from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {useEffect, useState} from 'react'
 import ConfirmationModal from './confirmationModal'
 
@@ -25,11 +25,9 @@ export default function Profile(){
 
     async function handleUpdatePassword(){
         if(password !== confirmPassword) return
-            setIsUpdatePassword(false)
-            setPassword('')
-            setConfirmPassword('')
-       
-
+        setIsUpdatePassword(false)
+        setPassword('')
+        setConfirmPassword('')
     }
 
     function handleAddPassword(event){
@@ -42,7 +40,7 @@ export default function Profile(){
         setConfirmPassword(confirmPassword)
     }
 
-    useEffect(() =>{
+    useEffect(() => {
         const modal = ()=> {
             if(isPurgeAccount || isUpdatePassword) {
                 document.body.classList.add('overflow-y-hidden')
@@ -56,7 +54,7 @@ export default function Profile(){
     if(!dadosCliente) return
 
     return(
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className="flex flex-col gap-8 lg:gap-8 pt-7 pb-25 lg:py-30 pl-20 pr-5 lg:pl-150 lg:pr-70 h-full">
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className='flex flex-col gap-8  h-full pt-7 pb-25 pl-20 pr-5 lg:gap-8 lg:pr-70 lg:py-30 lg:pl-150'>
 
             <ConfirmationModal
                 isPurgeAccount={isPurgeAccount}
@@ -84,14 +82,14 @@ export default function Profile(){
                 hasPassword={hasPassword}
             />
              
-            <h1 className="text-2xl font-semibold">Configurações</h1>
+            <h1 className='text-2xl font-semibold'>Configurações</h1>
 
-            <div className="flex flex-col gap-4">
+            <div className='flex flex-col gap-4'>
 
                 {/* ACCOUNT INFO */}
-                <h2 className="text-xl font-semibold">Dados pessoais</h2>
+                <h2 className='text-xl font-semibold'>Dados pessoais</h2>
 
-                <div className="bg-white border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex flex-col ">
+                <div className='bg-white border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex flex-col '>
                     
                     {/* NAME */}
                     <Name dadosCliente={dadosCliente}  onSaveName={submitName}/>
@@ -100,7 +98,7 @@ export default function Profile(){
                     <Cpf dadosCliente={dadosCliente} onSaveCpf={cpfAdd}/>
 
                     {/* E-MAIL */}
-                    <Email dadosCliente={dadosCliente} atualizarEmail={atualizarEmail} userEmail={user.email} userNewEmail={user.new_email} cancelEmailUpdate={cancelEmailUpdate}/>
+                    <Email dadosCliente={dadosCliente} atualizarEmail={atualizarEmail} userEmail={user?.email} userNewEmail={user?.new_email} cancelEmailUpdate={cancelEmailUpdate}/>
 
                     {/* WHATSAPP */}
                     <Whatsapp dadosCliente={dadosCliente} onSaveWhatsApp={atualizarWhatsApp}/>
@@ -113,9 +111,9 @@ export default function Profile(){
             </div>
 
             {/* ACCOUNT SECURITY */}
-            <div className="flex-col flex gap-4">
+            <div className='flex-col flex gap-4'>
 
-                <h2 className="text-xl font-semibold">Segurança da conta</h2>
+                <h2 className='text-xl font-semibold'>Segurança da conta</h2>
 
                 {/* PASSWORD */}
                 <Password setIsUpdatePassword={setIsUpdatePassword}/>
@@ -128,36 +126,36 @@ export default function Profile(){
 
 
             {/* ACTIVE SESSIONS */}
-            <div className="flex flex-col gap-4">
+            <div className='flex flex-col gap-4'>
 
-                <h2 className="text-xl font-semibold">Sessões ativas</h2>
+                <h2 className='text-xl font-semibold'>Sessões ativas</h2>
 
-                <div className="bg-gray-100 border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex items-center justify-between">
-                    <div className="flex gap-4 items-center">
-                    <div className="bg-white w-12 h-12 flex justify-center items-center rounded-2xl text-gray-800 text-xl"><i class="fa-solid fa-laptop"></i></div>
+                <div className='bg-gray-100 border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex items-center justify-between'>
+                    <div className='flex gap-4 items-center'>
+                    <div className='bg-white w-12 h-12 flex justify-center items-center rounded-2xl text-gray-800 text-xl'><i class='fa-solid fa-laptop'></i></div>
                     <div>
-                        <h3 className="font-semibold">MackBook Pro</h3>
-                        <p className="text-xs text-gray-500">Safari . São Paulo . <span className="text-blue-700 italic font-semibold">Está sessão</span> </p>
+                        <h3 className='font-semibold'>MackBook Pro</h3>
+                        <p className='text-xs text-gray-500'>Safari . São Paulo . <span className='text-blue-700 italic font-semibold'>Está sessão</span> </p>
                     </div>
 
                     </div>
                     <div>
-                        <div className="font-semibold text-gray-500"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                        <div className='font-semibold text-gray-500'><i class='fa-solid fa-arrow-right-from-bracket'></i></div>
                     </div>
                     
                 </div>
 
-                <div className="bg-gray-100 border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex items-center justify-between">
-                    <div className="flex gap-4 items-center">
-                    <div className="bg-white w-12 h-12 flex justify-center items-center rounded-2xl text-gray-800 text-xl"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <div className='bg-gray-100 border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex items-center justify-between'>
+                    <div className='flex gap-4 items-center'>
+                    <div className='bg-white w-12 h-12 flex justify-center items-center rounded-2xl text-gray-800 text-xl'><i class='fa-solid fa-mobile-screen-button'></i></div>
                     <div>
-                        <h3 className="font-semibold">iPhone 15 Pro</h3>
-                        <p className="text-xs text-gray-500">Website . São Paulo . <span className="text-blue-700 italic font-semibold">Está sessão</span> </p>
+                        <h3 className='font-semibold'>iPhone 15 Pro</h3>
+                        <p className='text-xs text-gray-500'>Website . São Paulo . <span className='text-blue-700 italic font-semibold'>Está sessão</span> </p>
                     </div>
 
                     </div>
                     <div>
-                        <div className="font-semibold text-gray-500"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
+                        <div className='font-semibold text-gray-500'><i class='fa-solid fa-arrow-right-from-bracket'></i></div>
                     </div>
                     
                 </div>
