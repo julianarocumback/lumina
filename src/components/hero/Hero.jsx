@@ -35,7 +35,7 @@ export default function Hero() {
             initial={{ left: '-100%' }}
             animate={{ left: '100%' }}
             transition={{ repeat: Infinity, duration: 2, repeatDelay: 3, ease: 'linear'}}
-            animationStyle={'absolute top-0 w-1/2 h-full bg-white/20 skew-x-12 blur-sm'}
+            animationStyle={'absolute top-0 w-1/2 lg:w-1/3 h-full bg-white/20 skew-x-12 blur-sm'}
             whileHover={{ scale: 1.02 }}
           />
         </div>

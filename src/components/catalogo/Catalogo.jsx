@@ -4,7 +4,6 @@ import Order from "./order/Order"
 import Filter from "./filter/Filter"
 import Products from "./products/Products"
 import {MobileSearch, DesktopSearch} from './pesquisa/Pesquisa'
-import { a } from "framer-motion/client";
 
 export default function Catalogo(){
 
@@ -63,14 +62,14 @@ export default function Catalogo(){
         return a.nome.localeCompare(b.nome)
     })
 
-    const handleCleanSearch = ()=>{
+    const handleCleanSearch = () => {
         setPesquisa('')
     }
     
     
 
     return (
-        <section className="px-5 relative">
+        <section>
             <MobileSearch lista={produtos} categoria={categoria} setCategoria={setCategoria} setPesquisa={setPesquisa}  pesquisa={pesquisa}/>
             <div className="flex lg:px-70 py-12 lg:py-30 w-full">
                 <div className="hidden lg:flex lg:flex-col lg:p-6 gap-4">
