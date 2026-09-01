@@ -7,9 +7,9 @@ export default function ProductGallery({photo, gallery, setPhotoId}) {
     }
 
     return (
-        <div className='relative flex flex-col gap-4 h-full lg:w-240'>
+        <div className='relative flex flex-col gap-4 h-full sm:w-150 lg:w-200 lg:py-16  '>
             {/* Photo */}
-            <motion.div  className='overflow-hidden h-120 border border-gray-200 rounded-4xl lg:h-150'>
+            <motion.div className='overflow-hidden h-full border border-gray-200 rounded-4xl lg:h-150'>
                 <img src={photo?.url} alt='Capa do livro' className='h-full w-full object-cover'/>
             </motion.div>
 

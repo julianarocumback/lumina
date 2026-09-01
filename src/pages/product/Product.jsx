@@ -40,7 +40,7 @@ export default function Product(){
     }
     
     return(
-    <div className='h-full w-full py-8 bg-[rgba(249,249,251,1)]'>
+    <div className='h-full w-full bg-[rgba(249,249,251,1)]'>
         <Header/>
         <ProductHero photo={photo} gallery={gallery} setPhotoId={setPhotoId} product={product} onAddToFavorites={addToFavorites} onRemoveFromFavorites={removeFromFavorites} dadosCliente={dadosCliente} authenticated={authenticated}/>
         <ProductDetails product={product}/>

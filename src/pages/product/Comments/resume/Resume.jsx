@@ -1,12 +1,13 @@
 export default function Resume(){
     return (
-        <div className='flex flex-col gap-8 w-80 p-8 bg-white border border-gray-100 rounded-2xl shadow-sm'>
+        <div className='flex h-fit flex-col gap-4 w-full md:w-80 p-8 bg-white border border-gray-100 rounded-2xl shadow-sm '>
             <h3 className='text-xl lg:text-2xl font-bold'>Resumo das Avaliações</h3>
             
-            {/* Reviews */}
-            <div className='flex items-center gap-8'>
+            <div className='flex flex-col md:flex-col  sm:flex-row sm:justify-around     gap-4'>
+                {/* Reviews */}
+            <div className='flex items-center sm:justify-center gap-4 sm:flex-col md:justify-start md:items-start'>
                 <div className='text-5xl font-bold'>4.9</div>
-                <div>
+                <div className="flex flex-col sm:items-center md:items-start">
                     <div className='text-[rgb(112,93,0)]'><i className='fa-solid fa-star'></i><i className='fa-solid fa-star'></i><i className='fa-solid fa-star'></i><i className='fa-solid fa-star'></i><i className='fa-solid fa-star'></i></div>
                     <div>Baseado em 128 avaliações</div>
                 </div>
@@ -55,6 +56,8 @@ export default function Resume(){
                     </div>
                 </div>
             </div>
+            </div>
+            
 
             {/* Recommendations */}
             <div className='flex items-center gap-4 p-3 text-[rgb(0,99,154)] bg-[rgba(206,229,255,0.2)] rounded-2xl'>
