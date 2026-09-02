@@ -77,8 +77,8 @@ export default function Catalogo(){
             setPesquisa={setPesquisa}
             pesquisa={pesquisa}
             />
-            <div className='flex w-full'>
-                <div className='hidden lg:flex lg:flex-col gap-4 lg:p-6'>
+            <div className='flex w-full sm:gap-8 lg:gap-16 xl:gap-32'>
+                <div className='hidden sm:flex sm:flex-col gap-4 lg:p-6  sm:w-50'>
                     <h3 className='font-semibold text-2xl'>Catálogo</h3>
                     <div className='relative w-full'>
                         <h4>Pesquisa</h4>

@@ -7,7 +7,7 @@ import Button from '../ui/Button'
 export default function Hero() {
 
   return (
-    <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className='relative flex flex-col overflow-hidden w-full h-screen font-sans antialiased text-slate-900 bg-[#f0f2f5]'>
+    <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className='relative flex flex-col overflow-hidden w-full h-screen sm:h-fit sm:px-8 sm:py-2  font-sans antialiased text-slate-900 bg-[#f0f2f5]'>
       
       {/* Active background */}
       <div className='z-0 inset-0 absolute pointer-events-none'>
@@ -16,8 +16,8 @@ export default function Hero() {
       </div>
 
       {/* Hero */}
-      <main className='z-10 relative flex flex-col flex-1 justify-between h-full px-10 select-none md:p-12 lg:overflow-y-visible lg:mx-auto lg:mt-40'>
-        <div className='grid grid-cols-1 items-center gap-8 w-full max-w-7xl pt-10 lg:grid-cols-12 lg:gap-12 lg:pt-0'>
+      <main className='z-10 relative flex flex-col  flex-1 justify-center h-full px-8 sm:px-16 lg:px-32  select-none  g:overflow-y-visible bottom-7 lg:bottom-0 lg:mx-auto lg:mt-40'>
+        <div className='grid grid-cols-1 sm:grid-cols-2  items-center gap-8 w-full max-w-7xl pt-10 lg:grid-cols-12 lg:gap-20 lg:pt-0'>
           
           {/* Hero Content*/}
           <div className='col-span-1 pointer-events-auto lg:col-start-1 lg:col-span-7'>
@@ -30,7 +30,7 @@ export default function Hero() {
           <Button
             texto={'Adquira já o seu!'}
             icone={<span className='material-icons-outlined'>auto_awesome</span>}
-            style={'lg:hidden gap-4'}
+            style={'sm:hidden gap-4'}
             link={'/produto/21'}
             initial={{ left: '-100%' }}
             animate={{ left: '100%' }}

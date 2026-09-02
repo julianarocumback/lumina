@@ -36,7 +36,7 @@ export default function Products({produtos, carregar, setQuantidade, listaFiltra
                 </div>
             :
                 <div 
-                    className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3  gap-4 sm:gap-6 lg:gap-8">
+                    className="grid grid-cols-[repeat(auto-fill,150px)] justify-center gap-6">
 
                     <AnimatePresence>
                         {produtos.map((produto) => {
@@ -62,12 +62,12 @@ export default function Products({produtos, carregar, setQuantidade, listaFiltra
                                     </Link>
                                     
                                     <div className='flex flex-col'>
-                                        <span className='text-xs uppercase text-gray-400 font-semibold'>{produto.livros.autor}</span>
+                                        <span className='text-xs uppercase truncate text-gray-400 font-semibold'>{produto.livros.autor}</span>
                                         <div className='flex flex-col gap-2'>
                                             <span className='font-semibold truncate lg:text-lg'>{produto.nome}</span>
                                             <div className='flex justify-between items-center'>
-                                                <span className='font-semibold lg:text-lg text-blue-700'>{produto.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
-                                                <button disabled={items?.some(item => item.id === produto.id)} className={`px-3 lg:px-2 py-0.5 lg:py-1  rounded-xl bg-black/80 cursor-pointer text-white text-sm font-semibold   disabled:bg-gray-200 disabled:cursor-default disabled:transition-all`} onClick={() => addToCart(produto)}>{!items?.some(item => item.id === produto.id)? '+ Carrinho': 'Adicionado'}</button>  
+                                                <span className='font-semibold text-[12px] lg:text-lg text-blue-700'>{produto.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</span>
+                                                <button disabled={items?.some(item => item.id === produto.id)} className={`px-2 md:px-3 lg:px-2 py-0.5 lg:py-1 rounded-xl bg-black/80 cursor-pointer text-white text-sm font-semibold   disabled:bg-gray-200 disabled:cursor-default disabled:transition-all`} onClick={() => addToCart(produto)}>{!items?.some(item => item.id === produto.id)? '+ Carrinho': 'Adicionado'}</button>  
                                             </div>
                                         </div>
                                     </div>  

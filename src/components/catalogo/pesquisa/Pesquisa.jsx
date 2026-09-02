@@ -29,7 +29,7 @@ export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa}) => {
 
     return (
         <AnimatePresence>
-        <motion.div  className='absolute lg:hidden flex flex-col z-10 left-0 -top-10 w-full p-4 gap-8 items-center'>
+        <motion.div  className='absolute sm:hidden flex flex-col z-10 left-0 -top-10 w-full p-4 gap-8 items-center'>
             
             <div className='flex w-full gap-4 '>
                 <div className='w-full relative flex items-center justify-center'>
