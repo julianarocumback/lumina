@@ -11,7 +11,7 @@ export default function Favorites(){
 
     if(!favorites) return
 
-    function handleAdicionarCarrinho(favorito){
+    function handleAddToFavorites(favorito){
         addToCart(favorito)
     }
 
@@ -45,10 +45,10 @@ export default function Favorites(){
                                 </div>
                                 <div className='flex gap-4 py-1 overflow-visible'>
                                     <p className='text-xl font-bold text-blue-900 lg:text-lg hidden lg:block'>{currencyFormatter(favorite.valor)}</p>
-                                    <button onClick={()=> handleAdicionarCarrinho(favorite)} className='flex items-center justify-center gap-1 w-full px-4 lg:px-2 py-1.5 text-white bg-linear-to-r from-blue-500 to-red-500 rounded-full cursor-pointer lg:py-1'> 
+                                    <button onClick={()=> handleAddToFavorites(favorite)} className='flex items-center justify-center gap-1 w-full px-4 lg:px-2 py-1.5 text-white bg-linear-to-r from-blue-500 to-red-500 rounded-full cursor-pointer lg:py-1'> 
                                         <div className='text-xs font-semibold'>{items?.some(item => item.id === favorite.id)? 'ADICIONADO': <div className='flex items-center'><div className='text-xs'><i className='fa-solid fa-plus'></i></div>CARRINHO</div>}</div>
                                     </button>
-                                    <button className='flex justify-center items-center w-10 h-7 text-xs text-black/50 bg-white/90 border border-gray-100 rounded-2xl transition-transform shadow cursor-pointer lg:block hover:text-red-600 hover:bg-red-200 hover:scale-110 lg:hidden' onClick={() => handleRemoveFromFavorites(favorite)}><i className="fa-solid fa-heart-crack"></i></button>
+                                    <button className='flex justify-center items-center w-10 h-7 text-xs text-black/50 bg-white/90 border border-gray-100 rounded-2xl transition-transform shadow cursor-pointer hover:text-red-600 hover:bg-red-200 hover:scale-110 lg:hidden' onClick={() => handleRemoveFromFavorites(favorite)}><i className="fa-solid fa-heart-crack"></i></button>
                                 </div>
                             </div>
                         </motion.div> 

@@ -37,7 +37,7 @@ export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa}) => {
                     {pesquisa && <button onClick={handleCleanSearch} className='absolute hover:text-red-500 transition-all right-4 cursor-pointer z-50 '><i className="fa-solid fa-xmark" ></i></button>}
 
                 </div>
-                <button onClick={() => setIsFilterOpen(prev => !prev)} className=' shadow p-2 rounded-xl bg-white'><i class="fa-solid fa-filter"></i></button>
+                <button onClick={() => setIsFilterOpen(prev => !prev)} className=' shadow p-2 rounded-xl bg-white'><i className="fa-solid fa-filter"></i></button>
                 
             </div>
             {isFilterOpen &&

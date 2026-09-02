@@ -8,7 +8,7 @@ const Testimonials = () => {
 
     useEffect(() => {
         const checkSize = () => {
-            setIsMobile(window.innerWidth < 1200)
+            setIsMobile(window.innerWidth < 1024)
         }
         checkSize()
         

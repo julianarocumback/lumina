@@ -7,7 +7,7 @@ export default function Explorar(){
 
     useEffect(()=> {
         const checkSize = ()=>{
-            setIsMobile(window.innerWidth < 1200)
+            setIsMobile(window.innerWidth < 1024)
         }
         checkSize()
 
@@ -16,7 +16,7 @@ export default function Explorar(){
 
     },[])
     return (
-        <section id="exploreByColors" className="w-full px-8 py-12 lg:py-24 lg:px-86">
+        <section id="exploreByColors" className="w-full px-8 py-12 lg:py-24 lg:px-16 xl:px-32 2xl:px-80">
             <AnimatePresence>{isMobile? (<Carrossel/>): (<BentoGrid/>)}</AnimatePresence>
         </section>
     )
