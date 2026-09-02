@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 
 export default function HelpCenter(){
     return(
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className='flex flex-col gap-8 h-full pt-7 pb-25 pl-20 pr-5 lg:gap-8 lg:py-30 lg:pr-70   lg:pl-150'>
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className='flex flex-col gap-4 h-full ml-15 px-8 pt-8 pb-22 sm:p-16 sm:pb-30 md:px-32 lg:ml-80 lg:p-16 lg:pt-30 xl:p-32 xl:pb-18 2xl:px-70'>
             {/* CTA */}
             <div className='flex flex-col gap-4 p-8  border bg-[radial-gradient(at_0%_100%,#0288D120,transparent_30%),radial-gradient(at_100%_0%,#E91E6310,transparent_30%)] border-gray-100 rounded-2xl shadow-xs lg:py-15'>
                 <h1 className='text-2xl font-semibold'>Problemas com um pedido?</h1>
