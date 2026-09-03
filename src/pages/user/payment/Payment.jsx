@@ -19,7 +19,7 @@ export default function Payment(){
     if(!dadosCliente) return
     return(
         
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`flex flex-col gap-8 h-full pt-7 pb-25 pl-20 pr-5 lg:gap-8 lg:h-screen lg:py-30 lg:pl-150 lg:pr-70`}>
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`flex flex-col gap-8 ml-15 p-4 pb-18 sm:p-8 sm:pb-30 md:px-16 lg:ml-80 lg:pt-30 xl:p-32 xl:pb-18 2xl:px-70 `}>
             {/* Page header */}
             <div className='flex flex-col gap-4'>
                 <h1 className='text-2xl font-semibold lg:text-2xl'>Pagamentos</h1>
@@ -35,12 +35,12 @@ export default function Payment(){
 
                 {/* Saved Cards */}
                 <AnimatePresence>
-                    <div className='grid gap-4 lg:grid-cols-3'> 
+                    <div className='grid gap-4 sm:grid-cols-2 md:grid-cols-3'> 
                         {dadosCliente?.payment?.map(card => {
                             const maskedCard = card?.card_number?.replace(/\D/g,'').replace(/^(\d{4})(\d{4})(\d{4})(\d{4})$/, '•••• •••• •••• $4')
 
                             return (
-                                <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} layout className='relative flex flex-col justify-center gap-2 w-full h-40 p-4 bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] rounded-2xl shadow-lg md:w-full lg:w-full lg:h-45'>
+                                <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} layout className='relative flex flex-col justify-center gap-2   h-40 p-4 bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] rounded-2xl shadow-lg md:w-full lg:w-full lg:h-45'>
                                     <div className='absolute top-4 right-5 flex gap-2 text-white/70'>
                                         <button onClick={defaultCard}>deixar principal</button>
                                         {card.is_default && <div className='flex justify-center items-center text-xs px-2 bg-green-400/30 border-none rounded-full '>Principal</div>}

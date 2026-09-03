@@ -7,8 +7,6 @@ export default function Favorites(){
     const {dadosCliente, addToCart, onRemoveFromFavorites, items} = useOutletContext()
     const favorites = dadosCliente?.favoritos || []
 
-    const hasMaxLength = favorites.length < 2
-
     if(!favorites) return
 
     function handleAddToFavorites(favorito){
@@ -20,12 +18,12 @@ export default function Favorites(){
     }
 
     return (
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`flex flex-col gap-8 ml-15 p-4 pb-18 sm:p-8 sm:pb-30 md:px-16 lg:ml-80 lg:pt-30 xl:p-32 xl:pb-18 2xl:px-70 `}>
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`flex flex-col gap-8 ml-15 p-4 pb-18 sm:p-8 sm:pb-30 md:px-16 lg:ml-80 lg:pt-30 xl:p-32 xl:pb-18 2xl:px-70`}>
             <div className='flex flex-col gap-2'>
                 <h2 className='text-2xl font-semibold lg:text-2xl'> Lista de Desejos</h2>
                 <p className='lg:text-lg'>Guarde aqui os tesouros que você deseja iluminar sua biblioteca em breve. </p>
             </div>
-            <div className='grid grid-cols-1  gap-4 md:gap-8 py-2 sm:grid-cols-2 lg:grid-cols-[repeat(4,minmax(200px,1fr))] overflow-visible'>
+            <div className='grid grid-cols-1  gap-4 md:gap-8 py-2 sm:grid-cols-2 lg:grid-cols-[repeat(4,minmax(200px,1fr))] overflow-visible overflow-x-hidden'>
                 <AnimatePresence>
                 {favorites.length > 0 ? 
                 favorites.map(favorite => {
