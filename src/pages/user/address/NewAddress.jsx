@@ -218,7 +218,7 @@ export default function NewAddress({setNewAddress, onAddAddress, dadosCliente}){
 
     return ReactDOM.createPortal (
         <motion.div className='fixed flex justify-center modal-overlay items-center inset-0 h-dvh w-full transition-colors bg-black/30 overflow-hidden' initial={{opacity:0 }} animate={{opacity: 1}} exit={{opacity: 0}} transition={{duration: 0.3}}>
-            <div className='relative flex flex-col  gap-6 w-full h-fit p-8 sm:pb-30 bg-white border overflow-y-auto border-gray-200 shadow-lg lg:w-150 lg:h-fit lg:rounded-2xl'>
+            <div className='relative flex flex-col  gap-6 w-full pb-22 h-fit p-8 sm:pb-30 bg-white border overflow-y-auto border-gray-200 shadow-lg lg:w-150 lg:h-fit lg:rounded-2xl'>
                 <h2 className='text-xl font-semibold'>Novo endereço</h2>
                 <button onClick={()=> setNewAddress(false)} className='absolute right-8 w-7 h-7 hover:text-red-500 transition-all' ><i className='fa-solid fa-xmark' ></i></button>
             
