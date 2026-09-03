@@ -20,7 +20,7 @@ export default function Favorites(){
     }
 
     return (
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`flex flex-col gap-8 ${hasMaxLength ? 'h-screen': 'h-full'} pt-7 pb-25 pl-20 pr-5 lg:py-30 lg:pl-150 lg:pr-70 lg:gap-8`}>
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`flex flex-col gap-8 ml-15 p-4 pb-18 sm:p-16 sm:pb-30 md:px-32 lg:ml-80 lg:p-16 lg:pt-30 xl:p-32 xl:pb-18 2xl:px-70 `}>
             <div className='flex flex-col gap-2'>
                 <h2 className='text-2xl font-semibold lg:text-2xl'> Lista de Desejos</h2>
                 <p className='lg:text-lg'>Guarde aqui os tesouros que você deseja iluminar sua biblioteca em breve. </p>
