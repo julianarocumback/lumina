@@ -26,8 +26,8 @@ export default function HelpCenter(){
                 </div>
 
                 {/* Support layout ticket card */}
-                <div className='flex flex-col gap-4'>
-                    <div className='flex flex-col p-8 bg-white border border-gray-100 rounded-2xl shadow-xs'>
+                <div className='grid grid-cols-1 sm:grid-cols-2  gap-4 flex-wrap'>
+                    <div className='flex flex-col p-8 bg-white border border-gray-100 rounded-2xl shadow-xs w-full'>
                         <div className='flex justify-between items-center'>
                             <p className='text-xs font-medium text-blue-700 '>#CH-0001</p>
                             <p className='py-1 px-2 text-xs font-semibold text-yellow-800 bg-yellow-300 rounded-full'>EM ANÁLISE</p>
@@ -44,7 +44,41 @@ export default function HelpCenter(){
                             </button>
                         </div>
                     </div>
-                    <div className='flex flex-col p-8 bg-white border border-gray-100 rounded-2xl shadow-xs'>
+                    <div className='flex flex-col p-8 bg-white border border-gray-100 rounded-2xl shadow-xs w-full'>
+                        <div className='flex justify-between items-center'>
+                            <p className='text-xs font-medium text-blue-700 '>#CH-0002</p>
+                            <p className='py-1 px-2 text-xs font-semibold text-yellow-800 bg-yellow-300 rounded-full'>EM ANÁLISE</p>
+                        </div>
+                        <p className='text-xl font-semibold'>Atraso na Entrega</p>
+
+                        <div className='flex justify-between items-center mt-3'>
+                            <div className='flex justify-between text-xs'>
+                                <div><i className='fa-solid fa-calendar'></i></div>
+                                <span>10 Out, 2023</span>
+                            </div>
+                            <button className='h-7 w-7  bg-gray-200 rounded-full'>
+                                <i className='fa-solid fa-angle-right'></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div className='flex flex-col p-8 bg-white border border-gray-100 rounded-2xl shadow-xs w-full'>
+                        <div className='flex justify-between items-center'>
+                            <p className='text-xs font-medium text-blue-700 '>#CH-0002</p>
+                            <p className='py-1 px-2 text-xs font-semibold text-yellow-800 bg-yellow-300 rounded-full'>EM ANÁLISE</p>
+                        </div>
+                        <p className='text-xl font-semibold'>Atraso na Entrega</p>
+
+                        <div className='flex justify-between items-center mt-3'>
+                            <div className='flex justify-between text-xs'>
+                                <div><i className='fa-solid fa-calendar'></i></div>
+                                <span>10 Out, 2023</span>
+                            </div>
+                            <button className='h-7 w-7  bg-gray-200 rounded-full'>
+                                <i className='fa-solid fa-angle-right'></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div className='flex flex-col p-8 bg-white border border-gray-100 rounded-2xl shadow-xs w-full'>
                         <div className='flex justify-between items-center'>
                             <p className='text-xs font-medium text-blue-700 '>#CH-0002</p>
                             <p className='py-1 px-2 text-xs font-semibold text-yellow-800 bg-yellow-300 rounded-full'>EM ANÁLISE</p>
