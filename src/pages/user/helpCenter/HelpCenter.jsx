@@ -17,7 +17,7 @@ export default function HelpCenter(){
             {/* SUPPORT HISTORY SECTION */}
             <div>
                 <div className='flex flex-col items-center gap-8 py-8 sm:flex-row sm:justify-between'>
-                    <h2 className='text-lg lg:text-xl font-semibold'>Histórico de atendimento</h2>
+                    <h2 className='text-lg font-semibold lg:text-xl'>Histórico de atendimento</h2>
                     {/* Filter tabs */}
                     <div className='flex justify-between gap-4 w-full p-1 bg-gray-200 rounded-2xl sm:w-70 lg:w-100 '>
                         <button className='w-full p-2 text-blue-700 font-semibold bg-white rounded-xl'>Em aberto</button>
@@ -26,7 +26,7 @@ export default function HelpCenter(){
                 </div>
 
                 {/* Support layout ticket card */}
-                <div className='grid grid-cols-1 min-[500px]:grid-cols-2  gap-4 flex-wrap'>
+                <div className='grid grid-cols-1 gap-4 min-[500px]:grid-cols-2 xl:grid-cols-3'>
                     <div className='flex flex-col p-8 bg-white border border-gray-100 rounded-2xl shadow-xs w-full'>
                         <div className='flex justify-between items-center'>
                             <p className='text-xs font-medium text-blue-700 '>#CH-0001</p>

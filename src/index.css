@@ -100,3 +100,10 @@
 .book-pages-right { position: absolute; top: var(--cover-overhang); bottom: var(--cover-overhang); width: calc(var(--book-depth) * 2); right: calc(var(--cover-overhang) - var(--book-depth)); background-color: #d4af37; transform: rotateY(90deg); transform-origin: center center; }
 .book-pages-top { position: absolute; left: 2px; right: calc(var(--cover-overhang) + 2px); height: calc(var(--book-depth) * 2); top: calc(var(--cover-overhang) - var(--book-depth)); background-color: #d4af37; transform: rotateX(90deg); transform-origin: center center; }
 .book-pages-bottom { position: absolute; left: 2px; right: calc(var(--cover-overhang) + 2px); height: calc(var(--book-depth) * 2); bottom: calc(var(--cover-overhang) - var(--book-depth)); background-color: #d4af37; transform: rotateX(-90deg); transform-origin: center center; }
+
+
+body:has(.modal-overlay) {
+  overflow: hidden;
+  touch-action: none;
+  scrollbar-gutter: stable both-edges;
+}
