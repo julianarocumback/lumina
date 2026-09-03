@@ -26,7 +26,7 @@ export default function HelpCenter(){
                 </div>
 
                 {/* Support layout ticket card */}
-                <div className='grid grid-cols-1 sm:grid-cols-2  gap-4 flex-wrap'>
+                <div className='grid grid-cols-1 min-[500px]:grid-cols-2  gap-4 flex-wrap'>
                     <div className='flex flex-col p-8 bg-white border border-gray-100 rounded-2xl shadow-xs w-full'>
                         <div className='flex justify-between items-center'>
                             <p className='text-xs font-medium text-blue-700 '>#CH-0001</p>
