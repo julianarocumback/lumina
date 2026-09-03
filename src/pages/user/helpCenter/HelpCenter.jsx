@@ -16,7 +16,7 @@ export default function HelpCenter(){
 
             {/* SUPPORT HISTORY SECTION */}
             <div>
-                <div className='flex flex-col items-center gap-8 py-8 lg:flex-row lg:justify-between'>
+                <div className='flex flex-col items-center gap-8 py-8 sm:flex-row lg:justify-between'>
                     <h2 className='text-xl font-semibold'>Histórico de atendimento</h2>
                     {/* Filter tabs */}
                     <div className='flex justify-between gap-4 w-full p-1 bg-gray-200 rounded-2xl lg:w-100 '>
