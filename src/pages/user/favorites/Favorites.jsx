@@ -25,7 +25,7 @@ export default function Favorites(){
                 <h2 className='text-2xl font-semibold lg:text-2xl'> Lista de Desejos</h2>
                 <p className='lg:text-lg'>Guarde aqui os tesouros que você deseja iluminar sua biblioteca em breve. </p>
             </div>
-            <div className='grid grid-cols-1 overflow-hidden gap-4 md:gap-8 py-2 sm:grid-cols-2 lg:grid-cols-[repeat(4,minmax(200px,1fr))]'>
+            <div className='grid grid-cols-1  gap-4 md:gap-8 py-2 sm:grid-cols-2 lg:grid-cols-[repeat(4,minmax(200px,1fr))] overflow-visible'>
                 <AnimatePresence>
                 {favorites.length > 0 ? 
                 favorites.map(favorite => {
