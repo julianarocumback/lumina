@@ -120,7 +120,7 @@ export default function AddCardModal({setNewPayment, onAddCard, dadosCliente}){
 
     
     return ReactDOM.createPortal(
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.3}} className='fixed inset-0 flex items-center justify-center h-screen w-full bg-black/30 z-50'>
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.3}} className='fixed inset-0 flex items-center justify-center h-screen w-full bg-black/30 z-50 overflow-hidden'>
 
             <div className='relative flex flex-col gap-8 w-full h-full lg:h-fit p-8 bg-white border border-gray-200 lg:rounded-2xl shadow-lg lg:w-100 overflow-y-auto'>
                 {/* Close modal */}
