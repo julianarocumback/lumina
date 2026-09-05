@@ -1,4 +1,4 @@
-export default function DeleteAccount({onPurgeAccount, setIsPurgeAccount}){
+export default function DeleteAccount({setIsPurgeAccount}){
     return(
         <div className="bg-white border border-gray-100 rounded-2xl shadow-xs p-6 flex justify-between items-center w-full">
                         <div className="flex gap-8 items-center">

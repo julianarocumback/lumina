@@ -133,7 +133,9 @@ export default function Profile(){
 
                 <h2 className='text-xl font-semibold'>Sessões ativas</h2>
 
-                <div className='bg-gray-100 border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex items-center justify-between'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+
+                    <div className='bg-gray-100 border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex items-center justify-between'>
                     <div className='flex gap-4 items-center'>
                     <div className='bg-white w-12 h-12 flex justify-center items-center rounded-2xl text-gray-800 text-xl'><i class='fa-solid fa-laptop'></i></div>
                     <div>
@@ -162,6 +164,25 @@ export default function Profile(){
                     </div>
                     
                 </div>
+
+                <div className='bg-gray-100 border border-gray-100 rounded-2xl shadow-xs p-6 gap-8 flex items-center justify-between'>
+                    <div className='flex gap-4 items-center'>
+                    <div className='bg-white w-12 h-12 flex justify-center items-center rounded-2xl text-gray-800 text-xl'><i class='fa-solid fa-mobile-screen-button'></i></div>
+                    <div>
+                        <h3 className='font-semibold'>Samsung Galaxy S26 Ultra</h3>
+                        <p className='text-xs text-gray-500'>Website . São Paulo . <span className='text-blue-700 italic font-semibold'>Está sessão</span> </p>
+                    </div>
+
+                    </div>
+                    <div>
+                        <div className='font-semibold text-gray-500'><i class='fa-solid fa-arrow-right-from-bracket'></i></div>
+                    </div>
+                    
+                </div>
+
+                </div>
+
+                
 
             </div>
 
