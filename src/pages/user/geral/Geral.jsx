@@ -14,7 +14,7 @@ export default function Geral(){
             {/* Welcome banner */}
             <Welcome dadosCliente={dadosCliente}/>
             
-            <div className='flex flex-col gap-4 md:flex-row lg:gap-8'>
+            <div className='flex flex-col gap-4 sm:flex-row lg:gap-8'>
                 {/* Order preview */}
                 <OrderPreview orders={dadosCliente.pedidos}/>
                 {/* Favorites preview */}
