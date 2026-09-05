@@ -23,14 +23,14 @@ export default function Favorites(){
                 <h2 className='text-2xl font-semibold lg:text-2xl'> Lista de Desejos</h2>
                 <p className='lg:text-lg'>Guarde aqui os tesouros que você deseja iluminar sua biblioteca em breve. </p>
             </div>
-            <div className='grid grid-cols-1  gap-4 md:gap-8 py-2 sm:grid-cols-2 lg:grid-cols-[repeat(4,minmax(200px,1fr))] overflow-visible overflow-x-hidden'>
+            <div className='grid grid-cols-1  gap-4 md:gap-8 py-2 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,minmax(180px,1fr))] overflow-visible overflow-x-hidden'>
                 <AnimatePresence>
                 {favorites.length > 0 ? 
                 favorites.map(favorite => {
                     return ( 
                         <motion.div initial={{opacity:0, y:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}} layout key={favorite.id} className='relative flex flex-rol gap-4 h-40 p-4 bg-white rounded-2xl shadow lg:flex-col lg:justify-between lg:gap-8 lg:h-fit '>
                             <button className='absolute hidden top-7 right-7 w-8 h-8 text-black/50 bg-white/90 rounded-2xl transition-all shadow cursor-pointer lg:block hover:text-red-600 hover:bg-red-200 hover:scale-110' onClick={() => handleRemoveFromFavorites(favorite)}><i className="fa-solid fa-heart-crack"></i></button>
-                            <div className='flex-none overflow-hidden w-20 bg-gray-200 rounded-xl lg:w-fit lg:h-75'>
+                            <div className='flex-none overflow-hidden w-20 bg-gray-200 rounded-xl lg:w-fit lg:h-full'>
                                 <img className='w-full h-full' src={favorite.img_url} alt='Capa do livro' />
                             </div>
                             <div className='flex flex-col justify-between w-full truncate lg:gap-2'>

@@ -5,7 +5,7 @@ export default function Welcome({dadosCliente}){
             {/* Welcome message wrapper */}
             <div className='flex flex-col text-center lg:gap-4'>
                 {/* Personalized greeting */}
-                <h2 className='text-lg font-semibold lg:text-5xl'>Bem-vinda de volta, {dadosCliente?.nome}!</h2>
+                <h2 className='text-lg font-semibold sm:text-[20px] lg:text-4xl'>Bem-vinda de volta, {dadosCliente?.nome}!</h2>
                 <span className='text-xs lg:text-lg'>É um prazer ter você aqui novamente.</span>
             </div>
         </div>

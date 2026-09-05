@@ -10,7 +10,7 @@ import Name from './name'
 import Email from './email'
 import Whatsapp from './whatsapp'
 import Birthdate from './birthdate'
-import Password from './password'
+import UpdatePassword from './updatePassword'
 import DeleteAccount from './deleteAccount'
 
 export default function Profile(){
@@ -54,7 +54,7 @@ export default function Profile(){
     if(!dadosCliente) return
 
     return(
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className='flex flex-col gap-8  h-full pt-7 pb-25 pl-20 pr-5 lg:gap-8 lg:pr-70 lg:py-30 lg:pl-150'>
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className='flex flex-col gap-8 ml-15 p-4 pb-18 sm:p-8 sm:pb-30 md:px-16 lg:ml-80 lg:pt-30 xl:p-32 xl:pb-18 2xl:px-70'>
 
             <ConfirmationModal
                 isPurgeAccount={isPurgeAccount}
@@ -116,7 +116,7 @@ export default function Profile(){
                 <h2 className='text-xl font-semibold'>Segurança da conta</h2>
 
                 {/* PASSWORD */}
-                <Password setIsUpdatePassword={setIsUpdatePassword}/>
+                <UpdatePassword setIsUpdatePassword={setIsUpdatePassword}/>
 
                 {/* DELETE ACCOUNT */}
                 <DeleteAccount onPurgeAccount={purgeAccount} setIsPurgeAccount={setIsPurgeAccount}/>

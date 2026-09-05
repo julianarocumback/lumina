@@ -10,11 +10,11 @@ export default function Geral(){
     if(!dadosCliente) return
  
     return (
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className='flex flex-col gap-8 h-full pt-7 pb-25 pl-20 pr-5 lg:gap-8 lg:py-30 lg:pl-150 lg:pr-70'>
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className='flex flex-col gap-8 ml-15 p-4 pb-18 sm:p-8 sm:pb-30 md:px-16 lg:ml-80 lg:pt-30 xl:p-32 xl:pb-18 2xl:px-70'>
             {/* Welcome banner */}
             <Welcome dadosCliente={dadosCliente}/>
             
-            <div className='flex flex-col gap-4 lg:flex-row lg:gap-8'>
+            <div className='flex flex-col gap-4 md:flex-row lg:gap-8'>
                 {/* Order preview */}
                 <OrderPreview orders={dadosCliente.pedidos}/>
                 {/* Favorites preview */}

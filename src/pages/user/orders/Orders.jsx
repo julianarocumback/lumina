@@ -13,19 +13,19 @@ export default function Orders(){
 
     const categories = [
         {
-            status: 'Todos',
+            status: 'Todos'
         },
         {
-            status: 'Processando',
+            status: 'Processando'
         },
         {
-            status: 'Em transporte',
+            status: 'Em transporte'
         },
         {
-            status: 'Entregue',
+            status: 'Entregue'
         },
         {
-            status: 'Cancelado',
+            status: 'Cancelado'
         }
     ]
 
@@ -35,7 +35,7 @@ export default function Orders(){
     }
  
     return (
-        <div className='flex flex-col gap-8 h-full pt-7 pb-25 pl-20 pr-5 lg:gap-8 lg:py-30 lg:pl-150 lg:pr-70'>
+        <div className='flex flex-col gap-8 ml-15 p-4 pb-18 sm:p-8 sm:pb-30 md:px-16 lg:ml-80 lg:pt-30 xl:p-32 xl:pb-18 2xl:px-70'>
             <div className='flex flex-col gap-8 w-full h-full'>
                 <div>
                     <h2 className='text-2xl font-semibold'>Meus Pedidos</h2>
@@ -49,13 +49,12 @@ export default function Orders(){
                     </div>
 
                     {/* Categories */}
-                    <div className='flex overflow-x-auto gap-4 text-nowrap no-scrollbar'>
+                    <div className='flex overflow-x-auto gap-4    w-full no-scrollbar'>
                         {categories.map(category => {
                             return (
-                                <button onClick={()=> setStatus(category.status)} className={`py-2 px-4 font-semibold ${category.status === status? 'text-white bg-blue-400':'bg-white'} border border-gray-100 rounded-full cursor-pointer`}>{category.status}</button>
+                                <button onClick={()=> setStatus(category.status)} className={`py-2 px-4 font-semibold ${category.status === status? 'text-white bg-blue-400':'bg-white'} border border-gray-100 rounded-full cursor-pointer text-nowrap w-fit`}>{category.status}</button>
                             )
                         })}
-                        {orders.map(item => <div>{item?.nome}</div>)} 
                     </div>
                 </div>           
 

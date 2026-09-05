@@ -13,13 +13,13 @@ export default function Address(){
     const hasMaxAddress = dadosCliente?.address?.length === 3
 
     return (
-        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`flex flex-col w-screen gap-8 pt-7 pr-5 pl-20 lg:py-30 lg:pr-70 lg:pl-150`}>    
+        <motion.div initial={{opacity:0}} animate={{opacity:1}} transition={{duration:0.7}} className={`flex flex-col gap-8 ml-15 p-4 pb-18 sm:p-8 sm:pb-30 md:px-16 lg:ml-80 lg:pt-30 xl:p-32 xl:pb-18 2xl:px-70`}>    
             <h1 className="text-2xl font-semibold">Endereços</h1>
             <AnimatePresence>
-                <div className={`grid grid-cols-1 gap-8 w-full lg:grid-cols-3`}>
+                <div className={`grid gap-4 sm:grid-cols-2 md:grid-cols-3`}>
                     {dadosCliente?.address?.map(address => {
                         return (
-                            <motion.div initial={{opacity:0}} layout animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}}  key={address.id} className="flex flex-col justify-center overflow-hidden gap-7 h-40 p-6 bg-white border border-gray-100 rounded-2xl shadow lg:h-45 lg:w-full">
+                            <motion.div initial={{opacity:0}} layout animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}}  key={address.id} className="flex flex-col justify-center overflow-hidden gap-7 h-40 px-6 py-4 bg-white border border-gray-100 rounded-2xl shadow lg:h-45 lg:w-full">
                                 <div className="flex justify-between items-center gap-4">
                                     <div className='flex items-center gap-4'>
                                         {address.type === 'Casa'?
@@ -36,9 +36,7 @@ export default function Address(){
                                     </div>
                                     <div className='text-gray-500 hover:text-red-600 transition-all cursor-pointer' onClick={() => deleteAddress(address.id)}><i className="fa-solid fa-trash"></i></div>
                                 </div>
-                                <div className='text-wrap break-all'>
-                                    <p className='font-semibold text-gray-500'>{address.street}, {address.street_number} - {address.neighborhood}, {address.city} - {address.state}, {address.zip_code}</p>
-                                </div>
+                                <p className='font-semibold text-gray-500 truncate'>{address.street}, {address.street_number} - {address.neighborhood}, {address.city} - {address.state}, {address.zip_code}</p>
                             </motion.div>
                         )
                     })}
@@ -48,7 +46,7 @@ export default function Address(){
                         animate={{opacity:1}}
                         exit={{opacity:0}}
                         transition={{duration:0.5}}
-                        className={`${!hasMaxAddress&& ' hover:bg-blue-500/10 hover:border-blue-500 hover:text-blue-500 group [*_>_p]:text-blue-500 '}h-40 flex-none border lg:h-45 lg:w-full  w-full md:w-70 justify-center items-center gap-2 rounded-2xl p-4 flex flex-col border-dashed  border-gray-300  transition-colors  hover:cursor-pointer `}
+                        className={`${!hasMaxAddress&& ' hover:bg-blue-500/10 hover:border-blue-500 hover:text-blue-500 group [*_>_p]:text-blue-500 '} h-40 flex-none border lg:h-45 lg:w-full  w-full md:w-full justify-center items-center gap-2 rounded-2xl p-4 flex flex-col border-dashed border-gray-300  transition-colors hover:cursor-pointer `}
                         onClick={()=>setNewAddress(true)}
                         disabled={hasMaxAddress}
                     >               
