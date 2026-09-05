@@ -115,11 +115,14 @@ export default function Profile(){
 
                 <h2 className='text-xl font-semibold'>Segurança da conta</h2>
 
-                {/* PASSWORD */}
-                <UpdatePassword setIsUpdatePassword={setIsUpdatePassword}/>
+                <div className='flex flex-col gap-4 sm:flex-row'>
+                    {/* PASSWORD */}
+                    <UpdatePassword setIsUpdatePassword={setIsUpdatePassword}/>
 
-                {/* DELETE ACCOUNT */}
-                <DeleteAccount onPurgeAccount={purgeAccount} setIsPurgeAccount={setIsPurgeAccount}/>
+                    {/* DELETE ACCOUNT */}
+                    <DeleteAccount onPurgeAccount={purgeAccount} setIsPurgeAccount={setIsPurgeAccount}/>
+
+                </div>
                
 
             </div>
