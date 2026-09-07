@@ -5,8 +5,15 @@ export default function Birthdate({dadosCliente, onSaveBirthdate}){
     const [birthdate, setBirthdate] = useState('')
     const [isEditingBirthdate, setIsEditingBirthdate] = useState(false)
     const [isConfirming, setIsConfirming] = useState(false)
-    console.log(birthdate)
+    const [hasInteracted, setHasInteracted] = useState(false)
+    const [isSubmitted, setIsSubmitted] = useState(false)
 
+    const hasBirthdateContent = birthdate !== ''
+    const shouldShowBirthdateError = (hasInteracted || isSubmitted) && !hasBirthdateContent
+
+    const handleBirthdateInteracted = () => {
+        setHasInteracted(true)
+    }
  
     // SAVE BIRTHDATE
     const handleSaveBirthdate = () => {
@@ -30,9 +37,15 @@ export default function Birthdate({dadosCliente, onSaveBirthdate}){
         setIsEditingBirthdate(false)
         setBirthdate('')
         setIsConfirming(false)
+        setIsSubmitted(false)
+
+        setHasInteracted(false)
+
     }
 
     const handleConfirming = () => {
+        setIsSubmitted(true)
+        if(!birthdate) return
         setIsConfirming(true)
         setIsEditingBirthdate(false)
 
@@ -44,7 +57,7 @@ export default function Birthdate({dadosCliente, onSaveBirthdate}){
             <h3 className="font-semibold text-[11px] text-gray-500">DATA DE NASCIMENTO</h3>
 
             <div className='flex flex-col gap-2 sm:flex-row sm:justify-between'>
-                <input disabled={!isEditingBirthdate} onChange={(e) => handleAddBirthdate(e.target.value)}  type="date" className={`${isEditingBirthdate && 'enabled:outline'} caret-black cursor z-10 w-fit`} value={birthdate}/>     
+                <input disabled={!isEditingBirthdate} onChange={(e) => handleAddBirthdate(e.target.value)}  type="date" className={`${isEditingBirthdate && 'enabled:outline'} caret-black cursor z-10 w-fit`} value={birthdate} onBlur={handleBirthdateInteracted}/>     
 
                 <div>
                     {!isEditingBirthdate && !dadosCliente.birthdate &&
@@ -63,6 +76,7 @@ export default function Birthdate({dadosCliente, onSaveBirthdate}){
             {isConfirming &&
                <Confirmation isConfirming={isConfirming} handleSaveBirthdate={handleSaveBirthdate} handleCancelAddBirthdate={handleCancelAddBirthdate}/>
             }
+            {shouldShowBirthdateError && <p>O campo não pode ficar vazio</p>}
         
         </div>
     )

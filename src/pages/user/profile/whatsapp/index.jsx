@@ -135,7 +135,7 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
                 </div>
 
             </div>
-            {shouldShowContentError && <p className='text-xs text-red-500'>Obrigatório</p>}
+            {shouldShowContentError && <p className='text-xs text-red-500'>O campo não pode ficar vazio</p>}
             {shouldShowExactLengthError && <p className='text-xs text-red-500'>Deve conter 11 dígitos</p>}
             
         </div>

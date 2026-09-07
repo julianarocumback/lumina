@@ -7,13 +7,13 @@ export default function Cpf({dadosCliente, onSaveCpf}){
     const [isConfirming, setIsConfirming] = useState(false)
 
     const [hasCPFInteracted, setHasCPFInteracted] = useState(false)
-    const [trySubmit, setTrySubmit] = useState(false)
+    const [IsTrySubmit, setIsTrySubmit] = useState(false)
 
     const hasCPFExactlyLength = cpf.length === 11
     const hasCPFContent = cpf !== ''
-    const isCPFCorrect =  hasCPFExactlyLength && hasCPFContent
-    const shouldShowCPFErrorLength = hasCPFInteracted && !isCPFCorrect
-    const shouldShowCPFErrorContent = hasCPFInteracted && !isCPFCorrect
+    const shouldShowCPFErrorLength = (hasCPFInteracted || IsTrySubmit) && (hasCPFContent && !hasCPFExactlyLength)
+
+    const shouldShowCPFErrorContent = (hasCPFInteracted || IsTrySubmit) && (!hasCPFContent)
 
     const cpfPlaceholder = dadosCliente?.cpf ?? ''
     const placeholderPart1 = cpfPlaceholder.slice(0,3)
@@ -67,6 +67,8 @@ export default function Cpf({dadosCliente, onSaveCpf}){
     const handleCancelAddCpf = ()=> {
         setIsEditingCPF(false)
         setCpf('')
+        setHasCPFInteracted(false)
+        setIsTrySubmit(false)
     }
 
     const handleCPFInteracted = () => {
@@ -74,7 +76,13 @@ export default function Cpf({dadosCliente, onSaveCpf}){
     }
 
     const handleTrySubmit = () => {
-        setTrySubmit(true)
+        setIsTrySubmit(true)
+        const hasCPFExactlyLength = cpf.length === 11
+    const hasCPFContent = cpf !== ''
+    const hasCPFCorrect = hasCPFExactlyLength && hasCPFContent
+        if(hasCPFCorrect) {
+            setIsConfirming(true)
+        }
     }
 
 
@@ -98,9 +106,9 @@ export default function Cpf({dadosCliente, onSaveCpf}){
                     </div>
                 }
            </div>
-           {shouldShowCPFErrorLength && <p className='text-xs text-red-700 font-semibold'> Adicione um CPF válido</p>}
-           {trySubmit && <p className='text-xs text-red-700 font-semibold'> Adicione um CPF</p>}
-           {isCPFCorrect && <Confirmation isConfirming={isConfirming} onHandleSaveCpf={handleSaveCpf} setIsConfirming={setIsConfirming} onHandleCancelAddCpf={handleCancelAddCpf} cpf={cpf}/>}
+           {shouldShowCPFErrorLength && <p className='text-xs text-red-700 font-semibold'>O CPF deve conter 11 dígitos</p>}
+           {shouldShowCPFErrorContent && <p className='text-xs text-red-700 font-semibold'> O campo não pode ficar vazio</p>}
+           <Confirmation isConfirming={isConfirming} onHandleSaveCpf={handleSaveCpf} setIsConfirming={setIsConfirming} onHandleCancelAddCpf={handleCancelAddCpf} cpf={cpf}/>
         
         </div>
     )

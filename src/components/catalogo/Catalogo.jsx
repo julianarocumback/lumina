@@ -68,7 +68,7 @@ export default function Catalogo(){
 
             <div className='relative flex w-full sm:gap-8 xl:gap-16 '>
                 {/* sidebar */}
-                <div className='sm:sticky sm:top-30 hidden sm:flex sm:flex-col gap-4 lg:p-6 h-fit border border-gray-100 shadow bg-gray-50 rounded-2xl sm:w-1/3 md:w-1/4'>
+                <div className='sm:sticky sm:top-30 hidden sm:flex sm:flex-col gap-4 lg:p-6 h-fit border border-gray-100 shadow bg-gray-50 rounded-2xl sm:w-1/3 md:w-1/4 p-4'>
                     <h3 className='font-semibold text-2xl'>Catálogo</h3>
                     <div className='relative w-full flex flex-col gap-2'>
                         <h4 className='text-lg font-semibold'>Pesquisa</h4>

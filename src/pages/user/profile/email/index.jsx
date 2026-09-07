@@ -4,6 +4,20 @@ export default function Email({ dadosCliente, atualizarEmail, cancelEmailUpdate,
   const [email, setEmail] = useState('')
   const [isEditingEmail, setIsEditingEmail] = useState(false)
 
+  const [isEmailValited, setEmailValited] = useState(true)
+
+  const [isInteracted, setIsInteracted] = useState(false)
+
+    const hasEmailContent = email !== ''
+    const shouldShowEmailError = isInteracted && !hasEmailContent
+
+    const handleEmailInteracted = () => {
+        setIsInteracted(true)
+    }
+
+
+
+
   const handleAtivarBotaoEmail = () => {
     setEmail(userNewEmail || userEmail || '')
     setIsEditingEmail(true)
@@ -12,10 +26,18 @@ export default function Email({ dadosCliente, atualizarEmail, cancelEmailUpdate,
   const handleCancelarAtualizacaoEmail = () => {
     setIsEditingEmail(false)
     setEmail('')
+    setIsInteracted(false)
   }
 
   const handleAtualizarEmail = () => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     if (!email || email === userEmail) return
+    if(!emailRegex.test(email)){
+        setEmailValited(false)
+        return
+    }
+    setEmailValited(true)
+
     atualizarEmail(email)
     setIsEditingEmail(false)
   }
@@ -40,6 +62,7 @@ export default function Email({ dadosCliente, atualizarEmail, cancelEmailUpdate,
                     placeholder='Digite o novo e-mail'
                     className='w-full px-3 py-1 text-sm font-semibold text-gray-800 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 lg:w-80'
                     autoFocus
+                    onBlur={handleEmailInteracted}
                 />
                 <div className='flex items-center gap-3 shrink-0'>
                     {/* Save email */}
@@ -90,6 +113,8 @@ export default function Email({ dadosCliente, atualizarEmail, cancelEmailUpdate,
         {userNewEmail && !isEditingEmail && (
             <p className='mt-1 text-amber-600 text-xs font-medium'> Você receberá um e-mail de confirmação em seu novo e-mail. </p>
         )}
+        {shouldShowEmailError && <p>O campo não pode ficar vazio</p>}
+        {!isEmailValited && <p>email invalido</p>}
     </div>
   )
 }

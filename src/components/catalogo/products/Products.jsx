@@ -48,7 +48,7 @@ export default function Products({produtos, carregar, setQuantidade, pesquisaLis
                                 key={produto.id}
                                 >
                                     {/* Favorite button */}
-                                    {authenticated  && <button className={`absolute top-7 right-7 w-8 h-8 ${isAreadyInFavorite ? 'text-red-600 bg-red-200 scale-110':'text-black/50 bg-white/90'} rounded-2xl transition-all shadow cursor-pointer hover:text-red-600 hover:scale-110`} onClick={() => handleAddToFavorite(produto)}><i className='fa-solid fa-heart'></i></button>}
+                                    {authenticated  && <button className={`absolute top-5 right-7 w-8 h-8 ${isAreadyInFavorite ? 'text-red-600 bg-red-200 scale-110':'text-black/50 bg-white/90'} rounded-2xl transition-all shadow cursor-pointer hover:text-red-600 hover:scale-110`} onClick={() => handleAddToFavorite(produto)}><i className='fa-solid fa-heart'></i></button>}
                                     
                                             
                                     <Link to={`/produto/${produto.id}`}>
