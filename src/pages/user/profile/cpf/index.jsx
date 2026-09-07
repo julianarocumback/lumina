@@ -1,9 +1,19 @@
 import {useState} from 'react'
+import Confirmation from './confirmation'
 
 export default function Cpf({dadosCliente, onSaveCpf}){
     const [cpf, setCpf] = useState('')
     const [isEditingCPF, setIsEditingCPF] = useState(false)
     const [isConfirming, setIsConfirming] = useState(false)
+
+    const [hasCPFInteracted, setHasCPFInteracted] = useState(false)
+    const [trySubmit, setTrySubmit] = useState(false)
+
+    const hasCPFExactlyLength = cpf.length === 11
+    const hasCPFContent = cpf !== ''
+    const isCPFCorrect =  hasCPFExactlyLength && hasCPFContent
+    const shouldShowCPFErrorLength = hasCPFInteracted && !isCPFCorrect
+    const shouldShowCPFErrorContent = hasCPFInteracted && !isCPFCorrect
 
     const cpfPlaceholder = dadosCliente?.cpf ?? ''
     const placeholderPart1 = cpfPlaceholder.slice(0,3)
@@ -58,35 +68,40 @@ export default function Cpf({dadosCliente, onSaveCpf}){
         setIsEditingCPF(false)
         setCpf('')
     }
+
+    const handleCPFInteracted = () => {
+        setHasCPFInteracted(true)
+    }
+
+    const handleTrySubmit = () => {
+        setTrySubmit(true)
+    }
+
+
+    
     return (
         <div className="flex flex-col gap-1">
             <h3 className="font-semibold text-[11px] text-gray-500">CPF</h3>
-            <div className='flex flex-col lg:flex-row justify-between relative'>
+            <div className='flex flex-col sm:flex-row justify-between relative'>
                 {!isEditingCPF && <span>{!dadosCliente?.cpf?cpfFormated:cpfparaplaceholder }</span>}
-                {isEditingCPF && <div> <input disabled={!isEditingCPF} onChange={(e) => handleAddCPF(e.target.value.replace(/\D/g, ''))}  type="text" className={` absolute active:outline-none text-transparent bg-transparent caret-black  z-10`} value={cpfFormatedValue()}/>
-                {/*  */}
-                {/*  */}
-                {/*  */}
+                {isEditingCPF && <div> <input disabled={!isEditingCPF} onChange={(e) => handleAddCPF(e.target.value.replace(/\D/g, ''))}  type="text" className={` absolute active:outline-none text-transparent bg-transparent caret-black  z-10`} value={cpfFormatedValue()} onBlur={handleCPFInteracted}/>
                 <span className='select-none pointer-events-none relative -left-[0.2px] tracking-tight font-arial font-sans'>{cpfFormated}</span></div>}
-            <div className='flex flex-col lg:flex-row lg:justify-between'>
-                {!isEditingCPF && !dadosCliente?.cpf && <button onClick={handleEditingCPF} className='font-semibold text-blue-700 w-fit'>Adicionar</button>}
-            </div>
-            {isEditingCPF &&
-                <div className='flex gap-4'>
-                    <button className='text-red-500 font-semibold' onClick={handleCancelAddCpf}>Cancelar</button>
-                    <button className='font-semibold' onClick={() => setIsConfirming(true)}>Adicionar</button>
+                <div className='flex flex-col sm:flex-row lg:justify-between'>
+                    {!isEditingCPF && !dadosCliente?.cpf && <button onClick={handleEditingCPF} className='font-semibold text-blue-700 w-fit'>Adicionar</button>}
                 </div>
-            }
+                {isEditingCPF &&
+                    <div className='flex gap-4'>
+                        {/* Update cpf */}
+                        <button type='button' className='px-2 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg transition-colors cursor-pointer hover:bg-blue-700' onClick={handleTrySubmit}>Salvar</button>
+                        {/* Cancel cpf update */}
+                        <button type='button' className='font-semibold text-gray-600 hover:text-gray-800 transition-colors cursor-pointer' onClick={handleCancelAddCpf}>Cancelar</button>
+                    </div>
+                }
            </div>
-            {isConfirming &&
-                <div className='border '>
-                    <p>Só é possível adicionar uma vez, após isso não será possível alterá-lo. Deseja continuar</p>
-                    <div className='border flex justify-center items-center gap-8'>
-                        <button onClick={handleSaveCpf} className='bg-blue-500 py-2 px-8 rounded-xl font-semibold'>Sim</button>
-                        <button className='bg-gray-200 py-2 px-8 rounded-xl font-semibold' onClick={()=>setIsConfirming(false)}>Não</button>
-                    </div>    
-                </div>
-            }
+           {shouldShowCPFErrorLength && <p className='text-xs text-red-700 font-semibold'> Adicione um CPF válido</p>}
+           {trySubmit && <p className='text-xs text-red-700 font-semibold'> Adicione um CPF</p>}
+           {isCPFCorrect && <Confirmation isConfirming={isConfirming} onHandleSaveCpf={handleSaveCpf} setIsConfirming={setIsConfirming} onHandleCancelAddCpf={handleCancelAddCpf} cpf={cpf}/>}
+        
         </div>
     )
 }

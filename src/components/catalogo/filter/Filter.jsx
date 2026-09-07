@@ -7,7 +7,7 @@ export default function Filter({lista, setCategoria}){
 
     
     return (
-        <div className="w-80 h-full">
+        <div className="sticky top-0 w-80 h-full">
             <div>
                 <div className="flex flex-col" onClick={() => setCategoria('Todos')}>Todos</div>
                 {categorias}

@@ -20,11 +20,20 @@ export default function Checkout() {
     const enderecoOk = Object.keys(endereco).length > 0 && Object.keys(frete).length > 0
     const pagamentoOk = Object.keys(pagamento).length > 0
 
+
+
+
+    const valorProdutos = items.map(items => items.valor * items.quantidade).reduce((a, b) => a + b, 0);
+    const valorFrete = frete?.price || 0;
+    const valorCupom = cupom?.valor || 0;
+    const desconto = (valorProdutos + valorFrete) * valorCupom;
+    const total = valorProdutos + (valorFrete > 0 ? valorFrete : 0) - (desconto > 0 ? desconto : 0);
+
     // verificar informações antes de ir para a próxima etapa
     function verificar(){
         if(listaOk && pagamentoOk && enderecoOk) {
             setEtapa(3)
-            adicionarPedido({cliente_id: user.id , produtos: items, endereco: endereco, frete: frete, pagamento: pagamento, cupom: cupom, valor: 20})
+            adicionarPedido({cliente_id: user.id , produtos: items, endereco: endereco, frete: frete, pagamento: pagamento, cupom: cupom, valor: total})
             setItems([])
         } else if (listaOk && enderecoOk && !pagamentoOk) {
             setEtapa(2)
@@ -53,9 +62,9 @@ export default function Checkout() {
     if(!items) return
     
     return(
-        <div className=" relative bg-[radial-gradient(at_0%_0%,#cee5ff90,transparent_50%),radial-gradient(at_100%_100%,#fb923c20,transparent_50%),radial-gradient(at_0%_100%,#ec489910,transparent_50%),radial-gradient(at_100%_0%,#22c55e10,transparent_50%)]" >
+        <div className='relative bg-[radial-gradient(at_0%_0%,#cee5ff90,transparent_50%),radial-gradient(at_100%_100%,#fb923c20,transparent_50%),radial-gradient(at_0%_100%,#ec489910,transparent_50%),radial-gradient(at_100%_0%,#22c55e10,transparent_50%)]'>
             <Header/>
-            <div className="flex flex-col gap-4 lg:px-90 relative h-full">
+            <div className='flex flex-col gap-4 lg:px-32 xl:px-48 2xl:px-80 relative h-full'>
                 <Stepper listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} etapa={etapa} setEtapa={setEtapa}/>
                 <div className='lg:pt-60'>
                     <Cart 

@@ -127,20 +127,20 @@ export default function Bundle() {
             
             {tons.filter(tom => tom.tom === link).map(item => {
                 return (
-                    <div key={item.tom} className='flex flex-col py-8 px-8 lg:px-64 lg:py-32 gap-8'>
-                        <div className='flex flex-col text-center lg:px-80'>
+                    <div key={item.tom} className='flex flex-col py-8 px-8 sm:px-16 lg:px-32 xl:px-64 2xl:px-80 lg:py-32 gap-8 lg:gap-16'>
+                        <div className='flex flex-col text-center gap-2 sm:gap-4 lg:px-16 xl:px-32'>
                             <h1 className='text-3xl font-semibold'>{item.titulo}</h1>
-                            <p className=''>{item.substitulo}</p>
+                            <p className='sm:text-[18px] md:text-[20px]'>{item.substitulo}</p>
                         </div>
 
                         {/* CARD */}
-                        <div className='border-gray-100 bg-white rounded-2xl flex flex-col lg:flex-row justify-center gap-8 lg:p-8 shadow-sm py-8'>
+                        <div className='border-gray-100 bg-white rounded-2xl flex flex-col md:flex-row justify-center gap-8 lg:p-8 shadow-sm py-8'>
                             {/* IMAGES */}
-                            <div className='w-full lg:w-1/2 relative flex items-center justify-center border-b border-b-gray-200 lg:border-b-transparent pb-4'>
+                            <div className='w-full md:w-1/2 relative flex items-center justify-center border-b border-b-gray-200 sm:border-b-transparent pb-4'>
                                 {produtosFiltrados.map(prod => {
                                     return (
                                         <div key={prod.id} className='relative'>
-                                            <div className='h-30 lg:h-50'>
+                                            <div className='h-30 md:h-50'>
                                                 <Link to={`/produto/${prod.id}`}>
                                                     <img className='h-full object-contain' src={prod.img_url} alt={prod.titulo} />
                                                 </Link>
@@ -185,9 +185,9 @@ export default function Bundle() {
             })}
 
             {/* ESPECIFICAÇÕES */}
-            <div className='bg-white w-full flex flex-col px-4 gap-4 lg:px-64 py-16 border-t border-gray-200'>
+            <div className='bg-white w-full flex flex-col px-8 gap-4 sm:px-16 lg:px-32 xl:px-64 2xl:px-80  py-16 border-t border-gray-200'>
                 <h2 className='text-2xl font-semibold'>Especificações</h2>
-                <div className='flex  justify-between flex-col lg:flex-row w-full gap-8 '>
+                <div className='flex  justify-between flex-col md:flex-row w-full gap-8 '>
                     {books.filter(book => book.tom === link).map((book) => {
                         return (
                             <div key={book.id} className='w-full gap-2 flex flex-col p-4 bg-gray-50 rounded-xl border border-gray-100'>

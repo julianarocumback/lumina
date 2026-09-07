@@ -22,8 +22,7 @@ export default function ConfirmationModal({isPurgeAccount, isUpdatePassword, des
             {isPurgeAccount && 
             <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration: 0.3}} className='bg-black/20 fixed w-full h-full inset-0 flex justify-center items-center z-10'>
                 <motion.div  className='flex flex-col border border-gray-100 w-100 h-70 bg-white rounded-3xl gap-8 p-8 shadow justify-center top-100'>
-                    <p className='text-2xl text-center'>{description}
-                    </p>
+                    <p className='text-2xl text-center'>{description}</p>
                     {isUpdatePassword &&
                         <div className='flex w-full flex-col gap-4'>
                             <input type="text" className='border p-2 rounded-xl border-gray-200 focus:outline-gray-300 shadow-xs' placeholder='Digite a nova senha' onChange={onHandleAddPassword} value={password}/>

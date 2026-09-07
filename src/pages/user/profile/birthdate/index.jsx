@@ -1,4 +1,5 @@
-import {useEffect, useMemo, useState} from 'react'
+import { useState } from 'react'
+import Confirmation from './confirmation' 
 
 export default function Birthdate({dadosCliente, onSaveBirthdate}){
     const [birthdate, setBirthdate] = useState('')
@@ -6,22 +7,7 @@ export default function Birthdate({dadosCliente, onSaveBirthdate}){
     const [isConfirming, setIsConfirming] = useState(false)
     console.log(birthdate)
 
-    useEffect(()=> {
-        if(dadosCliente?.birthdate){
-            setBirthdate(dadosCliente.birthdate)
-        }
-    },[dadosCliente])
-
-
-    const birthdateFormated = useMemo(() => {
-        if(!birthdate) return ''
-
-        const [ano, mes, dia] = birthdate.split('-')
-        return `${dia}/${mes}/${ano}`
-
-
-    }, [birthdate]) 
-
+ 
     // SAVE BIRTHDATE
     const handleSaveBirthdate = () => {
         if(!birthdate) return
@@ -54,34 +40,30 @@ export default function Birthdate({dadosCliente, onSaveBirthdate}){
 
 
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-1">
             <h3 className="font-semibold text-[11px] text-gray-500">DATA DE NASCIMENTO</h3>
-            <div className='relative'>
-                {!isEditingBirthdate && birthdate && <span>{birthdateFormated}</span>}
-                {isEditingBirthdate && <div> <input disabled={!isEditingBirthdate} onChange={(e) => handleAddBirthdate(e.target.value)}  type="date" className={`${isEditingBirthdate && 'enabled:outline'} absolute caret-black   cursor z-10`} value={birthdate}/>
-                {/*  */}
-                {/*  */}
-                {/*  */}
-                <span className='select-none pointer-events-none relative -left-[0.2px] tracking-tight font-arial font-sans'>{dadosCliente.birthdate}</span></div>}
-           </div>
-            <div className='flex flex-col lg:flex-row lg:justify-between'>
-                {!isEditingBirthdate  && !dadosCliente.birthdate && <button onClick={handleEditingBirthdate} className='font-semibold text-blue-700 w-fit'>Adicionar</button>}
+
+            <div className='flex flex-col gap-2 sm:flex-row sm:justify-between'>
+                <input disabled={!isEditingBirthdate} onChange={(e) => handleAddBirthdate(e.target.value)}  type="date" className={`${isEditingBirthdate && 'enabled:outline'} caret-black cursor z-10 w-fit`} value={birthdate}/>     
+
+                <div>
+                    {!isEditingBirthdate && !dadosCliente.birthdate &&
+                        <button onClick={handleEditingBirthdate} className='font-semibold text-blue-700 w-fit'>Adicionar</button>   
+                    }
+                    {isEditingBirthdate &&
+                        <div className='flex gap-4'>
+                            {/* Update birthdate */}
+                            <button type='button' className='px-2 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg transition-colors cursor-pointer hover:bg-blue-700' onClick={handleConfirming}>Salvar</button>
+                            {/* Cancel birthdate update */}
+                            <button type='button' className='font-semibold text-gray-600 hover:text-gray-800 transition-colors cursor-pointer' onClick={handleCancelAddBirthdate}>Cancelar</button>
+                        </div>
+                    }
+                </div>
             </div>
-            {isEditingBirthdate &&
-                <div className='flex gap-4'>
-                    <button onClick={handleCancelAddBirthdate}>Cancelar</button>
-                    <button onClick={handleConfirming}>Adicionar</button>
-                </div>
-            }
             {isConfirming &&
-                <div className='border '>
-                    <p>Só é possível adicionar uma vez, após isso não será possível alterá-lo. Deseja continuar</p>
-                    <div className='border flex justify-center items-center gap-8'>
-                        <button onClick={handleSaveBirthdate} className='bg-blue-500 py-2 px-8 rounded-xl font-semibold'>Sim</button>
-                        <button className='bg-gray-200 py-2 px-8 rounded-xl font-semibold' onClick={handleCancelAddBirthdate}>Não</button>
-                    </div>    
-                </div>
+               <Confirmation isConfirming={isConfirming} handleSaveBirthdate={handleSaveBirthdate} handleCancelAddBirthdate={handleCancelAddBirthdate}/>
             }
+        
         </div>
     )
 }

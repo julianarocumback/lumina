@@ -5,13 +5,9 @@ import { Link } from 'react-router-dom'
 import Skeleton from '../skeleton/Skeleton';
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function Products({produtos, carregar, setQuantidade, listaFiltrada}){
+export default function Products({produtos, carregar, setQuantidade, pesquisaLista}){
     const {addToCart, items} = useCart()
     const {authenticated, dadosCliente,addToFavorites, removeFromFavorites} = useContext(AuthContext)
-
-    
-
-    
     function alterarQuantidade(valor){
         setQuantidade(prev => prev + valor)
     }
@@ -25,21 +21,20 @@ export default function Products({produtos, carregar, setQuantidade, listaFiltra
         
     }   
     
-    if (!produtos || produtos.length === 0) return <p>Nenhum livro encontrado.</p>;
     
     
     return (
         <motion.div initial={{opacity:0, y:-30}} whileInView={{opacity:1, y:0}} transition={{duration: 0.5}} className='flex flex-col justify-center gap-24'>
             {carregar ?
-                <div className='grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-8'>
+                <div className='grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-8'>
                     {[...Array(3)].map((_, i) => <Skeleton key={i}/>)}
                 </div>
             :
                 <div 
-                    className="grid grid-cols-[repeat(auto-fill,150px)] justify-center gap-6">
+                    className="@container grid grid-cols-2 lg:grid-cols-3 min-[1500px]:grid-cols-4 justify-center gap-8">
 
                     <AnimatePresence>
-                        {produtos.map((produto) => {
+                        {pesquisaLista?.map((produto) => {
 
                             const isAreadyInFavorite = dadosCliente?.favoritos?.some(item => item.id === produto.id)
                             return (                
@@ -49,14 +44,15 @@ export default function Products({produtos, carregar, setQuantidade, listaFiltra
                                 transition={{ type: 'tween', duration: 0.5 }}
                                 exit={{opacity:0}}
                                 layout
-                                className='flex flex-col gap-4 cursor-pointer relative select-none'
+                                className='flex flex-col gap-4 cursor-pointer relative select-none px-2'
                                 key={produto.id}
                                 >
+                                    {/* Favorite button */}
                                     {authenticated  && <button className={`absolute top-7 right-7 w-8 h-8 ${isAreadyInFavorite ? 'text-red-600 bg-red-200 scale-110':'text-black/50 bg-white/90'} rounded-2xl transition-all shadow cursor-pointer hover:text-red-600 hover:scale-110`} onClick={() => handleAddToFavorite(produto)}><i className='fa-solid fa-heart'></i></button>}
                                     
                                             
                                     <Link to={`/produto/${produto.id}`}>
-                                        <div className='h-70 lg:h-100 rounded-2xl overflow-hidden shadow-xl'>
+                                        <div className='h-60 @sm:h-75 @md:h-100 @lg:h-80 @xl:h-90 @2xl:h-100 rounded-2xl overflow-hidden shadow-lg'>
                                             <img  className='object-cover h-full w-full' src={produto.img_url} alt={produto.nome} />
                                         </div>
                                     </Link>
@@ -79,7 +75,7 @@ export default function Products({produtos, carregar, setQuantidade, listaFiltra
             }
                
             <div className='w-full flex justify-center'>
-                {produtos.length <  listaFiltrada && <button className='py-2 self-center w-70 rounded-full text-lg font-semibold bg-gray-200' onClick={()=> {alterarQuantidade(3)}}>Mostrar mais</button>}
+                {pesquisaLista?.length <  produtos?.length && <button className='py-2 self-center w-70 rounded-full text-lg font-semibold bg-gray-200' onClick={()=> {alterarQuantidade(15)}}>Mostrar mais</button>}
             </div>
         </motion.div>
     )

@@ -1,3 +1,4 @@
+import { div } from 'framer-motion/client';
 import {useState, useMemo} from 'react'
 
 export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
@@ -103,34 +104,41 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
     
 
     return(
-        <div className="flex justify-between flex-col w-full ">
-                            <h3 className="font-semibold text-[11px] text-gray-500">WHATSAPP</h3>
+        <div className="flex flex-col justify-between w-full ">
+            <h3 className="text-[11px] font-semibold text-gray-500">WHATSAPP</h3>
+        
+            <div className='flex flex-col justify-between w-full sm:flex-row'>
+                <div className="flex justify-between w-full">
+                    <input
+                        type="text"
+                        disabled={!isEditingWhatsapp}
+                        value={whatsappValue}
+                        className={`${!isEditingWhatsapp && 'border left-0'} text-gray-black px-2 -left-2 relative tracking-wider text-transparent caret-black z-10`}
+                        onChange={handleEditingWhatsapp}
+                        onBlur={handleWhatsappVerification}
+                    />
+                    {isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormated}</span>}
+                    {!isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormatinho}</span>}
+                </div>
+                <div className="flex">
+                    {!isEditingWhatsapp && <div onClick={handleEditWhatsApp} className="font-semibold text-blue-700">Editar</div>}
+                    <div className="flex gap-4">
+                        {isEditingWhatsapp && 
+                        <div className='flex gap-2'>
+                            {/* Update whatsapp */}
+                            <button type='button' className='px-2 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg transition-colors cursor-pointer hover:bg-blue-700' onClick={handleAtualizarWhatsApp}>Salvar</button>
+                             {/* Cancel whatsapp update */}
+                            <button type='button' className='font-semibold text-gray-600 hover:text-gray-800 transition-colors cursor-pointer' onClick={handleCancelUpdateWhatsApp}>Cancelar</button>
+                        </div>}
                         
-                            <div className='flex w-full justify-between flex-col lg:flex-row'>
-                                <div className="flex justify-between w-full">
-                                    <input
-                                        type="text"
-                                        disabled={!isEditingWhatsapp}
-                                        value={whatsappValue}
-                                        className={`${!isEditingWhatsapp && 'border left-0'} text-gray-black px-2 -left-2 relative tracking-wider text-transparent caret-black z-10`}
-                                        onChange={handleEditingWhatsapp}
-                                        onBlur={handleWhatsappVerification}
-                                    />
-                                    {isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormated}</span>}
-                                    {!isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormatinho}</span>}
-                                </div>
-                                    <div className="flex">
-                                        {!isEditingWhatsapp && <div onClick={handleEditWhatsApp} className="font-semibold text-blue-700">Editar</div>}
-                                        <div className="flex gap-4">
-                                        {isEditingWhatsapp && <div onClick={handleCancelUpdateWhatsApp} className='text-red-500 font-semibold'>Cancelar</div>}
-                                        {isEditingWhatsapp && <div onClick={handleAtualizarWhatsApp} className='font-semibold'>Salvar</div>}
-                                    </div>
-                                </div>
+                    </div>
+                </div>
 
-                            </div>
-                            {shouldShowContentError && <p className='text-xs text-red-500'>Obrigatório</p>}
-                            {shouldShowExactLengthError && <p className='text-xs text-red-500'>Deve conter 11 dígitos</p>}
-                            
-                        </div>
+            </div>
+            {shouldShowContentError && <p className='text-xs text-red-500'>Obrigatório</p>}
+            {shouldShowExactLengthError && <p className='text-xs text-red-500'>Deve conter 11 dígitos</p>}
+            
+        </div>
     )
 }
+

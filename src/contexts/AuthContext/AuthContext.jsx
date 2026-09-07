@@ -10,17 +10,16 @@ export const AuthContext = createContext({});
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  
-  
   const [dadosCliente, setDadosCliente] = useState(null);
+
   useEffect(() => {
     async function buscarDados() {
       if (user?.id) {
         const { data, error } = await supabase
-        .from('clientes')
-        .select('*, pedidos!cliente_id(*), address(*), payment(*)')
-        .eq('id', user.id)
-        .single();
+          .from('clientes')
+          .select('*, pedidos!cliente_id(*), address(*), payment(*)')
+          .eq('id', user.id)
+          .single();
         
         if (data) {
           setDadosCliente(data);
@@ -30,98 +29,117 @@ export function AuthProvider({ children }) {
           console.error('Erro detalhado do Supabase:', error.message); 
           console.error('Código do erro:', error.code);
         }
-
       }
     }
     
-      buscarDados();
-    }, [user])
+    buscarDados();
+  }, [user]);
 
-  // ----------  ORDERS ----------
-  async function adicionarPedido(pedido) {
-  if (user?.id) {
-    const { data, error } = await supabase
-      .from('pedidos')
-      .insert([pedido])
-      .select('*');
+  // Sincronização e limpeza automática após o usuário confirmar a troca via link do e-mail
+  useEffect(() => {
+    async function limparPendenciaAposConfirmacao() {
+      const pendingEmail = dadosCliente?.pending_email || user?.user_metadata?.pending_email;
 
-    if (error) {
-      console.error('Erro exato do Supabase:', error.message, error.details, error.hint);
-      return;
+      if (user?.email && pendingEmail && user.email === pendingEmail) {
+        // 1. Limpa na tabela clientes
+        await supabase
+          .from('clientes')
+          .update({ pending_email: null })
+          .eq('id', user.id);
+
+        // 2. Limpa no metadata do Auth
+        const { data: authData } = await supabase.auth.updateUser({
+          data: { pending_email: null }
+        });
+
+        // 3. Atualiza os estados para remover a badge imediatamente
+        if (authData?.user) {
+          setUser(authData.user);
+        }
+        setDadosCliente((prev) => (prev ? { ...prev, pending_email: null } : null));
+      }
     }
 
-    if (data && data.length > 0) {
-      console.log('Adicionou com sucesso:', data[0]);
+    limparPendenciaAposConfirmacao();
+  }, [user?.email, dadosCliente?.pending_email, user?.user_metadata?.pending_email]);
 
-      // Adiciona o pedido retornado pelo banco (que já possui o 'id' válido)
-      setDadosCliente(prev => ({
-        ...prev,
-        pedidos: [...(prev?.pedidos || []), data[0]]
-      }));
+  // ---------- ORDERS ----------
+  async function adicionarPedido(pedido) {
+    if (user?.id) {
+      const { data, error } = await supabase
+        .from('pedidos')
+        .insert([pedido])
+        .select('*');
+
+      if (error) {
+        console.error('Erro exato do Supabase:', error.message, error.details, error.hint);
+        return;
+      }
+
+      if (data && data.length > 0) {
+        setDadosCliente(prev => ({
+          ...prev,
+          pedidos: [...(prev?.pedidos || []), data[0]]
+        }));
+      }
     }
   }
-}
 
-
-// ---------- PROFILE ----------
+  // ---------- PROFILE ----------
 
   // Update user name
   async function submitName(name) {
     if (user?.id) {
       const { data } = await supabase
         .from('clientes')
-        .update({nome: name})
+        .update({ nome: name })
         .eq('id', user.id)
         .select('*')
-        .single()
+        .single();
 
       if (data) {
-        setDadosCliente(prev => ({...prev, nome: name}))
+        setDadosCliente(prev => ({ ...prev, nome: name }));
       }
     }
   }
 
   // Add user CPF
   const cpfAdd = async (cpf) => {
-    if(user?.id) {
-      const { data, error} = await supabase
-      .from('clientes')
-      .update({cpf: cpf})
-      .eq('id', user.id)
-      .select('*')
-      .single()
+    if (user?.id) {
+      const { data, error } = await supabase
+        .from('clientes')
+        .update({ cpf: cpf })
+        .eq('id', user.id)
+        .select('*')
+        .single();
 
-
-      if(data){
-        setDadosCliente(prev => ({...prev, cpf: cpf}))
+      if (data) {
+        setDadosCliente(prev => ({ ...prev, cpf: cpf }));
       }
 
-      if(error) {
-        console.error(error.message)
+      if (error) {
+        console.error(error.message);
       }
+    }
+  };
 
+  // Atualizar e-mail
+  async function atualizarEmail(novoEmail) {
+    if (!novoEmail || !user?.id) return;
+
+    // 1. Solicita a troca no Auth e salva no metadata
+    const { data, error } = await supabase.auth.updateUser({
+      email: novoEmail,
+      data: { pending_email: novoEmail }
+    });
+
+    if (error) {
+      console.error('Erro ao atualizar o email:', error.message);
+      alert(`Erro no Auth: ${error.message}`);
+      return;
     }
 
-  }
-
-// update user email
-async function atualizarEmail(novoEmail) {
-  if (!novoEmail) return;
-
-  const { data, error } = await supabase.auth.updateUser({
-    email: novoEmail
-  });
-
-  if (error) {
-    console.error('Erro ao atualizar o email:', error.message);
-    alert(`Erro no Auth: ${error.message}`);
-    return;
-  }
-
-  if (data?.user) {
-    setUser(data.user);
-
-    // Grava o e-mail pendente na tabela clientes
+    // 2. Grava o e-mail pendente na tabela clientes
     const { error: errorClientes } = await supabase
       .from('clientes')
       .update({ pending_email: novoEmail })
@@ -130,122 +148,136 @@ async function atualizarEmail(novoEmail) {
     if (errorClientes) {
       console.error('Erro ao salvar na tabela clientes:', errorClientes.message);
     }
-  }
-}
 
-// Cancel email update
-const cancelEmailUpdate = async () => {
-  if (!user?.id) return;
-
-  const { error } = await supabase
-    .from('clientes')
-    .update({ pending_email: null })
-    .eq('id', user.id);
-
-  if (error) {
-    console.error('Erro ao cancelar o email:', error.message);
-    return;
+    // 3. Atualiza os estados locais
+    if (data?.user) {
+      setUser(data.user);
+    }
+    setDadosCliente(prev => (prev ? { ...prev, pending_email: novoEmail } : null));
   }
 
-  
-};
+  // Cancelar atualização de e-mail
+  const cancelEmailUpdate = async () => {
+    if (!user?.id) return;
+
+    // 1. Limpa o metadata do Auth
+    const { data: authData, error: authError } = await supabase.auth.updateUser({
+      data: { pending_email: null }
+    });
+
+    if (authError) {
+      console.error('Erro ao limpar metadata do Auth:', authError.message);
+    }
+
+    // 2. Limpa o banco na tabela clientes
+    const { error: dbError } = await supabase
+      .from('clientes')
+      .update({ pending_email: null })
+      .eq('id', user.id);
+
+    if (dbError) {
+      console.error('Erro ao cancelar o email no banco:', dbError.message);
+      return;
+    }
+
+    // 3. Atualiza os estados para sumir a badge "Pendente" imediatamente
+    if (authData?.user) {
+      setUser(authData.user);
+    }
+    setDadosCliente(prev => (prev ? { ...prev, pending_email: null } : null));
+  };
 
   // Update user whatsapp
   async function atualizarWhatsApp(whatsapp) {
     if (user?.id) {
-      // A Cozinha: Consulta na tabela personalizada
       const { data } = await supabase
         .from('clientes')
-        .update({whatsapp: whatsapp}) // Peça aqui todas as colunas que adicionou
+        .update({ whatsapp: whatsapp })
         .eq('id', user.id)
         .select('*')
-        .single(); // Como é um usuário, trazemos apenas um registro
+        .single();
 
       if (data) {
-        setDadosCliente(prev => ({...prev, whatsapp: whatsapp}))
+        setDadosCliente(prev => ({ ...prev, whatsapp: whatsapp }));
       }
     }
   }
 
   // Add user birthdate 
   const birthdateAdd = async (birthdate) => {
-    if(user?.id) {
-      const { data, error} = await supabase
-      .from('clientes')
-      .update({birthdate: birthdate})
-      .eq('id', user.id)
-      .select('*')
-      .single()
+    if (user?.id) {
+      const { data, error } = await supabase
+        .from('clientes')
+        .update({ birthdate: birthdate })
+        .eq('id', user.id)
+        .select('*')
+        .single();
 
-      if(data){
-        setDadosCliente(prev => ({...prev, birthdate: birthdate}))
+      if (data) {
+        setDadosCliente(prev => ({ ...prev, birthdate: birthdate }));
       }
 
-      if(error) {
-        console.error(error.message)
+      if (error) {
+        console.error(error.message);
       }
-
     }
-  }
+  };
 
   // Update user password
-    const updatePassword = async (password) => {
+  const updatePassword = async (password) => {
     const { error } = await supabase.auth.updateUser({
-        password: password
-      })
-  }
+      password: password
+    });
+  };
 
   // Purge user account
   const purgeAccount = async () => {
-    const {error} = await supabase.rpc('purge_account')
+    const { error } = await supabase.rpc('purge_account');
 
-    if(!error){
-      await supabase.auth.signOut()
-      window.location.href = '/'
+    if (!error) {
+      await supabase.auth.signOut();
+      window.location.href = '/';
     }
-  }
+  };
 
-
-// ---------- ADDRESS ----------
+  // ---------- ADDRESS ----------
 
   // Add user address
   async function addAddress(address) {
     if (user?.id) {
-      if(address.isDefault === true) {
+      if (address.isDefault === true) {
         const { data } = await supabase
-        .from('address')
-        .update({is_default: false})
-        .eq('user_id', user.id)
-        .select('*')
+          .from('address')
+          .update({ is_default: false })
+          .eq('user_id', user.id)
+          .select('*');
 
-        if(data){
-          const address = dadosCliente?.address?.map(address => ({...address, is_default: false}))
-
-          setDadosCliente(prev => ({...prev, address: address}))
+        if (data) {
+          const addressList = dadosCliente?.address?.map(item => ({ ...item, is_default: false }));
+          setDadosCliente(prev => ({ ...prev, address: addressList }));
         }
       }
       const { data } = await supabase
         .from('address')
         .insert([{
-            user_id: address.userId,
-            zip_code: address.zipCode,
-            street: address.street,
-            street_number: address.streetNumber,
-            complement: address.complement,
-            neighborhood: address.neighborhood,
-            city: address.city,
-            state: address.state,
-            type: address.type,
-            is_default: address.isDefault
+          user_id: address.userId,
+          zip_code: address.zipCode,
+          street: address.street,
+          street_number: address.streetNumber,
+          complement: address.complement,
+          neighborhood: address.neighborhood,
+          city: address.city,
+          state: address.state,
+          type: address.type,
+          is_default: address.isDefault
         }])
         .select('*')
-        .single() 
+        .single();
 
-
-        if (data) {
-          setDadosCliente(prev => ({...prev, address: [...prev.address, data]}))           
-        }
+      if (data) {
+        setDadosCliente(prev => ({ ...prev, address: [...(prev?.address || []), data] }));
       }
+    }
   } 
 
   // Delete user address
@@ -253,44 +285,38 @@ const cancelEmailUpdate = async () => {
     if (user?.id) {
       const { error } = await supabase
         .from('address')
-        .delete() 
-        .eq('id', addressId)
+        .delete()
+        .eq('id', addressId);
 
       if (!error) {
-        const removedAddress = dadosCliente?.address.filter(item => item.id !== addressId)
-        setDadosCliente(prev => ({...prev, address: removedAddress}))
+        const removedAddress = dadosCliente?.address.filter(item => item.id !== addressId);
+        setDadosCliente(prev => ({ ...prev, address: removedAddress }));
       } else {
-        console.error('Erro ao remover endereço', error.message)
+        console.error('Erro ao remover endereço', error.message);
       }
     }
   }
-
-
-
 
   // ---------- PAYMENT ----------
 
   // Add credit card
   async function addPayment(payment) {
-
-    if(user?.id) {
-      if(payment.isDefault === true){
+    if (user?.id) {
+      if (payment.isDefault === true) {
         const { data } = await supabase
-        .from('payment')
-        .update({is_default: false})
-        .eq('user_id', user.id)
-        .select('*')
+          .from('payment')
+          .update({ is_default: false })
+          .eq('user_id', user.id)
+          .select('*');
 
-        if(data){
-          const cards = dadosCliente?.payment?.map(card => ({...card, is_default: false}))
-          
-          setDadosCliente(prev => ({...prev, payment:cards}))
+        if (data) {
+          const cards = dadosCliente?.payment?.map(card => ({ ...card, is_default: false }));
+          setDadosCliente(prev => ({ ...prev, payment: cards }));
         }
       }
     }
 
-    
-      const { data: newCard } = await supabase
+    const { data: newCard } = await supabase
       .from('payment')
       .insert([{
         user_id: payment.userId,
@@ -302,24 +328,18 @@ const cancelEmailUpdate = async () => {
         is_default: payment.isDefault
       }])
       .select('*')
-      .single()
+      .single();
 
-      if(newCard){
-        const OldersCards = dadosCliente?.payment?.map(card => ({
-          ...card,
-          is_default: payment.isDefault ? false : card.is_default
-        })) || []
+    if (newCard) {
+      const OldersCards = dadosCliente?.payment?.map(card => ({
+        ...card,
+        is_default: payment.isDefault ? false : card.is_default
+      })) || [];
 
-        const allCards = [...OldersCards, newCard]
-
-        setDadosCliente({...dadosCliente, payment: allCards})
-
-      }
-    
+      const allCards = [...OldersCards, newCard];
+      setDadosCliente({ ...dadosCliente, payment: allCards });
+    }
   }
-
-  // Default card
-  
 
   // Delete credit card
   async function deleteCard(cardId) {
@@ -327,66 +347,60 @@ const cancelEmailUpdate = async () => {
       const { error } = await supabase
         .from('payment')
         .delete()
-        .eq('id', cardId)
+        .eq('id', cardId);
         
-      if(!error) {
-        const deletedCard = dadosCliente?.payment?.filter(item => item.id !== cardId)
-        setDadosCliente(prev => ({...prev, payment: deletedCard}))
+      if (!error) {
+        const deletedCard = dadosCliente?.payment?.filter(item => item.id !== cardId);
+        setDadosCliente(prev => ({ ...prev, payment: deletedCard }));
       } else {
-        console.error('Erro ao deletar cartão', error.message)
+        console.error('Erro ao deletar cartão', error.message);
       }
     }
   }
 
-
   // ---------- FAVORITES ----------
 
-    // Add favorite
-    async function addToFavorites(produto) {
-      if (user?.id) {
-        const favoritoAtualizado = [...dadosCliente.favoritos, produto]
-        const { data } = await supabase
-          .from('clientes')
-          .update({favoritos: favoritoAtualizado}) 
-          .eq('id', user.id)
-          .select('*')
-          .single()
+  // Add favorite
+  async function addToFavorites(produto) {
+    if (user?.id) {
+      const favoritoAtualizado = [...(dadosCliente?.favoritos || []), produto];
+      const { data } = await supabase
+        .from('clientes')
+        .update({ favoritos: favoritoAtualizado }) 
+        .eq('id', user.id)
+        .select('*')
+        .single();
 
-        if (data) {
-          setDadosCliente(prev => ({...prev, favoritos: favoritoAtualizado}))
-        }
+      if (data) {
+        setDadosCliente(prev => ({ ...prev, favoritos: favoritoAtualizado }));
       }
     }
+  }
 
-    // Delete favorite
-    async function removeFromFavorites(produto) {
-      if (user?.id) {
-        const favoritoAtualizado = dadosCliente?.favoritos.filter(item => item.id !== produto.id)
-        const { data } = await supabase
-          .from('clientes')
-          .update({favoritos: favoritoAtualizado})
-          .eq('id', user.id)
-          .select('*')
-          .single()
+  // Delete favorite
+  async function removeFromFavorites(produto) {
+    if (user?.id) {
+      const favoritoAtualizado = dadosCliente?.favoritos.filter(item => item.id !== produto.id);
+      const { data } = await supabase
+        .from('clientes')
+        .update({ favoritos: favoritoAtualizado })
+        .eq('id', user.id)
+        .select('*')
+        .single();
 
-        if (data) {
-          setDadosCliente(prev => ({...prev, favoritos: favoritoAtualizado}))
-        }
+      if (data) {
+        setDadosCliente(prev => ({ ...prev, favoritos: favoritoAtualizado }));
       }
     }
+  }
 
-
-    
-
-
+  // Autenticação e Sessão
   useEffect(() => {
-    // 1. Checa se já existe uma sessão ativa quando a página carrega
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
-    // 2. Escuta mudanças no estado de login (Login, Logout, Troca de senha)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
@@ -422,7 +436,30 @@ const cancelEmailUpdate = async () => {
   };
 
   return (
-    <AuthContext.Provider value={{ authenticated: !!user, user, loading, signIn, signOut, signUp, dadosCliente, addToFavorites, removeFromFavorites, submitName, atualizarEmail, cancelEmailUpdate, atualizarWhatsApp, adicionarPedido, addAddress, deleteAddress, addPayment, onDeleteCard: deleteCard, cpfAdd, birthdateAdd, purgeAccount, updatePassword}}>
+    <AuthContext.Provider value={{ 
+      authenticated: !!user, 
+      user, 
+      loading, 
+      signIn, 
+      signOut, 
+      signUp, 
+      dadosCliente, 
+      addToFavorites, 
+      removeFromFavorites, 
+      submitName, 
+      atualizarEmail, 
+      cancelEmailUpdate, 
+      atualizarWhatsApp, 
+      adicionarPedido, 
+      addAddress, 
+      deleteAddress, 
+      addPayment, 
+      onDeleteCard: deleteCard, 
+      cpfAdd, 
+      birthdateAdd, 
+      purgeAccount, 
+      updatePassword
+    }}>
       {children}
     </AuthContext.Provider>
   );

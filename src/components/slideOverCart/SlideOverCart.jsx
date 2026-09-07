@@ -108,7 +108,7 @@ export default function SlideOverCart({isCartOpen, setIsCartOpen}){
                                 <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} exit={{ opacity: 0, y: -30, transition: { duration: 0.20 } }} key={item.id}  layout className='flex h-35 lg:h-35 w-full border border-gray-200 gap-4 overflow-hidden rounded-2xl shrink-0 shadow-xs p-4'>
                                     <div className='h-full w-20 lg:w-1/4'>
                                         <Link to={`/produto/${item.id}`}>
-                                            <img className='h-full w-full border border-gray-100 rounded-2xl shadow-xs' src={item.img_url} alt='' />
+                                            <img className='h-full w-full object-cover border border-gray-100 rounded-2xl shadow-xs' src={item.img_url} alt='' />
                                         </Link>
                                     </div>
                                     <div className='relative flex flex-col justify-between gap-4 py-2 w-3/4 overflow-hidden'>
