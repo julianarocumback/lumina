@@ -6,8 +6,6 @@ export default function OrderPreview({orders}){
     const orderArray = orders ?? []
     const latestOrder = orderArray.length > 0? [...orders].sort((a,b)=> new Date(b.created_at) - new Date(a.created_at))[0] : null
    
-    console.log(latestOrder)
-    console.log(latestOrder?.frete.price)
     return (
         <div className='flex flex-col overflow-hidden gap-4 p-8 bg-white border border-gray-100 rounded-3xl shadow-lg md:w-3/4 lg:w-3/5 lg:h-125 xl:w-2/3'>
             {latestOrder?
@@ -32,7 +30,7 @@ export default function OrderPreview({orders}){
                                 <div className='p-2 h-9 rounded-lg w-9 flex items-center justify-center bg-blue-300 text-white'><i class="fa-solid fa-bolt-lightning"></i></div>
                             </div>
                             <div className='flex flex-col '>
-                                <p className='font-semibold text-gray-700  text-text-[rgba(71,71,71,0.7)]'>Chega em  até dois dias</p>
+                                <p className='font-semibold text-[14px] text-gray-700  text-text-[rgba(71,71,71,0.7)]'>Chega em  até dois dias</p>
                                 <p className='text-xs text-gray-500'>Entrega rápida • {currencyFormatter(latestOrder?.frete?.price)}</p>
                             </div>
                         </div>
@@ -70,11 +68,11 @@ export default function OrderPreview({orders}){
                             <p className=' text-lg font-semibold'>{currencyFormatter(latestOrder.valor)}</p>
                         </div>
                         <div className='flex gap-4'>
-                            <button className='flex items-center gap-3 px-2 py-2 w-full font-semibold text-gray-800 bg-gray-50 rounded-xl lg:px-4 lg:py-4 lg:text-xl'>
+                            <button className='flex items-center gap-1 px-2 py-2 w-full font-semibold text-gray-800 bg-gray-50 rounded-xl lg:px-4 lg:py-4 lg:text-xl'>
                             <div><i className="fa-solid fa-file-lines"></i></div>
                             <div>Detalhes</div>
                         </button>
-                        <button className='flex items-center gap-3 px-2 py-2 font-semibold text-blue-400 bg-blue-50 rounded-xl lg:px-4 lg:py-4 lg:text-xl w-full'>
+                        <button className='flex items-center gap-1 px-2 py-2 font-semibold text-blue-400 bg-blue-50 rounded-xl lg:px-4 lg:py-4 lg:text-xl w-full'>
                             <div><i className="fa-solid fa-location-dot"></i></div>
                             <div>Rastrear</div>
                         </button>
