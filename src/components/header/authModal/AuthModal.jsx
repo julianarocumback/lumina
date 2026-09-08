@@ -41,11 +41,12 @@ export default function AuthModal({authenticated, dadosCliente, onSignIn, onSign
             </div>
 
 
+
             {/* Auth modal */}
             <AnimatePresence>          
                 {isAuthModalOpen && 
                     <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration: 0.2}} className='h-fit'>
-                        {authenticated ? <UserMenu authenticated={authenticated} onSignOut={onSignOut}/> : !authenticated && isSignUp ? <SignUp setIsSignUp={setIsSignUp} onSignUp={onSignUp}/> : <SignIn onSignIn={onSignIn} setIsSignUp={setIsSignUp}/>}
+                        {authenticated ? <UserMenu authenticated={authenticated} onSignOut={onSignOut}/> : !authenticated && isSignUp ? <SignUp setIsSignUp={setIsSignUp} onSignUp={onSignUp}/> : <SignIn onSignIn={onSignIn} setIsSignUp={setIsSignUp} />}
                     </motion.div>
                 }
             </AnimatePresence>

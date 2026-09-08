@@ -156,36 +156,92 @@ export function AuthProvider({ children }) {
     setDadosCliente(prev => (prev ? { ...prev, pending_email: novoEmail } : null));
   }
 
-  // Cancelar atualização de e-mail
+  // Carregamento inicial com validação de inconsistência do F5
+  useEffect(() => {
+    const loadUserData = async () => {
+      const { data: { user: currentUser } } = await supabase.auth.getUser()
+
+      if (currentUser) {
+        // Busca os dados da tabela clientes
+        const { data: cliente } = await supabase
+          .from('clientes')
+          .select('*')
+          .eq('id', currentUser.id)
+          .single()
+
+        setDadosCliente(cliente)
+
+        // Trava de segurança: se no banco de dados o pending_email for nulo,
+        // força a remoção do new_email que o Auth do Supabase tenta reidratar no F5
+        const hasPendingInDb = Boolean(cliente?.pending_email)
+
+        setUser({
+          ...currentUser,
+          new_email: hasPendingInDb ? (currentUser.new_email || cliente.pending_email) : null,
+          user_metadata: {
+            ...currentUser.user_metadata,
+            pending_email: hasPendingInDb ? cliente.pending_email : null
+          }
+        })
+      }
+    }
+
+    loadUserData()
+  }, [])
+
+  // Função para cancelar alteração de e-mail
   const cancelEmailUpdate = async () => {
-    if (!user?.id) return;
+    const userId = user?.id || dadosCliente?.id
+    if (!userId) return
 
-    // 1. Limpa o metadata do Auth
-    const { data: authData, error: authError } = await supabase.auth.updateUser({
-      data: { pending_email: null }
-    });
+    try {
+      // 1. Força o cancelamento da troca no Auth reafirmando o e-mail atual
+      const { error: authError } = await supabase.auth.updateUser({
+        email: user?.email || dadosCliente?.email,
+        data: { pending_email: null }
+      })
 
-    if (authError) {
-      console.error('Erro ao limpar metadata do Auth:', authError.message);
+      if (authError) {
+        console.error('Erro ao limpar Auth:', authError.message)
+      }
+
+      // 2. Limpa a coluna na tabela clientes
+      const { error: dbError } = await supabase
+        .from('clientes')
+        .update({ pending_email: null })
+        .eq('id', userId)
+
+      if (dbError) {
+        console.error('Erro ao limpar Banco:', dbError.message)
+        return
+      }
+
+      // 3. Zera os estados locais imediatamente para remover a badge da tela
+      setUser(prev => {
+        if (!prev) return null
+        return {
+          ...prev,
+          new_email: null,
+          email_change: null,
+          user_metadata: {
+            ...prev.user_metadata,
+            pending_email: null
+          }
+        }
+      })
+
+      setDadosCliente(prev => {
+        if (!prev) return null
+        return {
+          ...prev,
+          pending_email: null
+        }
+      })
+
+    } catch (err) {
+      console.error('Erro inesperado ao cancelar alteração de e-mail:', err)
     }
-
-    // 2. Limpa o banco na tabela clientes
-    const { error: dbError } = await supabase
-      .from('clientes')
-      .update({ pending_email: null })
-      .eq('id', user.id);
-
-    if (dbError) {
-      console.error('Erro ao cancelar o email no banco:', dbError.message);
-      return;
-    }
-
-    // 3. Atualiza os estados para sumir a badge "Pendente" imediatamente
-    if (authData?.user) {
-      setUser(authData.user);
-    }
-    setDadosCliente(prev => (prev ? { ...prev, pending_email: null } : null));
-  };
+  }
 
   // Update user whatsapp
   async function atualizarWhatsApp(whatsapp) {
@@ -394,7 +450,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // Autenticação e Sessão
+  // Authentication
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
@@ -410,14 +466,20 @@ export function AuthProvider({ children }) {
   }, []);
 
   // Sign up
-  const signUp = async (email, password) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-    
-    if (error) throw error; 
-  };
+  const signUp = async (email, password, setcontajacriada) => {
+  const { data } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+
+  
+  if (data?.user && data.user.identities?.length === 0) {
+    setcontajacriada(true)
+  }
+
+  return data;
+};
 
   // Login
   const signIn = async (email, password) => {

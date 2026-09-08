@@ -64,7 +64,7 @@ export default function Catalogo(){
                 setPesquisa={setPesquisa}
                 pesquisa={pesquisa}
                 />
-          
+         
 
             <div className='relative flex w-full sm:gap-8 xl:gap-16 '>
                 {/* sidebar */}
@@ -83,13 +83,13 @@ export default function Catalogo(){
                 </div>
 
                 {/* produtos */}
-                <div className='flex flex-col gap-6 w-full sm:w-2/3 md:w-3/4 sm:-top-12 sm: lg:-top-30 relative -top-12'>
-                <div className='z-10 bg-white top-0 sm:pt-30 sticky h-fit pb-2 w-full py-8'>
+                <div className='flex flex-col gap-6 w-full sm:w-2/3 md:w-3/4 sm:-top-12 sm: lg:-top-30 relative -top-6'>
+                <div className='z-10 bg-white top-0 pt-21 sm:pt-30 sticky h-fit pb-2 w-full py-8'>
                     <Order setOrdem={setOrdem} ordemAtiva={ordem} quantidade={pesquisaLista.length}/>
                     <div className='h-[0.1px] w-full bg-gray-200'></div>
 
                 </div>
-                    <Products pesquisaLista={pesquisaLista} setQuantidade={setQuantidade} produtos={produtos}/>
+                    <Products pesquisaLista={pesquisaLista} setQuantidade={setQuantidade} produtos={produtos} categoria={categoria}/>
                 </div>
             </div>
         </section>

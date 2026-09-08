@@ -42,7 +42,6 @@ export default function SignIn({setIsAuthModalOpen, onSignIn, setIsSignUp}){
             setIsAuthModalOpen(false)
         } catch(err) {
             if(err){
-
                 setIsSignInError(true)
             }
         }
@@ -51,7 +50,7 @@ export default function SignIn({setIsAuthModalOpen, onSignIn, setIsSignUp}){
     }
     
     return (
-        <div className='z-50 bottom-14 left-0 absolute w-full h-50 p-8 bg-white border-gray-700 shadow-lg lg:w-70 lg:left-auto lg:right-0 lg:top-14'>
+        <div className='z-50 bottom-14 left-0 absolute w-full h-fit p-8 bg-white border-gray-700 shadow-lg lg:w-70 lg:left-auto lg:right-0 lg:top-14'>
             <form onSubmit={handleSubmit} className="flex flex-col gap-2 w-full">
                 <input value={email} placeholder='E-mail' onChange={handleEmailChange} onBlur={handleBlur} className={`w-full px-2 border ${hasEmailError ? 'border-red-500': 'border-gray-400'} rounded-lg" type="email`}/>
                 {showEmailError && <p className='text-xs text-red-500'>Digite o email</p>}

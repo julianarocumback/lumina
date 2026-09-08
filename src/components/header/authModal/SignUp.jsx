@@ -4,6 +4,9 @@ export default function SignUp({onSignUp, setIsSignUp}) {
     const [newEmail, setNewEmail] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const [contajacriada, setcontajacriada] = useState(false)
+
     
     const cadastro = async (e) => {
     e.preventDefault();
@@ -11,13 +14,12 @@ export default function SignUp({onSignUp, setIsSignUp}) {
 
     try {
       // Chama a função do contexto passando os dados recolhidos pelo formulário
-      await onSignUp(newEmail, newPassword);
+      await onSignUp(newEmail, newPassword, setcontajacriada);
       
-      alert('Usuário cadastrado com sucesso! Verifique seu e-mail.');
       setNewEmail('');
       setNewPassword('');
     } catch (error) {
-      alert('Erro ao enviar dados para o Supabase: ' + error.message);
+      ''
     } finally {
       setLoading(false);
     }
@@ -35,6 +37,7 @@ export default function SignUp({onSignUp, setIsSignUp}) {
                         </button>
                     </form>
                     <button onClick={()=>setIsSignUp(false)}>Voltar para login</button>
+                    {contajacriada && <p className='text-xs text-red-700'>E-mail já cadastrado</p>}
                 </div>
     )
 }
