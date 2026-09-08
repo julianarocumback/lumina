@@ -102,8 +102,8 @@ export default function Orders(){
                                                 {item?.produtos.map(produto => {
                                                     return (
                                                         <Link to={`/produto/${produto.id}`}>
-                                                            <div key={produto.id} className='flex overflow-hidden w-57 h-30 md:h-40 md:w-70 shadow border border-gray-200 rounded-xl gap-2 md:gap-4 items-center p-2'>
-                                                                <div className='h-full w-2/3 md:w-2/5 rounded-xl overflow-hidden border border-gray-200'>
+                                                            <div key={produto.id} className='flex overflow-hidden w-70 h-35 md:h-40 md:w-70 shadow border border-gray-200 rounded-xl gap-2 md:gap-4 items-center p-2'>
+                                                                <div className='h-full w-1/3 md:w-2/5 rounded-xl overflow-hidden border border-gray-200'>
                                                                     <img className='w-full h-full object-cover' src={produto.img_url} alt='' />
                                                                 </div>
                                                                 <div className='w-2/3 md:w-3/5'>
