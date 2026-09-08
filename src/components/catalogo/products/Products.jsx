@@ -80,7 +80,7 @@ export default function Products({produtos, carregar, setQuantidade, pesquisaLis
                 </div>
             }
                
-            <div className='w-full flex justify-center'>
+            <div className='w-full flex justify-center '>
                 {pesquisaLista?.length <  produtos?.length && pesquisaLista?.length !== categoryLength && <button className='py-2 self-center w-70 rounded-full text-lg font-semibold bg-gray-200' onClick={()=> {alterarQuantidade(15)}}>Mostrar mais</button>}
             </div>
         </motion.div>
