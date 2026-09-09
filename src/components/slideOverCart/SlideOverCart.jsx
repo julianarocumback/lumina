@@ -55,25 +55,16 @@ export default function SlideOverCart({isCartOpen, setIsCartOpen}){
     }
 
 
-    // Closes the cart overlay when clicking outside its bounds
     useEffect(() => {
         function handleClickOutside(event) {
-            if (!cartRef.current) return;
-
-            const isInsideCart = cartRef.current.contains(event.target);
-            const isInsideContainer = event.target.closest('.h-screen'); 
-            const isToggleCartButton = event.target.closest('.botao-carrinho');
-            const isElementInDOM = document.body.contains(event.target);
-
-            if (!isInsideCart && !isInsideContainer && !isToggleCartButton && isElementInDOM) {
-                if (isCartOpen) {
-                    setIsCartOpen(false);
-                }
+            if (event.target.closest('.botao-carrinho')) {
+                return;
             }
+            setIsCartOpen(false);
         }
-
-        document.addEventListener('mousedown', handleClickOutside);
-
+        if (isCartOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
@@ -86,6 +77,7 @@ export default function SlideOverCart({isCartOpen, setIsCartOpen}){
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: '100%', opacity: 0 }}
             transition={{ type: 'tween', duration: 0.3 }}
+            onMouseDown={(e) => e.stopPropagation()}
             ref={cartRef}
             className='bottom-13 right-0 flex flex-col h-screen w-82 pt-4 bg-white absolute shadow-sm lg:top-13 lg:w-100 lg:pt-0'
         >
