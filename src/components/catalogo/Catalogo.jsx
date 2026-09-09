@@ -54,6 +54,7 @@ export default function Catalogo(){
     
     
     console.log('pesquisa', pesquisaLista.length)
+    console.log('produtos', produtos?.length)
     
     return (
         <section className='relative px-4 py-12 sm:px-8 md:px-16 lg:py-30 xl:px-32 2xl:px-64'>
@@ -90,7 +91,7 @@ export default function Catalogo(){
                     <div className='hidden sm:block h-[0.1px] w-full bg-gray-200'></div>
 
                 </div>
-                    <Products pesquisaLista={pesquisaLista} setQuantidade={setQuantidade} produtos={produtos} categoria={categoria}/>
+                    <Products pesquisaLista={pesquisaLista} quantidade={quantidade} setQuantidade={setQuantidade} produtos={produtos} categoria={categoria}/>
                 </div>
             </div>
         </section>

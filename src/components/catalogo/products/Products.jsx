@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Skeleton from '../skeleton/Skeleton';
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function Products({produtos, carregar, setQuantidade, pesquisaLista, categoria}){
+export default function Products({produtos, carregar,quantidade,  setQuantidade, pesquisaLista, categoria}){
     const {addToCart, items} = useCart()
     const {authenticated, dadosCliente,addToFavorites, removeFromFavorites} = useContext(AuthContext)
     function alterarQuantidade(valor){
@@ -81,7 +81,7 @@ export default function Products({produtos, carregar, setQuantidade, pesquisaLis
             }
                
             <div className='w-full flex justify-center '>
-                {pesquisaLista?.length <  produtos?.length && pesquisaLista?.length !== categoryLength && <button className='py-2 self-center w-70 rounded-full text-lg font-semibold bg-gray-200' onClick={()=> {alterarQuantidade(15)}}>Mostrar mais</button>}
+                {pesquisaLista?.length >= quantidade &&  <button className='py-2 self-center w-70 rounded-full text-lg font-semibold bg-gray-200' onClick={()=> {alterarQuantidade(15)}}>Mostrar mais</button>}
             </div>
         </motion.div>
     )

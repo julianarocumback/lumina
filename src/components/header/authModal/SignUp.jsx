@@ -6,6 +6,7 @@ export default function SignUp({onSignUp, setIsSignUp}) {
     const [loading, setLoading] = useState(false)
 
     const [contajacriada, setcontajacriada] = useState(false)
+    const [confirmacao, setconfirmacao] = useState(false)
 
     
     const cadastro = async (e) => {
@@ -14,7 +15,7 @@ export default function SignUp({onSignUp, setIsSignUp}) {
 
     try {
       // Chama a função do contexto passando os dados recolhidos pelo formulário
-      await onSignUp(newEmail, newPassword, setcontajacriada);
+      await onSignUp(newEmail, newPassword, setcontajacriada, setconfirmacao);
       
       setNewEmail('');
       setNewPassword('');
@@ -38,6 +39,7 @@ export default function SignUp({onSignUp, setIsSignUp}) {
                     </form>
                     <button onClick={()=>setIsSignUp(false)}>Voltar para login</button>
                     {contajacriada && <p className='text-xs text-red-700'>E-mail já cadastrado</p>}
+                    {confirmacao && <p> Verifique seu e-mail</p>}
                 </div>
     )
 }

@@ -466,16 +466,21 @@ export function AuthProvider({ children }) {
   }, []);
 
   // Sign up
-  const signUp = async (email, password, setcontajacriada) => {
+  const signUp = async (email, password, setcontajacriada, setconfirmacao) => {
   const { data } = await supabase.auth.signUp({
     email,
     password,
   });
 
-
+  
   
   if (data?.user && data.user.identities?.length === 0) {
     setcontajacriada(true)
+  }
+
+  if (data?.user && data.user.identities?.length > 0) {
+    setconfirmacao(true)
+    setcontajacriada(false);
   }
 
   return data;
