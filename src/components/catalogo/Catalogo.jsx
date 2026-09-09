@@ -63,12 +63,13 @@ export default function Catalogo(){
                 setCategoria={setCategoria}
                 setPesquisa={setPesquisa}
                 pesquisa={pesquisa}
+                setOrdem={setOrdem} ordem={ordem} pesquisaLista={pesquisaLista}
                 />
          
 
             <div className='relative flex w-full sm:gap-8 xl:gap-16 '>
                 {/* sidebar */}
-                <div className='sm:sticky sm:top-30 hidden sm:flex sm:flex-col gap-4 lg:p-6 h-fit border border-gray-100 shadow bg-gray-50 rounded-2xl sm:w-1/3 md:w-1/4 p-4'>
+                <div className='sm:sticky sm:top-15 lg:top-30 hidden sm:flex sm:flex-col gap-4 lg:p-6 h-fit border border-gray-100 shadow bg-gray-50 rounded-2xl sm:w-1/3 md:w-1/4 p-4'>
                     <h3 className='font-semibold text-2xl'>Catálogo</h3>
                     <div className='relative w-full flex flex-col gap-2'>
                         <h4 className='text-lg font-semibold'>Pesquisa</h4>
@@ -83,10 +84,10 @@ export default function Catalogo(){
                 </div>
 
                 {/* produtos */}
-                <div className='flex flex-col gap-6 w-full sm:w-2/3 md:w-3/4 sm:-top-12 sm: lg:-top-30 relative -top-6'>
-                <div className='z-10 bg-white top-0 pt-21 sm:pt-30 sticky h-fit pb-2 w-full py-8'>
-                    <Order setOrdem={setOrdem} ordemAtiva={ordem} quantidade={pesquisaLista.length}/>
-                    <div className='h-[0.1px] w-full bg-gray-200'></div>
+                <div className='flex flex-col gap-6 w-full sm:w-2/3 md:w-3/4 sm:-top-12   lg:-top-30 relative -top-6'>
+                <div className='z-10 bg-white top-0 pt-16 lg:pt-32 sm:pt-14 sticky h-fit pb-2 w-full py-8'>
+                    <Order setOrdem={setOrdem} ordemAtiva={ordem} quantidade={pesquisaLista.length} style={'hidden sm:flex'}/>
+                    <div className='hidden sm:block h-[0.1px] w-full bg-gray-200'></div>
 
                 </div>
                     <Products pesquisaLista={pesquisaLista} setQuantidade={setQuantidade} produtos={produtos} categoria={categoria}/>

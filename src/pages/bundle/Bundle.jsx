@@ -57,7 +57,7 @@ export default function Bundle() {
             colorGradient: '#ec489920', // Rosa com opacidade
             livros: [
                 { titulo: 'Mananciais no Deserto', editora: 'Betânia', edicao: 'Padrão', idioma: 'Português', paginas: 'N/A', ISBN10: 'N/A', ISBN13: 'N/A', peso: 'N/A', dimensoes: 'N/A' },
-                { titulo: 'Reflexões Diárias com C.S. Lewis', editora: 'Thomas Nelson', edicao: 'Padrão', idioma: 'Português', paginas: 'N/A', ISBN10: 'N/A', ISBN13: 'N/A', peso: 'N/A', dimensoes: 'N/A' },
+                { titulo: 'Em Busca de Deus: Minha alma anseia por Ti', editora: 'Thomas Nelson', edicao: 'Padrão', idioma: 'Português', paginas: 'N/A', ISBN10: 'N/A', ISBN13: 'N/A', peso: 'N/A', dimensoes: 'N/A' },
                 { titulo: 'Manhãs e Noites', editora: 'Fiel', edicao: 'Padrão', idioma: 'Português', paginas: 'N/A', ISBN10: 'N/A', ISBN13: 'N/A', peso: 'N/A', dimensoes: 'N/A' }
             ]
         },
@@ -136,7 +136,7 @@ export default function Bundle() {
                         {/* CARD */}
                         <div className='border-gray-100 bg-white rounded-2xl flex flex-col md:flex-row justify-center gap-8 lg:p-8 shadow-sm py-8'>
                             {/* IMAGES */}
-                            <div className='w-full md:w-1/2 relative flex items-center justify-center border-b border-b-gray-200 sm:border-b-transparent pb-4'>
+                            <div className='w-full md:w-1/2 relative flex gap-4 items-center justify-center border-b border-b-gray-200 sm:border-b-transparent pb-4'>
                                 {produtosFiltrados.map(prod => {
                                     return (
                                         <div key={prod.id} className='relative'>

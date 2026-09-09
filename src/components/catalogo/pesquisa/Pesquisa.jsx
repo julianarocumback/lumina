@@ -4,9 +4,10 @@ import { useContext, useState} from 'react'
 import { Link } from 'react-router-dom'
 import Skeleton from '../skeleton/Skeleton';
 import {motion, AnimatePresence} from 'framer-motion'
+import Order from '../order/Order'
 
 // Mobile search
-export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa}) => {
+export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa, setOrdem, ordem, pesquisaLista}) => {
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     if(!lista) return null
 
@@ -26,7 +27,7 @@ export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa}) => {
 
     return (
         <AnimatePresence>
-        <motion.div  className='sticky -mt-21  sm:hidden flex flex-col z-20 left-0 top-0 h-fit w-full p-4 gap-8 items-center '>
+        <motion.div  className='sticky -mt-21  sm:hidden flex flex-col z-20 left-0 top-0 h-fit w-full p-4 gap-4 items-center'>
             
             <div className='flex w-full gap-4'>
                 <div className='w-full relative flex items-center justify-center'>
@@ -37,12 +38,19 @@ export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa}) => {
                 <button onClick={() => setIsFilterOpen(prev => !prev)} className=' shadow p-2 rounded-xl bg-white'><i className='fa-solid fa-filter'></i></button>
                 
             </div>
-            {isFilterOpen &&
-                <motion.div initial={{opacity:0, y:-30}} layout animate={{opacity: 1, y:0}}   transition={{ type: 'tween', duration: 0.5 }} exit={{opacity:0, y:-30}} className='bg-white w-full h-full flex gap-4'>
-                        {filters}
+            <div className='w-screen bg-white'>
+                {isFilterOpen &&
+                    <motion.div initial={{opacity:0, y:-30}} layout animate={{opacity: 1, y:0}}   transition={{ type: 'tween', duration: 0.5 }} exit={{opacity:0, y:-30}} className='bg-white w-full justify-center h-fit flex gap-4'>
+                            {filters}
 
-                </motion.div>
-            }
+                    </motion.div>
+                }
+                <div className='bg-white  w-full p-4 flex flex-col'>
+                    <Order setOrdem={setOrdem} ordemAtiva={ordem} quantidade={pesquisaLista.length}/>
+                    <div className='block h-[0.1px] w-full bg-gray-200'></div>
+                </div>
+
+            </div>
             
         </motion.div>
         </AnimatePresence>
