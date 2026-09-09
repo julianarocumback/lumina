@@ -466,7 +466,8 @@ export function AuthProvider({ children }) {
   }, []);
 
 // Sign up (Versão simplificada sem quebrar o banco)
-const signUp = async (email, password, setcontajacriada, setconfirmacao) => {
+// Sign up
+const signUp = async (email, password) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -474,18 +475,7 @@ const signUp = async (email, password, setcontajacriada, setconfirmacao) => {
 
   if (error) {
     console.error("Erro Supabase:", error.message);
-    return;
-  }
-
-  // Se o e-mail já existe
-  if (data?.user?.identities?.length === 0) {
-    setcontajacriada(true);
-    setconfirmacao(false);
-  } 
-  // Se a conta foi criada e enviou o e-mail
-  else if (data?.user) {
-    setconfirmacao(true);
-    setcontajacriada(false);
+    throw error;
   }
 
   return data;
