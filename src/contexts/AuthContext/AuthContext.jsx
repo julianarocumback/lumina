@@ -465,21 +465,26 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  // Sign up
-  const signUp = async (email, password, setcontajacriada, setconfirmacao) => {
-  const { data } = await supabase.auth.signUp({
+// Sign up (Versão simplificada sem quebrar o banco)
+const signUp = async (email, password, setcontajacriada, setconfirmacao) => {
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
   });
 
-  
-  
-  if (data?.user && data.user.identities?.length === 0) {
-    setcontajacriada(true)
+  if (error) {
+    console.error("Erro Supabase:", error.message);
+    return;
   }
 
-  if (data?.user && data.user.identities?.length > 0) {
-    setconfirmacao(true)
+  // Se o e-mail já existe
+  if (data?.user?.identities?.length === 0) {
+    setcontajacriada(true);
+    setconfirmacao(false);
+  } 
+  // Se a conta foi criada e enviou o e-mail
+  else if (data?.user) {
+    setconfirmacao(true);
     setcontajacriada(false);
   }
 
