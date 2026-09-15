@@ -8,11 +8,10 @@ import {MobileSearch, DesktopSearch} from './pesquisa/Pesquisa'
 export default function Catalogo(){
 
     const [produtos, setProdutos] = useState([])
-    const [carregando, setCarregando] = useState(true)
 
-    const [categoria, setCategoria] = useState('Todos')
+    const [category, setCategory] = useState('Todos')
     const [ordem, setOrdem] = useState('padrao')
-    const [quantidade, setQuantidade] = useState(15)
+    const [quantity, setQuantity] = useState(15)
 
     const [pesquisa, setPesquisa] = useState('')
     console.log(produtos.length)
@@ -21,7 +20,7 @@ export default function Catalogo(){
     useEffect(() => {
         async function getProdutos() {
             try {
-                setCarregando(true)
+     
                 const {data, error} = await supabase
                 .from('produtos')
                 .select('*, livros(*)')
@@ -30,41 +29,37 @@ export default function Catalogo(){
             } catch (error) {
                 console.error('Erro ao buscar livros:', error.message)
             } finally {
-                setCarregando(false)
+               ''
             }
         }
         getProdutos()
     },[])
     
     
-    const pesquisaLista = produtos.filter(item => {
-        const nomeArrumado = item.nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
-        const autorFormatado = item.livros.autor.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
-        const pesquisaArrumada = pesquisa.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
+    const filteredProducts = produtos.filter(item => {
+        const normalizedName = item.nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
+        const normalizedAuthor = item.livros.autor.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
+        const normalizedQuery = pesquisa.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
         
-        if(nomeArrumado.includes(pesquisaArrumada) || autorFormatado.includes(pesquisaArrumada) ) return item
-    }).filter(item => categoria === 'Todos' || item.categoria === categoria)
+        if(normalizedName.includes(normalizedQuery) || normalizedAuthor.includes(normalizedQuery) ) return item
+    }).filter(item => category === 'Todos' || item.categoria === category)
     .toSorted((a,b) => {
         const valorA = Number(a.valor)
         const valorB = Number(b.valor)
         if (ordem === 'menor-valor') return valorA - valorB
         if (ordem === 'maior-valor') return valorB - valorA
         return a.nome.localeCompare(b.nome)
-    }).slice(0, quantidade)
-    
-    
-    console.log('pesquisa', pesquisaLista.length)
-    console.log('produtos', produtos?.length)
+    }).slice(0, quantity)
     
     return (
         <section className='relative px-4 py-12 sm:px-8 md:px-16 lg:py-30 xl:px-32 2xl:px-64'>
                 <MobileSearch
                 lista={produtos}
-                categoria={categoria}
-                setCategoria={setCategoria}
+                category={category}
+                setCategory={setCategory}
                 setPesquisa={setPesquisa}
                 pesquisa={pesquisa}
-                setOrdem={setOrdem} ordem={ordem} pesquisaLista={pesquisaLista}
+                setOrdem={setOrdem} ordem={ordem} filteredProducts={filteredProducts}
                 />
          
 
@@ -74,12 +69,12 @@ export default function Catalogo(){
                     <h3 className='font-semibold text-2xl'>Catálogo</h3>
                     <div className='relative w-full flex flex-col gap-2'>
                         <h4 className='text-lg font-semibold'>Pesquisa</h4>
-                        <DesktopSearch setPesquisa={setPesquisa} pesquisa={pesquisa} pesquisaLista={pesquisaLista}/>
+                        <DesktopSearch setPesquisa={setPesquisa} pesquisa={pesquisa} filteredProducts={filteredProducts}/>
                     </div>
                     <div className='h-0.5 w-full border border-gray-200'></div>
                     <div className='flex flex-col gap-2'>
                         <h4 className='text-lg font-semibold'>Categorias</h4>
-                        <Filter lista={produtos} categoria={categoria} setCategoria={setCategoria}/>
+                        <Filter lista={produtos} category={category} setCategory={setCategory}/>
 
                     </div>
                 </div>
@@ -87,11 +82,11 @@ export default function Catalogo(){
                 {/* produtos */}
                 <div className='flex flex-col gap-6 w-full sm:w-2/3 md:w-3/4 sm:-top-12   lg:-top-30 relative -top-6'>
                 <div className='z-10 bg-white top-0 pt-16 lg:pt-32 sm:pt-14 sticky h-fit pb-2 w-full py-8'>
-                    <Order setOrdem={setOrdem} ordemAtiva={ordem} quantidade={pesquisaLista.length} style={'hidden sm:flex'}/>
+                    <Order setOrdem={setOrdem} ordemAtiva={ordem} itemCount={filteredProducts.length} style={'hidden sm:flex'}/>
                     <div className='hidden sm:block h-[0.1px] w-full bg-gray-200'></div>
 
                 </div>
-                    <Products pesquisaLista={pesquisaLista} quantidade={quantidade} setQuantidade={setQuantidade} produtos={produtos} categoria={categoria}/>
+                    <Products filteredProducts={filteredProducts} quantity={quantity} setQuantity={setQuantity}/>
                 </div>
             </div>
         </section>

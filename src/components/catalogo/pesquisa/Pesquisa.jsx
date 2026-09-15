@@ -1,13 +1,9 @@
-import { useCart } from '../../../contexts/CartContext/CartContext'
-import { AuthContext } from '../../../contexts/AuthContext/AuthContext'
-import { useContext, useState} from 'react'
-import { Link } from 'react-router-dom'
-import Skeleton from '../skeleton/Skeleton';
+import { useState } from 'react'
 import {motion, AnimatePresence} from 'framer-motion'
 import Order from '../order/Order'
 
 // Mobile search
-export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa, setOrdem, ordem, pesquisaLista}) => {
+export const MobileSearch = ({lista, setCategory, pesquisa, setPesquisa, setOrdem, ordem, filteredProducts}) => {
     const [isFilterOpen, setIsFilterOpen] = useState(false)
     if(!lista) return null
 
@@ -23,7 +19,7 @@ export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa, setOrd
         setPesquisa('')
     }
 
-    const filters = [...new Set(lista.map(item => item.categoria))].map(item => <div onClick={()=>setCategoria(item)}>{item}</div>)
+    const filters = [...new Set(lista.map(item => item.categoria))].map(item => <div onClick={()=>setCategory(item)}>{item}</div>)
 
     return (
         <AnimatePresence>
@@ -46,7 +42,7 @@ export const MobileSearch = ({lista, setCategoria, pesquisa, setPesquisa, setOrd
                     </motion.div>
                 }
                 <div className='bg-white  w-full p-4 flex flex-col'>
-                    <Order setOrdem={setOrdem} ordemAtiva={ordem} quantidade={pesquisaLista.length}/>
+                    <Order setOrdem={setOrdem} ordemAtiva={ordem} quantidade={filteredProducts.length}/>
                     <div className='block h-[0.1px] w-full bg-gray-200'></div>
                 </div>
 
