@@ -14,8 +14,7 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
     const shouldShowExactLengthError = hasContent && !hasExactLength && (hasInteracted || isSubmitted)
 
     const whatsappFormatinho = useMemo(()=>{
-        if(!dadosCliente.whatsapp) return ''
-        const whatsappEdited = dadosCliente.whatsapp + '___________'
+        const whatsappEdited = whatsapp + '___________'
         const pt1 = whatsappEdited.slice(0,2)
         const pt2 = whatsappEdited.slice(2,7)
         const pt3 = whatsappEdited.slice(7,11)
@@ -24,8 +23,9 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
     })
 
     const whatsappFormated = useMemo(()=>{
-        if(!dadosCliente.whatsapp) return ''
-        const whatsappEdited = whatsapp + '___________'
+        if(!dadosCliente.whatsapp) return '(__) _____-____'
+
+        const whatsappEdited = dadosCliente.whatsapp + '___________'
         const pt1 = whatsappEdited.slice(0,2)
         const pt2 = whatsappEdited.slice(2,7)
         const pt3 = whatsappEdited.slice(7,11)
@@ -117,8 +117,8 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
                         onChange={handleEditingWhatsapp}
                         onBlur={handleWhatsappVerification}
                     />
-                    {isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormated}</span>}
-                    {!isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormatinho}</span>}
+                    {isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormatinho}</span>}
+                    {!isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormated}</span>}
                 </div>
                 <div className="flex">
                     {!isEditingWhatsapp && <div onClick={handleEditWhatsApp} className="font-semibold text-blue-700">Editar</div>}
