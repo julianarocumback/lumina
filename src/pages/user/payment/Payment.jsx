@@ -42,7 +42,6 @@ export default function Payment(){
                             return (
                                 <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} layout className='relative flex flex-col justify-center gap-2   h-40 p-4 bg-[radial-gradient(at_0%_0%,#000,transparent_100%),radial-gradient(at_100%_100%,#000,transparent_90%),radial-gradient(at_0%_0%,#000,transparent_80%)] rounded-2xl shadow-lg md:w-full lg:w-full lg:h-45'>
                                     <div className='absolute top-4 right-5 flex gap-2 text-white/70'>
-                                        <button onClick={defaultCard}>deixar principal</button>
                                         {card.is_default && <div className='flex justify-center items-center text-xs px-2 bg-green-400/30 border-none rounded-full '>Principal</div>}
                                         <div className='transition-all hover:text-white ' onClick={() => handleDeleteCard(card.id)}>
                                             <i className='fa-solid fa-trash'></i>

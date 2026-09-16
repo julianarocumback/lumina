@@ -30,7 +30,7 @@ export default function Favorites(){
                     return ( 
                         <motion.div initial={{opacity:0, y:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:0.5}} layout key={favorite.id} className='relative flex flex-rol gap-4 h-40 p-4 bg-white rounded-2xl shadow lg:flex-col lg:justify-between lg:gap-8 lg:h-fit '>
                             <button className='absolute hidden top-7 right-7 w-8 h-8 text-black/50 bg-white/90 rounded-2xl transition-all shadow cursor-pointer lg:block hover:text-red-600 hover:bg-red-200 hover:scale-110' onClick={() => handleRemoveFromFavorites(favorite)}><i className="fa-solid fa-heart-crack"></i></button>
-                            <div className='flex-none overflow-hidden w-20 bg-gray-200 rounded-xl lg:w-fit lg:h-full'>
+                            <div className='flex-none overflow-hidden w-20 bg-gray-200 rounded-xl lg:w-full lg:h-70'>
                                 <img className='w-full h-full' src={favorite.img_url} alt='Capa do livro' />
                             </div>
                             <div className='flex flex-col justify-between w-full truncate lg:gap-2'>

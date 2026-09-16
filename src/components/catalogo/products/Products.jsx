@@ -42,7 +42,7 @@ export default function Products({filteredProducts, quantity, setQuantity}){
                                 {authenticated  && <button className={`absolute top-5 right-7 w-8 h-8 ${isAreadyInFavorite ? 'text-red-600 bg-red-200 scale-110' : 'text-black/50 bg-white/90'} rounded-2xl transition-all shadow cursor-pointer hover:text-red-600 hover:scale-110`} onClick={() => handleAddToFavorite(product)}><i className='fa-solid fa-heart'></i></button>}
                                 
                                         
-                                <Link to={`/product/${product.id}`}>
+                                <Link to={`/produto/${product?.id}`}>
                                     <div className='overflow-hidden h-60 rounded-2xl shadow-lg @sm:h-75 @md:h-100 @lg:h-80 @xl:h-90 @2xl:h-100'>
                                         <img  className='h-full w-full object-cover ' src={product.img_url} alt={product.nome} />
                                     </div>
