@@ -55,13 +55,13 @@ export default function SignIn({setIsAuthModalOpen, onSignIn, setIsSignUp}){
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">
                 <div className='flex flex-col gap-2'>
                     <input value={email} placeholder='E-mail' onChange={handleEmailChange} onBlur={handleBlur} className={`w-full px-2 py-1 border ${hasEmailError ? 'border-red-500': 'border-gray-400'} rounded-lg type="email`}/>
-                    {showEmailError && <p className='text-xs text-red-500'>Digite o email</p>}
                     <input value={password} placeholder='Senha' onChange={(e)=> setPassword(e.target.value)} className={`w-full px-2 py-1 border ${hasPasswordError ? 'border-red-500': 'border-gray-400'} rounded-lg  type="email`} type="password" onBlur={handlePasswordBlur}/>
 
                 </div>
                 <button type='submit' className=" w-full py-1 text-white bg-black/70 rounded-lg cursor-pointer">Entrar</button>
-                {showPasswordError && <p className='text-xs text-red-500'>Digite sua senha</p>}
-                {hasSignInError && <p className='text-xs text-red-500'>Email ou senha incorretos</p>}
+                {showEmailError && <p className='text-xs font-semibold text-red-700 bg-red-50 p-2 rounded border border-red-200'>Digite o email</p>}
+                {showPasswordError && <p className='text-xs font-semibold text-red-700 bg-red-50 p-2 rounded border border-red-200'>Digite sua senha</p>}
+                {(hasEmailContent && hasPasswordContent) && hasSignInError && <p className='text-xs font-semibold text-red-700 bg-red-50 p-2 rounded border border-red-200'>Email ou senha incorretos</p>}
             </form>
             <div className='text-xs flex justify-between w-full'>
                 <p className="text-md text-red-700 cursor-pointer ">Esqueci a senha</p>
