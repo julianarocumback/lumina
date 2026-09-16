@@ -36,7 +36,7 @@ export default function AuthModal({authenticated, dadosCliente, onSignIn, onSign
             <div onClick={handleAuthModalOpen} className='md:flex md:items-center md:gap-2 lg:text-xl'>
                 <i className="fa-regular fa-circle-user"></i>
                 <div className="text-base hidden lg:block">
-                    {authenticated && <p>{dadosCliente?.nome} </p>}
+                    {authenticated && <p>{dadosCliente?.nome || 'Usuário'} </p>}
                 </div>
             </div>
 

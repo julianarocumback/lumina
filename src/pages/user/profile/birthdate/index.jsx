@@ -57,7 +57,7 @@ export default function Birthdate({dadosCliente, onSaveBirthdate}){
             <h3 className="font-semibold text-[11px] text-gray-500">DATA DE NASCIMENTO</h3>
 
             <div className='flex flex-col gap-2 sm:flex-row sm:justify-between'>
-                <input disabled={!isEditingBirthdate} onChange={(e) => handleAddBirthdate(e.target.value)}  type="date" className={`${isEditingBirthdate && 'enabled:outline'} caret-black cursor z-10 w-35  rounded-xl px-2 disabled:border border border-gray-500 lg:border-none`} value={dadosCliente.birthdate || '11/11/1111'} onBlur={handleBirthdateInteracted}/>     
+                <input disabled={!isEditingBirthdate} onChange={(e) => handleAddBirthdate(e.target.value)}  type="date" className={`${isEditingBirthdate && 'enabled:outline'} caret-black cursor z-10 w-35  rounded-xl px-2 disabled:border border border-gray-500 lg:border-none`} value={birthdate || dadosCliente.birthdate} onBlur={handleBirthdateInteracted}/>     
 
                 <div>
                     {!isEditingBirthdate && !dadosCliente.birthdate &&
