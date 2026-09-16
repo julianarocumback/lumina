@@ -46,6 +46,7 @@ export default function SignUp({ setIsSignUp }) {
 
   return (
     <div className='absolute bottom-14 left-0 lg:left-auto lg:right-0 lg:top-14 shadow-lg border border-gray-300 w-full lg:w-72 bg-white min-h-fit p-6 z-50 rounded-xl flex flex-col gap-3'>
+            <h3 className='text-center text-lg'>Cadastrar</h3>
       
       {confirmacao ? (
         <div className="flex flex-col gap-3">
@@ -67,7 +68,7 @@ export default function SignUp({ setIsSignUp }) {
               value={newEmail} 
               placeholder='E-mail' 
               onChange={(e) => setNewEmail(e.target.value)} 
-              className="border border-gray-400 w-full rounded-lg px-2 py-1 text-sm" 
+              className="border border-gray-400 w-full rounded-lg px-2 py-1" 
               type="email"
               required
             />
@@ -75,14 +76,14 @@ export default function SignUp({ setIsSignUp }) {
               value={newPassword} 
               placeholder='Senha' 
               onChange={(e) => setNewPassword(e.target.value)} 
-              className="border border-gray-400 w-full rounded-lg px-2 py-1 text-sm" 
+              className="border border-gray-400 w-full rounded-lg px-2 py-1" 
               type="password"
               required
             />
             <button 
               type='submit' 
               disabled={loading} 
-              className="w-full bg-black/70 text-white py-1 rounded-lg cursor-pointer disabled:bg-gray-400 mt-1 text-sm"
+              className="w-full bg-black/70 text-white py-1 rounded-lg cursor-pointer disabled:bg-gray-400 mt-1"
             >
               {loading ? 'Cadastrando...' : 'Cadastrar'}
             </button>
