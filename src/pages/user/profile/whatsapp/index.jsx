@@ -97,7 +97,7 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
         <div className="flex flex-col justify-between w-full ">
             <h3 className="text-[11px] font-semibold text-gray-500">WHATSAPP</h3>
         
-            <form onSubmit={handleAddWhatsApp} className='flex flex-col justify-between w-full sm:flex-row'>
+            <form onSubmit={handleAddWhatsApp} className='flex flex-col justify-between gap-2 w-full sm:flex-row'>
                 <div className="flex justify-between w-full">
                     {isEditingWhatsapp ?
                     <div  className='relative w-full'>
