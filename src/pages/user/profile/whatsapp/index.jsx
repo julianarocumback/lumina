@@ -1,4 +1,3 @@
-import { div } from 'framer-motion/client';
 import {useState, useMemo} from 'react'
 
 export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
@@ -7,33 +6,38 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
     const [hasInteracted, setHasInteracted] = useState(false)
     const [isSubmitted, setIsSubmitted] = useState(false)
 
+    // Validation flags and conditional error display rules
     const hasContent = whatsapp !== ''
     const shouldShowContentError = !hasContent && (hasInteracted || isSubmitted)
 
     const hasExactLength = whatsapp.length === 11
     const shouldShowExactLengthError = hasContent && !hasExactLength && (hasInteracted || isSubmitted)
 
-    const whatsappFormatinho = useMemo(()=>{
+    // Displays the saved customer number (read-only mode)
+    const formattedClientWhatsapp = useMemo(() => {
+        if(dadosCliente.whatsapp === null) {
+            return '(__) _____-___'
+        } else {
+            const whatsappEdited = dadosCliente.whatsapp + '___________'
+            const pt1 = whatsappEdited.slice(0,2)
+            const pt2 = whatsappEdited.slice(2,7)
+            const pt3 = whatsappEdited.slice(7,11)
+            return `(${pt1}) ${pt2}-${pt3}`
+        }
+    }, [dadosCliente?.whatsapp])
+
+    // Mask template with underlines rendered behind the input (edit mode)
+    const whatsappMaskTemplate = useMemo(() => {
         const whatsappEdited = whatsapp + '___________'
         const pt1 = whatsappEdited.slice(0,2)
         const pt2 = whatsappEdited.slice(2,7)
         const pt3 = whatsappEdited.slice(7,11)
 
         return `(${pt1}) ${pt2}-${pt3}`
-    })
+    }, [whatsapp])
 
-    const whatsappFormated = useMemo(()=>{
-        if(!dadosCliente.whatsapp) return '(__) _____-____'
-
-        const whatsappEdited = dadosCliente.whatsapp + '___________'
-        const pt1 = whatsappEdited.slice(0,2)
-        const pt2 = whatsappEdited.slice(2,7)
-        const pt3 = whatsappEdited.slice(7,11)
-
-        return `(${pt1}) ${pt2}-${pt3}`
-    })
-
-    const whatsappValue = useMemo(()=>{
+    // Progressive formatting for the controlled <input /> value
+    const formattedInputValue = useMemo(() => {
         if(!whatsapp) return ''
         let whatsappEdited = ''
 
@@ -47,43 +51,41 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
 
         return whatsappEdited
     }, [whatsapp])
-
-    // aaaaaa
-
+    
+    // Marks the field as interacted on blur
     const handleWhatsappVerification = () => {
-        
         setHasInteracted(true)
     }
     
 
-    // ATIVAR EDIÇÃO DO WHATSAPP
+    // Enters edit mode
     function handleEditWhatsApp(){
         setIsEditingWhatsap(true)
     }
 
-    // SALVAR NO ESTADO
+    // Update state
     const handleEditingWhatsapp = (event) => {
         const whatsapp = event.target.value.replace(/\D/g, '')
 
         if(whatsapp.length > 11) return
         setWhatsapp(whatsapp)
-        console.log(whatsapp)
     }
 
-    // Cancel edition
-    function handleCancelUpdateWhatsApp(){
+    // Resets component state and cancels editing mode
+    function handleCancelEditingWhatsApp(){
         setIsEditingWhatsap(false)
         setWhatsapp('')
         setHasInteracted(false)
         setIsSubmitted(false)
-
-       
     }
     
-    // Save whatsapp
-    function handleAtualizarWhatsApp(){
+    // Validates length and submits the sanitized phone number
+    function handleAddWhatsApp(event){
+        if (event) event.preventDefault()
         setIsSubmitted(true)
+
         if(whatsapp.length < 11) return
+
         onSaveWhatsApp(whatsapp)
         setIsEditingWhatsap(false)
         setWhatsapp('')
@@ -91,34 +93,27 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
         setIsSubmitted(false)
     }
 
-    const whatsappFormatado = (whatsapp) => {
-        const ddd = (whatsapp.slice(0, 2) + '__').slice(0,2)
-        const parte1 = (whatsapp.slice(2, 7) + '_____').slice(0,5)
-        const parte2 = (whatsapp.slice(7, 11) + '_____').slice(0,4)
-
-
-
-        return `(${ddd}) ${parte1}-${parte2}`
-    }
-
-    
-
-    return(
+    return (
         <div className="flex flex-col justify-between w-full ">
             <h3 className="text-[11px] font-semibold text-gray-500">WHATSAPP</h3>
         
-            <div className='flex flex-col justify-between w-full sm:flex-row'>
+            <form onSubmit={handleAddWhatsApp} className='flex flex-col justify-between w-full sm:flex-row'>
                 <div className="flex justify-between w-full">
-                    <input
-                        type="text"
-                        disabled={!isEditingWhatsapp}
-                        value={whatsappValue}
-                        className={`${!isEditingWhatsapp && 'border left-0'} text-gray-black px-2 -left-2 relative tracking-wider text-transparent caret-black z-10`}
-                        onChange={handleEditingWhatsapp}
-                        onBlur={handleWhatsappVerification}
-                    />
-                    {isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormatinho}</span>}
-                    {!isEditingWhatsapp && <span className='absolute tracking-wider'>{whatsappFormated}</span>}
+                    {isEditingWhatsapp ?
+                    <div  className='relative w-full'>
+                        <input
+                            type="text"
+                            disabled={!isEditingWhatsapp}
+                            value={formattedInputValue}
+                            className={`z-10 absolute -left-1 flex items-center px-1 text-base text-transparent leading-relaxed tracking-wider text- ring-1 ring-black rounded-lg caret-black focus:outline-none`}
+                            onChange={handleEditingWhatsapp}
+                            onBlur={handleWhatsappVerification}
+                        />
+                        <span className='relative top-px text-base tracking-wider'>{whatsappMaskTemplate}</span>
+                    </div>
+                    :
+                    <span className='relative top-px text-base tracking-wider'>{formattedClientWhatsapp}</span>
+                    }
                 </div>
                 <div className="flex">
                     {!isEditingWhatsapp && <div onClick={handleEditWhatsApp} className="font-semibold text-blue-700">Editar</div>}
@@ -126,18 +121,15 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
                         {isEditingWhatsapp && 
                         <div className='flex gap-2'>
                             {/* Update whatsapp */}
-                            <button type='button' className='px-2 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg transition-colors cursor-pointer hover:bg-blue-700' onClick={handleAtualizarWhatsApp}>Salvar</button>
-                             {/* Cancel whatsapp update */}
-                            <button type='button' className='font-semibold text-gray-600 hover:text-gray-800 transition-colors cursor-pointer' onClick={handleCancelUpdateWhatsApp}>Cancelar</button>
+                            <button type='submit' className='px-2 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg transition-colors cursor-pointer hover:bg-blue-700' >Salvar</button>
+                            {/* Cancel whatsapp update */}
+                            <button type='button' className='font-semibold text-gray-600 hover:text-gray-800 transition-colors cursor-pointer' onClick={handleCancelEditingWhatsApp}>Cancelar</button>
                         </div>}
-                        
                     </div>
                 </div>
-
-            </div>
+            </form>
             {shouldShowContentError && <p className='text-xs text-red-500'>O campo não pode ficar vazio</p>}
             {shouldShowExactLengthError && <p className='text-xs text-red-500'>Deve conter 11 dígitos</p>}
-            
         </div>
     )
 }

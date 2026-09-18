@@ -60,7 +60,6 @@ export default function Profile(){
                 isPurgeAccount={isPurgeAccount}
                 setIsPurgeAccount={setIsPurgeAccount}
                 isUpdatePassword={isUpdatePassword}
-                onPurgeAccount={purgeAccount}
                 description={'Tem certeza que deseja apagar a conta? Essa ação não poderá ser desfeita.'}
                 onConfirm={purgeAccount}
                 onCancel={() => setIsPurgeAccount(false)}
