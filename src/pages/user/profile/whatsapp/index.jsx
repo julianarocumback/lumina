@@ -15,15 +15,12 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
 
     // Displays the saved customer number (read-only mode)
     const formattedClientWhatsapp = useMemo(() => {
-        if(dadosCliente.whatsapp === null) {
-            return '(__) _____-___'
-        } else {
             const whatsappEdited = dadosCliente.whatsapp + '___________'
             const pt1 = whatsappEdited.slice(0,2)
             const pt2 = whatsappEdited.slice(2,7)
             const pt3 = whatsappEdited.slice(7,11)
-            return `(${pt1}) ${pt2}-${pt3}`
-        }
+            return dadosCliente.whatsapp ? `(${pt1}) ${pt2}-${pt3}` : dadosCliente.whatsapp ?? '(__) _____-____'
+       
     }, [dadosCliente?.whatsapp])
 
     // Mask template with underlines rendered behind the input (edit mode)
@@ -100,7 +97,7 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
             <form onSubmit={handleAddWhatsApp} className='flex flex-col justify-between gap-2 w-full sm:flex-row'>
                 <div className="flex justify-between w-full">
                     {isEditingWhatsapp ?
-                    <div  className='relative w-full'>
+                    <div  className='relative flex flex-col gap-2 w-full'>
                         <input
                             type="text"
                             disabled={!isEditingWhatsapp}
@@ -110,6 +107,8 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
                             onBlur={handleWhatsappVerification}
                         />
                         <span className='relative top-px text-base tracking-wider'>{whatsappMaskTemplate}</span>
+                        {shouldShowContentError && <p className='text-xs text-red-700'>O campo não pode ficar vazio</p>}
+                        {shouldShowExactLengthError && <p className='text-xs text-red-700'>Deve conter 11 dígitos</p>}
                     </div>
                     :
                     <span className='relative top-px text-base tracking-wider'>{formattedClientWhatsapp}</span>
@@ -128,8 +127,7 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
                     </div>
                 </div>
             </form>
-            {shouldShowContentError && <p className='text-xs text-red-500'>O campo não pode ficar vazio</p>}
-            {shouldShowExactLengthError && <p className='text-xs text-red-500'>Deve conter 11 dígitos</p>}
+            
         </div>
     )
 }

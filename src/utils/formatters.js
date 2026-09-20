@@ -25,3 +25,18 @@ export const formatDate = (dataIso) => {
         minute: '2-digit'
     }).format(date)
 }
+
+// Format date to the Brazilian date standard (DD/MM/YYYY)
+export const formatDateOnly = (dataIso) => {
+    if (!dataIso) return ''
+    const date = new Date(dataIso)
+
+    if (isNaN(date.getTime())) return ''
+
+    return new Intl.DateTimeFormat('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        timeZone: 'UTC'
+    }).format(date)
+}
