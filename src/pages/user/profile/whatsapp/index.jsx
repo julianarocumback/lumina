@@ -91,43 +91,38 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
     }
 
     return (
-        <div className="flex flex-col justify-between w-full ">
-            <h3 className="text-[11px] font-semibold text-gray-500">WHATSAPP</h3>
+        <div className='flex flex-col justify-between w-full'>
+            <h3 className='text-[11px] font-semibold text-gray-500'>WHATSAPP</h3>
         
-            <form onSubmit={handleAddWhatsApp} className='flex flex-col justify-between gap-2 w-full sm:flex-row'>
-                <div className="flex justify-between w-full">
-                    {isEditingWhatsapp ?
-                    <div  className='relative flex flex-col gap-2 w-full'>
-                        <input
-                            type="text"
-                            disabled={!isEditingWhatsapp}
-                            value={formattedInputValue}
-                            className={`z-10 absolute -left-1 flex items-center px-1 text-base text-transparent leading-relaxed tracking-wider text- ring-1 ring-black rounded-lg caret-black focus:outline-none`}
-                            onChange={handleEditingWhatsapp}
-                            onBlur={handleWhatsappVerification}
-                        />
-                        <span className='relative top-px text-base tracking-wider'>{whatsappMaskTemplate}</span>
-                        {shouldShowContentError && <p className='text-xs text-red-700'>O campo não pode ficar vazio</p>}
-                        {shouldShowExactLengthError && <p className='text-xs text-red-700'>Deve conter 11 dígitos</p>}
-                    </div>
-                    :
-                    <span className='relative top-px text-base tracking-wider'>{formattedClientWhatsapp}</span>
-                    }
+            {isEditingWhatsapp ?
+            <form onSubmit={handleAddWhatsApp} className='flex flex-col justify-between w-full sm:flex-row items-start sm:items-center gap-2 sm:gap-0'>
+                <div className='relative flex flex-col w-full gap-2'>
+                    <input
+                        type='text'
+                        disabled={!isEditingWhatsapp}
+                        value={formattedInputValue}
+                        className={`z-10 absolute -left-1 flex items-center px-1 text-base text-transparent leading-relaxed tracking-wider ring-1 ring-black rounded-lg caret-black focus:outline-none`}
+                        onChange={handleEditingWhatsapp}
+                        onBlur={handleWhatsappVerification}
+                    />
+                    <span className='relative top-px text-base tracking-wider'>{whatsappMaskTemplate}</span>
+                    {shouldShowContentError && <span className='text-xs text-red-700'>O campo não pode ficar vazio</span>}
+                    {shouldShowExactLengthError && <span className='text-xs text-red-700'>Deve conter 11 dígitos</span>}
                 </div>
-                <div className="flex">
-                    {!isEditingWhatsapp && <div onClick={handleEditWhatsApp} className="font-semibold text-blue-700">Editar</div>}
-                    <div className="flex gap-4">
-                        {isEditingWhatsapp && 
-                        <div className='flex gap-2'>
-                            {/* Update whatsapp */}
-                            <button type='submit' className='px-2 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg transition-colors cursor-pointer hover:bg-blue-700' >Salvar</button>
-                            {/* Cancel whatsapp update */}
-                            <button type='button' className='font-semibold text-gray-600 hover:text-gray-800 transition-colors cursor-pointer' onClick={handleCancelEditingWhatsApp}>Cancelar</button>
-                        </div>}
-                    </div>
+
+                <div className='flex gap-2'>
+                    {/* Update whatsapp */}
+                    <button type='submit' className='px-2 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg transition-colors cursor-pointer hover:bg-blue-700' >Salvar</button>
+                    {/* Cancel whatsapp update */}
+                    <button type='button' className='font-semibold text-gray-600 hover:text-gray-800 transition-colors cursor-pointer' onClick={handleCancelEditingWhatsApp}>Cancelar</button>
                 </div>
             </form>
-            
+            :
+            <div className='flex flex-col items-start justify-center sm:flex-row sm:justify-between'>
+                <span className='relative top-px text-base tracking-wider'>{formattedClientWhatsapp}</span>
+                <button onClick={handleEditWhatsApp} className='font-semibold text-blue-700'>Editar</button>
+            </div>
+            }
         </div>
     )
 }
