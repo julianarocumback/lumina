@@ -67,6 +67,7 @@ export default function Birthdate({dadosCliente, onSaveBirthdate}){
                     {/* Cancel birthdate update */}
                     <button type='button' className='font-semibold text-gray-600 hover:text-gray-800 transition-colors cursor-pointer' onClick={handleCancelAddBirthdate}>Cancelar</button>
                 </div>
+                {isConfirming && <Confirmation isConfirming={isConfirming} handleSaveBirthdate={handleSaveBirthdate} handleCancelAddBirthdate={handleCancelAddBirthdate}/>}
             </div>
             :
             <div className='flex flex-col sm:flex-row sm:justify-between'>
@@ -74,7 +75,6 @@ export default function Birthdate({dadosCliente, onSaveBirthdate}){
                 {!dadosCliente?.birthdate && <button onClick={handleEditingBirthdate} className='font-semibold text-blue-700 w-fit'>Adicionar</button>}
             </div> 
             }        
-            {isConfirming && <Confirmation isConfirming={isConfirming} handleSaveBirthdate={handleSaveBirthdate} handleCancelAddBirthdate={handleCancelAddBirthdate}/>}
         </div>
     )
 }

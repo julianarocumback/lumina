@@ -95,7 +95,7 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
             <h3 className='text-[11px] font-semibold text-gray-500'>WHATSAPP</h3>
         
             {isEditingWhatsapp ?
-            <form onSubmit={handleAddWhatsApp} className='flex flex-col justify-between w-full sm:flex-row items-start sm:items-center gap-2 sm:gap-0'>
+            <form onSubmit={handleAddWhatsApp} className='flex flex-col justify-between items-start gap-2 w-full sm:flex-row sm:items-center sm:gap-0'>
                 <div className='relative flex flex-col w-full gap-2'>
                     <input
                         type='text'
@@ -112,7 +112,7 @@ export default function Whatsapp({dadosCliente, onSaveWhatsApp}){
 
                 <div className='flex gap-2'>
                     {/* Update whatsapp */}
-                    <button type='submit' className='px-2 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg transition-colors cursor-pointer hover:bg-blue-700' >Salvar</button>
+                    <button type='submit' className='px-2 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg transition-colors cursor-pointer hover:bg-blue-700'>Salvar</button>
                     {/* Cancel whatsapp update */}
                     <button type='button' className='font-semibold text-gray-600 hover:text-gray-800 transition-colors cursor-pointer' onClick={handleCancelEditingWhatsApp}>Cancelar</button>
                 </div>
