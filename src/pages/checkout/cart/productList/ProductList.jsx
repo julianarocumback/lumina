@@ -1,64 +1,79 @@
-export default function ProductList({lista, increaseQuantity, decreaseQuantity, onRemoveFromCart, addQuantity}){
+import {currencyFormatter} from '../../../../utils/formatters'
+
+export default function ProductList({lista, increaseQuantity, decreaseQuantity, onRemoveFromCart, updateQuantity, checkQuantity}){
+
+    // Strips non-numeric characters from input and updates item quantity
+    const handleUpdateQuantity = (item, e) => {
+        const itemQuantity = e.target.value.replace(/\D/g, '')
+        updateQuantity(item, itemQuantity)
+    }
+
+    // Strips non-numeric characters from input and runs quantity checks
+    const handleCheckQuantity = (item, e) => {
+        const itemQuantity = e.target.value.replace(/\D/g, '')
+        checkQuantity(item, itemQuantity)
+    }
 
     if(!lista) return
     return(
 
-        <div className="w-full h-[calc(100vh-300px)] lg:h-145 lg:rounded-2xl overflow-hidden bg-white shadow-xs overflow-y-auto relative lg:py-0 mt-24 lg:mt-0">
-            <table className="w-full">
-                <thead className="bg-gray-200 text-sm text-gray-700 font-semibold  h-12">
-                    <tr className="indent-7">
-                        <td>Produto</td>
-                        <td>Nome</td>
-                        <td>Preço</td>
-                        <td>Quantidade</td>
-                        <td>Total</td>
-                        <td>Remover</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {lista.length > 0? 
-                    lista.map(produto => {
-                        return(
-                            <tr className="indent-7 text-md">
-                            
-                                <td className="h-35 left-5 relative top-3">
-                                    <img className="h-30 rounded-2xl" src={produto.img_url} alt="" /></td>
-                                <td>{produto.nome}</td>
-                                <td>{produto.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
-                                <td>
-                                    <div className="place-self-center flex border border-gray-300 w-20 items-center justify-around bg-white rounded-3xl  select-none relative indent-0 px-2">
-                                            {/* Diminuir a quantidade */}
-                                            <div className={`  w-4 text-xs cursor-pointer ${produto.quantidade === 1 && 'text-gray-300 '}`} onClick={()=> decreaseQuantity(produto)}><i class="fa-solid fa-minus"></i></div>
+        <div className='overflow-y-auto w-full h-[calc(100vh-300px)] mt-24 bg-white shadow-xs lg:h-145 lg:py-0 lg:mt-0 lg:rounded-2xl'>
+            <div className='z-10 sticky top-0 grid grid-cols-4 xl:grid-cols-6 justify-items-center  w-full p-4 font-semibold bg-gray-200'>
+                <div className=''>Produto</div>
+                <div className='hidden xl:block'>Nome</div>
+                <div className='hidden xl:block'>Preço</div>
+                <div>Quantidade</div>
+                <div>Total</div>
+                <div>Remover</div>
+            </div>
+            {lista.length > 0? 
+                lista.map(produto => {
+                    const total = produto.valor*produto.quantidade
+                    const hasExactLength = produto.quantidade === 1
 
-                                            {/* Quantidade atual */}
-                                            <div>{produto.quantidade}</div>
+                    return(
+                        <div className='grid grid-cols-4 xl:grid-cols-6 items-center justify-items-center p-4 text-md'>
+                        
+                            <div className='overflow-hidden h-20 w-15 lg:h-35 lg:w-25 border border-gray-200 rounded-2xl shadow-xs'>
+                                <img className='h-full w-full' src={produto.img_url} alt='Capa do produto'/>
+                            </div>
 
-                                            {/* Aumentar a quantidade */}
-                                            <div className="text-xs cursor-pointer " onClick={()=> increaseQuantity(produto)}><i class="fa-solid fa-plus"></i></div>
-                                                
-                                        </div>
-                                </td>
-                                <td>{(produto.valor*produto.quantidade).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</td>
-                                <td>
-                                    <div onClick={()=> onRemoveFromCart(produto)} className=" text-center hover:text-red-500 cursor-pointer transition-colors">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </div>
-                                </td>
-                            </tr>
-                            
-                            )
-                        })
-                
-                    :
-                        <div>
-                            Adicione produtos no carrinho!
-                        </div>
-                    }
-                    
-                
-                   
-                </tbody>        
-            </table>
+                            <div className='hidden xl:block'>{produto.nome}</div>
+
+                            <div className='hidden xl:block'>{currencyFormatter(produto.valor)}</div>
+
+                            {/* Product quantity */}
+                            <div className='flex items-center justify-around w-15 lg:w-20 px-2 bg-white border border-gray-300 rounded-3xl select-none'>
+
+                                {/* Decrease quantity */}
+                                <div className={`w-5 text-xs ${hasExactLength && 'text-gray-300'} cursor-pointer`} onClick={()=> decreaseQuantity(produto)}><i className='fa-solid fa-minus'></i></div>
+
+                                {/* Current quantity */}
+                                <div className='relative flex items-center w-5 h-5'>
+                                    <div className='flex items-center justify-center h-full w-full '>{produto.quantidade}</div>
+                                    <input onChange={(e) => handleUpdateQuantity(produto, e)} className='z-10 absolute top-0 h-full w-full text-center text-transparent border caret-black focus:outline-none' type='text' value={produto.quantidade} onBlur={(e) => handleCheckQuantity(produto, e)}/>
+                                </div>
+
+                                {/* Increase quantity */}
+                                <div className='w-5 text-xs cursor-pointer' onClick={()=> increaseQuantity(produto)}><i className='fa-solid fa-plus'></i></div>
+                                
+                            </div>
+
+                            <div>{currencyFormatter(total)}</div>
+
+     
+                            <div  className='text-center hover:text-red-500 cursor-pointer transition-colors' onClick={()=> onRemoveFromCart(produto)}>
+                                <i className='fa-solid fa-trash'></i>
+                            </div>
+         
+                        </div>        
+                    )
+                })   
+            :
+            <div>
+                Adicione produtos no carrinho!
+            </div>
+            }
         </div>
     )
 }

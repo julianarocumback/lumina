@@ -7,7 +7,7 @@ import { AuthContext } from '../../contexts/AuthContext/AuthContext'
 import { useState, useEffect, useContext } from 'react'
 
 export default function Checkout() {
-    const {items, setItems, increaseQuantity, decreaseQuantity, removeFromCart, addQuantity} = useCart()
+    const {items, setItems, increaseQuantity, decreaseQuantity, removeFromCart, addQuantity, updateQuantity, checkQuantity} = useCart()
     const {user, adicionarPedido, dadosCliente, addAddress, addPayment, setNewAddress, onAddCard, defaultCard, onDeleteCard, deleteAddress} = useContext(AuthContext)
 
     const [endereco, setEndereco] = useState({})
@@ -69,7 +69,7 @@ export default function Checkout() {
                 <div className='lg:pt-60'>
                     <Cart 
                     etapa={etapa} setEtapa={setEtapa}
-                    lista={items} increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} onRemoveFromCart={removeFromCart} addQuantity={addQuantity}
+                    lista={items} increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} onRemoveFromCart={removeFromCart} addQuantity={addQuantity} updateQuantity={updateQuantity} checkQuantity={checkQuantity}
                     endereco={endereco} setEndereco={setEndereco} frete={frete} setFrete={setFrete} addAddress={addAddress} deleteAddress={deleteAddress}
                     pagamento={pagamento} setPagamento={setPagamento} cupom={cupom} setCupom={setCupom} addPayment={addPayment} onAddCard={onAddCard} defaultCard={defaultCard} onDeleteCard={onDeleteCard}
                     

@@ -57,7 +57,7 @@ export default function Name({dadosCliente, onSaveName}){
 
     return (
         <div className='flex flex-col gap-1 w-full'>
-            <h3 className="text-[11px] font-semibold text-gray-500">NOME COMPLETO</h3>
+            <h3 className='text-[11px] font-semibold text-gray-500'>NOME COMPLETO</h3>
         
             {isEditingName ?
                 <form onSubmit={handleSaveName} className='flex flex-col justify-between gap-2 w-full sm:flex-row sm:items-center'>
@@ -65,7 +65,7 @@ export default function Name({dadosCliente, onSaveName}){
                         <input type='text' disabled={!isEditingName} value={name} className={`${isEditingName && 'border left-0'} ${shouldShowNameSuccess ? 'ring-green-500': shouldShowNameError ? 'ring-red-700' : 'ring-black'} text-gray-black font-semibold px-2 rounded-lg relative -left-2 border-none outline-none ring-1`} onChange={handleAddName} onBlur={handleHasInteracted}/>
                         {shouldShowNameError && <p className='text-xs text-red-700'>O nome deve conter pelo menos 3 caracteres</p>}
                     </div>
-                    <div className="flex gap-4">
+                    <div className='flex gap-4'>
                          {/* Save email */}
                         <button type='submit' className='h-fit px-2 py-1 text-sm font-semibold text-white bg-blue-600 rounded-lg transition-colors cursor-pointer hover:bg-blue-700' onBlur={handleIsSubmit}>Salvar</button>
                         {/* Cancel email update */}

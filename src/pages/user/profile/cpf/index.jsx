@@ -87,12 +87,12 @@ export default function Cpf({dadosCliente, onSaveCpf}){
 
     
     return (
-        <div className="flex flex-col gap-1">
-            <h3 className="font-semibold text-[11px] text-gray-500">CPF</h3>
+        <div className='flex flex-col gap-1'>
+            <h3 className='font-semibold text-[11px] text-gray-500'>CPF</h3>
             {isEditingCPF ?
             <div className='relative flex flex-col gap-2 sm:flex-row sm:justify-between '>
                 <div className='flex flex-col gap-1'>
-                    <input disabled={!isEditingCPF} onChange={(e) => handleAddCPF(e.target.value.replace(/\D/g, ''))}  type="text" className={`z-10 absolute text-trans bg-transparent caret-black focus:outline-none ring-1 px-2 -left-2 rounded-md w-40 tracking-wider`} value={cpfFormatedValue()} onBlur={handleCPFInteracted}/>
+                    <input disabled={!isEditingCPF} onChange={(e) => handleAddCPF(e.target.value.replace(/\D/g, ''))}  type='text' className={`z-10 absolute text-trans bg-transparent caret-black focus:outline-none ring-1 px-2 -left-2 rounded-md w-40 tracking-wider`} value={cpfFormatedValue()} onBlur={handleCPFInteracted}/>
                     <span className='select-none pointer-events-none relative tracking-wider'>{cpfFormated}</span>
                     {shouldShowCPFErrorLength && <p className='text-xs text-red-700 font-semibold'>O CPF deve conter 11 dígitos</p>}
                     {shouldShowCPFErrorContent && <p className='text-xs text-red-700 font-semibold'> O campo não pode ficar vazio</p>}

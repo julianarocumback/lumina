@@ -5,7 +5,7 @@ import Payment from './payment/Payment';
 import Confirmation from './confirmation/Confirmation'
 import BackLink from '../backLink/BackLink'
 
-export default function Cart({lista, increaseQuantity, decreaseQuantity, onRemoveFromCart, addQuantity, endereco, setEndereco, frete, setFrete, pagamento, setPagamento, cupom, setCupom, listaOk, enderecoOk, pagamentoOk, verificar, etapa, addresses, payments, addAddress, addPayment, dadosCliente, setNewAddress, onDeleteCard, defaultCard, deleteAddress}){
+export default function Cart({lista, increaseQuantity, decreaseQuantity, onRemoveFromCart, addQuantity, endereco, setEndereco, frete, setFrete, pagamento, setPagamento, cupom, setCupom, listaOk, enderecoOk, pagamentoOk, verificar, etapa, addresses, payments, addAddress, addPayment, dadosCliente, setNewAddress, onDeleteCard, defaultCard, deleteAddress, updateQuantity, checkQuantity}){
 
     return (
         <div className="lg:sh">
@@ -32,7 +32,7 @@ export default function Cart({lista, increaseQuantity, decreaseQuantity, onRemov
             :
                 <div className="flex flex-col lg:gap-8 lg:py-7 relative">
                     <div className="flex flex-col lg:flex-row lg:gap-8 relative">
-                        <ProductList lista={lista} increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} onRemoveFromCart={onRemoveFromCart} addQuantity={addQuantity}/>
+                        <ProductList lista={lista} increaseQuantity={increaseQuantity} decreaseQuantity={decreaseQuantity} onRemoveFromCart={onRemoveFromCart} addQuantity={addQuantity} updateQuantity={updateQuantity} checkQuantity={checkQuantity}/>
                         <OrderSummary lista={lista} frete={frete} cupom={cupom} listaOk={listaOk} enderecoOk={enderecoOk} pagamentoOk={pagamentoOk} verificar={verificar} etapa={etapa}/>
                     </div>
                     <BackLink/>
