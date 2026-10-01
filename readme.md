@@ -147,7 +147,7 @@ Gestão de cartões salvos para visualização e remoção de métodos de pagame
 
 ---
 
-## 👤 Desenvolvido por
+## 💻 Desenvolvido por
 
 **Juliana Rocumback**  
 *Desenvolvedora Full-Stack*
